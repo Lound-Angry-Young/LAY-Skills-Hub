@@ -40,6 +40,8 @@ class HubIntegrationTests(unittest.TestCase):
         refactored.mkdir(parents=True)
         (refactored / 'SKILL.md').write_text('---\nname: design-page\ndescription: Design a page. Use this skill when: a page needs layout. Do NOT use this skill when: backend only.\n---\nUse design.\n', encoding='utf-8')
         (self.root / 'refactored_skills/design/SKILL.md').write_text('---\nname: routing-design-skills\ndescription: Routes design requests.\n---\n', encoding='utf-8')
+        (self.root / 'agents').mkdir()
+        shutil.copy2(Path(hub.__file__).resolve().parents[1] / 'agents/perfis.json', self.root / 'agents/perfis.json')
         (self.root / 'scripts').mkdir()
         shutil.copy2(Path(hub.__file__), self.root / 'scripts/skill_hub.py')
         project = self.base / 'project'

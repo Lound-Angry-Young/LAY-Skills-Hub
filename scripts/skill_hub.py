@@ -367,6 +367,109 @@ def ensure_graphify(hub, root, source):
     print(f"✅ Graphify instalado versão {source['version']} em {executable}.")
 
 
+AGENTS_FERRAMENTAS = {'Read', 'Grep', 'Glob', 'Bash', 'Edit', 'Write'}
+AGENTS_DOMINIOS = ['routing-and-proxy', 'frontend', 'engineering', 'context', 'devops', 'qa',
+                   'security', 'creative-3d', 'documentation', 'design', 'database']
+AGENTE_NOME = re.compile(r'[a-z0-9-]{1,64}')
+
+
+def load_profiles(root=ROOT):
+    """Perfis de subagente (agents/perfis.json): exatamente um por domínio."""
+    perfis = json.loads((root / 'agents/perfis.json').read_text(encoding='utf-8'))['perfis']
+    if sorted(p['dominio'] for p in perfis) != sorted(AGENTS_DOMINIOS):
+        raise ValueError('perfis não cobrem exatamente os domínios esperados')
+    nomes = [p['nome'] for p in perfis]
+    if len(set(nomes)) != len(nomes):
+        raise ValueError('nomes de subagente duplicados')
+    for p in perfis:
+        if not AGENTE_NOME.fullmatch(p['nome']):
+            raise ValueError(f"nome de subagente inválido: {p['nome']}")
+        if len(p['descricao']) > 1024 or 'Use quando:' not in p['descricao'] or 'Não use para:' not in p['descricao']:
+            raise ValueError(f"description sem gatilhos ou longa demais: {p['nome']}")
+        if not set(p['ferramentas']) <= AGENTS_FERRAMENTAS:
+            raise ValueError(f"ferramentas fora do conjunto permitido: {p['nome']}")
+    return perfis
+
+
+def claude_agent_text(perfil, skills):
+    """Arquivo de subagente do Claude Code: frontmatter (name, description, tools) e instruções de atuação."""
+    partes = [
+        '---',
+        'name: ' + perfil['nome'],
+        'description: ' + json.dumps(perfil['descricao'], ensure_ascii=False),
+        'tools: ' + ', '.join(perfil['ferramentas']),
+        '---',
+        '',
+        '# ' + perfil['nome'],
+        '',
+        perfil['descricao'],
+        '',
+        '## Skills do domínio',
+        '',
+        'Abra o SKILL.md original de uma skill só quando a tarefa bater com a descrição dela. Caminhos:',
+        '',
+    ]
+    for nome, original, desc in skills:
+        partes.append('- `' + nome + '`: `' + original + '`')
+        partes.append('  ' + desc[:240])
+    partes += [
+        '',
+        '## Regras de atuação',
+        '',
+        '1. Use só as skills deste domínio. Se o pedido for de outro domínio, responda com status `escalated`, a razão e o domínio sugerido.',
+        '2. Escolha a skill pela descrição, abra o SKILL.md original e siga os passos dela.',
+        '3. Não invente capacidade: afirme só o que verificou (arquivo lido, comando executado, saída observada).',
+        '4. Pergunte só se a resposta depender de informação que você não tem. Faça uma pergunta por vez.',
+        '5. Ações externas ou irreversíveis (enviar mensagens, publicar, apagar, sobrescrever com perda) só com confirmação explícita do usuário.',
+        '6. Em projeto existente, mostre prioridades e evidências antes de editar.',
+        '7. Escreva em português direto, sem rodeio.',
+        '',
+        '## Resposta (RESULT)',
+        '',
+        '- status: success | failure | needs_clarification | escalated',
+        '- artifacts: arquivos ou saídas produzidas',
+        '- summary: 2 a 4 frases',
+        '- open_items: pendências',
+        '',
+    ]
+    return '\n'.join(partes)
+
+
+def claude_routing_index(perfis):
+    """Índice que vai para o bloco gerenciado do CLAUDE.md global: qual subagente atende cada domínio."""
+    linhas = ['', '## Subagentes LAY (Claude Code)', '',
+              'Subagentes globais em ~/.claude/agents. Escolha pelo domínio do pedido e delegue. '
+              'Subagentes não chamam outros subagentes: o roteamento é desta conversa.', '']
+    linhas += ['- ' + p['dominio'] + ': `' + p['nome'] + '`' for p in perfis]
+    return '\n'.join(linhas) + '\n'
+
+
+def install_claude_agents(home, perfis, por_dominio, anteriores):
+    """Grava os subagentes em ~/.claude/agents. Só mexe em arquivos que este instalador registrou."""
+    pasta = home / '.claude/agents'
+    registrados = {w['path']: w['sha256'] for w in anteriores}
+    textos = {p['nome']: claude_agent_text(p, por_dominio.get(p['dominio'], [])) for p in perfis}
+    for nome in textos:
+        dest = pasta / (nome + '.md')
+        if dest.exists():
+            if str(dest) not in registrados:
+                raise ValueError(f'Colisão preservada: {dest}')
+            if registrados[str(dest)] != sha(dest):
+                raise ValueError(f'Subagente local modificado; preservado: {dest}')
+    pasta.mkdir(parents=True, exist_ok=True)
+    novos = []
+    for nome, texto in textos.items():
+        dest = pasta / (nome + '.md')
+        dest.write_text(texto, encoding='utf-8', newline='\n')
+        novos.append({'path': str(dest), 'sha256': sha(dest)})
+    ativos = {n['path'] for n in novos}
+    for antigo in anteriores:
+        p = Path(antigo['path'])
+        if antigo['path'] not in ativos and p.parent == pasta and p.exists() and sha(p) == antigo['sha256']:
+            p.unlink()
+    return novos
+
+
 def install(home, agents, root=ROOT, skip_tools=False):
     home = home.resolve()
     hub = home / '.lay-skills'
@@ -423,6 +526,11 @@ def install(home, agents, root=ROOT, skip_tools=False):
     if not skip_tools:
         graph_source = next((s for s in sources(root)['sources'] if 'graphify' in s['id']), None)
         ensure_graphify(hub, root, graph_source)
+    perfis = load_profiles(root) if 'claude' in agents else []
+    por_dominio = {}
+    for e in installed:
+        dominio = e['path'].split('/')[-3]
+        por_dominio.setdefault(dominio, []).append((e['name'], str(source_paths[e['source']] / e['path']), e['description']))
     for agent in agents:
         for e in installed:
             original = source_paths[e['source']] / e['path']
@@ -460,6 +568,8 @@ def install(home, agents, root=ROOT, skip_tools=False):
                       f"Leia `{runtime / 'skills/lay-orchestrator/SKILL.md'}` para orquestração e `{runtime / 'docs/GUIA.md'}` para seleção. "
                       f"Busque por área com `python \"{runtime / 'scripts/skill_hub.py'}\" search design`. "
                       "Não carregue o catálogo inteiro no contexto. As instruções do usuário e do projeto definem o escopo.\n")
+        if agent == 'claude' and perfis:
+            rules_body += claude_routing_index(perfis)
         graph_exe = hub / 'tools/graphify' / ('Scripts/graphify.exe' if os.name == 'nt' else 'bin/graphify')
         if graph_exe.exists():
             rules_body += f"\nGraphify CLI isolada: `{graph_exe}`. Use o executável por caminho absoluto quando não estiver no PATH.\n"
@@ -468,6 +578,7 @@ def install(home, agents, root=ROOT, skip_tools=False):
             rule_path = Path(os.environ['CODEX_HOME']) / 'AGENTS.md'
         update_block(rule_path, rules_body, hub)
         install_hook(home, agent, runtime, hub)
+    claude_agents = install_claude_agents(home, perfis, por_dominio, previous.get('claude_agents', [])) if 'claude' in agents else previous.get('claude_agents', [])
     # Remove obsolete managed adapters after the new set is installed.
     new_paths = {w['path'] for w in wrappers}
     retained = []
@@ -487,7 +598,7 @@ def install(home, agents, root=ROOT, skip_tools=False):
             retained.append(old)
     state = {'schema_version': 1, 'owner': 'lay-skills', 'installed_at': now(), 'source_root': str(root.resolve()),
              'home': str(home), 'agents': sorted(set(agents + previous.get('agents', []))),
-             'wrappers': retained + wrappers, 'catalog_count': len(installed), 'python': sys.executable}
+             'wrappers': retained + wrappers, 'catalog_count': len(installed), 'python': sys.executable, 'claude_agents': claude_agents}
     write(marker, state)
     print(f"✅ {len(installed)} entradas instaladas por agente: {', '.join(agents)}.")
     return state
@@ -656,6 +767,10 @@ def doctor(home):
     for agent in state.get('agents', []):
         for directory in destinations(agent):
             print(f"✅ {agent}: {home / directory}")
+    for entry in state.get('claude_agents', []):
+        p = Path(entry['path'])
+        if not p.exists() or sha(p) != entry['sha256']:
+            errors.append(f'Subagente ausente/modificado: {p}')
     override = home / '.codex/AGENTS.override.md'
     if override.exists():
         print(f'⚠️ {override} tem precedência; integre o bloco LAY manualmente se necessário.')
@@ -694,6 +809,11 @@ def uninstall(home):
             if old.count(BEGIN) == 1 and old.count(END) == 1:
                 new = old[:old.index(BEGIN)] + old[old.index(END)+len(END):]
                 managed_write(path, new, hub)
+    for entry in state.get('claude_agents', []):
+        p = Path(entry['path'])
+        if p.parent == home / '.claude/agents' and p.exists() and sha(p) == entry['sha256']:
+            p.unlink()
+    state['claude_agents'] = []
     state['wrappers'] = kept
     state['agents'] = []
     for agent, path in [('claude', home / '.claude/settings.json'), ('codex', home / '.codex/hooks.json'), ('antigravity', home / '.gemini/config/hooks.json')]:
