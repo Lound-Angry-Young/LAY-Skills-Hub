@@ -611,7 +611,7 @@ def sync(root=ROOT, apply=False):
         git(root, 'fetch', '--quiet', 'origin', timeout=45)
         before = git(root, 'rev-parse', 'HEAD')
         remote = git(root, 'rev-parse', '@{upstream}')
-        dirty = bool(git(root, 'status', '--porcelain'))
+        dirty = bool(git(root, 'status', '--porcelain', '--untracked-files=no'))
         base = git(root, 'merge-base', before, remote)
         behind = before != remote and base == before
         ahead = before != remote and base == remote
@@ -665,7 +665,7 @@ def sync_sources(root, apply, events=None):
                 elif git(path, 'merge-base', current, target) != current:
                     print(f"⚠️ {source['id']}: histórico divergente; revisão local preservada.")
                     status = 'diverged'
-                elif apply and not git(path, 'status', '--porcelain'):
+                elif apply and not git(path, 'status', '--porcelain', '--untracked-files=no'):
                     git(path, 'checkout', '--quiet', '--detach', target)
                     if (path / '.gitmodules').exists():
                         git(path, 'submodule', 'update', '--init', '--recursive', timeout=300)
@@ -674,7 +674,10 @@ def sync_sources(root, apply, events=None):
                     print(f"✅ Skill {source['id']} atualizada versão {source['version']}.")
                     status = 'updated'
                 else:
-                    print(f"⚠️ {source['id']}: atualização disponível {target[:12]}; arquivos locais preservados.")
+                    if apply:
+                        print(f"⚠️ {source['id']}: atualização disponível {target[:12]}; alterações em arquivos rastreados preservadas.")
+                    else:
+                        print(f"⚠️ {source['id']}: atualização disponível {target[:12]}; aplique com sync --apply.")
                     status = 'pending'
                 events.append({'source': source['id'], 'status': status, 'target': target})
             except (RuntimeError, ValueError, subprocess.TimeoutExpired) as exc:
