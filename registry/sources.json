@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "addyosmani--agent-skills",
+      "repo": "addyosmani/agent-skills",
+      "url": "https://github.com/addyosmani/agent-skills.git",
+      "path": "upstream/addyosmani--agent-skills",
+      "commit": "1be8e34187e34647bb83adc3a1323b26ae6f6abe",
+      "version": "0.6.12-43-g1be8e34",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/api-and-interface-design/SKILL.md",
+        "skills/browser-testing-with-devtools/SKILL.md",
+        "skills/ci-cd-and-automation/SKILL.md",
+        "skills/code-review-and-quality/SKILL.md",
+        "skills/code-simplification/SKILL.md",
+        "skills/constraint-driven-development/SKILL.md",
+        "skills/context-engineering/SKILL.md",
+        "skills/debugging-and-error-recovery/SKILL.md",
+        "skills/deprecation-and-migration/SKILL.md",
+        "skills/documentation-and-adrs/SKILL.md",
+        "skills/doubt-driven-development/SKILL.md",
+        "skills/frontend-ui-engineering/SKILL.md",
+        "skills/git-workflow-and-versioning/SKILL.md",
+        "skills/idea-refine/SKILL.md",
+        "skills/incremental-implementation/SKILL.md",
+        "skills/interview-me/SKILL.md",
+        "skills/observability-and-instrumentation/SKILL.md",
+        "skills/performance-optimization/SKILL.md",
+        "skills/planning-and-task-breakdown/SKILL.md",
+        "skills/security-and-hardening/SKILL.md",
+        "skills/shipping-and-launch/SKILL.md",
+        "skills/source-driven-development/SKILL.md",
+        "skills/spec-driven-development/SKILL.md",
+        "skills/test-driven-development/SKILL.md",
+        "skills/using-agent-skills/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "anil-matcha--open-generative-ai",
+      "repo": "anil-matcha/open-generative-ai",
+      "url": "https://github.com/anil-matcha/open-generative-ai.git",
+      "path": "upstream/anil-matcha--open-generative-ai",
+      "commit": "d8d624dcf48a581fde18102f53d76a01a95ec58c",
+      "version": "v2.0.0-267-gd8d624d",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+      ]
+    },
+    {
+      "id": "darkroomengineering--lenis",
+      "repo": "darkroomengineering/lenis",
+      "url": "https://github.com/darkroomengineering/lenis.git",
+      "path": "upstream/darkroomengineering--lenis",
+      "commit": "bc152f90d7c9b04ef372718350e2f616f3c706b2",
+      "version": "bc152f9",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+      ]
+    },
+    {
+      "id": "DavidHDev--react-bits",
+      "repo": "DavidHDev/react-bits",
+      "url": "https://github.com/DavidHDev/react-bits.git",
+      "path": "upstream/DavidHDev--react-bits",
+      "commit": "26cf51f7874aeb31aa9eb463648f3221865dbc11",
+      "version": "26cf51f",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+      ]
+    },
+    {
+      "id": "diegosouzapw--omniroute",
+      "repo": "diegosouzapw/OmniRoute",
+      "url": "https://github.com/diegosouzapw/OmniRoute.git",
+      "path": "upstream/diegosouzapw--omniroute",
+      "commit": "e82d6370f18c01988a6c55f656e199b5d6e19401",
+      "version": "e82d6370",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/cli-a2a/SKILL.md",
+        "skills/cli-backup-sync/SKILL.md",
+        "skills/cli-batches/SKILL.md",
+        "skills/cli-chat/SKILL.md",
+        "skills/cli-compression/SKILL.md",
+        "skills/cli-contexts/SKILL.md",
+        "skills/cli-cost-usage/SKILL.md",
+        "skills/cli-eval/SKILL.md",
+        "skills/cli-health/SKILL.md",
+        "skills/cli-keys/SKILL.md",
+        "skills/cli-mcp/SKILL.md",
+        "skills/cli-models/SKILL.md",
+        "skills/cli-plugins-skills/SKILL.md",
+        "skills/cli-policy-audit/SKILL.md",
+        "skills/cli-providers/SKILL.md",
+        "skills/cli-resilience/SKILL.md",
+        "skills/cli-routing/SKILL.md",
+        "skills/cli-serve/SKILL.md",
+        "skills/cli-setup/SKILL.md",
+        "skills/cli-skill-collector/SKILL.md",
+        "skills/cli-tunnel/SKILL.md",
+        "skills/config-codex-cli/SKILL.md",
+        "skills/omni-agents-a2a/SKILL.md",
+        "skills/omni-api-keys/SKILL.md",
+        "skills/omni-auth/SKILL.md",
+        "skills/omni-budget/SKILL.md",
+        "skills/omni-cache/SKILL.md",
+        "skills/omni-cli-tools/SKILL.md",
+        "skills/omni-combos-routing/SKILL.md",
+        "skills/omni-compression/SKILL.md",
+        "skills/omni-context-rtk/SKILL.md",
+        "skills/omni-db-backups/SKILL.md",
+        "skills/omni-github-skills/SKILL.md",
+        "skills/omni-inference/SKILL.md",
+        "skills/omni-mcp/SKILL.md",
+        "skills/omni-models/SKILL.md",
+        "skills/omni-providers/SKILL.md",
+        "skills/omni-proxies/SKILL.md",
+        "skills/omni-resilience/SKILL.md",
+        "skills/omni-settings/SKILL.md",
+        "skills/omni-sync-cloud/SKILL.md",
+        "skills/omni-tunnels/SKILL.md",
+        "skills/omni-usage-logs/SKILL.md",
+        "skills/omni-version-manager/SKILL.md",
+        "skills/omni-webhooks/SKILL.md",
+        "skills/ponytail/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "dietrichgebert--ponytail",
+      "repo": "DietrichGebert/ponytail",
+      "url": "https://github.com/DietrichGebert/ponytail.git",
+      "path": "upstream/dietrichgebert--ponytail",
+      "commit": "9b58c1ffb790c075ca32e70a89cf1d80588f4abf",
+      "version": "v5.1.0-4-g9b58c1f",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/ponytail-audit/SKILL.md",
+        "skills/ponytail-debt/SKILL.md",
+        "skills/ponytail-gain/SKILL.md",
+        "skills/ponytail-help/SKILL.md",
+        "skills/ponytail-review/SKILL.md",
+        "skills/ponytail/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "guillaumemeyer--watermarks-remover",
+      "repo": "guillaumemeyer/watermarks-remover",
+      "url": "https://github.com/guillaumemeyer/watermarks-remover.git",
+      "path": "upstream/guillaumemeyer--watermarks-remover",
+      "commit": "c5297e9e69fec0779c29127c7892427e673fafd9",
+      "version": "v0.7.0-34-gc5297e9",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/clean-user-facing-text/SKILL.md",
+        "skills/remove-ai-marks/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "Jakubantalik--Libraries.dev",
+      "repo": "Jakubantalik/Libraries.dev",
+      "url": "https://github.com/Jakubantalik/Libraries.dev.git",
+      "path": "upstream/Jakubantalik--Libraries.dev",
+      "commit": "bcaf88f8a16a75fd95bf21e0747193ee3380a927",
+      "version": "voice-glow@0.2.0-175-gbcaf88f",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+      ]
+    },
+    {
+      "id": "latent-spaces--brag",
+      "repo": "latent-spaces/brag",
+      "url": "https://github.com/latent-spaces/brag.git",
+      "path": "upstream/latent-spaces--brag",
+      "commit": "8531ccb9f471ef5099abf930079e47b55c55bb21",
+      "version": "v0.3.0-10-g8531ccb",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Skills brag/brag-slim preservadas na fonte, mas não expostas globalmente: dependem de Hyperframes, removido por pedido do usuário."
+      ]
+    },
+    {
+      "id": "leonxlnx--taste-skill",
+      "repo": "leonxlnx/taste-skill",
+      "url": "https://github.com/leonxlnx/taste-skill.git",
+      "path": "upstream/leonxlnx--taste-skill",
+      "commit": "717446e07a78d4e6d7918b1fde1a263378eebac9",
+      "version": "717446e",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/brandkit/SKILL.md",
+        "skills/brutalist-skill/SKILL.md",
+        "skills/gpt-tasteskill/SKILL.md",
+        "skills/image-to-code-skill/SKILL.md",
+        "skills/imagegen-frontend-mobile/SKILL.md",
+        "skills/imagegen-frontend-web/SKILL.md",
+        "skills/minimalist-skill/SKILL.md",
+        "skills/output-skill/SKILL.md",
+        "skills/redesign-skill/SKILL.md",
+        "skills/soft-skill/SKILL.md",
+        "skills/stitch-skill/SKILL.md",
+        "skills/taste-skill-v1/SKILL.md",
+        "skills/taste-skill/SKILL.md"
+      ],
+      "notes": [
+        "URLs Leonxlnx/leonxlnx deduplicadas: GitHub trata o nome sem distinção de maiúsculas."
+      ]
+    },
+    {
+      "id": "microsoft--playwright-cli",
+      "repo": "microsoft/playwright-cli",
+      "url": "https://github.com/microsoft/playwright-cli.git",
+      "path": "upstream/microsoft--playwright-cli",
+      "commit": "b85c7a736bb473bf55b584e54a09ffa698d6d871",
+      "version": "v0.1.22",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/playwright-cli/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "ray0907--security-scan",
+      "repo": "Ray0907/security-scan",
+      "url": "https://github.com/Ray0907/security-scan.git",
+      "path": "upstream/ray0907--security-scan",
+      "commit": "8af92d4d5892855bba4bdb695edabc707d541276",
+      "version": "v1.6.0",
+      "kind": "skills",
+      "skill_paths": [
+        "SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "safishamsi--graphify",
+      "repo": "safishamsi/graphify",
+      "url": "https://github.com/safishamsi/graphify.git",
+      "path": "upstream/safishamsi--graphify",
+      "commit": "1d1e03b4c88abf94a3f450c838e3c744ae514ef9",
+      "version": "v0.9.84-6-g1d1e03b",
+      "kind": "skills",
+      "skill_paths": [
+        "graphify/SKILL.md"
+      ],
+      "notes": [
+        "Fonte adicional da skill Graphify legada; inclui runtime e referências ausentes na cópia local."
+      ]
+    },
+    {
+      "id": "semgrep--skills",
+      "repo": "semgrep/skills",
+      "url": "https://github.com/semgrep/skills.git",
+      "path": "upstream/semgrep--skills",
+      "commit": "68177b8830f96cd9d10dacbb14dde2566360503d",
+      "version": "68177b8",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/code-security/SKILL.md",
+        "skills/llm-security/SKILL.md",
+        "skills/semgrep/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "tengbao--vanta",
+      "repo": "tengbao/vanta",
+      "url": "https://github.com/tengbao/vanta.git",
+      "path": "upstream/tengbao--vanta",
+      "commit": "f8b351906688b56f0fc744e53bde81fc3c56f150",
+      "version": "f8b3519",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+      ]
+    },
+    {
+      "id": "vercel-labs--agent-skills",
+      "repo": "vercel-labs/agent-skills",
+      "url": "https://github.com/vercel-labs/agent-skills.git",
+      "path": "upstream/vercel-labs--agent-skills",
+      "commit": "063bee94c3f4df8453406c830b0a7df0f2860278",
+      "version": "agent-skills-063bee94c3f4df8453406c830b0a7df0f2860278",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/composition-patterns/SKILL.md",
+        "skills/deploy-to-vercel/SKILL.md",
+        "skills/react-best-practices/SKILL.md",
+        "skills/react-native-skills/SKILL.md",
+        "skills/react-view-transitions/SKILL.md",
+        "skills/vercel-cli-with-tokens/SKILL.md",
+        "skills/vercel-optimize/SKILL.md",
+        "skills/web-design-guidelines/SKILL.md",
+        "skills/writing-guidelines/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
+      "id": "voltagent--awesome-design-md",
+      "repo": "voltagent/awesome-design-md",
+      "url": "https://github.com/voltagent/awesome-design-md.git",
+      "path": "upstream/voltagent--awesome-design-md",
+      "commit": "13be5c05c63be24b57581162364167028020f043",
+      "version": "13be5c0",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+      ]
+    }
+  ]
+}
