@@ -980,6 +980,181 @@
       opacity: 1;
     }
 
+    /* ==========================================================================
+       SUBAGENTES (seção de agentes)
+       ========================================================================== */
+    .agents-section {
+      padding: 48px 0 40px 0;
+      border-bottom: 2px solid var(--color-border-dark);
+    }
+
+    .section-kicker {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--color-blaze-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--color-bone-white);
+      margin-bottom: 14px;
+    }
+
+    .section-lead {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--color-off-white);
+      max-width: 860px;
+      margin-bottom: 28px;
+    }
+
+    .section-lead strong {
+      color: var(--color-blaze-yellow);
+    }
+
+    .section-lead code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--color-retro-cyan);
+      padding: 1px 6px;
+    }
+
+    .agent-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .agent-card {
+      background: var(--color-graphite-card);
+      border: 2px solid var(--color-border-dark);
+      padding: 18px;
+      box-shadow: var(--shadow-hard-s);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .agent-card:hover {
+      transform: translate(-3px, -3px);
+      border-color: var(--color-blaze-yellow);
+      box-shadow: 6px 6px 0 var(--color-blaze-yellow);
+    }
+
+    .agent-name {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--color-bone-white);
+      word-break: break-word;
+    }
+
+    .agent-domain {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-retro-cyan);
+    }
+
+    .agent-use {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--color-off-white);
+      flex-grow: 1;
+    }
+
+    .agent-tag {
+      align-self: flex-start;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      padding: 3px 8px;
+      border: 1px solid #000;
+      background: var(--color-blaze-yellow);
+      color: #000;
+    }
+
+    .agent-tag.tag-leitura { background: var(--color-retro-cyan); }
+    .agent-tag.tag-sem-bash { background: var(--color-toxic-green); }
+
+    .agent-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin: 28px 0;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .agent-flow span {
+      background: var(--color-graphite-surface);
+      border: 2px solid var(--color-border-dark);
+      padding: 8px 12px;
+      box-shadow: 3px 3px 0 #000;
+      color: var(--color-bone-white);
+    }
+
+    .agent-flow .arrow {
+      background: none;
+      border: none;
+      box-shadow: none;
+      color: var(--color-blaze-yellow);
+      padding: 0;
+    }
+
+    .agent-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .agent-note {
+      margin-top: 18px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-muted-grey);
+      line-height: 1.7;
+      word-break: break-word;
+    }
+
+    /* ==========================================================================
+       CONTADOR DE ESTRELAS (botão do repositório)
+       ========================================================================== */
+    .gh-stars {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 8px;
+      border: 2px solid var(--color-blaze-yellow);
+      background: #000;
+      color: var(--color-blaze-yellow);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .gh-stars.is-hidden {
+      display: none;
+    }
+
     /* Responsive adjustments */
     @media (max-width: 768px) {
       .skills-grid { grid-template-columns: 1fr; }
@@ -1086,11 +1261,112 @@
           <button class="btn-brutal btn-primary-magenta" onclick="openProjectPlannerModal()">
             <span>🎯</span> PLANEJADOR CUSTOMIZADO POR SELEÇÃO
           </button>
-          <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS" target="_blank" rel="noopener">
+          <a class="btn-brutal btn-outline-white" href="instalacao.html">
+            <span>👥</span> INSTALAR SUBAGENTES
+          </a>
+          <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener">
             <span>↗</span> REPOSITÓRIO GITHUB
+            <span class="gh-stars" data-gh-stars>★ …</span>
           </a>
         </div>
       </div>
+    </section>
+
+    <!-- Subagentes Claude Code -->
+    <section class="agents-section" id="subagentes">
+      <div class="section-kicker">SUBAGENTES • CLAUDE CODE</div>
+      <h2 class="section-title">11 especialistas<br>um por domínio</h2>
+      <p class="section-lead">
+        Além das skills, o hub instala <strong>11 subagentes</strong> para o Claude Code. Cada um recebe as skills do seu domínio e só as
+        ferramentas que o trabalho exige. A conversa principal escolhe o especialista, delega a tarefa e junta a resposta.
+        Subagentes não chamam outros subagentes.
+      </p>
+
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-name">lay-omniroute</div>
+          <div class="agent-domain">routing-and-proxy</div>
+          <div class="agent-use">Roteamento entre modelos, providers, combos, custos e limites de gasto.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-frontend</div>
+          <div class="agent-domain">frontend</div>
+          <div class="agent-use">Telas, componentes, landing pages, layout e animação de interface.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-engenharia</div>
+          <div class="agent-domain">engineering</div>
+          <div class="agent-use">Arquitetura, revisão de código, depuração, migração e performance.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-contexto</div>
+          <div class="agent-domain">context</div>
+          <div class="agent-use">Grafo do projeto, planejamento, levantamento de requisitos e compressão de contexto.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-devops</div>
+          <div class="agent-domain">devops</div>
+          <div class="agent-use">Commits, branches, releases, pipelines de CI/CD e deploy.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-qa</div>
+          <div class="agent-domain">qa</div>
+          <div class="agent-use">Testes, cobertura, falhas de CI e validação antes de merge.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-seguranca</div>
+          <div class="agent-domain">security</div>
+          <div class="agent-use">Vulnerabilidades, auditoria, segredos, autenticação e chaves de API.</div>
+          <span class="agent-tag tag-leitura">Só leitura</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-3d</div>
+          <div class="agent-domain">creative-3d</div>
+          <div class="agent-use">3D, Blender, shaders, fundos animados e efeitos WebGL.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-documentacao</div>
+          <div class="agent-domain">documentation</div>
+          <div class="agent-use">Revisão de texto, registro de decisões (ADR) e prosa para publicação.</div>
+          <span class="agent-tag tag-sem-bash">Sem comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-design</div>
+          <div class="agent-domain">design</div>
+          <div class="agent-use">Identidade visual, moodboard e mockups. Não escreve código de interface: use lay-frontend.</div>
+          <span class="agent-tag tag-sem-bash">Sem comandos</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">lay-banco-de-dados</div>
+          <div class="agent-domain">database</div>
+          <div class="agent-use">Backup, restauração, snapshots e cache de respostas do LLM.</div>
+          <span class="agent-tag">Leitura, edição e comandos</span>
+        </div>
+      </div>
+
+      <div class="agent-flow">
+        <span>1 · Pedido</span><span class="arrow">→</span>
+        <span>2 · Domínio</span><span class="arrow">→</span>
+        <span>3 · HANDOFF</span><span class="arrow">→</span>
+        <span>4 · RESULT</span><span class="arrow">→</span>
+        <span>5 · Resposta</span>
+      </div>
+
+      <div class="agent-actions">
+        <a class="btn-brutal btn-primary-yellow" href="instalacao.html">📘 COMO INSTALAR E USAR</a>
+        <a class="btn-brutal btn-primary-magenta" href="instalacao.html#prompts">📋 PROMPT DE INSTALAÇÃO</a>
+      </div>
+      <p class="agent-note">
+        instalar: python scripts/skill_hub.py install --agents claude<br>
+        projeto: .claude/agents/ (versionado) · global: ~/.claude/agents/ (todos os projetos)
+      </p>
     </section>
 
     <!-- Console Section (Search, Filters, Switchboard) -->
@@ -1192,13 +1468,13 @@
 Você é o agente líder técnico e de engenharia operando com este repositório de habilidades.
 
 ## REPOSITÓRIO NO GITHUB & SINCRONIZAÇÃO DE SKILLS
-- Repositório Central: https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git
+- Repositório Central: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
 - Se as skills e o runtime ainda não estiverem alocados na máquina, sincronize diretamente do repositório:
 
 ```powershell
 # 1. Clonar ou atualizar o repositório central com submódulos
 if (-not (Test-Path "$env:USERPROFILE\.lay-skills-repo")) {
-    git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git "$env:USERPROFILE\.lay-skills-repo"
+    git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\.lay-skills-repo"
 } else {
     git -C "$env:USERPROFILE\.lay-skills-repo" pull --recurse-submodules
 }
@@ -1314,7 +1590,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
         }
       });
 
-      document.getElementById('stat-total-sources').textContent = sourcesMap.size;
+      document.getElementById('stat-total-sources').textContent = window.LAY_SOURCES_COUNT ?? sourcesMap.size;
 
       sourcesMap.forEach((info, key) => {
         const opt = document.createElement('option');
@@ -1597,9 +1873,9 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       let customPrompt = `# PLANO DE PROJETO SOB MEDIDA — REPERTÓRIO LAY®\n`;
       customPrompt += `Você é o agente líder técnico implementando este projeto. Siga rigorosamente as diretrizes da LAY®.\n\n`;
       customPrompt += `## REPOSITÓRIO GITHUB & SINCRONIZAÇÃO DE SKILLS:\n`;
-      customPrompt += `Repositório: https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git\n\n`;
+      customPrompt += `Repositório: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n`;
       customPrompt += `Se as skills não estiverem alocadas na máquina, execute:\n`;
-      customPrompt += `git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git "$env:USERPROFILE\\.lay-skills-repo"\n`;
+      customPrompt += `git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n`;
       customPrompt += `powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n`;
       customPrompt += `## DIAGNÓSTICO DO PROJETO:\n`;
       customPrompt += `python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n`;
@@ -1688,6 +1964,59 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
 
       return html;
     }
+  </script>
+  <script>
+    // Contagem de estrelas do repositório (API pública do GitHub). Cache de 30 min no navegador;
+    // se a API não responder ou o limite do IP estourar, o chip some e o botão continua valendo.
+    (function () {
+      const REPO_API = 'https://api.github.com/repos/Lound-Angry-Young/LAY-Skills-Hub';
+      const CHAVE = 'lay-gh-stars';
+      const VALIDADE_MS = 30 * 60 * 1000;
+      const chips = document.querySelectorAll('[data-gh-stars]');
+      if (!chips.length) return;
+
+      function mostrar(total) {
+        const texto = new Intl.NumberFormat('pt-BR', { notation: 'compact', maximumFractionDigits: 1 }).format(total);
+        chips.forEach((chip) => {
+          chip.textContent = '★ ' + texto;
+          chip.title = total + ' estrelas no GitHub';
+        });
+      }
+
+      function esconder() {
+        chips.forEach((chip) => chip.classList.add('is-hidden'));
+      }
+
+      function lerCache() {
+        try {
+          const guardado = JSON.parse(localStorage.getItem(CHAVE) || 'null');
+          return guardado && Date.now() - guardado.quando < VALIDADE_MS ? guardado.total : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function gravarCache(total) {
+        try {
+          localStorage.setItem(CHAVE, JSON.stringify({ total: total, quando: Date.now() }));
+        } catch (e) {
+          // navegação privada ou armazenamento bloqueado: segue sem cache
+        }
+      }
+
+      const emCache = lerCache();
+      if (emCache !== null) {
+        mostrar(emCache);
+        return;
+      }
+      fetch(REPO_API)
+        .then((resposta) => (resposta.ok ? resposta.json() : Promise.reject(resposta.status)))
+        .then((dados) => {
+          mostrar(dados.stargazers_count);
+          gravarCache(dados.stargazers_count);
+        })
+        .catch(esconder);
+    })();
   </script>
 </body>
 </html>

@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAY® SKILLS HUB — Instalar Subagentes</title>
+  <meta name="description" content="Como instalar, conferir, chamar e atualizar os 11 subagentes LAY no Claude Code, com prompts prontos para copiar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS (mesmos de index.html)
+       ========================================================================== */
+    :root {
+      --color-blaze-yellow: #fff201;
+      --color-absolute-magenta: #ff3eb5;
+      --color-blood-red: #c21818;
+      --color-toxic-green: #77b82a;
+      --color-retro-cyan: #00ffff;
+      --color-dark-purple: #1f0e3e;
+      --color-rich-black: #060709;
+      --color-graphite-surface: #101218;
+      --color-graphite-card: #151821;
+      --color-graphite-hover: #1c202d;
+      --color-bone-white: #faf5e9;
+      --color-off-white: #dcd6c8;
+      --color-muted-grey: #697386;
+      --color-border-dark: #232734;
+      --color-border-light: rgba(250, 245, 233, 0.2);
+
+      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      --shadow-hard-s: 3px 3px 0px #000000;
+      --shadow-hard-m: 5px 5px 0px #000000;
+      --shadow-hard-l: 8px 8px 0px #000000;
+      --shadow-yellow: 5px 5px 0px var(--color-blaze-yellow);
+      --shadow-magenta: 5px 5px 0px var(--color-absolute-magenta);
+      --shadow-cyan: 5px 5px 0px var(--color-retro-cyan);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    ::selection {
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: var(--color-rich-black);
+      color: var(--color-bone-white);
+      font-family: var(--font-display);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-color: var(--color-rich-black);
+      background-image:
+        radial-gradient(rgba(255, 242, 1, 0.04) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(16, 18, 24, 0.8), rgba(6, 7, 9, 0.98));
+      background-size: 28px 28px, 100% 100%;
+      background-attachment: fixed;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .bg-binary-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: url('hub/assets/lay/Binary Pattern.png');
+      background-repeat: repeat;
+      background-size: 320px;
+      opacity: 0.035;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    a { color: var(--color-retro-cyan); }
+
+    .container {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 16px 100px 16px;
+    }
+
+    code, pre, .mono {
+      font-family: var(--font-mono);
+    }
+
+    /* ==========================================================================
+       TICKER
+       ========================================================================== */
+    .ticker-wrapper {
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      overflow: hidden;
+      white-space: nowrap;
+      border-bottom: 2px solid #000;
+      padding: 6px 0;
+      display: flex;
+      user-select: none;
+    }
+
+    .ticker-content {
+      display: inline-block;
+      animation: ticker 32s linear infinite;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      display: inline-block;
+      padding: 0 20px;
+    }
+
+    .ticker-item span {
+      background: var(--color-rich-black);
+      color: var(--color-blaze-yellow);
+      padding: 1px 6px;
+      margin-right: 6px;
+    }
+
+    /* ==========================================================================
+       HEADER
+       ========================================================================== */
+    .main-header {
+      padding: 24px 0 20px 0;
+      border-bottom: 2px solid var(--color-border-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand-block {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .lay-logo-img {
+      height: 44px;
+      width: 44px;
+      object-fit: contain;
+      filter: drop-shadow(2px 2px 0px var(--color-blaze-yellow));
+    }
+
+    .brand-title {
+      font-size: 22px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--color-bone-white);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .brand-title .badge-reg {
+      color: var(--color-blaze-yellow);
+      font-size: 14px;
+    }
+
+    .brand-subtitle {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-muted-grey);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .seal-wrap {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lay-seal-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(2px 2px 0 #000);
+    }
+
+    /* ==========================================================================
+       BUTTONS (mesmos de index.html)
+       ========================================================================== */
+    .btn-brutal {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 13px 24px;
+      border: 2px solid #000;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: var(--shadow-hard-m);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+      user-select: none;
+    }
+
+    .btn-brutal:hover {
+      transform: translate(-3px, -3px);
+    }
+
+    .btn-brutal:active {
+      transform: translate(1px, 1px);
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .btn-primary-yellow {
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+    }
+    .btn-primary-yellow:hover {
+      box-shadow: 7px 7px 0 var(--color-absolute-magenta);
+    }
+
+    .btn-primary-magenta {
+      background: var(--color-absolute-magenta);
+      color: var(--color-bone-white);
+    }
+    .btn-primary-magenta:hover {
+      box-shadow: 7px 7px 0 var(--color-blaze-yellow);
+    }
+
+    .btn-outline-white {
+      background: var(--color-graphite-surface);
+      color: var(--color-bone-white);
+      border: 2px solid var(--color-bone-white);
+    }
+    .btn-outline-white:hover {
+      background: var(--color-bone-white);
+      color: var(--color-rich-black);
+      box-shadow: 7px 7px 0 var(--color-retro-cyan);
+    }
+
+    .btn-small {
+      font-size: 11px;
+      padding: 8px 14px;
+      box-shadow: var(--shadow-hard-s);
+    }
+
+    /* ==========================================================================
+       HERO
+       ========================================================================== */
+    .hero-section {
+      padding: 48px 0 36px 0;
+      border-bottom: 2px solid var(--color-border-dark);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--color-rich-black);
+      border: 2px solid var(--color-blaze-yellow);
+      color: var(--color-blaze-yellow);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 12px;
+      box-shadow: 3px 3px 0 var(--color-blaze-yellow);
+      margin-bottom: 20px;
+      transform: rotate(-1deg);
+    }
+
+    .hero-heading {
+      font-size: clamp(38px, 4.5vw, 68px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.95;
+      letter-spacing: -0.04em;
+      color: var(--color-bone-white);
+      margin-bottom: 20px;
+    }
+
+    .highlight-yellow {
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+      padding: 0 8px;
+      display: inline-block;
+      transform: rotate(0.8deg);
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .highlight-magenta {
+      background: var(--color-absolute-magenta);
+      color: var(--color-bone-white);
+      padding: 0 8px;
+      display: inline-block;
+      transform: rotate(-1deg);
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .hero-description {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--color-off-white);
+      max-width: 860px;
+      margin-bottom: 32px;
+    }
+
+    .hero-description strong {
+      color: var(--color-blaze-yellow);
+      font-weight: 700;
+    }
+
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+
+    .stat-box {
+      background: var(--color-graphite-surface);
+      border: 2px solid var(--color-border-dark);
+      padding: 18px 20px;
+      box-shadow: var(--shadow-hard-m);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .stat-box:hover {
+      transform: translate(-3px, -3px);
+      border-color: var(--color-blaze-yellow);
+      box-shadow: 6px 6px 0 var(--color-blaze-yellow);
+    }
+
+    .stat-box-val {
+      font-size: 38px;
+      font-weight: 900;
+      color: var(--color-bone-white);
+      line-height: 1;
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+    }
+
+    .stat-box-val .accent-char {
+      color: var(--color-blaze-yellow);
+      font-size: 24px;
+    }
+
+    .stat-box-lbl {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--color-muted-grey);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-top: 6px;
+    }
+
+    .hero-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    /* ==========================================================================
+       SECTIONS
+       ========================================================================== */
+    .guide-section {
+      padding: 48px 0;
+      border-bottom: 2px solid var(--color-border-dark);
+    }
+
+    .section-kicker {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--color-blaze-yellow);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 3.2vw, 44px);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: var(--color-bone-white);
+      margin-bottom: 14px;
+    }
+
+    .section-lead {
+      font-size: 15px;
+      color: var(--color-off-white);
+      max-width: 820px;
+      margin-bottom: 28px;
+    }
+
+    .section-lead code,
+    .card-text code,
+    td code,
+    li code {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--color-retro-cyan);
+      padding: 1px 6px;
+      font-size: 0.92em;
+    }
+
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--color-graphite-card);
+      border: 2px solid var(--color-border-dark);
+      padding: 22px;
+      box-shadow: var(--shadow-hard-m);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translate(-3px, -3px);
+      border-color: var(--color-blaze-yellow);
+      box-shadow: 7px 7px 0 var(--color-blaze-yellow);
+    }
+
+    .card-num {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+      padding: 2px 8px;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: var(--color-bone-white);
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: var(--color-off-white);
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    .card-text + .card-text {
+      margin-top: 8px;
+    }
+
+    .card-text strong {
+      color: var(--color-blaze-yellow);
+    }
+
+    .card-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* ==========================================================================
+       CODE / PROMPT BLOCKS
+       ========================================================================== */
+    .code-block {
+      background: #000;
+      border: 2px solid var(--color-border-dark);
+      box-shadow: var(--shadow-hard-s);
+      margin-top: 14px;
+      min-width: 0;
+    }
+
+    .code-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--color-border-dark);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-muted-grey);
+    }
+
+    .copy-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+      border: 2px solid #000;
+      padding: 5px 12px;
+      cursor: pointer;
+      box-shadow: 2px 2px 0 #000;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+      flex: 0 0 auto;
+    }
+
+    .copy-btn:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--color-absolute-magenta);
+    }
+
+    .code-block pre {
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--color-blaze-yellow);
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    .code-block.prompt pre {
+      color: var(--color-bone-white);
+      font-size: 13px;
+    }
+
+    .note {
+      margin-top: 14px;
+      padding: 12px 16px;
+      background: var(--color-graphite-surface);
+      border-left: 4px solid var(--color-absolute-magenta);
+      font-size: 14px;
+      color: var(--color-off-white);
+    }
+
+    .note strong {
+      color: var(--color-bone-white);
+    }
+
+    /* ==========================================================================
+       MODES (automático / explícito)
+       ========================================================================== */
+    .mode-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border: 1px solid #000;
+      margin-bottom: 10px;
+    }
+
+    .mode-auto { background: var(--color-toxic-green); color: #000; }
+    .mode-explicit { background: var(--color-retro-cyan); color: #000; }
+
+    /* ==========================================================================
+       ORQUESTRAÇÃO (fluxo)
+       ========================================================================== */
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .flow-step {
+      background: var(--color-graphite-surface);
+      border: 2px solid var(--color-border-dark);
+      box-shadow: var(--shadow-hard-s);
+      padding: 16px;
+    }
+
+    .flow-step:nth-child(1) { border-top: 4px solid var(--color-blaze-yellow); }
+    .flow-step:nth-child(2) { border-top: 4px solid var(--color-absolute-magenta); }
+    .flow-step:nth-child(3) { border-top: 4px solid var(--color-retro-cyan); }
+    .flow-step:nth-child(4) { border-top: 4px solid var(--color-toxic-green); }
+    .flow-step:nth-child(5) { border-top: 4px solid var(--color-bone-white); }
+
+    .flow-step-name {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: var(--color-bone-white);
+      margin-bottom: 6px;
+    }
+
+    .flow-step-text {
+      font-size: 13px;
+      color: var(--color-off-white);
+      line-height: 1.5;
+    }
+
+    .rules-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      max-width: 900px;
+    }
+
+    .rules-list li {
+      font-size: 14px;
+      color: var(--color-off-white);
+      padding-left: 26px;
+      position: relative;
+    }
+
+    .rules-list li::before {
+      content: '■';
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: var(--color-blaze-yellow);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+
+    /* ==========================================================================
+       TABELA
+       ========================================================================== */
+    .table-wrap {
+      overflow-x: auto;
+      border: 2px solid var(--color-border-dark);
+      box-shadow: var(--shadow-hard-m);
+      background: var(--color-graphite-surface);
+    }
+
+    table.agent-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 720px;
+    }
+
+    .agent-table th,
+    .agent-table td {
+      text-align: left;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--color-border-dark);
+      vertical-align: top;
+    }
+
+    .agent-table th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-rich-black);
+      background: var(--color-blaze-yellow);
+    }
+
+    .agent-table tbody tr:hover {
+      background: var(--color-graphite-hover);
+    }
+
+    .agent-table td {
+      color: var(--color-off-white);
+    }
+
+    .agent-table td:first-child {
+      font-family: var(--font-mono);
+      font-weight: 800;
+      color: var(--color-bone-white);
+      white-space: nowrap;
+    }
+
+    .agent-table td.tools {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--color-muted-grey);
+    }
+
+    /* ==========================================================================
+       PROBLEMAS COMUNS
+       ========================================================================== */
+    .problem-table td:first-child {
+      color: var(--color-absolute-magenta);
+      font-weight: 800;
+    }
+
+    .problem-table td {
+      font-size: 14px;
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    .site-footer {
+      padding-top: 32px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--color-muted-grey);
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    /* ==========================================================================
+       TOAST
+       ========================================================================== */
+    .gh-stars {
+      display: inline-block;
+      margin-left: 6px;
+      padding: 2px 8px;
+      border: 2px solid var(--color-blaze-yellow);
+      background: #000;
+      color: var(--color-blaze-yellow);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .gh-stars.is-hidden {
+      display: none;
+    }
+
+    .brutal-toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--color-blaze-yellow);
+      color: var(--color-rich-black);
+      border: 2px solid #000;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 14px 20px;
+      box-shadow: 5px 5px 0 #000;
+      z-index: 200;
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .brutal-toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ==========================================================================
+       RESPONSIVO
+       ========================================================================== */
+    @media (max-width: 768px) {
+      .hero-section { padding: 32px 0 28px 0; }
+      .guide-section { padding: 36px 0; }
+      .hero-actions-row .btn-brutal { width: 100%; justify-content: center; }
+      .brand-title { font-size: 18px; }
+      .header-right .seal-wrap { display: none; }
+      .flow-step:nth-child(n) { border-top-width: 4px; }
+      .site-footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-binary-overlay"></div>
+
+  <!-- Ticker -->
+  <div class="ticker-wrapper">
+    <div class="ticker-content">
+      <div class="ticker-item"><span>LAY® HUB</span> 11 SUBAGENTES • 1 POR DOMÍNIO</div>
+      <div class="ticker-item"><span>INSTALAR</span> python scripts/skill_hub.py install --agents claude</div>
+      <div class="ticker-item"><span>ESCOPO</span> GLOBAL EM ~/.claude/agents • PROJETO EM .claude/agents</div>
+      <div class="ticker-item"><span>ORQUESTRAÇÃO</span> PEDIDO → DOMÍNIO → SUBAGENTE → RESULT</div>
+      <div class="ticker-item"><span>LAY® HUB</span> 11 SUBAGENTES • 1 POR DOMÍNIO</div>
+      <div class="ticker-item"><span>INSTALAR</span> python scripts/skill_hub.py install --agents claude</div>
+      <div class="ticker-item"><span>ESCOPO</span> GLOBAL EM ~/.claude/agents • PROJETO EM .claude/agents</div>
+      <div class="ticker-item"><span>ORQUESTRAÇÃO</span> PEDIDO → DOMÍNIO → SUBAGENTE → RESULT</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="main-header">
+      <div class="brand-block">
+        <img src="hub/assets/lay/Somente as caveiras/Caveira-01.svg" alt="LAY®" class="lay-logo-img">
+        <div>
+          <div class="brand-title">SKILLS HUB <span class="badge-reg">®</span></div>
+          <div class="brand-subtitle">INSTALAÇÃO DOS SUBAGENTES</div>
+        </div>
+      </div>
+      <div class="header-right">
+        <a class="btn-brutal btn-outline-white btn-small" href="index.html">← CATÁLOGO</a>
+        <div class="seal-wrap" title="Selo Pernambuco para o Mundo">
+          <img src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Oficial" class="lay-seal-img">
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero-section">
+      <div class="hero-eyebrow"><span>⚡</span> CLAUDE CODE • SUBAGENTES • ENGENHARIA DE ELITE</div>
+
+      <h1 class="hero-heading">
+        SUBAGENTES LAY <br>
+        <span class="highlight-yellow">UM POR DOMÍNIO</span> <br>
+        <span class="highlight-magenta">INSTALE EM 3 PASSOS</span>
+      </h1>
+
+      <p class="hero-description">
+        Cada subagente é um especialista que conhece as skills do seu domínio. O Claude Code escolhe o subagente
+        pelo pedido, ou você chama <strong>pelo nome</strong>. Abaixo: instalação, conferência, uso, orquestração,
+        atualização e prompts prontos para copiar.
+      </p>
+
+      <div class="stats-strip">
+        <div class="stat-box">
+          <div class="stat-box-val">11 <span class="accent-char">/</span></div>
+          <div class="stat-box-lbl">Subagentes</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-val">11 <span class="accent-char">#</span></div>
+          <div class="stat-box-lbl">Domínios</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-val">132 <span class="accent-char">§</span></div>
+          <div class="stat-box-lbl">Skills públicas</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-box-val">2 <span class="accent-char">✓</span></div>
+          <div class="stat-box-lbl">Escopos (projeto e global)</div>
+        </div>
+      </div>
+
+      <div class="hero-actions-row">
+        <a class="btn-brutal btn-primary-yellow" href="#prompts">📋 PROMPTS PARA COPIAR</a>
+        <a class="btn-brutal btn-primary-magenta" href="#subagentes">👥 VER OS 11 SUBAGENTES</a>
+        <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener">↗ REPOSITÓRIO GITHUB <span class="gh-stars" data-gh-stars>★ …</span></a>
+      </div>
+    </section>
+
+    <main>
+      <!-- 01 Pré-requisitos -->
+      <section class="guide-section" id="requisitos">
+        <div class="section-kicker">01 · PRÉ-REQUISITOS</div>
+        <h2 class="section-title">O que você precisa</h2>
+        <p class="section-lead">Três coisas. Nada é instalado via pip: o instalador usa só a biblioteca padrão do Python.</p>
+        <div class="grid-cards">
+          <div class="card">
+            <div class="card-num">REQ 01</div>
+            <div class="card-title">Git</div>
+            <p class="card-text">Para clonar o repositório com as fontes fixadas (submódulos).</p>
+          </div>
+          <div class="card">
+            <div class="card-num">REQ 02</div>
+            <div class="card-title">Python 3.10+</div>
+            <p class="card-text">Use <code>python</code>. No Windows, se não funcionar, use <code>py -3</code>.</p>
+          </div>
+          <div class="card">
+            <div class="card-num">REQ 03</div>
+            <div class="card-title">Claude Code</div>
+            <p class="card-text">CLI no terminal ou app desktop. Os subagentes aparecem nas sessões novas.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 Instalar -->
+      <section class="guide-section" id="instalar">
+        <div class="section-kicker">02 · INSTALAR</div>
+        <h2 class="section-title">Três comandos</h2>
+        <p class="section-lead">Execute no terminal, dentro da pasta do repositório clonado.</p>
+
+        <div class="card-stack">
+          <div class="card">
+            <div class="card-num">PASSO 01</div>
+            <div class="card-title">Clonar com submódulos</div>
+            <p class="card-text">Faça uma vez. Se já clonou sem submódulos, rode <code>git submodule update --init --recursive</code>.</p>
+            <div class="code-block">
+              <div class="code-head">
+                <span>bash · pasta de sua escolha</span>
+                <button class="copy-btn" data-copy="cmd-clone">COPIAR</button>
+              </div>
+              <pre id="cmd-clone">git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
+cd LAY-Skills-Hub</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-num">PASSO 02</div>
+            <div class="card-title">Instalar os subagentes</div>
+            <p class="card-text">Instala os 11 arquivos <code>lay-*.md</code> em <code>~/.claude/agents/</code> e grava o índice de roteamento no <code>~/.claude/CLAUDE.md</code>, entre os marcadores <code>LAY-SKILLS</code>.</p>
+            <p class="card-text">Quer também Codex e Antigravity? Troque <code>claude</code> por <code>all</code>.</p>
+            <div class="code-block">
+              <div class="code-head">
+                <span>bash · dentro do repositório</span>
+                <button class="copy-btn" data-copy="cmd-install">COPIAR</button>
+              </div>
+              <pre id="cmd-install">python scripts/skill_hub.py install --agents claude</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-num">PASSO 03</div>
+            <div class="card-title">Conferir</div>
+            <p class="card-text">O <code>doctor</code> confere a instalação e termina com a contagem de entradas verificadas e <strong>0 problemas</strong>. Depois, em uma sessão do Claude Code, rode <code>/agents</code>: os <code>lay-*</code> aparecem na lista.</p>
+            <div class="code-block">
+              <div class="code-head">
+                <span>bash · dentro do repositório</span>
+                <button class="copy-btn" data-copy="cmd-doctor">COPIAR</button>
+              </div>
+              <pre id="cmd-doctor">python scripts/skill_hub.py doctor</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Escopos.</strong> O global (passo 02) vale em todos os seus projetos.
+          Os mesmos 11 arquivos ficam versionados em <code>.claude/agents/</code> deste repositório e valem quando o Claude Code abre este repositório.
+          Quando os dois existem, o do projeto prevalece.
+        </div>
+      </section>
+
+      <!-- 03 Chamar -->
+      <section class="guide-section" id="chamar">
+        <div class="section-kicker">03 · COMO CHAMAR</div>
+        <h2 class="section-title">Automático ou pelo nome</h2>
+        <p class="section-lead">Você não precisa decorar nada. Escreva o pedido normalmente, ou nomeie o especialista.</p>
+
+        <div class="grid-cards">
+          <div class="card">
+            <span class="mode-tag mode-auto">Automático</span>
+            <div class="card-title">O Claude escolhe</div>
+            <p class="card-text">Ele compara seu pedido com a <code>description</code> de cada subagente, que traz os gatilhos <strong>Use quando</strong> e <strong>Não use para</strong>.</p>
+            <p class="card-text">Exemplo: <em>"revise a segurança do login"</em> aciona <code>lay-seguranca</code>.</p>
+          </div>
+          <div class="card">
+            <span class="mode-tag mode-explicit">Explícito</span>
+            <div class="card-title">Você nomeia</div>
+            <p class="card-text">Quando quiser certeza do especialista, peça pelo nome:</p>
+            <p class="card-text"><code>use o subagente lay-qa para cobrir o fluxo de checkout com testes</code></p>
+          </div>
+        </div>
+
+        <div class="note">
+          <strong>Subagente novo não aparece?</strong> Reinicie a sessão. Os perfis são carregados no início da sessão.
+        </div>
+      </section>
+
+      <!-- 04 Subagentes -->
+      <section class="guide-section" id="subagentes">
+        <div class="section-kicker">04 · OS 11 SUBAGENTES</div>
+        <h2 class="section-title">Um por domínio</h2>
+        <p class="section-lead">Cada um só recebe as ferramentas do seu trabalho. <code>lay-seguranca</code> só lê e analisa; não edita arquivos. <code>lay-design</code> não escreve código de interface: para isso, use <code>lay-frontend</code>.</p>
+
+        <div class="table-wrap">
+          <table class="agent-table">
+            <thead>
+              <tr>
+                <th>Subagente</th>
+                <th>Domínio</th>
+                <th>Use quando</th>
+                <th>Ferramentas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>lay-omniroute</td>
+                <td>routing-and-proxy</td>
+                <td>roteamento entre modelos, providers, combos, custos e limites de gasto</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-frontend</td>
+                <td>frontend</td>
+                <td>telas, componentes, landing pages, layout e animação de interface</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-engenharia</td>
+                <td>engineering</td>
+                <td>arquitetura, revisão de código, depuração, migração e performance</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-contexto</td>
+                <td>context</td>
+                <td>entender o projeto por grafo, planejar tarefas, levantar requisitos, economizar contexto</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-devops</td>
+                <td>devops</td>
+                <td>commits, branches, releases, pipelines de CI/CD e deploy</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-qa</td>
+                <td>qa</td>
+                <td>testes, cobertura, falhas de CI e validação antes de merge</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-seguranca</td>
+                <td>security</td>
+                <td>vulnerabilidades, auditoria, segredos, autenticação e chaves de API (só lê)</td>
+                <td class="tools">Read, Grep, Glob, Bash</td>
+              </tr>
+              <tr>
+                <td>lay-3d</td>
+                <td>creative-3d</td>
+                <td>3D, Blender, shaders, fundos animados e efeitos WebGL</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-documentacao</td>
+                <td>documentation</td>
+                <td>revisar texto, registrar decisões (ADR) e limpar prosa para publicação</td>
+                <td class="tools">Read, Grep, Glob, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-design</td>
+                <td>design</td>
+                <td>identidade visual, moodboard, mockups e referências antes de implementar</td>
+                <td class="tools">Read, Grep, Glob, Edit, Write</td>
+              </tr>
+              <tr>
+                <td>lay-banco-de-dados</td>
+                <td>database</td>
+                <td>backup, restauração, snapshots e cache de respostas do LLM</td>
+                <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- 05 Orquestração -->
+      <section class="guide-section" id="orquestracao">
+        <div class="section-kicker">05 · ORQUESTRAÇÃO</div>
+        <h2 class="section-title">Quem decide é a conversa</h2>
+        <p class="section-lead">A conversa principal escolhe o domínio, delega e junta as respostas. Subagentes não chamam outros subagentes.</p>
+
+        <div class="flow">
+          <div class="flow-step">
+            <div class="flow-step-name">1 · Pedido</div>
+            <div class="flow-step-text">Você descreve o que quer.</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-name">2 · Domínio</div>
+            <div class="flow-step-text">A conversa escolhe <strong>um</strong> domínio primário.</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-name">3 · HANDOFF</div>
+            <div class="flow-step-text">Delega com <code>task</code>, <code>domain</code>, <code>context</code>, <code>constraints</code> e <code>acceptance_criteria</code>.</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-name">4 · RESULT</div>
+            <div class="flow-step-text">O subagente devolve <code>status</code>, <code>artifacts</code>, <code>summary</code> e <code>open_items</code>.</div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-step-name">5 · Resposta</div>
+            <div class="flow-step-text">A conversa responde em português direto.</div>
+          </div>
+        </div>
+
+        <ul class="rules-list">
+          <li>Um domínio primário por pedido. Domínios independentes rodam em paralelo, em lotes de até 5.</li>
+          <li>Pedido ambíguo: no máximo uma pergunta de clarificação.</li>
+          <li>Nenhum domínio cobre o pedido: a resposta diz isso e sugere criar uma skill.</li>
+          <li>Ações externas ou irreversíveis (enviar, publicar, apagar) só com confirmação explícita.</li>
+        </ul>
+      </section>
+
+      <!-- 06 Prompts -->
+      <section class="guide-section" id="prompts">
+        <div class="section-kicker">06 · PROMPTS PARA COPIAR</div>
+        <h2 class="section-title">Cole no Claude Code</h2>
+        <p class="section-lead">Copie o bloco, cole na sessão do Claude Code e envie. Eles não dependem de nenhum dado pessoal.</p>
+
+        <div class="card-stack">
+          <div class="card">
+            <div class="card-num">PROMPT A</div>
+            <div class="card-title">Instalar os subagentes</div>
+            <p class="card-text">Use em um computador novo, com o Claude Code aberto na pasta onde quer o clone.</p>
+            <div class="code-block prompt">
+              <div class="code-head">
+                <span>prompt · instalação</span>
+                <button class="copy-btn" data-copy="prompt-instalar">COPIAR</button>
+              </div>
+              <pre id="prompt-instalar">Instale os subagentes LAY deste computador. Siga estes passos e pare se algum falhar:
+
+1. Se o repositório ainda não existir aqui, clone com submódulos:
+   git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
+   Entre na pasta criada.
+2. Rode: python scripts/skill_hub.py install --agents claude
+3. Rode: python scripts/skill_hub.py doctor e me mostre o resultado.
+4. Confirme que a pasta ~/.claude/agents tem 11 arquivos lay-*.md.
+5. Não rode sync --apply, reset nem nenhum comando que altere o repositório sem me perguntar antes.
+6. Ao final, diga se preciso reiniciar a sessão para os subagentes aparecerem.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-num">PROMPT B</div>
+            <div class="card-title">Atualizar com confirmação</div>
+            <p class="card-text">Consulta primeiro. Só aplica depois que você disser sim.</p>
+            <div class="code-block prompt">
+              <div class="code-head">
+                <span>prompt · atualização</span>
+                <button class="copy-btn" data-copy="prompt-atualizar">COPIAR</button>
+              </div>
+              <pre id="prompt-atualizar">Atualize os subagentes LAY deste computador, sem alterar nada sem minha confirmação:
+
+1. Entre na pasta do clone do LAY-Skills-Hub.
+2. Rode: python scripts/skill_hub.py sync --check e me mostre o que mudou.
+3. Só se eu confirmar, rode: python scripts/skill_hub.py sync --apply
+4. Depois rode: python scripts/skill_hub.py install --agents all e python scripts/skill_hub.py doctor.
+5. Diga se preciso reiniciar a sessão.</pre>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-num">PROMPT C</div>
+            <div class="card-title">Pedir com orquestração</div>
+            <p class="card-text">Substitua o último campo pelo seu pedido. Serve para qualquer projeto com os subagentes instalados.</p>
+            <div class="code-block prompt">
+              <div class="code-head">
+                <span>prompt · uso</span>
+                <button class="copy-btn" data-copy="prompt-orquestrar">COPIAR</button>
+              </div>
+              <pre id="prompt-orquestrar">Use os subagentes LAY para este pedido e siga a orquestração:
+- Escolha um domínio primário e delegue ao subagente correspondente (lay-frontend, lay-qa, lay-seguranca etc.).
+- Subagentes não chamam outros subagentes: você coordena e junta as respostas.
+- Se o pedido for ambíguo, faça no máximo uma pergunta.
+- Antes de qualquer ação externa ou irreversível (enviar, publicar, apagar), peça minha confirmação.
+
+Pedido: [descreva aqui]</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 07 Atualizar e remover -->
+      <section class="guide-section" id="atualizar">
+        <div class="section-kicker">07 · ATUALIZAR E REMOVER</div>
+        <h2 class="section-title">Sem surpresas</h2>
+        <p class="section-lead">A abertura de sessão só consulta. Aplicar é sempre um comando seu.</p>
+
+        <div class="grid-cards">
+          <div class="card">
+            <div class="card-num">ATUALIZAR</div>
+            <div class="card-title">Consultar, aplicar, reinstalar</div>
+            <p class="card-text">Consulta: <code>sync --check</code>. Aplica: <code>sync --apply</code>, que só faz fast-forward limpo e preserva suas alterações. Depois, <code>install --agents all</code>.</p>
+            <div class="code-block">
+              <div class="code-head">
+                <span>bash · dentro do repositório</span>
+                <button class="copy-btn" data-copy="cmd-atualizar">COPIAR</button>
+              </div>
+              <pre id="cmd-atualizar">python scripts/skill_hub.py sync --check
+python scripts/skill_hub.py sync --apply
+python scripts/skill_hub.py install --agents all</pre>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-num">REMOVER</div>
+            <div class="card-title">Desinstalar</div>
+            <p class="card-text">Remove os subagentes <code>lay-*</code> que você não editou à mão. Arquivos seus, com outro nome, ficam.</p>
+            <div class="code-block">
+              <div class="code-head">
+                <span>bash · dentro do repositório</span>
+                <button class="copy-btn" data-copy="cmd-remover">COPIAR</button>
+              </div>
+              <pre id="cmd-remover">python scripts/skill_hub.py uninstall</pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 08 Problemas -->
+      <section class="guide-section" id="problemas">
+        <div class="section-kicker">08 · PROBLEMAS COMUNS</div>
+        <h2 class="section-title">Se algo falhar</h2>
+        <p class="section-lead">A instalação para quando encontra algo que não pode sobrescrever. Nada é apagado por engano.</p>
+
+        <div class="table-wrap">
+          <table class="agent-table problem-table">
+            <thead>
+              <tr>
+                <th>Sintoma</th>
+                <th>Causa provável</th>
+                <th>O que fazer</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Subagente não aparece</td>
+                <td>A sessão foi aberta antes da instalação.</td>
+                <td>Reinicie a sessão do Claude Code e rode <code>doctor</code>.</td>
+              </tr>
+              <tr>
+                <td>Mensagem com "Colisão"</td>
+                <td>Já existe um <code>lay-*.md</code> que não é do instalador.</td>
+                <td>Renomeie ou remova o seu arquivo e rode a instalação de novo. O arquivo existente é preservado até lá.</td>
+              </tr>
+              <tr>
+                <td>Mensagem com "modificado"</td>
+                <td>Você editou um <code>lay-*.md</code> à mão.</td>
+                <td>Guarde sua edição com outro nome, remova o arquivo e reinstale.</td>
+              </tr>
+              <tr>
+                <td>Mensagem com "Fonte modificada"</td>
+                <td>Há alteração rastreada no clone de uma fonte.</td>
+                <td>Rode <code>git status</code> no clone e resolva antes de instalar.</td>
+              </tr>
+              <tr>
+                <td><code>python</code> não encontrado</td>
+                <td>Python ausente ou fora do PATH.</td>
+                <td>Instale o Python 3.10+. No Windows, use <code>py -3</code>.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div>LAY® SKILLS HUB · repositório público · instalar não exige credenciais</div>
+      <div><a href="index.html">← voltar ao catálogo</a></div>
+    </footer>
+  </div>
+
+  <div class="brutal-toast" id="toast" role="status" aria-live="polite">COPIADO</div>
+
+  <script>
+    function mostrarToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(mostrarToast.timer);
+      mostrarToast.timer = setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    async function copiarTexto(texto) {
+      try {
+        await navigator.clipboard.writeText(texto);
+        return true;
+      } catch (e) {
+        const area = document.createElement('textarea');
+        area.value = texto;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        let ok = false;
+        try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
+        area.remove();
+        return ok;
+      }
+    }
+
+    document.querySelectorAll('[data-copy]').forEach((botao) => {
+      botao.addEventListener('click', async () => {
+        const alvo = document.getElementById(botao.dataset.copy);
+        if (!alvo) return;
+        const ok = await copiarTexto(alvo.innerText);
+        mostrarToast(ok ? 'COPIADO' : 'NÃO FOI POSSÍVEL COPIAR');
+      });
+    });
+  </script>
+  <script>
+    // Contagem de estrelas do repositório (API pública do GitHub). Cache de 30 min no navegador;
+    // se a API não responder ou o limite do IP estourar, o chip some e o botão continua valendo.
+    (function () {
+      const REPO_API = 'https://api.github.com/repos/Lound-Angry-Young/LAY-Skills-Hub';
+      const CHAVE = 'lay-gh-stars';
+      const VALIDADE_MS = 30 * 60 * 1000;
+      const chips = document.querySelectorAll('[data-gh-stars]');
+      if (!chips.length) return;
+
+      function mostrar(total) {
+        const texto = new Intl.NumberFormat('pt-BR', { notation: 'compact', maximumFractionDigits: 1 }).format(total);
+        chips.forEach((chip) => {
+          chip.textContent = '★ ' + texto;
+          chip.title = total + ' estrelas no GitHub';
+        });
+      }
+
+      function esconder() {
+        chips.forEach((chip) => chip.classList.add('is-hidden'));
+      }
+
+      function lerCache() {
+        try {
+          const guardado = JSON.parse(localStorage.getItem(CHAVE) || 'null');
+          return guardado && Date.now() - guardado.quando < VALIDADE_MS ? guardado.total : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function gravarCache(total) {
+        try {
+          localStorage.setItem(CHAVE, JSON.stringify({ total: total, quando: Date.now() }));
+        } catch (e) {
+          // navegação privada ou armazenamento bloqueado: segue sem cache
+        }
+      }
+
+      const emCache = lerCache();
+      if (emCache !== null) {
+        mostrar(emCache);
+        return;
+      }
+      fetch(REPO_API)
+        .then((resposta) => (resposta.ok ? resposta.json() : Promise.reject(resposta.status)))
+        .then((dados) => {
+          mostrar(dados.stargazers_count);
+          gravarCache(dados.stargazers_count);
+        })
+        .catch(esconder);
+    })();
+  </script>
+</body>
+</html>
