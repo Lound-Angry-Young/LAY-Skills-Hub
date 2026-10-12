@@ -1,0 +1,2007 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "id": "lay-architecting-generative-ai-apps",
+      "name": "architecting-generative-ai-apps",
+      "description": "Researches implementation patterns for a generative-AI feature by comparing a relevant open-source example: architecture, provider boundaries, costs and tests before adapting any code. Use this skill when: a project needs a generative-AI feature and an existing open-source implementation may serve as reference. Do NOT use this skill when: the project has no generative-AI feature or the work is limited to one provider's API usage with no architecture decision.",
+      "source": "local",
+      "path": "refactored_skills/context/architecting-generative-ai-apps/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "pesquisa"
+      ],
+      "version": "refactored",
+      "commit": "content-0ad30ecba234",
+      "sha256": "0ad30ecba2349e6684bd967078067cc033a7687becc6867e73df33104ab04da6",
+      "url": ""
+    },
+    {
+      "id": "lay-breaking-down-task-plans",
+      "name": "breaking-down-task-plans",
+      "description": "Breaks a spec or clear requirements into ordered, implementable tasks, estimating scope and identifying work that can run in parallel when a task is too large to start. Use this skill when: a spec exists and the work must be split into tasks, a task feels too large to start or parallel work is possible. Do NOT use this skill when: the requirements are still unclear (use interviewing-user-requirements or authoring-specifications-first).",
+      "source": "local",
+      "path": "refactored_skills/context/breaking-down-task-plans/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-15cc4494f411",
+      "sha256": "15cc4494f411b3f6156605f226bcfd48cdef6ef8d4d3c1e8b588549765542aff",
+      "url": ""
+    },
+    {
+      "id": "lay-compressing-agent-messages",
+      "name": "compressing-agent-messages",
+      "description": "Ultra-compressed communication mode that cuts output tokens while keeping technical accuracy, with lite, full, ultra and wenyan levels. Use this skill when: asked for caveman mode, to be brief, or to use fewer tokens. Do NOT use this skill when: the user needs full explanations or long-form prose (use polishing-user-facing-prose for finished text).",
+      "source": "local",
+      "path": "refactored_skills/context/compressing-agent-messages/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-d810a69a4ef2",
+      "sha256": "d810a69a4ef2632822ba269ae7f492d149fbfc52b45e95a5cb58b1d0b515481a",
+      "url": ""
+    },
+    {
+      "id": "lay-configuring-prompt-compression",
+      "name": "configuring-prompt-compression",
+      "description": "Configures RTK (command output), Caveman (prose) and stacked compression modes, managing language packs and custom rules, and testing prompt compression that reduces tokens by 60-90%. Use this skill when: setting up or tuning prompt compression rules for an OmniRoute deployment. Do NOT use this skill when: only testing compression from the terminal (use testing-cli-prompt-compression) or changing context pipelines (use optimizing-rtk-prompt-contexts).",
+      "source": "local",
+      "path": "refactored_skills/context/configuring-prompt-compression/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-90e70cad6025",
+      "sha256": "90e70cad60251c241899279b0ab227a0d9bfac1c0bda4ab9b2ef1382ac5ffc53",
+      "url": ""
+    },
+    {
+      "id": "lay-discovering-and-invoking-skills",
+      "name": "discovering-and-invoking-skills",
+      "description": "Discovers and invokes agent skills: the meta-skill that decides which skill or workflow applies when a session starts or a new piece of work begins. Use this skill when: starting a session or deciding which skill or workflow fits the work at hand. Do NOT use this skill when: the applicable skill is already known and only needs to run.",
+      "source": "local",
+      "path": "refactored_skills/context/discovering-and-invoking-skills/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-e5144fb57965",
+      "sha256": "e5144fb579659125ba9cc585f1d32f5de704b286590b6cae771a6eef5ed62b90",
+      "url": ""
+    },
+    {
+      "id": "lay-engineering-agent-context",
+      "name": "engineering-agent-context",
+      "description": "Optimizes agent context setup: starting new sessions, recovering from degraded output, switching between tasks and configuring rules files and context for a project. Use this skill when: starting a new session, output quality degrades, switching tasks or configuring a project's rules files. Do NOT use this skill when: the goal is only to compress messages or prompts (use compressing-agent-messages or configuring-prompt-compression).",
+      "source": "local",
+      "path": "refactored_skills/context/engineering-agent-context/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-9f51aa4aa296",
+      "sha256": "9f51aa4aa2969e08ceef643eb5baed3ce5dd04d1bde3f5cbfebb94fa852733f2",
+      "url": ""
+    },
+    {
+      "id": "lay-generating-knowledge-graphs",
+      "name": "generating-knowledge-graphs",
+      "description": "Answers questions about a codebase, its architecture, file relationships or project content by building and querying a persistent knowledge graph with graphify over code, docs, papers, images and videos, treating graphify-out/ as the first source when it exists. Use this skill when: asked about architecture, file relationships or project content, especially when graphify-out/ exists. Do NOT use this skill when: the question is a single-file edit with no structural context.",
+      "source": "local",
+      "path": "refactored_skills/context/generating-knowledge-graphs/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-0d41f25dab44",
+      "sha256": "0d41f25dab44a5f1820c03380d2cb4f9ae148673ca32918154abe1a78c11ef6d",
+      "url": ""
+    },
+    {
+      "id": "lay-interviewing-user-requirements",
+      "name": "interviewing-user-requirements",
+      "description": "Extracts what the user actually wants through a one-question-at-a-time interview until intent is about 95% clear, when a request is underspecified or the user asks to be interviewed or challenged. Use this skill when: an ask is underspecified (for whom or why now is missing), or the user asks to be interviewed, grilled or to stress-test a plan. Do NOT use this skill when: the requirements are already explicit and only need to be broken into tasks (use breaking-down-task-plans).",
+      "source": "local",
+      "path": "refactored_skills/context/interviewing-user-requirements/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "produto"
+      ],
+      "version": "refactored",
+      "commit": "content-92888c803c74",
+      "sha256": "92888c803c740fd8d2af38f1e2d2e7ce16dbf5a0cb321d6c2e97c1e47a56fdb5",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-cli-context-pipelines",
+      "name": "managing-cli-context-pipelines",
+      "description": "Manages context engineering configurations, RTK filter sets and conversation sessions from the CLI, applying context-relay settings and inspecting active context pipelines. Use this skill when: inspecting or changing context pipelines or sessions from the terminal. Do NOT use this skill when: configuring filters through the API (use optimizing-rtk-prompt-contexts).",
+      "source": "local",
+      "path": "refactored_skills/context/managing-cli-context-pipelines/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-274629844aab",
+      "sha256": "274629844aabae7bf199adb995168ef3d2ae712588b1597485b451aa9abb8306",
+      "url": ""
+    },
+    {
+      "id": "lay-optimizing-rtk-prompt-contexts",
+      "name": "optimizing-rtk-prompt-contexts",
+      "description": "Configures RTK filters, context engineering rules and context relay settings, testing compression with real prompt samples and managing context transformation pipelines. Use this skill when: tuning context filters or relay rules through the API. Do NOT use this skill when: working from the terminal (use managing-cli-context-pipelines) or changing compression levels only (use configuring-prompt-compression).",
+      "source": "local",
+      "path": "refactored_skills/context/optimizing-rtk-prompt-contexts/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-eeeda5142eed",
+      "sha256": "eeeda5142eedd8e0f24bcd3b0c28996b537f25d2fc15ef79a60c658b496ba7b3",
+      "url": ""
+    },
+    {
+      "id": "lay-orchestrating-lay-ecosystem-skills",
+      "name": "orchestrating-lay-ecosystem-skills",
+      "description": "Coordinates the LAY skill repertoire: initial diagnosis of new and existing projects, installation and updates of the catalog, and selection of capabilities by area for design, engineering, security and audit. Use this skill when: starting work in a project that uses the LAY hub, installing or updating its catalog, or choosing skills by area. Do NOT use this skill when: a specific skill already covers the task and no selection is needed.",
+      "source": "local",
+      "path": "refactored_skills/context/orchestrating-lay-ecosystem-skills/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-db9fa060a787",
+      "sha256": "db9fa060a7879dc706324ae8f3f007bb452214d47c0034f43ec29d6916fe204e",
+      "url": ""
+    },
+    {
+      "id": "lay-refining-raw-product-ideas",
+      "name": "refining-raw-product-ideas",
+      "description": "Refines raw ideas into sharp, actionable concepts through divergent and convergent thinking, stress-testing assumptions and expanding options before converging on one. Use this skill when: an idea is still vague, assumptions need stress-testing or options should be expanded before a plan. Do NOT use this skill when: the idea is already defined and needs requirements or a spec (use authoring-specifications-first).",
+      "source": "local",
+      "path": "refactored_skills/context/refining-raw-product-ideas/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "produto"
+      ],
+      "version": "refactored",
+      "commit": "content-8cabb60c16fa",
+      "sha256": "8cabb60c16faf7ce66ca979de00071562cdc417a20ad13263cee3ef02de8ea17",
+      "url": ""
+    },
+    {
+      "id": "lay-testing-cli-prompt-compression",
+      "name": "testing-cli-prompt-compression",
+      "description": "Configures and tests prompt compression from the CLI: manages RTK filters and Caveman rules, stacked compression modes, and previews compression output with real prompts. Use this skill when: testing or previewing compression from the terminal. Do NOT use this skill when: configuring compression through the API (use configuring-prompt-compression).",
+      "source": "local",
+      "path": "refactored_skills/context/testing-cli-prompt-compression/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-bdf5a1b1d408",
+      "sha256": "bdf5a1b1d40831ec0d0e8bd39f3d8fdc65a2ad5b58b41b18588779abf380c8b2",
+      "url": ""
+    },
+    {
+      "id": "lay-calibrating-hardware-rendering",
+      "name": "calibrating-hardware-rendering",
+      "description": "Diagnoses local hardware (GPU, VRAM, CPU cores, RAM, CUDA and OptiX support) to calibrate 3D rendering, texture baking and web asset compression automatically. Use this skill when: choosing render quality or bake settings for the local machine. Do NOT use this skill when: installing Blender (use installing-blender-headless) or configuring the MCP server (use configuring-blender-mcp-server).",
+      "source": "local",
+      "path": "refactored_skills/creative-3d/calibrating-hardware-rendering/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-4efa324b2950",
+      "sha256": "4efa324b295054d75401a492da9ad345df95944dbd5ec19e8ab03702087580fd",
+      "url": ""
+    },
+    {
+      "id": "lay-configuring-blender-mcp-server",
+      "name": "configuring-blender-mcp-server",
+      "description": "Configures, calibrates and connects the Blender MCP (Model Context Protocol) server for agent-driven scene orchestration and hardware-calibrated rendering. Use this skill when: Blender is already installed and an agent must connect to it over MCP. Do NOT use this skill when: Blender is not installed (use installing-blender-headless) or only the hardware must be diagnosed (use calibrating-hardware-rendering).",
+      "source": "local",
+      "path": "refactored_skills/creative-3d/configuring-blender-mcp-server/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-b03c0b915fa2",
+      "sha256": "b03c0b915fa21eb46da2567144cf486c126932ded42eaf2f97a8eb3999abdfc6",
+      "url": ""
+    },
+    {
+      "id": "lay-installing-blender-headless",
+      "name": "installing-blender-headless",
+      "description": "Detects hardware accelerators (GPU, CUDA, OptiX) and silently installs Blender without human intervention via winget. Use this skill when: the Blender executable is missing or needs automated installation. Do NOT use this skill when: Blender is already installed and only needs MCP configuration (use configuring-blender-mcp-server).",
+      "source": "local",
+      "path": "refactored_skills/creative-3d/installing-blender-headless/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-8913dd253557",
+      "sha256": "8913dd25355762097cc623973ef6e38d261de980f6b1a7000685951ac87cb371",
+      "url": ""
+    },
+    {
+      "id": "lay-integrating-creative-web-toolkits",
+      "name": "integrating-creative-web-toolkits",
+      "description": "Uses the Libraries.dev UI effect components correctly, covering border beam, thinking orbs, gooey, voice glow, bot avatars, liquid metal and image effects, and finds where each fits in a project. Use this skill when: adding a Libraries.dev UI effect to a web project. Do NOT use this skill when: choosing among creative libraries in general (use selecting-creative-libraries) or adding an animated Vanta background (use rendering-vanta-backgrounds).",
+      "source": "local",
+      "path": "refactored_skills/creative-3d/integrating-creative-web-toolkits/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-540dfd75d290",
+      "sha256": "540dfd75d2902ba0c5e193d387826136500183432ee9147e2a88720444b8955c",
+      "url": ""
+    },
+    {
+      "id": "lay-rendering-vanta-backgrounds",
+      "name": "rendering-vanta-backgrounds",
+      "description": "Integrates interactive 3D WebGL backgrounds (Waves, Net, Halo, Rings, Birds, Cells, Clouds, Globe) powered by Three.js or p5.js from tengbao/vanta, covering React and Next.js dynamic loading, canvas lifecycle, responsive resizing and palette calibration. Use this skill when: adding an animated Vanta background to a web app. Do NOT use this skill when: the page needs a Libraries.dev UI effect (use integrating-creative-web-toolkits) or a non-WebGL background.",
+      "source": "local",
+      "path": "refactored_skills/creative-3d/rendering-vanta-backgrounds/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-0c57e0bca8cd",
+      "sha256": "0c57e0bca8cdce369438ff7df5b25c889c4baea8a83b134a015ea66775fbf93f",
+      "url": ""
+    },
+    {
+      "id": "lay-selecting-creative-libraries",
+      "name": "selecting-creative-libraries",
+      "description": "Discovers, selects and integrates creative web libraries, shaders, 3D engines, canvas physics, audio synthesis and animation toolkits from the Libraries.dev catalog, with architectural guidance. Use this skill when: choosing which creative library fits a project needs. Do NOT use this skill when: the library is already chosen and only needs integration (use integrating-creative-web-toolkits or rendering-vanta-backgrounds).",
+      "source": "local",
+      "path": "refactored_skills/creative-3d/selecting-creative-libraries/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-e8010dbc4c10",
+      "sha256": "e8010dbc4c1055828f70d6d6596bbba24280c41f0af66ef5778f1dfc61dd33e8",
+      "url": ""
+    },
+    {
+      "id": "lay-backing-up-cli-data",
+      "name": "backing-up-cli-data",
+      "description": "Creates incremental snapshots of local SQLite databases and state data from the OmniRoute CLI, archiving them and syncing to remote storage on demand or on a schedule. Use this skill when: making one-off or scheduled backups of CLI databases and configuration. Do NOT use this skill when: backing up the OmniRoute server databases (use backing-up-omniroute-databases) or restoring a snapshot (use restoring-cli-snapshots).",
+      "source": "local",
+      "path": "refactored_skills/database/backing-up-cli-data/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-439d10147433",
+      "sha256": "439d1014743316f30175fd1566c13a3508c846b0334f5227c3ad01456853b705",
+      "url": ""
+    },
+    {
+      "id": "lay-backing-up-omniroute-databases",
+      "name": "backing-up-omniroute-databases",
+      "description": "Manages the backup lifecycle of OmniRoute server databases: SQLite snapshots, schema export and cloud uploads of tables and configuration. Use this skill when: triggering manual or automated backups of OmniRoute tables and settings. Do NOT use this skill when: backing up local CLI data (use backing-up-cli-data) or restoring a server after a failure (use restoring-omniroute-databases).",
+      "source": "local",
+      "path": "refactored_skills/database/backing-up-omniroute-databases/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-138645153b26",
+      "sha256": "138645153b269d9ee0b8e46e119a3dd0dd354a7bc30ae97be6f37e2dca7ad1e2",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-inference-cache",
+      "name": "managing-inference-cache",
+      "description": "Manages the LLM response cache: views cache statistics, clears entries, configures TTL policies and tunes semantic-similarity thresholds. Use this skill when: inspecting or tuning LLM response caching. Do NOT use this skill when: configuring prompt compression (use configuring-prompt-compression) or managing database backups (use backing-up-omniroute-databases).",
+      "source": "local",
+      "path": "refactored_skills/database/managing-inference-cache/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-a34504ef0c75",
+      "sha256": "a34504ef0c75f170af360fc1a85f58a7b01b7becf21ce84d2fe8d80624914217",
+      "url": ""
+    },
+    {
+      "id": "lay-restoring-cli-snapshots",
+      "name": "restoring-cli-snapshots",
+      "description": "Restores backup files and database snapshots into the local CLI runtime, with a pre-restore integrity check and a safety rollback. Use this skill when: recovering CLI databases after corruption or syncing an instance from an archived snapshot. Do NOT use this skill when: creating backups (use backing-up-cli-data) or restoring the OmniRoute server (use restoring-omniroute-databases).",
+      "source": "local",
+      "path": "refactored_skills/database/restoring-cli-snapshots/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-b77b7407ad97",
+      "sha256": "b77b7407ad97a9dbd6efa5345e34513baab3a5773becbdeb13f2516d55c68683",
+      "url": ""
+    },
+    {
+      "id": "lay-restoring-omniroute-databases",
+      "name": "restoring-omniroute-databases",
+      "description": "Restores OmniRoute server databases safely, validating schema, reindexing and restoring transactionally under a concurrency lock. Use this skill when: restoring the OmniRoute server after a failure or during an instance migration. Do NOT use this skill when: restoring CLI snapshots (use restoring-cli-snapshots) or taking backups (use backing-up-omniroute-databases).",
+      "source": "local",
+      "path": "refactored_skills/database/restoring-omniroute-databases/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-2721159d5543",
+      "sha256": "2721159d5543f956a4b6f804b034ff656f443aba1a45e997de54af38e9128524",
+      "url": ""
+    },
+    {
+      "id": "lay-consulting-design-references",
+      "name": "consulting-design-references",
+      "description": "Selects a product-specific visual direction from the awesome-design-md collection and compares design systems before an interface is implemented, consulting source designs selectively while preserving the project's brand. Use this skill when: choosing a visual direction for a product or comparing design systems before implementing an interface. Do NOT use this skill when: the project already has a defined design system to follow or the task is a pixel-level fix to existing UI.",
+      "source": "local",
+      "path": "refactored_skills/design/consulting-design-references/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-3ecd0fc01906",
+      "sha256": "3ecd0fc0190667ea9e899923a85bfe051f671a34e6882a7f5920788fdbb1af2b",
+      "url": ""
+    },
+    {
+      "id": "lay-generating-brandkit-identities",
+      "name": "generating-brandkit-identities",
+      "description": "Generates premium brand-kit image boards for brand guidelines, logo systems, identity decks and visual-world presentations, with intentional logo concepting, sparse typography, symbolic meaning and art-directed imagery. Use this skill when: creating a brand identity overview image or logo direction for a minimalist, editorial, luxury, cultural, security, gaming, developer-tool or consumer-app brand. Do NOT use this skill when: producing mobile app screens (use generating-mobile-ui-mockups), web page sections (use generating-web-ui-references) or writing brand code or tokens.",
+      "source": "local",
+      "path": "refactored_skills/design/generating-brandkit-identities/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-2b6c5401bf95",
+      "sha256": "2b6c5401bf95138177dade2091a61da2a7319a88c4e1d18b4f4c070a37979d4d",
+      "url": ""
+    },
+    {
+      "id": "lay-generating-mobile-ui-mockups",
+      "name": "generating-mobile-ui-mockups",
+      "description": "Generates premium, app-native mobile screen concepts and flows for iOS, Android and cross-platform products, shown inside a phone mockup with clean hierarchy, readable text and consistent multi-screen styling. Use this skill when: generating images of mobile app screens or multi-screen flows for design review. Do NOT use this skill when: building or implementing mobile UI in code (use frontend skills), generating web landing pages (use generating-web-ui-references) or creating a brand identity board (use generating-brandkit-identities).",
+      "source": "local",
+      "path": "refactored_skills/design/generating-mobile-ui-mockups/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-e412427ecbe9",
+      "sha256": "e412427ecbe99a50a88167e253087818af5b11ebef4029dfa607928ad7aa4254",
+      "url": ""
+    },
+    {
+      "id": "lay-generating-web-ui-references",
+      "name": "generating-web-ui-references",
+      "description": "Generates premium, conversion-aware website design reference images, producing one separate horizontal image per page section with varied composition, CTAs and hero scales under one consistent palette so developers can recreate the page. Use this skill when: creating visual references for a landing page, marketing site or product comp, section by section. Do NOT use this skill when: generating mobile app screens (use generating-mobile-ui-mockups), writing the page code or creating a brand identity board (use generating-brandkit-identities).",
+      "source": "local",
+      "path": "refactored_skills/design/generating-web-ui-references/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-ce1f4aa571a7",
+      "sha256": "ce1f4aa571a76a64157c9c8efcc0ca7a2000c9e6caea015a7dd3b157a33022c1",
+      "url": ""
+    },
+    {
+      "id": "lay-authoring-conventional-commits",
+      "name": "authoring-conventional-commits",
+      "description": "Structures atomic semantic commits following the Conventional Commits convention: writes commit messages, prepares commits, installs commit-msg validation hooks and audits commit history. Use this skill when: structuring commit messages, preparing semantic commits in git, installing commit-msg validation hooks or auditing history. Do NOT use this skill when: resolving complex rebase conflicts (use managing-git-branch-workflows) or managing release tags and changelogs (use tagging-semantic-releases).",
+      "source": "local",
+      "path": "refactored_skills/devops/authoring-conventional-commits/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-decaff104fd7",
+      "sha256": "decaff104fd736a48c39b7a6777295e3cc2ee51f3e347c579e8437e2e7713428",
+      "url": ""
+    },
+    {
+      "id": "lay-automating-cd-deployments",
+      "name": "automating-cd-deployments",
+      "description": "Automates continuous delivery flows: provisions staging and production environments, runs post-deploy smoke tests and triggers automatic rollback. Use this skill when: promoting artifacts through environments or wiring automated deployment and rollback. Do NOT use this skill when: building the CI validation pipeline (use building-ci-validation-pipelines) or releasing a canary to a traffic subset (use orchestrating-staged-rollouts).",
+      "source": "local",
+      "path": "refactored_skills/devops/automating-cd-deployments/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-c8f346469a78",
+      "sha256": "c8f346469a78d4e4f03119617e37891adc68a0951878de38471ead39b8b3f98c",
+      "url": ""
+    },
+    {
+      "id": "lay-building-ci-validation-pipelines",
+      "name": "building-ci-validation-pipelines",
+      "description": "Builds and orchestrates continuous integration pipelines with strict quality gates, static scanners, parallel test suites and coverage reports. Use this skill when: configuring CI checks that must pass before a change can be merged. Do NOT use this skill when: deploying to environments (use automating-cd-deployments).",
+      "source": "local",
+      "path": "refactored_skills/devops/building-ci-validation-pipelines/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-e6284288b75d",
+      "sha256": "e6284288b75d563f8f5d2eff086beb5d757368051124bb7c477fe919e62badf1",
+      "url": ""
+    },
+    {
+      "id": "lay-deploying-to-vercel-platform",
+      "name": "deploying-to-vercel-platform",
+      "description": "Deploys applications and websites to Vercel, including production deployments and preview links, when the user asks to deploy an app, push it live or create a preview deployment. Use this skill when: the user asks to deploy an app to Vercel or to create a preview deployment. Do NOT use this skill when: deploying with token-based CLI authentication (use deploying-with-vercel-tokens) or optimizing an existing deployment (use optimizing-vercel-deployments).",
+      "source": "local",
+      "path": "refactored_skills/devops/deploying-to-vercel-platform/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-c7cae320f1d0",
+      "sha256": "c7cae320f1d0f9cc39af1f3d98c11ddc8964459add5ac2e9583147fbb8a06de8",
+      "url": ""
+    },
+    {
+      "id": "lay-deploying-with-vercel-tokens",
+      "name": "deploying-with-vercel-tokens",
+      "description": "Deploys and manages Vercel projects with token-based CLI authentication instead of interactive login, for setup and deployment on machines or pipelines that use access tokens. Use this skill when: using the Vercel CLI with access tokens. Do NOT use this skill when: the user is already logged in interactively and only wants a deployment (use deploying-to-vercel-platform).",
+      "source": "local",
+      "path": "refactored_skills/devops/deploying-with-vercel-tokens/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-b191704c9d8e",
+      "sha256": "b191704c9d8eaacdf18da2443b584324fceaa8e203dbfe25e3557fd9aa9ec1a2",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-git-branch-workflows",
+      "name": "managing-git-branch-workflows",
+      "description": "Manages Git workflows: atomic branches, interactive rebase, splitting tangled commits and rigorous conflict resolution. Use this skill when: organizing task branches, rebasing, splitting messy commits or resolving conflicts. Do NOT use this skill when: only writing commit messages (use authoring-conventional-commits) or cutting a release tag (use tagging-semantic-releases).",
+      "source": "local",
+      "path": "refactored_skills/devops/managing-git-branch-workflows/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-ad33447961f0",
+      "sha256": "ad33447961f0103a79afce3c69f09b3a8c1b89ecb39315dbad37e23475338e5a",
+      "url": ""
+    },
+    {
+      "id": "lay-merging-validated-pull-requests",
+      "name": "merging-validated-pull-requests",
+      "description": "Consumes analyzed pull request plans, implements authorized fixes with contributor credit, validates exact candidates and merges only the owner-selected groups that were explicitly authorized, through the shared gates. Use this skill when: an owner has selected and authorized pull request groups to merge after validation. Do NOT use this skill when: only inspecting or pre-greening pull requests without merge authority (use enforcing-green-pull-requests) or sweeping failing CI (use sweeping-failing-ci-builds).",
+      "source": "local",
+      "path": "refactored_skills/devops/merging-validated-pull-requests/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-3fa69d649b1f",
+      "sha256": "3fa69d649b1f08de0ba3563235228261447e32b140cea0d64b6d7ff76803351a",
+      "url": ""
+    },
+    {
+      "id": "lay-optimizing-vercel-deployments",
+      "name": "optimizing-vercel-deployments",
+      "description": "Optimizes the cost and performance of deployed Vercel projects, especially Next.js, SvelteKit, Nuxt and limited Astro apps, by collecting Vercel metrics, usage, project configuration and code scan results. Use this skill when: reducing Vercel cost or improving the performance of a deployed project. Do NOT use this skill when: performing the deployment itself (use deploying-to-vercel-platform).",
+      "source": "local",
+      "path": "refactored_skills/devops/optimizing-vercel-deployments/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-99ab28a9dd5e",
+      "sha256": "99ab28a9dd5e7eed8458e39e815d4e492182578935488802000a03920532e14e",
+      "url": ""
+    },
+    {
+      "id": "lay-orchestrating-staged-rollouts",
+      "name": "orchestrating-staged-rollouts",
+      "description": "Orchestrates gradual production releases with canary traffic, active monitoring of error metrics and instant rollback triggers. Use this skill when: releasing a new version to a subset of users or monitoring the stability of live traffic. Do NOT use this skill when: running the pre-launch checklist (use verifying-prelaunch-readiness) or a full CD pipeline (use automating-cd-deployments).",
+      "source": "local",
+      "path": "refactored_skills/devops/orchestrating-staged-rollouts/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-95559062d677",
+      "sha256": "95559062d67737a64c2ee18a0cd694b77d19f25844295366eb68b6c7b17e47c2",
+      "url": ""
+    },
+    {
+      "id": "lay-synchronizing-cloud-storage",
+      "name": "synchronizing-cloud-storage",
+      "description": "Synchronizes OmniRoute configuration, provider connections and settings to and from cloud storage, managing cloud worker authentication and remote backup targets. Use this skill when: syncing OmniRoute configuration to cloud storage or configuring remote backup targets. Do NOT use this skill when: taking local database backups (use backing-up-omniroute-databases).",
+      "source": "local",
+      "path": "refactored_skills/devops/synchronizing-cloud-storage/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-ff8f47e8e9f3",
+      "sha256": "ff8f47e8e9f39640afb4c89d153d7b7a2c1f06c28ed341de313cd7c11c6b52d9",
+      "url": ""
+    },
+    {
+      "id": "lay-tagging-semantic-releases",
+      "name": "tagging-semantic-releases",
+      "description": "Calculates the semantic version increment (SemVer), generates release notes and changelog entries, and signs version tags in the repository. Use this skill when: closing a delivery cycle to publish a formal version with a tag and a standard changelog. Do NOT use this skill when: only organizing branches or commits (use managing-git-branch-workflows).",
+      "source": "local",
+      "path": "refactored_skills/devops/tagging-semantic-releases/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-4a8be1b0a4fb",
+      "sha256": "4a8be1b0a4fbca2f387a20135744bf5a8236c17ca559503b6c771d784e83472d",
+      "url": ""
+    },
+    {
+      "id": "lay-verifying-prelaunch-readiness",
+      "name": "verifying-prelaunch-readiness",
+      "description": "Runs an exhaustive pre-launch readiness checklist covering environment variables, secret checks and production integrity before real traffic is routed to a version. Use this skill when: preparing a version for production launch before routing real traffic. Do NOT use this skill when: the release is gradual and already live (use orchestrating-staged-rollouts).",
+      "source": "local",
+      "path": "refactored_skills/devops/verifying-prelaunch-readiness/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-99c8ade72d8b",
+      "sha256": "99c8ade72d8ba88739bcc5f4aa3ed152ed2dabbbbacca54a5323863c989c582c",
+      "url": ""
+    },
+    {
+      "id": "lay-auditing-writing-guidelines",
+      "name": "auditing-writing-guidelines",
+      "description": "Reviews docs and prose for Writing Guidelines compliance, checking style, voice and tone against the writing handbook. Use this skill when: asked to review docs, check writing style, audit prose or check a page against the writing handbook. Do NOT use this skill when: cleaning invisible marks or provenance from text (use polishing-user-facing-prose or stripping-ai-provenance-marks) or writing architecture decision records (use documenting-architecture-decisions).",
+      "source": "local",
+      "path": "refactored_skills/documentation/auditing-writing-guidelines/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "documentacao",
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-1f3d87977768",
+      "sha256": "1f3d879777689fd3312dcd8456bb40fdf7165c89ef44a9fb29c7f531bcf613dd",
+      "url": ""
+    },
+    {
+      "id": "lay-documenting-architecture-decisions",
+      "name": "documenting-architecture-decisions",
+      "description": "Records architecture decisions as ADRs and documents the reasoning behind design choices, public API changes and shipped features for future engineers and agents. Use this skill when: documenting an architecture decision, changing a public API, shipping a feature or recording context a future maintainer needs. Do NOT use this skill when: writing user-facing prose (use polishing-user-facing-prose) or auditing general writing style (use auditing-writing-guidelines).",
+      "source": "local",
+      "path": "refactored_skills/documentation/documenting-architecture-decisions/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "documentacao"
+      ],
+      "version": "refactored",
+      "commit": "content-deea66b83411",
+      "sha256": "deea66b83411200895dc1bbed4d59c8f69be7a62798bff60466fbec73da6bac8",
+      "url": ""
+    },
+    {
+      "id": "lay-polishing-user-facing-prose",
+      "name": "polishing-user-facing-prose",
+      "description": "Cleans and finalizes authorized natural-language text for readers by auditing invisible Unicode and rewriting prose while keeping facts, meaning and the writer voice. Use this skill when: asked to clean, humanize, polish or finalize an article or user-facing text the user owns. Do NOT use this skill when: removing provenance metadata from files (use stripping-ai-provenance-marks) or reviewing style against a handbook (use auditing-writing-guidelines).",
+      "source": "local",
+      "path": "refactored_skills/documentation/polishing-user-facing-prose/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "documentacao"
+      ],
+      "version": "refactored",
+      "commit": "content-62b22fb27d0e",
+      "sha256": "62b22fb27d0e17628e85ae15b37bdc5815172d618c3502093250d13e4406475c",
+      "url": ""
+    },
+    {
+      "id": "lay-stripping-ai-provenance-marks",
+      "name": "stripping-ai-provenance-marks",
+      "description": "Removes multi-vendor AI provenance marks from text and files: invisible Unicode, statistical text watermarks through rewriting, and C2PA, EXIF, XMP and container metadata on images and documents. Use this skill when: cleaning provenance marks from content the user owns or is authorized to edit. Do NOT use this skill when: the content does not belong to the user or no authorization exists, or when the goal is to hide AI authorship from a disclosure requirement or platform policy.",
+      "source": "local",
+      "path": "refactored_skills/documentation/stripping-ai-provenance-marks/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "documentacao"
+      ],
+      "version": "refactored",
+      "commit": "content-c93b5e31c5b9",
+      "sha256": "c93b5e31c5b9499ee99bcd2ee59caacd068938038ddb89ae7cef357d2b0a87e6",
+      "url": ""
+    },
+    {
+      "id": "lay-auditing-codebase-bloat",
+      "name": "auditing-codebase-bloat",
+      "description": "Audits a whole repository for bugs, security holes, behavior under real load, risky code without tests, slow paths, and code to delete, merge or split, with ranked findings explained in plain English. Produces a one-shot report and changes nothing. Use this skill when: asked to audit the codebase, review the whole repo, find bloat or decide what can be deleted. Do NOT use this skill when: reviewing a single change or pull request (use reviewing-code-minimalism or reviewing-multi-axis-code-quality).",
+      "source": "local",
+      "path": "refactored_skills/engineering/auditing-codebase-bloat/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-30c5c22c423d",
+      "sha256": "30c5c22c423ddf211c3691dd0ea816bffc1378b1cf252cf01295bd5e0a6efad3",
+      "url": ""
+    },
+    {
+      "id": "lay-authoring-specifications-first",
+      "name": "authoring-specifications-first",
+      "description": "Creates specifications before coding: objectives, scope, requirements, PRDs and a capability map of independently testable modules when a requirement spans several capabilities. Use this skill when: starting a new project, feature or significant change with no specification, or when requirements are vague or ambiguous. Do NOT use this skill when: the specification already exists and only needs implementation (use implementing-incremental-slices).",
+      "source": "local",
+      "path": "refactored_skills/engineering/authoring-specifications-first/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-19a1073cc25a",
+      "sha256": "19a1073cc25a5b6c78d55898f6c447438e68fff2189dec5611229658cf8f976a",
+      "url": ""
+    },
+    {
+      "id": "lay-debugging-root-causes",
+      "name": "debugging-root-causes",
+      "description": "Runs systematic root-cause diagnosis for compile failures, broken tests and unexpected behavior, without random trial-and-error attempts. Use this skill when: investigating bugs, build breaks or behavior that diverged from expectations. Do NOT use this skill when: building automatic failover or runtime service recovery (use recovering-system-errors).",
+      "source": "local",
+      "path": "refactored_skills/engineering/debugging-root-causes/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-9d71dc50aee3",
+      "sha256": "9d71dc50aee386bc7ade0a6b78c8e57636fd643b2d0a2a637837766361180fe6",
+      "url": ""
+    },
+    {
+      "id": "lay-deprecating-obsolete-apis",
+      "name": "deprecating-obsolete-apis",
+      "description": "Runs the full deprecation cycle for obsolete interfaces, endpoints and components: semantic annotations, sunset timelines and removal of legacy endpoints without breaking dependents. Use this skill when: marking code as deprecated, setting a grace period or removing legacy endpoints safely. Do NOT use this skill when: performing an active database or architecture migration (use migrating-legacy-architectures) or refactoring internals that keep public contracts unchanged.",
+      "source": "local",
+      "path": "refactored_skills/engineering/deprecating-obsolete-apis/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-47c28ecdc90d",
+      "sha256": "47c28ecdc90dde47f4ef7b3e42d2e93b07ca3b22a7c02c3a097e632f7b5fb176",
+      "url": ""
+    },
+    {
+      "id": "lay-designing-apis-and-interfaces",
+      "name": "designing-apis-and-interfaces",
+      "description": "Guides stable API and interface design: module boundaries, REST or GraphQL endpoints, type contracts between modules and the boundary between frontend and backend. Use this skill when: designing APIs, module boundaries or any public interface. Do NOT use this skill when: implementing the internals of an interface that is already designed (use implementing-incremental-slices).",
+      "source": "local",
+      "path": "refactored_skills/engineering/designing-apis-and-interfaces/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design",
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-d724fdacc768",
+      "sha256": "d724fdacc768cfe04cf22bd7d903e631890faa7b46eca8354f9c155f2312115b",
+      "url": ""
+    },
+    {
+      "id": "lay-enforcing-project-constraints",
+      "name": "enforcing-project-constraints",
+      "description": "Records the project's quality bar as a written contract in CONSTRAINTS.md and watches the diff for a weakened bar: new suppressions, skipped or deleted tests, stripped assertions, unimplemented stubs or lowered thresholds. Use this skill when: defining quality thresholds for a project or checking that agents are not quietly lowering the bar. Do NOT use this skill when: auditing the whole codebase for bugs (use auditing-codebase-bloat).",
+      "source": "local",
+      "path": "refactored_skills/engineering/enforcing-project-constraints/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "produto"
+      ],
+      "version": "refactored",
+      "commit": "content-ebe448e97365",
+      "sha256": "ebe448e97365f825c28c1c8fac3afb082578f81cf997603217469c019c6cc5fb",
+      "url": ""
+    },
+    {
+      "id": "lay-grounding-source-documentation",
+      "name": "grounding-source-documentation",
+      "description": "Grounds implementation decisions in official documentation: verifies an approach against the docs before implementing and produces source-cited code free from outdated patterns. Use this skill when: verifying an approach against official docs, or building with a framework or library where correctness matters. Do NOT use this skill when: the change is internal logic that no library documentation covers.",
+      "source": "local",
+      "path": "refactored_skills/engineering/grounding-source-documentation/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "documentacao",
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-4e3cc37b7e55",
+      "sha256": "4e3cc37b7e558c977099de0758cd66f132b39338b99ac2b0ad2a9e0372815aac",
+      "url": ""
+    },
+    {
+      "id": "lay-guiding-ponytail-minimalism",
+      "name": "guiding-ponytail-minimalism",
+      "description": "Shows the quick reference for ponytail levels, skills and commands in a one-shot display. Use this skill when: asked for ponytail help or how to use ponytail and its commands. Do NOT use this skill when: auditing, reviewing or measuring code (use auditing-codebase-bloat, reviewing-code-minimalism or measuring-code-savings).",
+      "source": "local",
+      "path": "refactored_skills/engineering/guiding-ponytail-minimalism/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-46a0d839a2f7",
+      "sha256": "46a0d839a2f755470055e9460c5f077eb99731401c0f1615320177f5bf2e90d8",
+      "url": ""
+    },
+    {
+      "id": "lay-implementing-incremental-slices",
+      "name": "implementing-incremental-slices",
+      "description": "Delivers changes incrementally in thin, verifiable slices, rolling out behind feature flags and breaking large tasks into steps that each land on their own. Use this skill when: implementing a change that touches more than one file, picking up the next task from a plan, or when a task feels too big to land in one step. Do NOT use this skill when: the specification is still missing (use authoring-specifications-first).",
+      "source": "local",
+      "path": "refactored_skills/engineering/implementing-incremental-slices/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-9544093fb391",
+      "sha256": "9544093fb3915f946f43a978bfac3faaaf129397f3623548d43683b2c06e278c",
+      "url": ""
+    },
+    {
+      "id": "lay-instrumenting-code-observability",
+      "name": "instrumenting-code-observability",
+      "description": "Instruments code so production behavior is visible and diagnosable: logging, metrics, tracing and alerting, with evidence that shipped features work. Use this skill when: adding logging, metrics, tracing or alerts, or when production issues cannot be explained from the available data. Do NOT use this skill when: the work is performance tuning without an observability gap (use optimizing-fullstack-performance).",
+      "source": "local",
+      "path": "refactored_skills/engineering/instrumenting-code-observability/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-ea00565acdc9",
+      "sha256": "ea00565acdc9120a3050150366c0c4b121815f8396f00f6469ac6386e8b6cba3",
+      "url": ""
+    },
+    {
+      "id": "lay-measuring-code-savings",
+      "name": "measuring-code-savings",
+      "description": "Shows ponytail's measured savings in code, cost and speed from the benchmark, as a one-shot display. Use this skill when: asked what ponytail saves or for its measured impact. Do NOT use this skill when: auditing or reviewing code (use auditing-codebase-bloat or reviewing-code-minimalism).",
+      "source": "local",
+      "path": "refactored_skills/engineering/measuring-code-savings/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-43729b4d970a",
+      "sha256": "43729b4d970ac5b873d723c70cb83b5eac5d64e1cfc9508f06da513d56615315",
+      "url": ""
+    },
+    {
+      "id": "lay-migrating-legacy-architectures",
+      "name": "migrating-legacy-architectures",
+      "description": "Migrates database schemas, architecture flows and infrastructure dependencies with expand/contract patterns and no downtime, including subsystem rewrites and shifting production traffic. Use this skill when: migrating data schemas, rewriting subsystems or moving production traffic without unavailability. Do NOT use this skill when: only marking methods with deprecation warnings without a physical migration (use deprecating-obsolete-apis).",
+      "source": "local",
+      "path": "refactored_skills/engineering/migrating-legacy-architectures/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-b45c03d32361",
+      "sha256": "b45c03d323614bd6bce1ff24b312bc85ca633343ef19263e2786662341ce511b",
+      "url": ""
+    },
+    {
+      "id": "lay-minimizing-code-overengineering",
+      "name": "minimizing-code-overengineering",
+      "description": "Forces the laziest solution that works: asks whether the task needs to exist at all, reuses existing code, prefers the standard library and native platform features, and keeps each change to the minimum. Use this skill when: writing, adding, refactoring, fixing or reviewing any coding task where the solution may be overbuilt. Do NOT use this skill when: the task is a dedicated audit of the whole codebase (use auditing-codebase-bloat).",
+      "source": "local",
+      "path": "refactored_skills/engineering/minimizing-code-overengineering/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-dd35121f6bf2",
+      "sha256": "dd35121f6bf2a644eacd189e2a38ecc8a2d73e3f184574dc2a6a9f03f377042e",
+      "url": ""
+    },
+    {
+      "id": "lay-optimizing-fullstack-performance",
+      "name": "optimizing-fullstack-performance",
+      "description": "Optimizes application performance across frontend, backend, queries and databases: Core Web Vitals, load times, N+1 query patterns and bottlenecks revealed by profiling. Use this skill when: performance requirements exist, regressions are suspected or profiling shows bottlenecks. Do NOT use this skill when: the work is React-specific (use optimizing-react-performance) or adding observability (use instrumenting-code-observability).",
+      "source": "local",
+      "path": "refactored_skills/engineering/optimizing-fullstack-performance/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-3aac47b21028",
+      "sha256": "3aac47b21028333e98718633d7b69c83130177c73cc0706e463788ca95363160",
+      "url": ""
+    },
+    {
+      "id": "lay-recovering-system-errors",
+      "name": "recovering-system-errors",
+      "description": "Orchestrates runtime error recovery strategies: resilient reconnection, fallback ladders and circuit breakers with exponential backoff. Use this skill when: a production system or upstream service failed and needs automatic state recovery. Do NOT use this skill when: only investigating logs to find the root cause of a bug (use debugging-root-causes).",
+      "source": "local",
+      "path": "refactored_skills/engineering/recovering-system-errors/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-46b3392af866",
+      "sha256": "46b3392af866ad1973d5179447189a6ee1f596bd3756cf682a5c9781b7028196",
+      "url": ""
+    },
+    {
+      "id": "lay-reviewing-code-minimalism",
+      "name": "reviewing-code-minimalism",
+      "description": "Reviews a change for correctness, safety, behavior under real load, test coverage of risky code, speed and whether every line is needed, reading the connected code and not only the diff. Use this skill when: asked to review code, a pull request or the last commit, or to judge whether code is over-engineered. Do NOT use this skill when: auditing the whole repository (use auditing-codebase-bloat).",
+      "source": "local",
+      "path": "refactored_skills/engineering/reviewing-code-minimalism/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-c7e4396eb547",
+      "sha256": "c7e4396eb54759b6e064f0374155cc4cfd1cbcc249868fdf00ab20365497f55c",
+      "url": ""
+    },
+    {
+      "id": "lay-reviewing-multi-axis-code-quality",
+      "name": "reviewing-multi-axis-code-quality",
+      "description": "Conducts multi-axis code review across quality dimensions before a change enters the main branch, covering code written by yourself, another agent or a human, including diffs pasted inline. Use this skill when: asked to review a diff or pull request, or before merging any change. Do NOT use this skill when: the review is about minimalism or over-engineering (use reviewing-code-minimalism).",
+      "source": "local",
+      "path": "refactored_skills/engineering/reviewing-multi-axis-code-quality/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-2365413441eb",
+      "sha256": "2365413441eb46e9cd0b1a1804e5232ab0337b5c7b689ce70e3145f97967498d",
+      "url": ""
+    },
+    {
+      "id": "lay-simplifying-code-complexity",
+      "name": "simplifying-code-complexity",
+      "description": "Simplifies code for clarity without changing behavior, reducing unnecessary complexity in code that works but is harder to read, maintain or extend. Use this skill when: refactoring for clarity or reviewing code that accumulated unnecessary complexity. Do NOT use this skill when: the code is wrong or its behavior must change (use debugging-root-causes).",
+      "source": "local",
+      "path": "refactored_skills/engineering/simplifying-code-complexity/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-b067a0d6c45a",
+      "sha256": "b067a0d6c45a8577c360686090090a06c85f4893d438ebc669710ffc25780ee4",
+      "url": ""
+    },
+    {
+      "id": "lay-stress-testing-architecture-decisions",
+      "name": "stress-testing-architecture-decisions",
+      "description": "Subjects non-trivial decisions to a fresh-context adversarial review, cross-examining assumptions and hidden failure modes before they stand. Use this skill when: stress-testing a plan, working in unfamiliar code, or when stakes are high (production auth, security-sensitive logic, high-stakes migrations, irreversible operations). Do NOT use this skill when: the decision is trivial and easily reversible.",
+      "source": "local",
+      "path": "refactored_skills/engineering/stress-testing-architecture-decisions/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-f18c23785ffb",
+      "sha256": "f18c23785ffb5e937df7d4681c4b02d22b4d0716eb138a3cb8825f2f9cc0a6e8",
+      "url": ""
+    },
+    {
+      "id": "lay-tracking-technical-debt-ledgers",
+      "name": "tracking-technical-debt-ledgers",
+      "description": "Lists every shortcut comment (and older ponytail comments) as a technical debt ledger, as a one-shot report that changes nothing. Use this skill when: asked what was deferred, to list shortcuts or to produce the debt ledger. Do NOT use this skill when: the request is to fix or remove the shortcuts (use simplifying-code-complexity).",
+      "source": "local",
+      "path": "refactored_skills/engineering/tracking-technical-debt-ledgers/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-2014ea1d9b9c",
+      "sha256": "2014ea1d9b9cf28ae736abffca6d1205952d06441da8f756c8175f32fc48fd06",
+      "url": ""
+    },
+    {
+      "id": "lay-animating-react-bits-components",
+      "name": "animating-react-bits-components",
+      "description": "Builds modern, production-grade animated UI components inspired by react-bits: text effects (DecryptedText, BlurText, SplitText, ShinyText, TrueFocus), animated backgrounds (Hyperspeed, Waves, Squares, LiquidChrome, Ballpit) and interactive components (SpotlightCard, TiltedCard, Stack, ElasticSlider). Use this skill when: adding react-bits style animated components or text effects to a React app. Do NOT use this skill when: animating route changes (use animating-react-view-transitions) or smooth scrolling (use orchestrating-smooth-scroll).",
+      "source": "local",
+      "path": "refactored_skills/frontend/animating-react-bits-components/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-486297f28370",
+      "sha256": "486297f2837066c6026705a43d182d75c31e3ee82b5be6611ffb4c1a91192ec5",
+      "url": ""
+    },
+    {
+      "id": "lay-animating-react-view-transitions",
+      "name": "animating-react-view-transitions",
+      "description": "Implements native-feeling animations with React's View Transition API (ViewTransition component, addTransitionType and CSS view-transition pseudo-elements), covering page and route transitions, shared elements, enter and exit animations, list reorder and directional navigation in Next.js. Use this skill when: adding page transitions, route change animations or shared element animations in React without third-party animation libraries. Do NOT use this skill when: animating decorative components (use animating-react-bits-components) or scroll-driven motion (use engineering-gsap-motion-uis).",
+      "source": "local",
+      "path": "refactored_skills/frontend/animating-react-view-transitions/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-69ad2ba17da2",
+      "sha256": "69ad2ba17da2e33cb1a6b5810588e73f51703dfa1c91909061265ec63356a639",
+      "url": ""
+    },
+    {
+      "id": "lay-applying-legacy-design-taste",
+      "name": "applying-legacy-design-taste",
+      "description": "Applies the original v1 taste guidance (design-taste-frontend-v1), kept for projects that depend on its exact behavior. Use this skill when: exact backward compatibility with taste-skill v1 is required. Do NOT use this skill when: a new project needs the current default taste guidance (use elevating-frontend-taste).",
+      "source": "local",
+      "path": "refactored_skills/frontend/applying-legacy-design-taste/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-e471e2ab4d5b",
+      "sha256": "e471e2ab4d5b3cf19cc185dcad428fb1f665ca798a6653fccec99606595c1725",
+      "url": ""
+    },
+    {
+      "id": "lay-architecting-react-composition",
+      "name": "architecting-react-composition",
+      "description": "Provides React composition patterns that scale: compound components, render props, context providers and React 19 API changes, replacing boolean prop proliferation with flexible, reusable component APIs. Use this skill when: refactoring components with boolean prop proliferation, building flexible component libraries or designing reusable component APIs. Do NOT use this skill when: the task is performance tuning (use optimizing-react-performance) or React Native code (use building-react-native-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/architecting-react-composition/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-ce6763d9ad0e",
+      "sha256": "ce6763d9ad0e22381d50f2466708f1717233cf58690c09d82fce917f448f701d",
+      "url": ""
+    },
+    {
+      "id": "lay-auditing-web-design-guidelines",
+      "name": "auditing-web-design-guidelines",
+      "description": "Reviews UI code for Web Interface Guidelines compliance, checking accessibility, design and UX against best practices. Use this skill when: asked to review my UI, check accessibility, audit design or UX, or check a site against best practices. Do NOT use this skill when: generating new visuals or layouts from scratch (use elevating-frontend-taste) or redesigning an existing site (use redesigning-legacy-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/auditing-web-design-guidelines/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design",
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-ddc45202778c",
+      "sha256": "ddc45202778ca0b6cec27b1912a0cc4d5dca8e1c9be5100813da2eaf4964e279",
+      "url": ""
+    },
+    {
+      "id": "lay-authoring-stitch-design-systems",
+      "name": "authoring-stitch-design-systems",
+      "description": "Generates semantic DESIGN.md files for Google Stitch that enforce premium, anti-generic UI standards: strict typography, calibrated color, asymmetric layouts, perpetual micro-motion and hardware-accelerated performance. Use this skill when: producing a DESIGN.md design system for Stitch screen generation. Do NOT use this skill when: the target is not Stitch or the task is implementing code directly (use engineering-frontend-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/authoring-stitch-design-systems/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-14d09f56786f",
+      "sha256": "14d09f56786f75fcbf2a4bfe56dbd792829660c264968aaa952f2415adde6e27",
+      "url": ""
+    },
+    {
+      "id": "lay-building-react-native-interfaces",
+      "name": "building-react-native-interfaces",
+      "description": "Applies React Native and Expo best practices for performant mobile apps: component structure, list performance, animations and native module usage. Use this skill when: building React Native components, optimizing list performance, implementing animations or working with Expo and native platform APIs. Do NOT use this skill when: the target is a web React or Next.js app (use optimizing-react-performance or engineering-frontend-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/building-react-native-interfaces/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-b11e041c94ed",
+      "sha256": "b11e041c94eda7d57d1a54d5f56d55397d3a4c741ff1e775408d6c99054a9a52",
+      "url": ""
+    },
+    {
+      "id": "lay-converting-images-to-code",
+      "name": "converting-images-to-code",
+      "description": "Converts a visually important website into code by first generating section-specific design images, analyzing them in depth and implementing the site to match them as closely as possible, with a clean, readable hero. Use this skill when: turning a website design image or mockup into implemented web code. Do NOT use this skill when: the target is a mobile app (use building-react-native-interfaces) or the request has no visual reference to match.",
+      "source": "local",
+      "path": "refactored_skills/frontend/converting-images-to-code/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-15f0d1cad07e",
+      "sha256": "15f0d1cad07e1c9249cc21e395e9f65375baf69e14ee49bcb3be9159acae0eea",
+      "url": ""
+    },
+    {
+      "id": "lay-crafting-high-end-visuals",
+      "name": "crafting-high-end-visuals",
+      "description": "Teaches the agent to design like a high-end agency, defining the fonts, spacing, shadows, card structures and animations that make a website feel premium, and blocking common defaults that look cheap or generic. Use this skill when: a website should feel expensive, editorial or agency-grade. Do NOT use this skill when: the request is a functional change with no visual goal (use engineering-frontend-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/crafting-high-end-visuals/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-23535a05bdcb",
+      "sha256": "23535a05bdcbdb5b3cd08fa97b229345068f6691feedbbe29eb3b747f02bef50",
+      "url": ""
+    },
+    {
+      "id": "lay-designing-minimalist-interfaces",
+      "name": "designing-minimalist-interfaces",
+      "description": "Designs clean editorial-style interfaces with a warm monochrome palette, typographic contrast, flat bento grids and muted pastels, without gradients or heavy shadows. Use this skill when: a minimalist, editorial or calm interface is requested. Do NOT use this skill when: the brief calls for expressive, high-tension or brutalist aesthetics (use elevating-frontend-taste or governing-anti-slop-aesthetics).",
+      "source": "local",
+      "path": "refactored_skills/frontend/designing-minimalist-interfaces/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-4d5a3b1c4847",
+      "sha256": "4d5a3b1c484746fcf6711e1aad5d4a6a120de0ef7b63d6f3d50fec6b7cba5daf",
+      "url": ""
+    },
+    {
+      "id": "lay-elevating-frontend-taste",
+      "name": "elevating-frontend-taste",
+      "description": "Anti-slop frontend guidance for landing pages, portfolios and redesigns: reads the brief, infers the right design direction and ships interfaces that do not look templated, using real design systems where applicable and an audit-first approach to redesigns. Use this skill when: building or redesigning a landing page, portfolio or marketing page that must not look generic. Do NOT use this skill when: building dashboards, data tables or multi-step product UI (use engineering-frontend-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/elevating-frontend-taste/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-ebc151d84fb1",
+      "sha256": "ebc151d84fb1d07c63ca3064265539f788eaec7d744878858e7471186da2c302",
+      "url": ""
+    },
+    {
+      "id": "lay-enforcing-full-code-output",
+      "name": "enforcing-full-code-output",
+      "description": "Overrides default LLM truncation behavior to enforce complete, unabridged code generation: bans placeholder patterns and handles token-limit splits cleanly. Use this skill when: a task needs exhaustive, complete output with no omitted code. Do NOT use this skill when: a short answer or a summary is what was requested.",
+      "source": "local",
+      "path": "refactored_skills/frontend/enforcing-full-code-output/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design",
+        "documentacao"
+      ],
+      "version": "refactored",
+      "commit": "content-db1bc512acaf",
+      "sha256": "db1bc512acaf2b4aadd3da4491ade79424aeb418da14a8ffa3d10a0eed608fc0",
+      "url": ""
+    },
+    {
+      "id": "lay-engineering-frontend-interfaces",
+      "name": "engineering-frontend-interfaces",
+      "description": "Builds production-quality, accessible and responsive user-facing UIs: components, layouts, state management and WCAG accessibility, so the output looks and works production-ready rather than AI-generated. Use this skill when: building or modifying interfaces and pages, creating components, implementing layouts, meeting WCAG requirements or managing UI state. Do NOT use this skill when: the request is purely visual direction without implementation (use elevating-frontend-taste) or React performance tuning (use optimizing-react-performance).",
+      "source": "local",
+      "path": "refactored_skills/frontend/engineering-frontend-interfaces/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-472e244a044e",
+      "sha256": "472e244a044ea4dfc9b01452b2f2f07801b75772a489138ebbc19e7b554ecf0d",
+      "url": ""
+    },
+    {
+      "id": "lay-engineering-gsap-motion-uis",
+      "name": "engineering-gsap-motion-uis",
+      "description": "Engineers high-end UX/UI with advanced GSAP motion: Python-driven randomization for layout variance, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use this skill when: a page needs scroll-driven GSAP motion with an editorial layout. Do NOT use this skill when: only smooth scrolling is needed (use orchestrating-smooth-scroll) or for route transitions (use animating-react-view-transitions).",
+      "source": "local",
+      "path": "refactored_skills/frontend/engineering-gsap-motion-uis/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-660702e5d53c",
+      "sha256": "660702e5d53c79b3f163ab037e543667956e72a070eac20090155451d3d85bdd",
+      "url": ""
+    },
+    {
+      "id": "lay-governing-anti-slop-aesthetics",
+      "name": "governing-anti-slop-aesthetics",
+      "description": "Applies anti-slop design guidelines to interfaces: avoids generic AI-generated visual patterns and enforces deliberate visual tension, typographic voice, solid shadows, texture and information density, with WCAG AA contrast and reduced-motion support. Use this skill when: reviewing or building a landing page, dashboard or component that looks templated, generic or interchangeable. Do NOT use this skill when: the project already has a defined design system that must be followed exactly, or the task is a functional change with no visual impact.",
+      "source": "local",
+      "path": "refactored_skills/frontend/governing-anti-slop-aesthetics/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-d9d83547908a",
+      "sha256": "d9d83547908a1fecaaa47cb7a9f5dd2775bacec61c7ce56656dccf6134ea019f",
+      "url": ""
+    },
+    {
+      "id": "lay-optimizing-react-performance",
+      "name": "optimizing-react-performance",
+      "description": "Applies React and Next.js performance guidelines from Vercel Engineering when writing, reviewing or refactoring components, pages, data fetching or bundles. Use this skill when: writing, reviewing or refactoring React or Next.js code for performance, bundle size or data fetching. Do NOT use this skill when: the task is component API design (use architecting-react-composition) or React Native (use building-react-native-interfaces).",
+      "source": "local",
+      "path": "refactored_skills/frontend/optimizing-react-performance/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design",
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-c17b38c10567",
+      "sha256": "c17b38c10567392a46b0d4dee661331f55adec05908f29c9ca903d9c484ce490",
+      "url": ""
+    },
+    {
+      "id": "lay-orchestrating-smooth-scroll",
+      "name": "orchestrating-smooth-scroll",
+      "description": "Implements butter-smooth scrolling and scroll orchestration with Lenis, including React wrappers, virtual scroll, touch momentum, anchor navigation and GSAP ScrollTrigger synchronization. Use this skill when: adding Lenis smooth scrolling or syncing it with ScrollTrigger. Do NOT use this skill when: the page needs only GSAP ScrollTrigger motion without Lenis (use engineering-gsap-motion-uis).",
+      "source": "local",
+      "path": "refactored_skills/frontend/orchestrating-smooth-scroll/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto",
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-5322440492e0",
+      "sha256": "5322440492e0f3de474a5077976fdb6375c0fc8a167bf989f070f8aa8e715ac2",
+      "url": ""
+    },
+    {
+      "id": "lay-redesigning-legacy-interfaces",
+      "name": "redesigning-legacy-interfaces",
+      "description": "Upgrades existing websites and apps to premium quality: audits the current design, identifies generic AI patterns and applies high-end standards without breaking functionality, with any CSS framework or vanilla CSS. Use this skill when: improving the visual quality of an existing site or app. Do NOT use this skill when: building a new interface from scratch (use elevating-frontend-taste) or reviewing compliance only (use auditing-web-design-guidelines).",
+      "source": "local",
+      "path": "refactored_skills/frontend/redesigning-legacy-interfaces/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-f09dc4e69d17",
+      "sha256": "f09dc4e69d17a33fffabe86ac05cd6d68738d39af05b5958329afffb84077cd1",
+      "url": ""
+    },
+    {
+      "id": "lay-automating-browser-tests",
+      "name": "automating-browser-tests",
+      "description": "Automates browser interactions, tests web pages and works with Playwright tests from the Playwright CLI. Use this skill when: writing or running browser automation or Playwright tests against a web page. Do NOT use this skill when: inspecting a running page through DevTools signals such as console errors, network requests or performance (use testing-in-browser-with-devtools).",
+      "source": "local",
+      "path": "refactored_skills/qa/automating-browser-tests/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-6e6f3e4eae43",
+      "sha256": "6e6f3e4eae4305bfebb332221b69603778599631c422a6cb5ce104fe435d2847",
+      "url": ""
+    },
+    {
+      "id": "lay-driving-test-driven-development",
+      "name": "driving-test-driven-development",
+      "description": "Drives development with tests in a red-green-refactor loop when implementing logic, fixing a bug or changing behavior, to prove that the code works. Use this skill when: implementing any logic, fixing any bug or changing existing behavior. Do NOT use this skill when: the work is a browser-level check of a running page (use testing-in-browser-with-devtools) or a codebase quality scan (use scanning-codebase-quality).",
+      "source": "local",
+      "path": "refactored_skills/qa/driving-test-driven-development/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-57bdbc50fbea",
+      "sha256": "57bdbc50fbea33f672f072e55017309ddaa292ee8cef57bd53b4ea36d138ac28",
+      "url": ""
+    },
+    {
+      "id": "lay-enforcing-green-pull-requests",
+      "name": "enforcing-green-pull-requests",
+      "description": "Inspects and prepares the selected pull request queue against its exact current base, repairs authorized defects with contributor credit and reports full versus partial validation. Use this skill when: a maintainer pre-greens selected pull requests before merge. Do NOT use this skill when: merging (use merging-validated-pull-requests) or sweeping failing CI on the base branch (use sweeping-failing-ci-builds).",
+      "source": "local",
+      "path": "refactored_skills/qa/enforcing-green-pull-requests/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-b6d45c2e1cf0",
+      "sha256": "b6d45c2e1cf04611d1a7f9b8d1de161b02a3d0ec0ece4675a428f81d58e397a6",
+      "url": ""
+    },
+    {
+      "id": "lay-evaluating-model-benchmarks",
+      "name": "evaluating-model-benchmarks",
+      "description": "Creates and runs evaluation suites, watches live benchmark progress, views scorecards, compares model performance and integrates eval runs with CI workflows from the CLI. Use this skill when: benchmarking or comparing models through evaluation suites. Do NOT use this skill when: only checking that a model is reachable or configured (use querying-models-via-cli).",
+      "source": "local",
+      "path": "refactored_skills/qa/evaluating-model-benchmarks/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-33aed2a7b027",
+      "sha256": "33aed2a7b027455e94e120819631d5ae7e8109c9a84bcdaa531a97bb3c429ad5",
+      "url": ""
+    },
+    {
+      "id": "lay-running-playwright-dev-tools",
+      "name": "running-playwright-dev-tools",
+      "description": "Runs development workflows for the playwright-cli repository, such as rolling dependencies, releasing and other repository maintenance tasks. Use this skill when: maintaining the playwright-cli repository itself. Do NOT use this skill when: writing browser tests for an application (use automating-browser-tests).",
+      "source": "local",
+      "path": "refactored_skills/qa/running-playwright-dev-tools/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-f9f085677871",
+      "sha256": "f9f085677871ae89fa7641f8d66e7462ae4c09f2d748f005abdf734b16ed2e8a",
+      "url": ""
+    },
+    {
+      "id": "lay-scanning-codebase-quality",
+      "name": "scanning-codebase-quality",
+      "description": "Runs a scoped, read-only quality scan that reports exact-candidate evidence, failures and frozen debt, for ad-hoc gate sweeps or release preparation. Use this skill when: an ad-hoc quality gate sweep or release preparation needs a read-only scan. Do NOT use this skill when: full release acceptance is required (a static scan is not enough; use validating-green-release-gates) or the task is to repair failing builds (use sweeping-failing-ci-builds).",
+      "source": "local",
+      "path": "refactored_skills/qa/scanning-codebase-quality/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-4190f70251b2",
+      "sha256": "4190f70251b22db55512130214a2fe9690a1f428684f3c21db6cd7750cbb6591",
+      "url": ""
+    },
+    {
+      "id": "lay-sweeping-failing-ci-builds",
+      "name": "sweeping-failing-ci-builds",
+      "description": "Repairs confirmed CI failures base-first, then prepares the affected pull requests one at a time with exact-candidate evidence. Use this skill when: asked to sweep red builds or restore the pull request queue. Do NOT use this skill when: merging or closing pull requests, weakening tests or changing CI configuration, or running a read-only scan (use scanning-codebase-quality).",
+      "source": "local",
+      "path": "refactored_skills/qa/sweeping-failing-ci-builds/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-f0df82b1e1f1",
+      "sha256": "f0df82b1e1f162a68ec3246899211213b94728b80617ea4efb7ef34eaf22a446",
+      "url": ""
+    },
+    {
+      "id": "lay-testing-in-browser-with-devtools",
+      "name": "testing-in-browser-with-devtools",
+      "description": "Tests in real browsers through Chrome DevTools MCP: inspects the DOM, captures console errors, analyzes network requests, profiles performance and verifies visual output with runtime data. Use this skill when: building or debugging anything that runs in a browser. Do NOT use this skill when: only writing Playwright test code without runtime inspection (use automating-browser-tests).",
+      "source": "local",
+      "path": "refactored_skills/qa/testing-in-browser-with-devtools/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-7b372b88e23f",
+      "sha256": "7b372b88e23f128cc1f72042566b99150aeed363256706fc5dfd2b599e7f000e",
+      "url": ""
+    },
+    {
+      "id": "lay-validating-green-release-gates",
+      "name": "validating-green-release-gates",
+      "description": "Runs or inspects the local Release-Green observer for an exact base or combined pull request candidate, separating hard failures, advisory drift and incomplete evidence. Use this skill when: a maintainer runs a preflight on a release candidate. Do NOT use this skill when: full CI acceptance is required (a separate requirement) or for an ad-hoc read-only scan (use scanning-codebase-quality).",
+      "source": "local",
+      "path": "refactored_skills/qa/validating-green-release-gates/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-5b478eeac33b",
+      "sha256": "5b478eeac33b7fdec54fa2c5538f738e85e0e0a93c7d148b4fe6c881e3e061d6",
+      "url": ""
+    },
+    {
+      "id": "lay-analyzing-usage-call-logs",
+      "name": "analyzing-usage-call-logs",
+      "description": "Accesses detailed call logs and usage analytics for OmniRoute, filtering by provider, model, time range, status and cost, exporting logs and aggregating token usage across connections. Use this skill when: analyzing request history, token consumption or cost per provider, model or time range. Do NOT use this skill when: viewing live health or circuit state (use checking-omniroute-server-health) or setting spending limits (use enforcing-spending-budgets).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/analyzing-usage-call-logs/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-fb5db0986daa",
+      "sha256": "fb5db0986daa1643a6e525db32db24f4743e3b05a96ee14c655a561baa225bca",
+      "url": ""
+    },
+    {
+      "id": "lay-chatting-via-omniroute-cli",
+      "name": "chatting-via-omniroute-cli",
+      "description": "Sends chat completions, streams responses and starts an interactive REPL session from the OmniRoute CLI, with combo routing and system prompt configuration across all providers. Use this skill when: testing a model or combo interactively or sending a one-off chat request from the terminal. Do NOT use this skill when: integrating an application through the HTTP inference API (use executing-omniroute-inference).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/chatting-via-omniroute-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-be2c6dc46f39",
+      "sha256": "be2c6dc46f39263ee791220c50b8b5b4288db626a8528134e206284112d064cf",
+      "url": ""
+    },
+    {
+      "id": "lay-checking-omniroute-server-health",
+      "name": "checking-omniroute-server-health",
+      "description": "Checks OmniRoute server health, component status and live metrics from the CLI, including a real-time watch of circuit breakers and provider status. Use this skill when: verifying the server is up, inspecting component status or watching live provider health. Do NOT use this skill when: inspecting cost or usage history (use analyzing-usage-call-logs) or tuning circuit thresholds (use inspecting-resilience-circuits).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/checking-omniroute-server-health/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-218fa89a5849",
+      "sha256": "218fa89a5849891c9acde10c81fcc65810100a594cf1fb949be34759b3aa1bf0",
+      "url": ""
+    },
+    {
+      "id": "lay-collecting-cli-agent-skills",
+      "name": "collecting-cli-agent-skills",
+      "description": "Detects installed CLI coding tools (Claude Code, Codex, Cursor, Copilot, Cline and more), searches GitHub for matching agent skills and installs them into the detected tools through OmniRoute's built-in APIs. Use this skill when: distributing agent skills to the coding tools installed on the machine. Do NOT use this skill when: only importing skills from GitHub without tool detection (use importing-github-agent-skills).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/collecting-cli-agent-skills/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-46f65802dada",
+      "sha256": "46f65802dada6b047ca3cf78af561fd50275cd7d9b0307d8b8b299a01783a720",
+      "url": ""
+    },
+    {
+      "id": "lay-configuring-codex-cli-proxy",
+      "name": "configuring-codex-cli-proxy",
+      "description": "Walks through configuring the OpenAI Codex CLI on Linux, macOS or Windows to use OmniRoute as an OpenAI-compatible backend: detects OS and shell, writes config.toml with named profiles, sets environment variables and verifies the setup. Use this skill when: pointing the Codex CLI at OmniRoute. Do NOT use this skill when: configuring other tools or general CLI setup (use configuring-omniroute-cli-setup).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/configuring-codex-cli-proxy/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-3d132b6aa430",
+      "sha256": "3d132b6aa430ea26116a77053e81b77b4ba4b32360ffdd58e9658e2de5dfba1f",
+      "url": ""
+    },
+    {
+      "id": "lay-configuring-network-proxies",
+      "name": "configuring-network-proxies",
+      "description": "Configures HTTP, HTTPS and SOCKS proxies for upstream provider requests, with per-provider or global rules, connectivity tests and proxy rotation. Use this skill when: upstream provider traffic must go through a proxy or proxy rotation is needed. Do NOT use this skill when: exposing OmniRoute itself through a tunnel (use tunneling-omniroute-endpoints).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/configuring-network-proxies/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-4332f1b791e8",
+      "sha256": "4332f1b791e8b4c1f51b543f79cc191a2e50633c16052b85d620e2f42c3a855d",
+      "url": ""
+    },
+    {
+      "id": "lay-configuring-omniroute-cli-setup",
+      "name": "configuring-omniroute-cli-setup",
+      "description": "Runs initial OmniRoute setup, configures global CLI settings, manages environment variables, checks for updates and configures autostart through the CLI setup and config commands. Use this skill when: installing or first-configuring the OmniRoute CLI or changing its global settings. Do NOT use this skill when: changing application settings through the API (use configuring-omniroute-settings).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/configuring-omniroute-cli-setup/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-a594c1c7861d",
+      "sha256": "a594c1c7861d5bf2ca01f7e69fd02f6fca23c811cc4c703232089711e5c3c174",
+      "url": ""
+    },
+    {
+      "id": "lay-configuring-omniroute-settings",
+      "name": "configuring-omniroute-settings",
+      "description": "Reads and updates global application settings: system prompts, thinking budget, IP filters, payload rules, combo defaults and require-login configuration. Use this skill when: changing global OmniRoute behavior or login requirements. Do NOT use this skill when: configuring the CLI installation itself (use configuring-omniroute-cli-setup) or key-level limits (use enforcing-spending-budgets).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/configuring-omniroute-settings/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-15921bbfa359",
+      "sha256": "15921bbfa3591dd1114a5442cfbd31a597dda48f0f8bccac5f4580966a89f89b",
+      "url": ""
+    },
+    {
+      "id": "lay-coordinating-omniroute-a2a",
+      "name": "coordinating-omniroute-a2a",
+      "description": "Interacts with OmniRoute through the JSON-RPC 2.0 agent-to-agent protocol, using its six built-in A2A skills: smart-routing, quota-management, provider-discovery, cost-analysis, health-report and list-capabilities. Use this skill when: an agent must call OmniRoute as an A2A peer. Do NOT use this skill when: calling the standard inference endpoints (use executing-omniroute-inference) or using the A2A server from the terminal (use interacting-with-a2a-cli).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/coordinating-omniroute-a2a/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-68b3cbe70697",
+      "sha256": "68b3cbe70697637876c6ba4c034f393cf251b35b9f2ba6452918d1d1259d0852",
+      "url": ""
+    },
+    {
+      "id": "lay-enforcing-spending-budgets",
+      "name": "enforcing-spending-budgets",
+      "description": "Configures spending limits, token quotas and rate-limit policies per API key or globally, inspects current consumption and enforces cost controls across providers. Use this skill when: capping spend, tokens or request rates for a key or the whole deployment. Do NOT use this skill when: only reading usage history (use analyzing-usage-call-logs) or managing the keys themselves (use managing-api-keys).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/enforcing-spending-budgets/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-b2c18175b02a",
+      "sha256": "b2c18175b02aa5160568b403179ae48bd302c04637caaa45a971652d001880a5",
+      "url": ""
+    },
+    {
+      "id": "lay-executing-omniroute-inference",
+      "name": "executing-omniroute-inference",
+      "description": "Runs the core OpenAI-compatible inference endpoints: chat completions, embeddings, images, audio (TTS and STT), moderations, rerank and the Responses API, the primary integration surface for AI agents. Use this skill when: an application or agent must call models through OmniRoute's inference API. Do NOT use this skill when: sending a quick chat from the terminal (use chatting-via-omniroute-cli) or managing providers (use managing-omniroute-providers).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/executing-omniroute-inference/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-bbd590dd2040",
+      "sha256": "bbd590dd20400e5b473a643e5cb49a7b40aac906f0cbe353593311c436062e62",
+      "url": ""
+    },
+    {
+      "id": "lay-handling-omniroute-webhooks",
+      "name": "handling-omniroute-webhooks",
+      "description": "Registers, lists, tests and removes webhook endpoints, configures event subscriptions (request.completed, request.failed, quota.exceeded and others) and manages delivery retries. Use this skill when: notifying external systems about OmniRoute events. Do NOT use this skill when: polling status or logs instead of receiving events (use checking-omniroute-server-health or analyzing-usage-call-logs).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/handling-omniroute-webhooks/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-944620f15dcc",
+      "sha256": "944620f15dcc00e8da546f65199663e51eeecc31cf7856961c305e4c62547182",
+      "url": ""
+    },
+    {
+      "id": "lay-importing-github-agent-skills",
+      "name": "importing-github-agent-skills",
+      "description": "Searches, scores, scans and imports agent skills from GitHub repositories that contain SKILL.md, CLAUDE.md, .cursorrules and similar files, checking heuristic relevance and screening for malware or hardcoded secrets before installing. Use this skill when: discovering and importing community agent skills from GitHub. Do NOT use this skill when: distributing already-installed skills to local coding tools (use collecting-cli-agent-skills).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/importing-github-agent-skills/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-5a641348067a",
+      "sha256": "5a641348067ad6fb0b50139201252eaaf848a1ce19ec7f4a94959d211f1212f7",
+      "url": ""
+    },
+    {
+      "id": "lay-inspecting-mcp-server-cli",
+      "name": "inspecting-mcp-server-cli",
+      "description": "Inspects MCP server status from the CLI, listing registered tools and scopes, running tool invocations and managing MCP audit logs. Use this skill when: checking which MCP tools and scopes are registered or auditing MCP calls from the terminal. Do NOT use this skill when: connecting an MCP client to the server (use integrating-omniroute-mcp-server).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/inspecting-mcp-server-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-39bd93d82fb8",
+      "sha256": "39bd93d82fb8eb5d215593ec3d8bc708bd9a35dfe29d40c35fe335a87c4d9441",
+      "url": ""
+    },
+    {
+      "id": "lay-inspecting-resilience-circuits",
+      "name": "inspecting-resilience-circuits",
+      "description": "Inspects and manages circuit-breaker states, connection cooldowns, quota limits and backoff levels from the CLI, resets stuck providers and configures resilience thresholds. Use this skill when: a provider is stuck in cooldown or an open circuit must be reset or retuned. Do NOT use this skill when: only monitoring latency and health trends (use monitoring-omniroute-resilience).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/inspecting-resilience-circuits/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-cc699cd10056",
+      "sha256": "cc699cd10056e26cf78c7b1ca1e6b3264bf1903676413c6dda148658979dcee5",
+      "url": ""
+    },
+    {
+      "id": "lay-inspecting-spending-costs-cli",
+      "name": "inspecting-spending-costs-cli",
+      "description": "Views cost breakdowns, token usage and call logs from the CLI, filtered by provider, model or date range, exporting usage reports and inspecting per-connection spending. Use this skill when: checking spend from the terminal or exporting a usage report. Do NOT use this skill when: setting budgets or limits (use enforcing-spending-budgets) or using the HTTP analytics surface (use analyzing-usage-call-logs).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/inspecting-spending-costs-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-0d8ce35fba9a",
+      "sha256": "0d8ce35fba9a5b580bb7c1e89af21dc8132e5287b7c65f74a25395dc54be46f1",
+      "url": ""
+    },
+    {
+      "id": "lay-integrating-omniroute-mcp-server",
+      "name": "integrating-omniroute-mcp-server",
+      "description": "Connects to the OmniRoute MCP server, with 110 tools over SSE, stdio or HTTP transports, covering routing, cache, compression, memory, skills, providers and audit tools across 33 permission scopes. Use this skill when: wiring an MCP client to OmniRoute. Do NOT use this skill when: only inspecting the MCP server from the terminal (use inspecting-mcp-server-cli).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/integrating-omniroute-mcp-server/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-8c3935f7077e",
+      "sha256": "8c3935f7077e130e44a25f7cb24c26c667b5c4cc91bfa68f7ee72206048f6499",
+      "url": ""
+    },
+    {
+      "id": "lay-interacting-with-a2a-cli",
+      "name": "interacting-with-a2a-cli",
+      "description": "Interacts with the OmniRoute A2A server from the CLI: sends tasks, inspects skill execution history and tests the JSON-RPC 2.0 agent-to-agent protocol interactively. Use this skill when: testing A2A tasks from the terminal. Do NOT use this skill when: an agent integrates with A2A programmatically (use coordinating-omniroute-a2a).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/interacting-with-a2a-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-c217ba3113dd",
+      "sha256": "c217ba3113dd756aa184387157fcb20b140d87bf386854cdc605816ba9870d84",
+      "url": ""
+    },
+    {
+      "id": "lay-invoking-cli-tool-plugins",
+      "name": "invoking-cli-tool-plugins",
+      "description": "Manages CLI tool integrations exposed through the API: lists, configures and invokes CLI tool plugins that extend OmniRoute's automation surface. Use this skill when: running or configuring an existing CLI tool plugin through the API. Do NOT use this skill when: creating or installing skills and plugins (use managing-omni-skills-and-memory).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/invoking-cli-tool-plugins/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-3e9cac8ae058",
+      "sha256": "3e9cac8ae058966c753737eef7b3e3ee6fc507e31826fadc41bb94b3414868f8",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-embedded-service-versions",
+      "name": "managing-embedded-service-versions",
+      "description": "Installs, starts, stops, restarts and updates embedded services (9Router, CLIProxyAPI), monitors their status and logs and configures auto-start for local-only service endpoints. Use this skill when: running or upgrading an embedded OmniRoute service. Do NOT use this skill when: managing the OmniRoute server daemon itself (use managing-omniroute-server-daemon).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-embedded-service-versions/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-2c971c93a451",
+      "sha256": "2c971c93a45104e0ba0542e3a16b38b47e9162863c639880628bca63f72022e3",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-omni-skills-and-memory",
+      "name": "managing-omni-skills-and-memory",
+      "description": "Manages Omni Skills (list, install, test, remove), plugins (create, configure) and persistent memory (search, add, clear) from the CLI. Use this skill when: installing or removing skills and plugins or managing persistent memory entries. Do NOT use this skill when: importing skills from GitHub (use importing-github-agent-skills) or invoking an installed CLI tool plugin (use invoking-cli-tool-plugins).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-omni-skills-and-memory/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-05d1c12a16f0",
+      "sha256": "05d1c12a16f040f54fbef4e43a47de1ac3c4b62a63a67c72eeb5645f71849970",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-omniroute-providers",
+      "name": "managing-omniroute-providers",
+      "description": "Manages provider connections, API keys, OAuth flows and connection tests through the REST API: lists, adds, updates, removes and tests AI provider integrations across the provider catalog. Use this skill when: adding or changing a provider connection via the API. Do NOT use this skill when: doing the same from the CLI (use managing-providers-via-cli) or configuring upstream network proxies (use configuring-network-proxies).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-omniroute-providers/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-88d2854f7a75",
+      "sha256": "88d2854f7a751cf7a3e386a8e11f02e3c15a8257c1c3b1dc2018f8cd392bafee",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-omniroute-server-daemon",
+      "name": "managing-omniroute-server-daemon",
+      "description": "Starts, stops and restarts the OmniRoute server from the CLI, managing daemon mode, port configuration, auto-recovery, system tray integration and the dashboard shortcut. Use this skill when: running the OmniRoute server as a daemon or changing its port or recovery behavior. Do NOT use this skill when: configuring the embedded services (use managing-embedded-service-versions).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-omniroute-server-daemon/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-76c3aab179a2",
+      "sha256": "76c3aab179a2f5410a7a161512460f16e7235b8b0b9fe0e9f516ce5d4c039797",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-providers-via-cli",
+      "name": "managing-providers-via-cli",
+      "description": "Manages provider connections from the CLI: lists available and configured providers, adds, tests, validates and rotates API keys, and views per-provider metrics. Use this skill when: adding, testing or rotating a provider connection from the terminal. Do NOT use this skill when: working through the REST API (use managing-omniroute-providers).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-providers-via-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-a10fe69e4e9e",
+      "sha256": "a10fe69e4e9ef5a417dd2ae4681c59ce87ff59c3b41792dbf39542904a92f4af",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-routing-combos-cli",
+      "name": "managing-routing-combos-cli",
+      "description": "Creates, lists, updates and deletes routing combos from the CLI, tests routing strategies, inspects combo metrics and configures fallback chains interactively. Use this skill when: maintaining combos or fallback chains from the terminal. Do NOT use this skill when: designing combo strategies through the API (use routing-omniroute-combos).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-routing-combos-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-88af67608cc4",
+      "sha256": "88af67608cc4273459ee783731c98892275b61547d31fac41c1c118bea404b6a",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-tunnels-via-cli",
+      "name": "managing-tunnels-via-cli",
+      "description": "Starts and stops tunnel connections (ngrok, Cloudflare, custom) from the CLI, inspects active tunnel URLs, configures authentication and tests external reachability. Use this skill when: opening or checking a tunnel from the terminal. Do NOT use this skill when: creating tunnels through the API (use tunneling-omniroute-endpoints).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/managing-tunnels-via-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-9fd878047320",
+      "sha256": "9fd878047320c326e719343877ba43a3aae7a4c367f41177d4f31d71d264b352",
+      "url": ""
+    },
+    {
+      "id": "lay-monitoring-omniroute-resilience",
+      "name": "monitoring-omniroute-resilience",
+      "description": "Monitors provider health, circuit-breaker states, p50/p95/p99 latency and budget guard alerts, inspecting connection cooldowns and model lockouts in real time. Use this skill when: watching latency trends, provider health or lockouts. Do NOT use this skill when: resetting a stuck provider or changing thresholds (use inspecting-resilience-circuits).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/monitoring-omniroute-resilience/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-d2eb80341bc4",
+      "sha256": "d2eb80341bc458abc61f2c68eb88ec33f54ddad3e83aa20c3ba17c646bb95d11",
+      "url": ""
+    },
+    {
+      "id": "lay-querying-models-via-cli",
+      "name": "querying-models-via-cli",
+      "description": "Queries available AI models, lists aliases and browses the model catalog from the CLI, filtering by provider, searching by capability and resolving model name variants. Use this skill when: finding a model name or alias from the terminal. Do NOT use this skill when: querying models through the API (use querying-omniroute-models).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/querying-models-via-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-84c4e94b269b",
+      "sha256": "84c4e94b269b212f6ff943938d23d6ea41058b6ad9f543bf0d92296b0aef5233",
+      "url": ""
+    },
+    {
+      "id": "lay-querying-omniroute-models",
+      "name": "querying-omniroute-models",
+      "description": "Queries available AI models across all configured providers through the API: lists models, resolves aliases and browses the full catalog including provider-specific variants. Use this skill when: an application needs model names, aliases or catalog data. Do NOT use this skill when: querying from the terminal (use querying-models-via-cli).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/querying-omniroute-models/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-55cec65deb35",
+      "sha256": "55cec65deb35d3f9f3c774f95c32765bea3b912cd0434b9d367c1110cd93f135",
+      "url": ""
+    },
+    {
+      "id": "lay-routing-omniroute-combos",
+      "name": "routing-omniroute-combos",
+      "description": "Creates and manages routing combos with 19 strategies (priority, weighted, round-robin, auto-combo and more), configures fallback chains, tests routing outcomes and retrieves combo metrics. Use this skill when: designing or evaluating combo routing strategies through the API. Do NOT use this skill when: maintaining combos from the terminal (use managing-routing-combos-cli).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/routing-omniroute-combos/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-66e049d3bdf1",
+      "sha256": "66e049d3bdf166110619355f845ab0ab1a1c75a8e7ed997290af2f949c9b050e",
+      "url": ""
+    },
+    {
+      "id": "lay-submitting-batch-inference-jobs",
+      "name": "submitting-batch-inference-jobs",
+      "description": "Submits and monitors batch inference jobs from the CLI, uploads files for batch processing, retrieves results and integrates batch pipelines with CI/CD workflows. Use this skill when: running large batches of inference from the terminal or a CI pipeline. Do NOT use this skill when: sending single real-time requests (use executing-omniroute-inference).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/submitting-batch-inference-jobs/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-0d682b06dae6",
+      "sha256": "0d682b06dae61ff5ef4875009ad6c0a80ae21b1abe70a56fe8300ac0564dc429",
+      "url": ""
+    },
+    {
+      "id": "lay-tunneling-omniroute-endpoints",
+      "name": "tunneling-omniroute-endpoints",
+      "description": "Creates and manages secure tunnels (ngrok, Cloudflare Tunnel, custom) to expose OmniRoute to the internet or share access with remote agents and CI pipelines. Use this skill when: making an OmniRoute endpoint reachable from outside the machine through the API. Do NOT use this skill when: only proxying upstream provider traffic (use configuring-network-proxies).",
+      "source": "local",
+      "path": "refactored_skills/routing-and-proxy/tunneling-omniroute-endpoints/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "operacoes"
+      ],
+      "version": "refactored",
+      "commit": "content-c06e40ab3885",
+      "sha256": "c06e40ab38851dfec970a15ea14ae00fb54257c3840e8220de04247cd7422c6e",
+      "url": ""
+    },
+    {
+      "id": "lay-auditing-access-policies",
+      "name": "auditing-access-policies",
+      "description": "Audits access policies and activity from the OmniRoute CLI: inspects audit logs, telemetry and request history, filtering by event type, user or time range for compliance reviews. Use this skill when: reviewing who accessed what, investigating access events, or gathering compliance evidence about access policies. Do NOT use this skill when: creating or revoking API keys (use managing-api-keys) or authenticating a request (use authenticating-api-sessions).",
+      "source": "local",
+      "path": "refactored_skills/security/auditing-access-policies/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-479ed725263c",
+      "sha256": "479ed725263c3ff820730c7c6761abb54b3267165673cd10aca770d696f5e300",
+      "url": ""
+    },
+    {
+      "id": "lay-auditing-code-security",
+      "name": "auditing-code-security",
+      "description": "Applies secure-coding guidelines when writing or reviewing code, flagging vulnerabilities such as injection, broken authentication and unsafe file, database, network, cryptography or infrastructure configuration. Use this skill when: writing or reviewing code that handles user input, authentication, file operations, database queries, network requests, cryptography, or infrastructure (Terraform, Kubernetes, Docker, GitHub Actions), or when asked to check code for bugs or safety. Do NOT use this skill when: running a tool-based static scan with Semgrep (use scanning-code-with-semgrep) or only fixing a non-security typo.",
+      "source": "local",
+      "path": "refactored_skills/security/auditing-code-security/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-d9df2ffe1de3",
+      "sha256": "d9df2ffe1de3553e001a30b4a17af0c81d5560efc7a4298439e36b6937346f9f",
+      "url": ""
+    },
+    {
+      "id": "lay-authenticating-api-sessions",
+      "name": "authenticating-api-sessions",
+      "description": "Manages API key authentication and session tokens for the OmniRoute API: sends Bearer tokens, obtains session cookies and configures login requirements. Use this skill when: a request must be authenticated with a Bearer token or session cookie, or login requirements must be configured. Do NOT use this skill when: creating, rotating or revoking the keys themselves (use managing-api-keys or managing-cli-keys).",
+      "source": "local",
+      "path": "refactored_skills/security/authenticating-api-sessions/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-15dd6320919a",
+      "sha256": "15dd6320919a77ffa47217cfe8a4aaeeb9031610c826a56e036822418291ee60",
+      "url": ""
+    },
+    {
+      "id": "lay-hardening-application-security",
+      "name": "hardening-application-security",
+      "description": "Hardens code against vulnerabilities by checking input handlers, authentication, data storage, external integrations, dependency risk and OWASP Top Ten exposure. Use this skill when: auditing an input handler, handling untrusted input, user sessions or third-party services, triaging dependency audit findings, or handling personal data under GDPR or CCPA. Do NOT use this skill when: only running a Semgrep pattern scan (use scanning-code-with-semgrep) or securing an LLM application specifically (use securing-llm-applications).",
+      "source": "local",
+      "path": "refactored_skills/security/hardening-application-security/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-7385a3d70996",
+      "sha256": "7385a3d70996370749898b021930ae7e5b38f2aab49d9835cbb2b5f29cfa06f5",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-api-keys",
+      "name": "managing-api-keys",
+      "description": "Creates, lists, rotates and revokes OmniRoute API keys, controlling per-key scopes, spending limits, expiration and model allowlists. Use this skill when: managing the lifecycle or permissions of OmniRoute API keys. Do NOT use this skill when: authenticating a request with an existing key (use authenticating-api-sessions) or managing keys from the CLI (use managing-cli-keys).",
+      "source": "local",
+      "path": "refactored_skills/security/managing-api-keys/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia",
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-313a257a1fd3",
+      "sha256": "313a257a1fd3510da9af9403a9131baceb68d7daccc6e690e38ecf875df36f1b",
+      "url": ""
+    },
+    {
+      "id": "lay-managing-cli-keys",
+      "name": "managing-cli-keys",
+      "description": "Creates, lists, rotates and revokes OmniRoute API keys from the CLI, manages OAuth flows for provider authentication and inspects key scopes and expiration. Use this skill when: handling API keys or provider OAuth through the OmniRoute CLI. Do NOT use this skill when: calling the HTTP API directly (use managing-api-keys) or authenticating a request (use authenticating-api-sessions).",
+      "source": "local",
+      "path": "refactored_skills/security/managing-cli-keys/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-cd77eabdaa27",
+      "sha256": "cd77eabdaa27229f3af91975051bafb5297eacdd3dd1773620ac693fa1d3a757",
+      "url": ""
+    },
+    {
+      "id": "lay-scanning-code-with-semgrep",
+      "name": "scanning-code-with-semgrep",
+      "description": "Runs Semgrep static analysis scans and writes custom YAML detection rules across 30+ languages to find security vulnerabilities and bug patterns. Use this skill when: asked to scan code with Semgrep, find vulnerabilities, write custom rules, run static analysis or enforce coding standards. Do NOT use this skill when: reviewing code by reading it without a scanner (use auditing-code-security) or auditing LLM application risks (use securing-llm-applications).",
+      "source": "local",
+      "path": "refactored_skills/security/scanning-code-with-semgrep/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-84d59f1ccbbd",
+      "sha256": "84d59f1ccbbdd42925c2b2242ac209b755a1cbda61c41df62dc9869861ea50cb",
+      "url": ""
+    },
+    {
+      "id": "lay-scanning-dependency-vulnerabilities",
+      "name": "scanning-dependency-vulnerabilities",
+      "description": "Scans a repository for dependency vulnerabilities, CVEs, license compliance problems, insecure code patterns and OWASP Top 10 risks. Use this skill when: asked to scan a repository for dependency vulnerabilities, license issues or CVEs. Do NOT use this skill when: fixing one known vulnerable package by hand or reviewing application logic (use hardening-application-security).",
+      "source": "local",
+      "path": "refactored_skills/security/scanning-dependency-vulnerabilities/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-63eab51ccc22",
+      "sha256": "63eab51ccc227ca1b9435ad80694f8ae745e43e2d57a2937522cd0d470d2632d",
+      "url": ""
+    },
+    {
+      "id": "lay-securing-llm-applications",
+      "name": "securing-llm-applications",
+      "description": "Applies the OWASP Top 10 for LLM 2025 security guidelines to LLM applications, covering prompt injection, RAG pipelines, and tool-using or agentic systems. Use this skill when: building chatbots, AI agents, RAG pipelines or any app that calls an LLM API (OpenAI, Anthropic, Gemini), or reviewing AI security or prompt injection. Do NOT use this skill when: the code calls no LLM and has no AI component (use auditing-code-security).",
+      "source": "local",
+      "path": "refactored_skills/security/securing-llm-applications/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "seguranca"
+      ],
+      "version": "refactored",
+      "commit": "content-d710563e7878",
+      "sha256": "d710563e7878c568e43b595a49c419061b62d535872896cd17183c6bcc8a4f99",
+      "url": ""
+    }
+  ]
+}
