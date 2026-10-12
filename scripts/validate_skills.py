@@ -23,6 +23,8 @@ import yaml
 
 REPO = Path(__file__).resolve().parent.parent
 BOIL = re.compile(r"Executa rotinas especializadas para|targetPath: string|Executar Ação Principal|Executar rotina atômica de|Executa fluxo padrão|Do NOT use this skill when: a tarefa exigir outro domínio")
+# Marcador de rascunho deixado por scripts/nova_skill.py até o autor preencher o corpo.
+PLACEHOLDER = re.compile(r'\[PREENCHER[^\]]*\]')
 FILLER = re.compile(r"Documentação e especificações aprofundadas|Siga os procedimentos prescritos|## Modelos e Blocos de Código Extraídos|## Visão Geral e Especificações")
 # Termos de identidade e lista de skills retiradas ficam no cofre local (não versionados), para não expô-los aqui.
 _MARCA = REPO / 'skills-privadas-lay' / 'tools' / 'marca.json'
@@ -82,6 +84,8 @@ class Validador:
                 self.erro(f'{onde}: name {nome!r} != pasta')
             if not re.fullmatch(r'[a-z0-9-]{1,64}', str(nome)):
                 self.erro(f'{onde}: name fora do padrão')
+            elif not re.search(r'(^|-)[a-z]+ing(-|$)', str(nome)):
+                self.erro(f'{onde}: name sem gerúndio (-ing), ver docs/PADRAO_DE_SKILLS.md, seção 1')
             if not isinstance(desc, str):
                 self.erro(f'{onde}: description não é texto')
                 continue
@@ -94,6 +98,8 @@ class Validador:
                 self.erro(f'{onde}: sem "Do NOT use this skill when:"')
             if BOIL.search(texto):
                 self.erro(f'{onde}: boilerplate da Fase 1')
+            if PLACEHOLDER.search(texto):
+                self.erro(f'{onde}: marcador [PREENCHER] não preenchido')
             if FILLER.search(texto):
                 self.erro(f'{onde}: preenchimento genérico')
             if not self.privado and BRAND and BRAND.search(texto):

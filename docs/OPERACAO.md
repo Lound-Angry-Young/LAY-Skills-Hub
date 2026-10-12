@@ -7,8 +7,8 @@ Requisitos para o hub: Git, Python 3.10+ e acesso às fontes GitHub durante clon
 ## Um comando no Windows
 
 ```powershell
-git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git
-cd SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS
+git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
+cd LAY-Skills-Hub
 ./install.ps1
 ```
 
@@ -17,6 +17,10 @@ Se o repositório já foi clonado, `git submodule update --init --recursive` tra
 ```powershell
 python scripts/skill_hub.py install --agents all
 python scripts/skill_hub.py doctor
+python scripts/nova_skill.py dominios
+python scripts/nova_skill.py nova <nome> --dominio <dominio> --descricao "<texto>" --corpo corpo.md
+python scripts/nova_skill.py lote <pasta>
+python scripts/nova_skill.py regenerar
 python scripts/skill_hub.py search design
 python scripts/skill_hub.py scan
 python scripts/skill_hub.py start --project 'C:\caminho\do\projeto'
