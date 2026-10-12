@@ -735,12 +735,11 @@ def start(home, project, refresh=False, offline=False):
     else:
         source_root = Path(state['source_root'])
         if (source_root / '.git').exists():
-            # Execute the maintained repository version, not a potentially stale runtime copy.
-            result = run([state.get('python', sys.executable), source_root / 'scripts/skill_hub.py', 'sync', '--apply'], timeout=600, check=False)
+            # Regra: o início de sessão só consulta. Não altera arquivos do repositório nem reinstala;
+            # atualizações são aplicadas explicitamente com `sync --apply` e commitadas.
+            result = run([state.get('python', sys.executable), source_root / 'scripts/skill_hub.py', 'sync', '--check'], timeout=600, check=False)
             print(result.stdout, end='')
             checked = result.returncode == 0
-            if checked:
-                install(home, state['agents'], source_root)
         else:
             print('⚠️ Clone pai indisponível; catálogo local preservado. Reinstale a partir de um clone para atualizar.')
     report, inventory = project_report(project)
