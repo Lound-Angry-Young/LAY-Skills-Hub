@@ -1,12 +1,12 @@
 ---
 name: lay-qa
-description: "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge ou benchmarks. Não use para: implementar funcionalidades sem foco em teste."
+description: "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades sem foco em teste."
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
 # lay-qa
 
-Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge ou benchmarks. Não use para: implementar funcionalidades sem foco em teste.
+Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades sem foco em teste.
 
 ## Skills do domínio
 
@@ -30,6 +30,8 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Tests in real browsers through Chrome DevTools MCP: inspects the DOM, captures console errors, analyzes network requests, profiles performance and verifies visual output with runtime data. Use this skill when: building or debugging anything
 - `validating-green-release-gates`: `refactored_skills/qa/validating-green-release-gates/SKILL.md`
   Runs or inspects the local Release-Green observer for an exact base or combined pull request candidate, separating hard failures, advisory drift and incomplete evidence. Use this skill when: a maintainer runs a preflight on a release candid
+- `verifying-animated-component-compliance`: `refactored_skills/qa/verifying-animated-component-compliance/SKILL.md`
+  Verifies a copied or generated animated UI component against the project rules: local imports resolved, use client where hooks are used, reduced-motion handling present, at most one WebGL component per route, touch fallback for pointer-only
 
 ## Regras de atuação
 

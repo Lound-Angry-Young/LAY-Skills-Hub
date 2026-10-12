@@ -1084,6 +1084,21 @@
       "url": ""
     },
     {
+      "id": "lay-clarifying-screen-requirements",
+      "name": "clarifying-screen-requirements",
+      "description": "Asks targeted questions before a screen, landing page, section or animated component is generated, to capture the real goal, primary device, stack, visual direction, motion tolerance, performance budget and content status, so the output does not rest on silent assumptions. Use this skill when: a request asks to create or generate a screen, page, section or component and at least one critical fact is missing. Do NOT use this skill when: the user already gave the critical facts, the task is a bug fix or a code review, or the question is product discovery (use interviewing-user-requirements).",
+      "source": "local",
+      "path": "refactored_skills/frontend/clarifying-screen-requirements/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-d5af73fcfcbd",
+      "sha256": "d5af73fcfcbd04260320d2bd79c6522f1dd90ff2c4bb3be3604754b4f40577bb",
+      "url": ""
+    },
+    {
       "id": "lay-converting-images-to-code",
       "name": "converting-images-to-code",
       "description": "Converts a visually important website into code by first generating section-specific design images, analyzing them in depth and implementing the site to match them as closely as possible, with a clean, readable hero. Use this skill when: turning a website design image or mockup into implemented web code. Do NOT use this skill when: the target is a mobile app (use building-react-native-interfaces) or the request has no visual reference to match.",
@@ -1205,6 +1220,21 @@
       "url": ""
     },
     {
+      "id": "lay-integrating-external-ui-components",
+      "name": "integrating-external-ui-components",
+      "description": "Installs and adapts one Pixel-Perfect or Componentry component in a React or Next.js project: fetches only the chosen item and the registry files it needs through the shadcn CLI at the moment of use, prepares the utils helper and TypeScript types, keeps the MIT notice, adds the use client directive and reduced-motion handling, adds touch fallback for pointer-only effects and removes debug controls. Use this skill when: copying an item from those registries into a project after the item was chosen. Do NOT use this skill when: choosing the component (use selecting-animated-ui-components), writing a component from scratch (use engineering-frontend-interfaces) or checking a finished component (use verifying-animated-component-compliance).",
+      "source": "local",
+      "path": "refactored_skills/frontend/integrating-external-ui-components/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-2f7095723d95",
+      "sha256": "2f7095723d9509268f371cdef95d0374a17443e63f9979ca3084a534b1b4e2b8",
+      "url": ""
+    },
+    {
       "id": "lay-optimizing-react-performance",
       "name": "optimizing-react-performance",
       "description": "Applies React and Next.js performance guidelines from Vercel Engineering when writing, reviewing or refactoring components, pages, data fetching or bundles. Use this skill when: writing, reviewing or refactoring React or Next.js code for performance, bundle size or data fetching. Do NOT use this skill when: the task is component API design (use architecting-react-composition) or React Native (use building-react-native-interfaces).",
@@ -1249,6 +1279,21 @@
       "version": "refactored",
       "commit": "content-f09dc4e69d17",
       "sha256": "f09dc4e69d17a33fffabe86ac05cd6d68738d39af05b5958329afffb84077cd1",
+      "url": ""
+    },
+    {
+      "id": "lay-selecting-animated-ui-components",
+      "name": "selecting-animated-ui-components",
+      "description": "Selects an animated UI component from the Pixel-Perfect and Componentry registries for a screen need, ranking options by rendering cost tier, reduced-motion handling, client-component requirements, touch fallback and missing local files. Use this skill when: choosing a text effect, button, image reveal, gallery or carousel, scroll section, cursor effect, background, card, 3D element, SVG or logo, navigation dock or page block from those two registries. Do NOT use this skill when: the component is a plain React component without animation, a react-bits component (use animating-react-bits-components), a route transition (use animating-react-view-transitions), a smooth-scroll setup (use orchestrating-smooth-scroll), or the requirements are still unknown (use clarifying-screen-requirements first).",
+      "source": "local",
+      "path": "refactored_skills/frontend/selecting-animated-ui-components/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-c1eabcdb5adf",
+      "sha256": "c1eabcdb5adfac540db46fb0f4e390bcc5594abc5033d43777a5d6e0c45c7583",
       "url": ""
     },
     {
@@ -1384,6 +1429,21 @@
       "version": "refactored",
       "commit": "content-5b478eeac33b",
       "sha256": "5b478eeac33b7fdec54fa2c5538f738e85e0e0a93c7d148b4fe6c881e3e061d6",
+      "url": ""
+    },
+    {
+      "id": "lay-verifying-animated-component-compliance",
+      "name": "verifying-animated-component-compliance",
+      "description": "Verifies a copied or generated animated UI component against the project rules: local imports resolved, use client where hooks are used, reduced-motion handling present, at most one WebGL component per route, touch fallback for pointer-only effects, debug controls removed, license notice kept, and the project type-checks and builds. Use this skill when: an animated component was just added or generated and needs a compliance check before delivery. Do NOT use this skill when: choosing a component (use selecting-animated-ui-components), installing it (use integrating-external-ui-components) or running end-to-end browser tests (use automating-browser-tests).",
+      "source": "local",
+      "path": "refactored_skills/qa/verifying-animated-component-compliance/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "testes"
+      ],
+      "version": "refactored",
+      "commit": "content-ef5155a14f7a",
+      "sha256": "ef5155a14f7a30877ce5590aa4f81c12ddc3a3ca7d584f2f1fb616b32152b59d",
       "url": ""
     },
     {

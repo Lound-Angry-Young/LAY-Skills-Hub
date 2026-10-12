@@ -1,8 +1,8 @@
 {
-  "total_refactored_skills": 132,
+  "total_refactored_skills": 136,
   "total_domains": 11,
-  "skills_with_reference": 81,
-  "skills_with_reference_pointer": 81,
+  "skills_with_reference": 82,
+  "skills_with_reference_pointer": 82,
   "excluded_from_public_count": 10,
   "domain_details": {
     "context": {
@@ -105,7 +105,7 @@
       ]
     },
     "frontend": {
-      "count": 18,
+      "count": 21,
       "skills": [
         "animating-react-bits-components",
         "animating-react-view-transitions",
@@ -114,6 +114,7 @@
         "auditing-web-design-guidelines",
         "authoring-stitch-design-systems",
         "building-react-native-interfaces",
+        "clarifying-screen-requirements",
         "converting-images-to-code",
         "crafting-high-end-visuals",
         "designing-minimalist-interfaces",
@@ -122,13 +123,15 @@
         "engineering-frontend-interfaces",
         "engineering-gsap-motion-uis",
         "governing-anti-slop-aesthetics",
+        "integrating-external-ui-components",
         "optimizing-react-performance",
         "orchestrating-smooth-scroll",
-        "redesigning-legacy-interfaces"
+        "redesigning-legacy-interfaces",
+        "selecting-animated-ui-components"
       ]
     },
     "qa": {
-      "count": 9,
+      "count": 10,
       "skills": [
         "automating-browser-tests",
         "driving-test-driven-development",
@@ -138,7 +141,8 @@
         "scanning-codebase-quality",
         "sweeping-failing-ci-builds",
         "testing-in-browser-with-devtools",
-        "validating-green-release-gates"
+        "validating-green-release-gates",
+        "verifying-animated-component-compliance"
       ]
     },
     "routing-and-proxy": {

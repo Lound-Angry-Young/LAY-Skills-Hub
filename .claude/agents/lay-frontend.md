@@ -1,12 +1,12 @@
 ---
 name: lay-frontend
-description: "Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura."
+description: "Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), componentes animados dos registros Pixel-Perfect e Componentry (escolha por custo, instalação e esclarecimento de requisitos antes de gerar telas), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura."
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
 # lay-frontend
 
-Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura.
+Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), componentes animados dos registros Pixel-Perfect e Componentry (escolha por custo, instalação e esclarecimento de requisitos antes de gerar telas), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura.
 
 ## Skills do domínio
 
@@ -26,6 +26,8 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Generates semantic DESIGN.md files for Google Stitch that enforce premium, anti-generic UI standards: strict typography, calibrated color, asymmetric layouts, perpetual micro-motion and hardware-accelerated performance. Use this skill when:
 - `building-react-native-interfaces`: `refactored_skills/frontend/building-react-native-interfaces/SKILL.md`
   Applies React Native and Expo best practices for performant mobile apps: component structure, list performance, animations and native module usage. Use this skill when: building React Native components, optimizing list performance, implemen
+- `clarifying-screen-requirements`: `refactored_skills/frontend/clarifying-screen-requirements/SKILL.md`
+  Asks targeted questions before a screen, landing page, section or animated component is generated, to capture the real goal, primary device, stack, visual direction, motion tolerance, performance budget and content status, so the output doe
 - `converting-images-to-code`: `refactored_skills/frontend/converting-images-to-code/SKILL.md`
   Converts a visually important website into code by first generating section-specific design images, analyzing them in depth and implementing the site to match them as closely as possible, with a clean, readable hero. Use this skill when: tu
 - `crafting-high-end-visuals`: `refactored_skills/frontend/crafting-high-end-visuals/SKILL.md`
@@ -42,12 +44,16 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Engineers high-end UX/UI with advanced GSAP motion: Python-driven randomization for layout variance, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use t
 - `governing-anti-slop-aesthetics`: `refactored_skills/frontend/governing-anti-slop-aesthetics/SKILL.md`
   Applies anti-slop design guidelines to interfaces: avoids generic AI-generated visual patterns and enforces deliberate visual tension, typographic voice, solid shadows, texture and information density, with WCAG AA contrast and reduced-moti
+- `integrating-external-ui-components`: `refactored_skills/frontend/integrating-external-ui-components/SKILL.md`
+  Installs and adapts one Pixel-Perfect or Componentry component in a React or Next.js project: fetches only the chosen item and the registry files it needs through the shadcn CLI at the moment of use, prepares the utils helper and TypeScript
 - `optimizing-react-performance`: `refactored_skills/frontend/optimizing-react-performance/SKILL.md`
   Applies React and Next.js performance guidelines from Vercel Engineering when writing, reviewing or refactoring components, pages, data fetching or bundles. Use this skill when: writing, reviewing or refactoring React or Next.js code for pe
 - `orchestrating-smooth-scroll`: `refactored_skills/frontend/orchestrating-smooth-scroll/SKILL.md`
   Implements butter-smooth scrolling and scroll orchestration with Lenis, including React wrappers, virtual scroll, touch momentum, anchor navigation and GSAP ScrollTrigger synchronization. Use this skill when: adding Lenis smooth scrolling o
 - `redesigning-legacy-interfaces`: `refactored_skills/frontend/redesigning-legacy-interfaces/SKILL.md`
   Upgrades existing websites and apps to premium quality: audits the current design, identifies generic AI patterns and applies high-end standards without breaking functionality, with any CSS framework or vanilla CSS. Use this skill when: imp
+- `selecting-animated-ui-components`: `refactored_skills/frontend/selecting-animated-ui-components/SKILL.md`
+  Selects an animated UI component from the Pixel-Perfect and Componentry registries for a screen need, ranking options by rendering cost tier, reduced-motion handling, client-component requirements, touch fallback and missing local files. Us
 
 ## Regras de atuação
 

@@ -41,6 +41,7 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-auditing-web-design-guidelines` | [auditing-web-design-guidelines](../refactored_skills/frontend/auditing-web-design-guidelines/SKILL.md) | frontend | refactored |
 | `lay-authoring-stitch-design-systems` | [authoring-stitch-design-systems](../refactored_skills/frontend/authoring-stitch-design-systems/SKILL.md) | frontend | refactored |
 | `lay-building-react-native-interfaces` | [building-react-native-interfaces](../refactored_skills/frontend/building-react-native-interfaces/SKILL.md) | frontend | refactored |
+| `lay-clarifying-screen-requirements` | [clarifying-screen-requirements](../refactored_skills/frontend/clarifying-screen-requirements/SKILL.md) | frontend | refactored |
 | `lay-converting-images-to-code` | [converting-images-to-code](../refactored_skills/frontend/converting-images-to-code/SKILL.md) | frontend | refactored |
 | `lay-crafting-high-end-visuals` | [crafting-high-end-visuals](../refactored_skills/frontend/crafting-high-end-visuals/SKILL.md) | frontend | refactored |
 | `lay-designing-minimalist-interfaces` | [designing-minimalist-interfaces](../refactored_skills/frontend/designing-minimalist-interfaces/SKILL.md) | frontend | refactored |
@@ -49,9 +50,11 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-engineering-frontend-interfaces` | [engineering-frontend-interfaces](../refactored_skills/frontend/engineering-frontend-interfaces/SKILL.md) | frontend | refactored |
 | `lay-engineering-gsap-motion-uis` | [engineering-gsap-motion-uis](../refactored_skills/frontend/engineering-gsap-motion-uis/SKILL.md) | frontend | refactored |
 | `lay-governing-anti-slop-aesthetics` | [governing-anti-slop-aesthetics](../refactored_skills/frontend/governing-anti-slop-aesthetics/SKILL.md) | frontend | refactored |
+| `lay-integrating-external-ui-components` | [integrating-external-ui-components](../refactored_skills/frontend/integrating-external-ui-components/SKILL.md) | frontend | refactored |
 | `lay-optimizing-react-performance` | [optimizing-react-performance](../refactored_skills/frontend/optimizing-react-performance/SKILL.md) | frontend | refactored |
 | `lay-orchestrating-smooth-scroll` | [orchestrating-smooth-scroll](../refactored_skills/frontend/orchestrating-smooth-scroll/SKILL.md) | frontend | refactored |
 | `lay-redesigning-legacy-interfaces` | [redesigning-legacy-interfaces](../refactored_skills/frontend/redesigning-legacy-interfaces/SKILL.md) | frontend | refactored |
+| `lay-selecting-animated-ui-components` | [selecting-animated-ui-components](../refactored_skills/frontend/selecting-animated-ui-components/SKILL.md) | frontend | refactored |
 
 ## testes
 
@@ -71,6 +74,7 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-sweeping-failing-ci-builds` | [sweeping-failing-ci-builds](../refactored_skills/qa/sweeping-failing-ci-builds/SKILL.md) | qa | refactored |
 | `lay-testing-in-browser-with-devtools` | [testing-in-browser-with-devtools](../refactored_skills/qa/testing-in-browser-with-devtools/SKILL.md) | qa | refactored |
 | `lay-validating-green-release-gates` | [validating-green-release-gates](../refactored_skills/qa/validating-green-release-gates/SKILL.md) | qa | refactored |
+| `lay-verifying-animated-component-compliance` | [verifying-animated-component-compliance](../refactored_skills/qa/verifying-animated-component-compliance/SKILL.md) | qa | refactored |
 
 ## contexto
 
