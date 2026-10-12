@@ -11,7 +11,7 @@
     {
       "dominio": "frontend",
       "nome": "lay-frontend",
-      "descricao": "Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura.",
+      "descricao": "Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), componentes animados dos registros Pixel-Perfect e Componentry (escolha por custo, instalação e esclarecimento de requisitos antes de gerar telas), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura.",
       "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
     },
     {
@@ -35,7 +35,7 @@
     {
       "dominio": "qa",
       "nome": "lay-qa",
-      "descricao": "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge ou benchmarks. Não use para: implementar funcionalidades sem foco em teste.",
+      "descricao": "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades sem foco em teste.",
       "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
     },
     {
