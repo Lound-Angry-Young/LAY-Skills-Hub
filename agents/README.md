@@ -3,7 +3,9 @@
 Um subagente por domínio de skills, gerado a partir de `perfis.json`.
 
 - `perfis.json`: fonte única (nome, description com gatilhos, ferramentas).
-- `scripts/skill_hub.py install`: grava os subagentes em `~/.claude/agents/` e atualiza o índice no CLAUDE.md global.
-- `scripts/build_agents.py`: valida os perfis e regenera esta documentação.
+- `.claude/agents/`: subagentes do projeto (versionados), com as skills públicas.
+- `scripts/skill_hub.py install`: subagentes globais em `~/.claude/agents/`, com as skills privadas locais.
+- `scripts/build_agents.py`: valida, gera `.claude/agents/` e esta documentação.
+- `CLAUDE.md`, seção "Orquestração de subagentes": roteamento domínio → subagente.
 - `wiring/`: mapa de domínios, contrato de handoff e invocação.
 - `index/INDEX.md`: índice de uma linha por domínio.

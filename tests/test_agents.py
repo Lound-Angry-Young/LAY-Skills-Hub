@@ -125,5 +125,26 @@ class AgentInstallTests(unittest.TestCase):
         self.assertTrue((self.agents_dir() / 'meu-agente.md').exists())
 
 
+class ProjectAgentTests(unittest.TestCase):
+    def test_project_agents_have_matching_names_and_existing_skill_paths(self):
+        from scripts import build_agents
+        import re
+        textos = build_agents.subagentes_do_projeto()
+        perfis = hub.load_profiles(REPO)
+        self.assertEqual(sorted(textos), sorted(p['nome'] + '.md' for p in perfis))
+        for nome, texto in textos.items():
+            partes = texto.split('---' + chr(10), 2)
+            meta = yaml.safe_load(partes[1])
+            self.assertEqual(meta['name'] + '.md', nome)
+            for caminho in re.findall(r'`(refactored_skills/[^`]+)`', texto):
+                self.assertTrue((REPO / caminho).is_file(), caminho)
+            self.assertNotIn('skills-privadas', texto)
+
+    def test_project_claude_md_routing_matches_profiles(self):
+        claude_md = (REPO / 'CLAUDE.md').read_text(encoding='utf-8')
+        for p in hub.load_profiles(REPO):
+            self.assertIn(p['dominio'] + ' → `' + p['nome'] + '`', claude_md, p['nome'])
+
+
 if __name__ == '__main__':
     unittest.main()
