@@ -157,6 +157,26 @@ class AlcanceTest(unittest.TestCase):
         self.assertEqual(g.alcance_do_cli('a', por_nome), set())
 
 
+class SiteTest(unittest.TestCase):
+    def test_arquivo_de_dados_do_site_e_json_valido_com_contagens(self):
+        import json
+        dados = {'files': [arquivo('registry/new-york/text/t.tsx', 'export const T = () => null;')],
+                 'dependencies': ['gsap'], 'description': 'Texto de teste.'}
+        item = g.montar_item('pixel-perfect', 't', dados, {'t'})
+        item['instalar'], item['alcance'], item['plano'] = [], set(), '—'
+        with tempfile.TemporaryDirectory() as tmp:
+            saida = Path(tmp) / 'catalogo.js'
+            total = g.gerar_site([item], {'pixel-perfect': 'teste', 'componentry': 'teste'}, saida, '2026-01-01')
+            texto = saida.read_text(encoding='utf-8')
+        self.assertEqual(total, 1)
+        self.assertTrue(texto.startswith('window.CATALOGO_COMPONENTES = '))
+        payload = json.loads(texto[len('window.CATALOGO_COMPONENTES = '):].rstrip().rstrip(';'))
+        self.assertEqual(payload['totais']['itens'], 1)
+        self.assertEqual(payload['itens'][0]['comando'],
+                         'npx shadcn@latest add https://www.pixel-perfect.space/r/t.json -y')
+        self.assertEqual(payload['totais']['toque']['nao_aplica'], 1)
+
+
 class LeituraTest(unittest.TestCase):
     def test_leitura_local_ignora_indice_e_le_so_itens(self):
         with tempfile.TemporaryDirectory() as tmp:

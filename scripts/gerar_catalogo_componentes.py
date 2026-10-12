@@ -25,6 +25,7 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SAIDA_PADRAO = REPO / 'refactored_skills' / 'frontend' / 'selecting-animated-ui-components' / 'reference.md'
+SITE_PADRAO = REPO / 'componentes' / 'catalogo.js'
 
 FONTES = {
     'pixel-perfect': {
@@ -459,11 +460,58 @@ def escrever(itens, origens, saida):
     return total
 
 
+def gerar_site(itens, origens, saida, gerado_em):
+    """Escreve o arquivo de dados da página componentes.html. Só contém o que sai dos registros."""
+    por_fonte = Counter(i['fonte'] for i in itens)
+    dominios = []
+    for chave, (titulo, descricao) in DOMINIOS.items():
+        lista = [i for i in itens if i['dominio'] == chave]
+        if lista:
+            dominios.append({
+                'id': chave, 'titulo': titulo, 'descricao': descricao, 'total': len(lista),
+                'tiers': {str(t): sum(1 for i in lista if i['tier'] == t) for t in (1, 2, 3)},
+            })
+    payload = {
+        'gerado_em': gerado_em,
+        'origens': origens,
+        'nota': 'Dados lidos dos índices públicos dos registros na data indicada. O CLI do shadcn baixa a versão atual do registro no momento da instalação.',
+        'fontes': [{'id': f, 'titulo': c['titulo'], 'repo': c['repo'], 'licenca': c['licenca'],
+                    'indice': c['indice'], 'url': c['url'], 'total': por_fonte[f]} for f, c in FONTES.items()],
+        'tiers': {str(k): v for k, v in TIERS.items()},
+        'dominios': dominios,
+        'totais': {
+            'itens': len(itens),
+            'por_tier': {str(t): sum(1 for i in itens if i['tier'] == t) for t in (1, 2, 3)},
+            'use_client': {k: sum(1 for i in itens if i['cliente'] == k) for k in ('sim', 'verificar', 'não precisa')},
+            'movimento_reduzido': {'sim': sum(1 for i in itens if i['reduzido'] == 'sim'),
+                                   'nao': sum(1 for i in itens if i['reduzido'] != 'sim')},
+            'toque': {'sim': sum(1 for i in itens if i['toque'] == 'sim'),
+                      'nao': sum(1 for i in itens if i['toque'] == 'não'),
+                      'nao_aplica': sum(1 for i in itens if i['toque'] == '—')},
+            'depuracao': sum(1 for i in itens if i['depuracao']),
+            'com_instalar_antes': sum(1 for i in itens if i['faltam']),
+            'instalacao_manual': sum(1 for i in itens if any(n not in i['alcance'] for n in i['instalar'])),
+        },
+        'itens': [{
+            'nome': i['nome'], 'fonte': i['fonte'], 'fonte_titulo': FONTES[i['fonte']]['titulo'],
+            'url': i['url'], 'comando': f"npx shadcn@latest add {i['url']} -y",
+            'descricao': i['descricao'], 'dominio': i['dominio'], 'tier': i['tier'],
+            'cliente': i['cliente'], 'reduzido': i['reduzido'], 'toque': i['toque'],
+            'depuracao': bool(i['depuracao']), 'deps': i['deps'], 'instalar_antes': i['plano'],
+        } for i in sorted(itens, key=lambda x: (x['fonte'], x['dominio'], x['nome']))],
+    }
+    saida.parent.mkdir(parents=True, exist_ok=True)
+    saida.write_text('window.CATALOGO_COMPONENTES = ' + json.dumps(payload, ensure_ascii=False, indent=1) + ';\n',
+                     encoding='utf-8', newline='\n')
+    return len(payload['itens'])
+
+
 def principal(argv=None):
     p = argparse.ArgumentParser(description='Gera o catálogo de componentes animados.')
     p.add_argument('--pixel-perfect', default=None, help='clone local do Pixel-Perfect (offline); sem ele, lê ao vivo')
     p.add_argument('--componentry', default=None, help='clone local do Componentry (offline); sem ele, lê ao vivo')
     p.add_argument('--saida', default=str(SAIDA_PADRAO), help='arquivo reference.md de saída')
+    p.add_argument('--site', default=str(SITE_PADRAO), help='arquivo JS de dados da página componentes.html')
     args = p.parse_args(argv)
     clones = {'pixel-perfect': args.pixel_perfect, 'componentry': args.componentry}
     origens = {}
@@ -474,7 +522,8 @@ def principal(argv=None):
             origens[fonte] = f'lido ao vivo em {date.today().isoformat()} a partir de {FONTES[fonte]["indice"]}'
     itens = coletar(clones)
     total = escrever(itens, origens, Path(args.saida))
-    print(f'itens: {total}  saída: {args.saida}')
+    gerar_site(itens, origens, Path(args.site), date.today().isoformat())
+    print(f'itens: {total}  saída: {args.saida}  site: {args.site}')
     for fonte, origem in origens.items():
         print(f'  {fonte}: {origem}')
     return 0
