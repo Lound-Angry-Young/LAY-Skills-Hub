@@ -1,0 +1,12 @@
+# Índice Global (1 linha por domínio)
+- routing-and-proxy: 32 skills — CLI e API do OmniRoute: inferência, providers, combos, proxies, custos, MCP, A2A, webhooks e túneis.
+- frontend: 18 skills — UI de produção, React, animações (GSAP, Lenis, view transitions), direção visual e redesign.
+- engineering: 20 skills — Arquitetura, APIs, especificações, code review, debug, performance, migrações e minimalismo.
+- context: 13 skills — Contexto de sessão, compressão de prompt e mensagens, grafos de conhecimento, requisitos e planejamento.
+- devops: 12 skills — Git, CI/CD, deploy na Vercel, releases, rollouts graduais e prontidão de lançamento.
+- qa: 9 skills — Testes (TDD, browser, DevTools), benchmarks de modelos, qualidade de código e gates de CI e PR.
+- security: 9 skills — Auditoria de código, Semgrep, dependências, segurança de LLM, chaves e sessões de API.
+- creative-3d: 6 skills — Renderização 3D, Blender, calibração de hardware, fundos WebGL e bibliotecas criativas.
+- documentation: 4 skills — Revisão de escrita, ADRs, limpeza de prosa e remoção de marcas de proveniência de IA.
+- design: 4 skills — Geração de brandkit, mockups de mobile e web e consulta de referências visuais.
+- database: 5 skills — Backup, restauração e cache de banco de dados do OmniRoute e da CLI.
