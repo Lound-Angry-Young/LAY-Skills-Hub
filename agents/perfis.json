@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "descricao": "Um subagente por domínio de skills. Cada perfil vira um arquivo em ~/.claude/agents/<nome>.md. A description é o que o Claude usa para decidir quando delegar: mantenha os gatilhos 'Use quando' e 'Não use para' explícitos e sem sobreposição entre perfis.",
+  "perfis": [
+    {
+      "dominio": "routing-and-proxy",
+      "nome": "lay-omniroute",
+      "descricao": "Especialista no OmniRoute (CLI e API): inferência compatível com OpenAI, providers, combos de roteamento, proxies de rede, custos e uso, limites de gasto, resiliência, MCP, A2A, webhooks, túneis e catálogo de modelos. Use quando: o pedido envolver OmniRoute, roteamento entre modelos, providers, combos, custo por chamada, limites de gasto ou configuração do servidor OmniRoute. Não use para: código de aplicação que não usa OmniRoute.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "frontend",
+      "nome": "lay-frontend",
+      "descricao": "Especialista em frontend de produção: interfaces React e Next.js, componentes acessíveis, animações (GSAP, Lenis, view transitions, react-bits), direção visual anti-slop, responsividade e redesign de sites existentes. Use quando: o pedido envolver criar ou revisar telas, componentes, landing pages, layout ou animação de interface. Não use para: backend, APIs ou infraestrutura.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "engineering",
+      "nome": "lay-engenharia",
+      "descricao": "Especialista em engenharia de software: desenho de APIs e interfaces, especificações, implementação incremental, code review, depuração de causa raiz, recuperação de erros, migrações, deprecações, performance full-stack, observabilidade e restrições de qualidade. Use quando: o pedido envolver arquitetura, revisão de código, depuração, refatoração, migração ou performance de aplicação. Não use para: UI visual (use lay-frontend) ou entrega e CI/CD (use lay-devops).",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "context",
+      "nome": "lay-contexto",
+      "descricao": "Especialista em contexto e planejamento: descoberta de skills, engenharia de contexto, compressão de prompts e mensagens, pipelines de contexto RTK, grafos de conhecimento do projeto, entrevista de requisitos, quebra de tarefas e refinamento de ideias. Use quando: o pedido envolver entender um projeto por grafo, planejar tarefas, levantar requisitos, economizar contexto ou comprimir prompts. Não use para: escrever código de funcionalidade.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "devops",
+      "nome": "lay-devops",
+      "descricao": "Especialista em entrega: convenções de commit, fluxo de branches e rebase, pipelines de CI, deploy contínuo, deploy na Vercel, rollouts graduais, prontidão de lançamento, releases semânticas e sincronização de dados em nuvem. Use quando: o pedido envolver commits, branches, releases, tags, pipelines de CI/CD, deploy ou lançamento. Não use para: escrever testes ou código de funcionalidade.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "qa",
+      "nome": "lay-qa",
+      "descricao": "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge ou benchmarks. Não use para: implementar funcionalidades sem foco em teste.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "security",
+      "nome": "lay-seguranca",
+      "descricao": "Especialista em segurança: auditoria de código, hardening de aplicações, Semgrep, varredura de dependências e CVEs, chaves e sessões de API, segurança de aplicações com LLM e políticas de acesso. Use quando: o pedido envolver vulnerabilidades, auditoria, segredos, autenticação, chaves de API ou varredura de segurança. Não use para: implementar funcionalidades sem foco em segurança. Este perfil só lê e analisa; não edita arquivos.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash"]
+    },
+    {
+      "dominio": "creative-3d",
+      "nome": "lay-3d",
+      "descricao": "Especialista em 3D e efeitos gráficos: calibração de hardware para renderização, Blender (instalação e MCP), fundos Vanta, efeitos WebGL e bibliotecas criativas da web. Use quando: o pedido envolver 3D, Blender, shaders, fundos animados ou bibliotecas de efeitos visuais. Não use para: layout de página sem elemento 3D ou WebGL.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    },
+    {
+      "dominio": "documentation",
+      "nome": "lay-documentacao",
+      "descricao": "Especialista em documentação e escrita: auditoria de estilo de escrita, ADRs e registro de decisões de arquitetura, polimento de texto para leitores e remoção de marcas de proveniência de IA. Use quando: o pedido envolver revisar um texto, documentar uma decisão de arquitetura ou limpar prosa para publicação. Não use para: comentários de código ou referência de API.",
+      "ferramentas": ["Read", "Grep", "Glob", "Edit", "Write"]
+    },
+    {
+      "dominio": "design",
+      "nome": "lay-design",
+      "descricao": "Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design. Use quando: o pedido envolver identidade visual, moodboard, mockups ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend).",
+      "ferramentas": ["Read", "Grep", "Glob", "Edit", "Write"]
+    },
+    {
+      "dominio": "database",
+      "nome": "lay-banco-de-dados",
+      "descricao": "Especialista em banco de dados: backup e restauração de bancos SQLite do OmniRoute e da CLI, snapshots e cache de inferência. Use quando: o pedido envolver backup, restauração, snapshot, banco corrompido ou cache de respostas do LLM. Não use para: modelagem de schema ou consultas de aplicação.",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
+    }
+  ]
+}

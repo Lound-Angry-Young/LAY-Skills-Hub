@@ -1,21 +1,15 @@
-# Invocação
+# Invocação no Claude Code
 
-Papéis tool-agnósticos. Cada plataforma só muda como o perfil é carregado.
+Os subagentes são globais: ficam em `~/.claude/agents/` e valem em qualquer projeto.
 
-## Paralelização
-- Domínios independentes podem rodar em paralelo.
-- Limite de concorrência: plataformas podem recusar execuções acima de um teto de sub-agentes ativos. No DeepSeek Harness observou-se teto de 5 simultâneos; use lotes de até 5 quando a plataforma tiver o mesmo limite.
+## Como são chamados
+- Automático: o Claude escolhe o subagente pela `description`, que traz os gatilhos "Use quando" e "Não use para".
+- Explícito: peça pelo nome, por exemplo "use o subagente lay-seguranca para auditar este módulo".
+- Subagentes não chamam outros subagentes. O roteamento entre domínios é feito pela conversa principal, que segue o índice do bloco LAY no `~/.claude/CLAUDE.md`.
+- Se um subagente novo não aparecer, reinicie a sessão do Claude Code: os perfis são carregados no início.
 
-## Sequenciamento
-- Quando o RESULT de um domínio é entrada de outro, rode em sequência.
+## Ferramentas
+Cada perfil declara as ferramentas que pode usar (`tools`). `lay-seguranca` só lê e analisa; não edita arquivos.
 
-## Escalonamento
-- `escalated` e `needs_clarification` voltam ao diretor (`agents/director/SYSTEM.md`).
-
-## Amarração por plataforma
-- Claude Code: cada `SYSTEM.md` vira `.claude/agents/<domínio>.md` com frontmatter `name` e `description`. Invoca-se pela ferramenta de subagente.
-- Antigravity: a definição de agente recebe o conteúdo do `SYSTEM.md` como instrução.
-- DeepSeek Harness: a delegação de sub-agente usa o `SYSTEM.md` como instrução de papel.
-
-## Verificação
-- Diretor: 11 domínios, 132 skills no índice, zero leitura de `SKILL.md`.
+## Contrato
+Ver `HANDOFF.md`: o subagente devolve RESULT com status, artifacts, summary e open_items.
