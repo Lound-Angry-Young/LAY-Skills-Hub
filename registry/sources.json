@@ -43,8 +43,8 @@
       "repo": "anil-matcha/open-generative-ai",
       "url": "https://github.com/anil-matcha/open-generative-ai.git",
       "path": "upstream/anil-matcha--open-generative-ai",
-      "commit": "d8d624dcf48a581fde18102f53d76a01a95ec58c",
-      "version": "v2.0.0-267-gd8d624d",
+      "commit": "6b704b0806bf07b435586ff182fb54fffe64253f",
+      "version": "v2.0.0-268-g6b704b0",
       "kind": "repertorio",
       "skill_paths": [],
       "notes": [
@@ -69,8 +69,8 @@
       "repo": "DavidHDev/react-bits",
       "url": "https://github.com/DavidHDev/react-bits.git",
       "path": "upstream/DavidHDev--react-bits",
-      "commit": "26cf51f7874aeb31aa9eb463648f3221865dbc11",
-      "version": "26cf51f",
+      "commit": "2139cb3098d4fedc6264f13e50dcb4694224ba7c",
+      "version": "2139cb3",
       "kind": "repertorio",
       "skill_paths": [],
       "notes": [
@@ -82,8 +82,8 @@
       "repo": "diegosouzapw/OmniRoute",
       "url": "https://github.com/diegosouzapw/OmniRoute.git",
       "path": "upstream/diegosouzapw--omniroute",
-      "commit": "e82d6370f18c01988a6c55f656e199b5d6e19401",
-      "version": "e82d6370",
+      "commit": "7f3cbb046b3706bf0bbc047b7eaa0cbada8d9e50",
+      "version": "7f3cbb04",
       "kind": "skills",
       "skill_paths": [
         "skills/cli-a2a/SKILL.md",
@@ -198,8 +198,8 @@
       "repo": "leonxlnx/taste-skill",
       "url": "https://github.com/leonxlnx/taste-skill.git",
       "path": "upstream/leonxlnx--taste-skill",
-      "commit": "717446e07a78d4e6d7918b1fde1a263378eebac9",
-      "version": "717446e",
+      "commit": "d237dd399d57524945c0c81327da5da19f7a468d",
+      "version": "d237dd3",
       "kind": "skills",
       "skill_paths": [
         "skills/brandkit/SKILL.md",
