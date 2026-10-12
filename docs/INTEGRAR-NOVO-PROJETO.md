@@ -9,8 +9,8 @@ Requisitos: Git, Python 3.10+ e acesso ao GitHub no clone. A instalação preser
 Windows (PowerShell):
 
 ```powershell
-git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git
-cd SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS
+git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
+cd LAY-Skills-Hub
 ./install.ps1
 python scripts/skill_hub.py doctor
 ```
@@ -18,8 +18,8 @@ python scripts/skill_hub.py doctor
 macOS/Linux:
 
 ```sh
-git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git
-cd SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS
+git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
+cd LAY-Skills-Hub
 ./install.sh
 python3 scripts/skill_hub.py doctor
 ```

@@ -1091,7 +1091,7 @@
           <button class="btn-brutal btn-primary-magenta" onclick="openProjectPlannerModal()">
             <span>🎯</span> PLANEJADOR CUSTOMIZADO POR SELEÇÃO
           </button>
-          <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS" target="_blank" rel="noopener">
+          <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener">
             <span>↗</span> REPOSITÓRIO GITHUB
           </a>
         </div>
@@ -1197,13 +1197,13 @@
 Você é o agente líder técnico e de engenharia operando com este repositório de habilidades.
 
 ## REPOSITÓRIO NO GITHUB & SINCRONIZAÇÃO DE SKILLS
-- Repositório Central: https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git
+- Repositório Central: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
 - Se as skills e o runtime ainda não estiverem alocados na máquina, sincronize diretamente do repositório:
 
 ```powershell
 # 1. Clonar ou atualizar o repositório central com submódulos
 if (-not (Test-Path "$env:USERPROFILE\.lay-skills-repo")) {
-    git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git "$env:USERPROFILE\.lay-skills-repo"
+    git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\.lay-skills-repo"
 } else {
     git -C "$env:USERPROFILE\.lay-skills-repo" pull --recurse-submodules
 }
@@ -1318,7 +1318,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
         }
       });
 
-      document.getElementById('stat-total-sources').textContent = sourcesMap.size;
+      document.getElementById('stat-total-sources').textContent = window.LAY_SOURCES_COUNT ?? sourcesMap.size;
 
       sourcesMap.forEach((info, key) => {
         const opt = document.createElement('option');
@@ -1595,9 +1595,9 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       let customPrompt = `# PLANO DE PROJETO SOB MEDIDA — REPERTÓRIO LAY®\n`;
       customPrompt += `Você é o agente líder técnico implementando este projeto. Siga rigorosamente as diretrizes da LAY®.\n\n`;
       customPrompt += `## REPOSITÓRIO GITHUB & SINCRONIZAÇÃO DE SKILLS:\n`;
-      customPrompt += `Repositório: https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git\n\n`;
+      customPrompt += `Repositório: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n`;
       customPrompt += `Se as skills não estiverem alocadas na máquina, execute:\n`;
-      customPrompt += `git clone --recurse-submodules https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS.git "$env:USERPROFILE\\.lay-skills-repo"\n`;
+      customPrompt += `git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n`;
       customPrompt += `powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n`;
       customPrompt += `## DIAGNÓSTICO DO PROJETO:\n`;
       customPrompt += `python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n`;

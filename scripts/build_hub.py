@@ -14,7 +14,7 @@ SOURCE_METADATA = {
     "local": {
         "author": "LAY® Core Ecosystem",
         "title": "LAY Core Skills",
-        "url": "https://github.com/Lound-Angry-Young/SKILLS-E-CONFIGS-PARA-NOVOS-PROJETOS",
+        "url": "https://github.com/Lound-Angry-Young/LAY-Skills-Hub",
         "avatar": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2307080b' stroke='%2300f0ff' stroke-width='4'/><path d='M55 15 L25 55 L48 55 L42 85 L75 45 L52 45 Z' fill='%2300f0ff'/></svg>",
         "icon": "⚡",
         "badge": "LAY® Native",
@@ -259,7 +259,9 @@ def build_data():
     # Sort skills logically: local first, then by category and name
     skills_list.sort(key=lambda s: (0 if s["source"] == "local" else 1, s["categories"][0], s["name"]))
 
-    output_js = f"// LAY SKILLS HUB - GENERATED DATASET ({len(skills_list)} SKILLS)\nwindow.LAY_SKILLS = {json.dumps(skills_list, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES = {json.dumps(SOURCE_METADATA, ensure_ascii=False, indent=2)};\n"
+    # Fontes de referência do registro (upstream). Não é a contagem de origens dos cards, que só lista as presentes.
+    sources_count = len(json.loads(SOURCES_PATH.read_text(encoding="utf-8"))["sources"])
+    output_js = f"// LAY SKILLS HUB - GENERATED DATASET ({len(skills_list)} SKILLS)\nwindow.LAY_SKILLS = {json.dumps(skills_list, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES = {json.dumps(SOURCE_METADATA, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES_COUNT = {sources_count};\n"
     DATA_JS_PATH.write_text(output_js, encoding="utf-8")
     print(f"[OK] Generated {DATA_JS_PATH} with {len(skills_list)} skills.")
 
