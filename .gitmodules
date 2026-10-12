@@ -34,6 +34,7 @@
 [submodule "upstream/safishamsi--graphify"]
 	path = upstream/safishamsi--graphify
 	url = https://github.com/safishamsi/graphify.git
+	ignore = untracked
 [submodule "upstream/diegosouzapw--omniroute"]
 	path = upstream/diegosouzapw--omniroute
 	url = https://github.com/diegosouzapw/OmniRoute.git
