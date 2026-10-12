@@ -1,0 +1,196 @@
+{
+  "total_refactored_skills": 132,
+  "total_domains": 11,
+  "skills_with_reference": 81,
+  "skills_with_reference_pointer": 81,
+  "excluded_from_public_count": 10,
+  "domain_details": {
+    "context": {
+      "count": 13,
+      "skills": [
+        "architecting-generative-ai-apps",
+        "breaking-down-task-plans",
+        "compressing-agent-messages",
+        "configuring-prompt-compression",
+        "discovering-and-invoking-skills",
+        "engineering-agent-context",
+        "generating-knowledge-graphs",
+        "interviewing-user-requirements",
+        "managing-cli-context-pipelines",
+        "optimizing-rtk-prompt-contexts",
+        "orchestrating-lay-ecosystem-skills",
+        "refining-raw-product-ideas",
+        "testing-cli-prompt-compression"
+      ]
+    },
+    "creative-3d": {
+      "count": 6,
+      "skills": [
+        "calibrating-hardware-rendering",
+        "configuring-blender-mcp-server",
+        "installing-blender-headless",
+        "integrating-creative-web-toolkits",
+        "rendering-vanta-backgrounds",
+        "selecting-creative-libraries"
+      ]
+    },
+    "database": {
+      "count": 5,
+      "skills": [
+        "backing-up-cli-data",
+        "backing-up-omniroute-databases",
+        "managing-inference-cache",
+        "restoring-cli-snapshots",
+        "restoring-omniroute-databases"
+      ]
+    },
+    "design": {
+      "count": 4,
+      "skills": [
+        "consulting-design-references",
+        "generating-brandkit-identities",
+        "generating-mobile-ui-mockups",
+        "generating-web-ui-references"
+      ]
+    },
+    "devops": {
+      "count": 12,
+      "skills": [
+        "authoring-conventional-commits",
+        "automating-cd-deployments",
+        "building-ci-validation-pipelines",
+        "deploying-to-vercel-platform",
+        "deploying-with-vercel-tokens",
+        "managing-git-branch-workflows",
+        "merging-validated-pull-requests",
+        "optimizing-vercel-deployments",
+        "orchestrating-staged-rollouts",
+        "synchronizing-cloud-storage",
+        "tagging-semantic-releases",
+        "verifying-prelaunch-readiness"
+      ]
+    },
+    "documentation": {
+      "count": 4,
+      "skills": [
+        "auditing-writing-guidelines",
+        "documenting-architecture-decisions",
+        "polishing-user-facing-prose",
+        "stripping-ai-provenance-marks"
+      ]
+    },
+    "engineering": {
+      "count": 20,
+      "skills": [
+        "auditing-codebase-bloat",
+        "authoring-specifications-first",
+        "debugging-root-causes",
+        "deprecating-obsolete-apis",
+        "designing-apis-and-interfaces",
+        "enforcing-project-constraints",
+        "grounding-source-documentation",
+        "guiding-ponytail-minimalism",
+        "implementing-incremental-slices",
+        "instrumenting-code-observability",
+        "measuring-code-savings",
+        "migrating-legacy-architectures",
+        "minimizing-code-overengineering",
+        "optimizing-fullstack-performance",
+        "recovering-system-errors",
+        "reviewing-code-minimalism",
+        "reviewing-multi-axis-code-quality",
+        "simplifying-code-complexity",
+        "stress-testing-architecture-decisions",
+        "tracking-technical-debt-ledgers"
+      ]
+    },
+    "frontend": {
+      "count": 18,
+      "skills": [
+        "animating-react-bits-components",
+        "animating-react-view-transitions",
+        "applying-legacy-design-taste",
+        "architecting-react-composition",
+        "auditing-web-design-guidelines",
+        "authoring-stitch-design-systems",
+        "building-react-native-interfaces",
+        "converting-images-to-code",
+        "crafting-high-end-visuals",
+        "designing-minimalist-interfaces",
+        "elevating-frontend-taste",
+        "enforcing-full-code-output",
+        "engineering-frontend-interfaces",
+        "engineering-gsap-motion-uis",
+        "governing-anti-slop-aesthetics",
+        "optimizing-react-performance",
+        "orchestrating-smooth-scroll",
+        "redesigning-legacy-interfaces"
+      ]
+    },
+    "qa": {
+      "count": 9,
+      "skills": [
+        "automating-browser-tests",
+        "driving-test-driven-development",
+        "enforcing-green-pull-requests",
+        "evaluating-model-benchmarks",
+        "running-playwright-dev-tools",
+        "scanning-codebase-quality",
+        "sweeping-failing-ci-builds",
+        "testing-in-browser-with-devtools",
+        "validating-green-release-gates"
+      ]
+    },
+    "routing-and-proxy": {
+      "count": 32,
+      "skills": [
+        "analyzing-usage-call-logs",
+        "chatting-via-omniroute-cli",
+        "checking-omniroute-server-health",
+        "collecting-cli-agent-skills",
+        "configuring-codex-cli-proxy",
+        "configuring-network-proxies",
+        "configuring-omniroute-cli-setup",
+        "configuring-omniroute-settings",
+        "coordinating-omniroute-a2a",
+        "enforcing-spending-budgets",
+        "executing-omniroute-inference",
+        "handling-omniroute-webhooks",
+        "importing-github-agent-skills",
+        "inspecting-mcp-server-cli",
+        "inspecting-resilience-circuits",
+        "inspecting-spending-costs-cli",
+        "integrating-omniroute-mcp-server",
+        "interacting-with-a2a-cli",
+        "invoking-cli-tool-plugins",
+        "managing-embedded-service-versions",
+        "managing-omni-skills-and-memory",
+        "managing-omniroute-providers",
+        "managing-omniroute-server-daemon",
+        "managing-providers-via-cli",
+        "managing-routing-combos-cli",
+        "managing-tunnels-via-cli",
+        "monitoring-omniroute-resilience",
+        "querying-models-via-cli",
+        "querying-omniroute-models",
+        "routing-omniroute-combos",
+        "submitting-batch-inference-jobs",
+        "tunneling-omniroute-endpoints"
+      ]
+    },
+    "security": {
+      "count": 9,
+      "skills": [
+        "auditing-access-policies",
+        "auditing-code-security",
+        "authenticating-api-sessions",
+        "hardening-application-security",
+        "managing-api-keys",
+        "managing-cli-keys",
+        "scanning-code-with-semgrep",
+        "scanning-dependency-vulnerabilities",
+        "securing-llm-applications"
+      ]
+    }
+  }
+}
