@@ -145,6 +145,24 @@ class ProjectAgentTests(unittest.TestCase):
         for p in hub.load_profiles(REPO):
             self.assertIn(p['dominio'] + ' → `' + p['nome'] + '`', claude_md, p['nome'])
 
+    def test_install_page_lists_every_subagent_and_is_linked_from_catalog(self):
+        pagina = (REPO / 'instalacao.html').read_text(encoding='utf-8')
+        for p in hub.load_profiles(REPO):
+            self.assertIn('<td>' + p['nome'] + '</td>', pagina, p['nome'])
+            self.assertIn(p['dominio'], pagina, p['dominio'])
+        self.assertIn('install --agents claude', pagina)
+        self.assertIn('href="instalacao.html"', (REPO / 'index.html').read_text(encoding='utf-8'))
+
+    def test_readme_and_catalog_page_reference_every_subagent(self):
+        for arquivo in ['README.md', 'index.html']:
+            texto = (REPO / arquivo).read_text(encoding='utf-8')
+            for p in hub.load_profiles(REPO):
+                self.assertIn(p['nome'], texto, arquivo + ' ' + p['nome'])
+        readme = (REPO / 'README.md').read_text(encoding='utf-8')
+        self.assertIn('LAY-Skills-Hub.git', readme)
+        self.assertIn('instalacao.html', readme)
+        self.assertIn('install --agents claude', readme)
+
 
 if __name__ == '__main__':
     unittest.main()
