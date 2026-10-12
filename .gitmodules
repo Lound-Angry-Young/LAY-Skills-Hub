@@ -1,0 +1,51 @@
+[submodule "upstream/addyosmani--agent-skills"]
+	path = upstream/addyosmani--agent-skills
+	url = https://github.com/addyosmani/agent-skills.git
+[submodule "upstream/semgrep--skills"]
+	path = upstream/semgrep--skills
+	url = https://github.com/semgrep/skills.git
+[submodule "upstream/ray0907--security-scan"]
+	path = upstream/ray0907--security-scan
+	url = https://github.com/Ray0907/security-scan.git
+[submodule "upstream/guillaumemeyer--watermarks-remover"]
+	path = upstream/guillaumemeyer--watermarks-remover
+	url = https://github.com/guillaumemeyer/watermarks-remover.git
+[submodule "upstream/dietrichgebert--ponytail"]
+	path = upstream/dietrichgebert--ponytail
+	url = https://github.com/DietrichGebert/ponytail.git
+[submodule "upstream/leonxlnx--taste-skill"]
+	path = upstream/leonxlnx--taste-skill
+	url = https://github.com/leonxlnx/taste-skill.git
+[submodule "upstream/vercel-labs--agent-skills"]
+	path = upstream/vercel-labs--agent-skills
+	url = https://github.com/vercel-labs/agent-skills.git
+[submodule "upstream/voltagent--awesome-design-md"]
+	path = upstream/voltagent--awesome-design-md
+	url = https://github.com/voltagent/awesome-design-md.git
+[submodule "upstream/microsoft--playwright-cli"]
+	path = upstream/microsoft--playwright-cli
+	url = https://github.com/microsoft/playwright-cli.git
+[submodule "upstream/latent-spaces--brag"]
+	path = upstream/latent-spaces--brag
+	url = https://github.com/latent-spaces/brag.git
+[submodule "upstream/anil-matcha--open-generative-ai"]
+	path = upstream/anil-matcha--open-generative-ai
+	url = https://github.com/anil-matcha/open-generative-ai.git
+[submodule "upstream/safishamsi--graphify"]
+	path = upstream/safishamsi--graphify
+	url = https://github.com/safishamsi/graphify.git
+[submodule "upstream/diegosouzapw--omniroute"]
+	path = upstream/diegosouzapw--omniroute
+	url = https://github.com/diegosouzapw/OmniRoute.git
+[submodule "upstream/tengbao--vanta"]
+	path = upstream/tengbao--vanta
+	url = https://github.com/tengbao/vanta.git
+[submodule "upstream/DavidHDev--react-bits"]
+	path = upstream/DavidHDev--react-bits
+	url = https://github.com/DavidHDev/react-bits.git
+[submodule "upstream/darkroomengineering--lenis"]
+	path = upstream/darkroomengineering--lenis
+	url = https://github.com/darkroomengineering/lenis.git
+[submodule "upstream/Jakubantalik--Libraries.dev"]
+	path = upstream/Jakubantalik--Libraries.dev
+	url = https://github.com/Jakubantalik/Libraries.dev.git

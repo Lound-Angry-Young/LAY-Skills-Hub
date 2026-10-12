@@ -1,0 +1,8 @@
+.DS_Store
+Thumbs.db
+desktop.ini
+*.tmp
+.state/
+__pycache__/
+node_modules/
+skills-privadas-lay/
