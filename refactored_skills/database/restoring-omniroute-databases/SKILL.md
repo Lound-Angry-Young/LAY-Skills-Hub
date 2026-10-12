@@ -1,0 +1,59 @@
+---
+name: restoring-omniroute-databases
+description: >
+  Restores OmniRoute server databases safely, validating schema, reindexing and restoring transactionally under a concurrency lock. Use this skill when: restoring the OmniRoute server after a failure or during an instance migration. Do NOT use this skill when: restoring CLI snapshots (use restoring-cli-snapshots) or taking backups (use backing-up-omniroute-databases).
+---
+
+## Overview
+
+Trigger system backups, restore from backup files, and manage the SQLite database lifecycle. Supports export, import, and incremental snapshot strategies.
+
+## Authentication
+
+All requests require a valid Bearer token or session cookie. Obtain a token via `POST /api/auth/login` or configure `REQUIRE_API_KEY=false` for local development.
+
+## Endpoints
+
+### GET /api/system/env/repair
+
+GET system › env › repair
+
+```bash
+curl https://localhost:20128/api/system/env/repair \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### POST /api/system/env/repair
+
+POST system › env › repair
+
+```bash
+curl -X POST https://localhost:20128/api/system/env/repair \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+### GET /api/system/version
+
+GET system › version
+
+```bash
+curl https://localhost:20128/api/system/version \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### POST /api/system/version
+
+POST system › version
+
+```bash
+curl -X POST https://localhost:20128/api/system/version \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{}'
+```
+
+## Payloads
+
+See the full OpenAPI specification at `GET /api/openapi/spec` or `docs/openapi.yaml` for detailed request/response schemas.

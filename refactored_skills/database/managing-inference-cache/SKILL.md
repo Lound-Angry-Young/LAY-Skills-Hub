@@ -1,0 +1,93 @@
+---
+name: managing-inference-cache
+description: >
+  Manages the LLM response cache: views cache statistics, clears entries, configures TTL policies and tunes semantic-similarity thresholds. Use this skill when: inspecting or tuning LLM response caching. Do NOT use this skill when: configuring prompt compression (use configuring-prompt-compression) or managing database backups (use backing-up-omniroute-databases).
+---
+
+## Overview
+
+Manage the LLM response cache. View cache statistics, clear entries, configure TTL policies, and control semantic-similarity caching thresholds.
+
+## Authentication
+
+All requests require a valid Bearer token or session cookie. Obtain a token via `POST /api/auth/login` or configure `REQUIRE_API_KEY=false` for local development.
+
+## Endpoints
+
+### GET /api/cache
+
+Get cache statistics
+
+```bash
+curl https://localhost:20128/api/cache \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### DELETE /api/cache
+
+Clear all caches
+
+```bash
+curl -X DELETE https://localhost:20128/api/cache \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### GET /api/cache/stats
+
+Get detailed cache statistics
+
+Returns detailed statistics for all cache layers.
+
+```bash
+curl https://localhost:20128/api/cache/stats \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### DELETE /api/cache/stats
+
+Clear cache statistics
+
+```bash
+curl -X DELETE https://localhost:20128/api/cache/stats \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### GET /api/cache/entries
+
+GET cache › entries
+
+```bash
+curl https://localhost:20128/api/cache/entries \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### DELETE /api/cache/entries
+
+DELETE cache › entries
+
+```bash
+curl -X DELETE https://localhost:20128/api/cache/entries \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### GET /api/cache/reasoning
+
+GET cache › reasoning
+
+```bash
+curl https://localhost:20128/api/cache/reasoning \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+### DELETE /api/cache/reasoning
+
+DELETE cache › reasoning
+
+```bash
+curl -X DELETE https://localhost:20128/api/cache/reasoning \
+  -H "Authorization: Bearer $OMNIROUTE_TOKEN"
+```
+
+## Payloads
+
+See the full OpenAPI specification at `GET /api/openapi/spec` or `docs/openapi.yaml` for detailed request/response schemas.
