@@ -9,6 +9,7 @@ CATALOG_PATH = ROOT / "catalog/skills.json"
 SOURCES_PATH = ROOT / "registry/sources.json"
 HUB_DIR = ROOT / "hub"
 DATA_JS_PATH = HUB_DIR / "data.js"
+TOTAIS_JS_PATH = HUB_DIR / "totais.js"
 
 SOURCE_METADATA = {
     "local": {
@@ -263,6 +264,9 @@ def build_data():
     sources_count = len(json.loads(SOURCES_PATH.read_text(encoding="utf-8"))["sources"])
     output_js = f"// LAY SKILLS HUB - GENERATED DATASET ({len(skills_list)} SKILLS)\nwindow.LAY_SKILLS = {json.dumps(skills_list, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES = {json.dumps(SOURCE_METADATA, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES_COUNT = {sources_count};\n"
     DATA_JS_PATH.write_text(output_js, encoding="utf-8")
+    # Totais pequenos, para páginas que não carregam data.js (ex.: instalacao.html).
+    totais_js = f"// LAY SKILLS HUB - TOTAIS GERADOS\nwindow.LAY_TOTAIS = {json.dumps({'skills': len(skills_list), 'fontes': sources_count}, ensure_ascii=False)};\n"
+    TOTAIS_JS_PATH.write_text(totais_js, encoding="utf-8")
     print(f"[OK] Generated {DATA_JS_PATH} with {len(skills_list)} skills.")
 
 if __name__ == "__main__":

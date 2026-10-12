@@ -1161,6 +1161,114 @@
       .console-top-row { flex-direction: column; }
       .selection-drawer-bar { width: calc(100% - 32px); justify-content: space-between; }
     }
+
+    /* ==========================================================================
+       COMPONENTES ANIMADOS (resumo das skills e fluxo de instalação)
+       ========================================================================== */
+    .comp-subtitulo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-blaze-yellow);
+      margin: 36px 0 14px 0;
+    }
+
+    .comp-passos {
+      list-style: none;
+      display: grid;
+      gap: 14px;
+    }
+
+    .comp-passo {
+      display: grid;
+      grid-template-columns: 40px minmax(0, 1fr);
+      gap: 14px;
+      background: var(--color-graphite-surface);
+      border: 2px solid var(--color-border-dark);
+      box-shadow: var(--shadow-hard-s);
+      padding: 16px;
+      min-width: 0;
+    }
+
+    .comp-passo > div {
+      min-width: 0;
+    }
+
+    .comp-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-blaze-yellow);
+      color: #000;
+      border: 2px solid #000;
+      font-family: var(--font-mono);
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .comp-passo p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--color-off-white);
+      margin-bottom: 10px;
+    }
+
+    .comp-passo p code,
+    .comp-nota code {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--color-retro-cyan);
+      padding: 1px 6px;
+      overflow-wrap: anywhere;
+    }
+
+    .comp-cmd {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--color-blaze-yellow);
+      background: #000;
+      border: 2px solid var(--color-border-dark);
+      padding: 10px 12px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+
+    #componentes-animados p a {
+      color: var(--color-blaze-yellow);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .comp-nota {
+      margin-top: 20px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--color-off-white);
+    }
+
+    /* ==========================================================================
+       MOVIMENTO REDUZIDO (animações do site respeitam prefers-reduced-motion)
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1171,13 +1279,13 @@
   <!-- Top Industrial Ticker -->
   <div class="ticker-wrapper">
     <div class="ticker-content">
-      <div class="ticker-item"><span>LAY® HUB</span> 132 SKILLS SINCRONIZADAS</div>
+      <div class="ticker-item"><span>LAY® HUB</span> <span class="js-total-skills">136</span> SKILLS SINCRONIZADAS</div>
       <div class="ticker-item"><span>STATUS</span> ANTIGRAVITY • CODEX • CLAUDE CODE 100% OK</div>
       <div class="ticker-item"><span>CRAFT</span> ENGENHARIA DE ELITE // PADRÃO MUNDIAL</div>
       <div class="ticker-item"><span>EVIDÊNCIA</span> GRAPHIFY v0.9.73 + METODOLOGIA DETERMINÍSTICA</div>
       <div class="ticker-item"><span>CREATIVE</span> VANTA 3D • REACT BITS • LENIS SMOOTH SCROLL • LIBRARIES.DEV</div>
       <!-- Repetição para loop contínuo -->
-      <div class="ticker-item"><span>LAY® HUB</span> 132 SKILLS SINCRONIZADAS</div>
+      <div class="ticker-item"><span>LAY® HUB</span> <span class="js-total-skills">136</span> SKILLS SINCRONIZADAS</div>
       <div class="ticker-item"><span>STATUS</span> ANTIGRAVITY • CODEX • CLAUDE CODE 100% OK</div>
       <div class="ticker-item"><span>CRAFT</span> ENGENHARIA DE ELITE // PADRÃO MUNDIAL</div>
       <div class="ticker-item"><span>EVIDÊNCIA</span> GRAPHIFY v0.9.73 + METODOLOGIA DETERMINÍSTICA</div>
@@ -1203,7 +1311,7 @@
       <div class="header-right">
         <div class="system-status-box">
           <span class="status-dot-pulse"></span>
-          <span>132 SKILLS ONLINE / 0 ERROS NA VALIDAÇÃO</span>
+          <span><span class="js-total-skills">136</span> SKILLS ONLINE / 0 ERROS NA VALIDAÇÃO</span>
         </div>
         <div class="seal-wrap" title="Selo Pernambuco para o Mundo">
           <img src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Oficial" class="lay-seal-img">
@@ -1227,7 +1335,7 @@
         </h1>
 
         <p class="hero-description">
-          Hub visual interativo reunindo <strong>132 capacidades especializadas</strong> e <strong>17 fontes de referência de elite mundial</strong>:
+          Hub visual interativo reunindo <strong><span class="js-total-skills">136</span> capacidades especializadas</strong> e <strong>17 fontes de referência de elite mundial</strong>:
           orquestração central de agentes (lay-orchestrator, Caveman, Graphify), referências de ponta (Addy Osmani, Vercel Labs, Semgrep, Playwright)
           e bibliotecas criativas (<strong>Vanta 3D</strong>, <strong>React Bits</strong>, <strong>Lenis Smooth Scroll</strong> e <strong>Libraries.dev</strong>).
           Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.
@@ -1236,7 +1344,7 @@
         <!-- Stats Strip -->
         <div class="stats-strip">
           <div class="stat-box">
-            <div class="stat-box-val"><span id="stat-total-skills">132</span> <span class="accent-char">/</span></div>
+            <div class="stat-box-val"><span id="stat-total-skills">136</span> <span class="accent-char">/</span></div>
             <div class="stat-box-lbl">Skills Ativas</div>
           </div>
           <div class="stat-box">
@@ -1263,6 +1371,9 @@
           </button>
           <a class="btn-brutal btn-outline-white" href="instalacao.html">
             <span>👥</span> INSTALAR SUBAGENTES
+          </a>
+          <a class="btn-brutal btn-outline-white" href="componentes.html">
+            COMPONENTES ANIMADOS
           </a>
           <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener">
             <span>↗</span> REPOSITÓRIO GITHUB
@@ -1292,7 +1403,7 @@
         <div class="agent-card">
           <div class="agent-name">lay-frontend</div>
           <div class="agent-domain">frontend</div>
-          <div class="agent-use">Telas, componentes, landing pages, layout e animação de interface.</div>
+          <div class="agent-use">Telas, componentes, landing pages, layout e animação. Escolhe componente animado pelo custo, instala só na hora do uso e pergunta antes de gerar tela.</div>
           <span class="agent-tag">Leitura, edição e comandos</span>
         </div>
         <div class="agent-card">
@@ -1316,7 +1427,7 @@
         <div class="agent-card">
           <div class="agent-name">lay-qa</div>
           <div class="agent-domain">qa</div>
-          <div class="agent-use">Testes, cobertura, falhas de CI e validação antes de merge.</div>
+          <div class="agent-use">Testes, falhas de CI e validação antes de merge. Confere componente animado: imports, movimento reduzido, WebGL por rota, toque, licença e tsc.</div>
           <span class="agent-tag">Leitura, edição e comandos</span>
         </div>
         <div class="agent-card">
@@ -1369,6 +1480,75 @@
       </p>
     </section>
 
+    <!-- Componentes animados: resumo das skills e fluxo de instalação -->
+    <section class="agents-section" id="componentes-animados">
+      <div class="section-kicker">COMPONENTES ANIMADOS • PIXEL-PERFECT E COMPONENTRY</div>
+      <h2 class="section-title">Escolher, instalar<br>e conferir</h2>
+      <p class="section-lead">
+        Componentes animados dos registros <strong>Pixel-Perfect</strong> e <strong>Componentry</strong>. A escolha considera o custo
+        (T1, T2 ou T3). A skill de escolha não baixa nada: o item só é instalado na hora do uso, pelo CLI do shadcn.
+        O catálogo, com busca e filtros, está em <a href="componentes.html">componentes.html</a>.
+      </p>
+
+      <div class="agent-grid">
+        <div class="agent-card">
+          <div class="agent-name">selecting-animated-ui-components</div>
+          <div class="agent-domain">frontend</div>
+          <div class="agent-use">Escolhe o componente pela necessidade da tela e pelo custo: CSS e DOM, biblioteca ou canvas 2D, WebGL.</div>
+          <span class="agent-tag">lay-frontend</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">integrating-external-ui-components</div>
+          <div class="agent-domain">frontend</div>
+          <div class="agent-use">Instala o item escolhido com o CLI do shadcn e prepara utils, tipos e pacotes. Adapta movimento reduzido, toque, "use client" e lil-gui.</div>
+          <span class="agent-tag">lay-frontend</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">clarifying-screen-requirements</div>
+          <div class="agent-domain">frontend</div>
+          <div class="agent-use">Faz perguntas antes de gerar a tela, para não decidir por suposição.</div>
+          <span class="agent-tag">lay-frontend</span>
+        </div>
+        <div class="agent-card">
+          <div class="agent-name">verifying-animated-component-compliance</div>
+          <div class="agent-domain">qa</div>
+          <div class="agent-use">Confere imports, "use client", movimento reduzido, WebGL por rota, toque, lil-gui, licença e tsc. Só lê os arquivos.</div>
+          <span class="agent-tag">lay-qa</span>
+        </div>
+      </div>
+
+      <h3 class="comp-subtitulo">Fluxo de instalação</h3>
+      <ol class="comp-passos">
+        <li class="comp-passo">
+          <span class="comp-num">1</span>
+          <div>
+            <p>Quando o item importa <code>@/lib/utils</code>, instale o helper antes. O CLI não traz esse arquivo sozinho.</p>
+            <code class="comp-cmd">npx shadcn@latest add utils -y</code>
+          </div>
+        </li>
+        <li class="comp-passo">
+          <span class="comp-num">2</span>
+          <div>
+            <p>Instale o item pela URL dele. O CLI traz a cadeia de dependências do registro, na maioria dos casos. A coluna "Instalar antes" diz o que instalar à mão.</p>
+            <code class="comp-cmd">npx shadcn@latest add &lt;url-do-item&gt; -y</code>
+          </div>
+        </li>
+        <li class="comp-passo">
+          <span class="comp-num">3</span>
+          <div>
+            <p>Rode o tsc. Se aparecer erro de tipo, instale <code>@types/three</code> na versão do three, ou o pacote que o componente importa e não declara (ex.: <code>class-variance-authority</code> para o button do shadcn).</p>
+            <code class="comp-cmd">npx tsc --noEmit</code>
+          </div>
+        </li>
+      </ol>
+      <p class="comp-nota">Verificado em 12/10/2026 num projeto React/TypeScript de teste: tsc sem erros nos itens testados.</p>
+
+      <div class="agent-actions">
+        <a class="btn-brutal btn-primary-yellow" href="componentes.html">VER O CATÁLOGO DE COMPONENTES</a>
+        <a class="btn-brutal btn-primary-magenta" href="componentes.html#cuidados">CUIDADOS ANTES DE PUBLICAR</a>
+      </div>
+    </section>
+
     <!-- Console Section (Search, Filters, Switchboard) -->
     <section class="console-section">
       <div class="console-top-row">
@@ -1396,7 +1576,7 @@
 
     <!-- Results Status Bar -->
     <div class="results-status-bar">
-      <div>CATÁLOGO: EXIBINDO <span class="results-count-bold" id="filtered-count">132</span> DE 132 SKILLS</div>
+      <div>CATÁLOGO: EXIBINDO <span class="results-count-bold" id="filtered-count">136</span> DE <span class="js-total-skills">136</span> SKILLS</div>
       <div id="active-filter-text">FILTRO ATIVO: TODOS</div>
     </div>
 
@@ -1479,7 +1659,7 @@ if (-not (Test-Path "$env:USERPROFILE\.lay-skills-repo")) {
     git -C "$env:USERPROFILE\.lay-skills-repo" pull --recurse-submodules
 }
 
-# 2. Instalar e distribuir as 132 skills nos agentes (Antigravity, Codex, Claude Code)
+# 2. Instalar e distribuir as <span class="js-total-skills">136</span> skills nos agentes (Antigravity, Codex, Claude Code)
 powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.lay-skills-repo\install.ps1"
 ```
 *(No Linux / macOS: `bash "$HOME/.lay-skills-repo/install.sh"`)*
@@ -1569,6 +1749,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       }
 
       document.getElementById('stat-total-skills').textContent = allSkills.length;
+      document.querySelectorAll('.js-total-skills').forEach((el) => { el.textContent = allSkills.length; });
       
       initSourceDropdown();
       initCategorySwitchboard();
@@ -1606,7 +1787,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       container.innerHTML = '';
 
       const categories = [
-        { id: 'all', label: 'TODAS (132)' },
+        { id: 'all', label: `TODAS (${allSkills.length})` },
         { id: 'design', label: 'DESIGN & UI/UX' },
         { id: 'contexto', label: 'CONTEXTO & AGENTES' },
         { id: 'engenharia', label: 'ENGENHARIA' },

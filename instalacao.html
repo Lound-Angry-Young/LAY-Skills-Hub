@@ -796,6 +796,24 @@
       .flow-step:nth-child(n) { border-top-width: 4px; }
       .site-footer { flex-direction: column; }
     }
+
+    /* ==========================================================================
+       MOVIMENTO REDUZIDO (animações do site respeitam prefers-reduced-motion)
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -859,7 +877,7 @@
           <div class="stat-box-lbl">Domínios</div>
         </div>
         <div class="stat-box">
-          <div class="stat-box-val">132 <span class="accent-char">§</span></div>
+          <div class="stat-box-val"><span class="js-total-skills">136</span> <span class="accent-char">§</span></div>
           <div class="stat-box-lbl">Skills públicas</div>
         </div>
         <div class="stat-box">
@@ -1008,7 +1026,7 @@ cd LAY-Skills-Hub</pre>
               <tr>
                 <td>lay-frontend</td>
                 <td>frontend</td>
-                <td>telas, componentes, landing pages, layout e animação de interface</td>
+                <td>telas, componentes, landing pages, layout e animação de interface; escolhe componente animado pelo custo, instala só na hora do uso e pergunta antes de gerar tela</td>
                 <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
               </tr>
               <tr>
@@ -1032,7 +1050,7 @@ cd LAY-Skills-Hub</pre>
               <tr>
                 <td>lay-qa</td>
                 <td>qa</td>
-                <td>testes, cobertura, falhas de CI e validação antes de merge</td>
+                <td>testes, cobertura, falhas de CI, validação antes de merge e conferência de componente animado (imports, movimento reduzido, WebGL por rota, toque, licença e tsc; a skill de conferência só lê)</td>
                 <td class="tools">Read, Grep, Glob, Bash, Edit, Write</td>
               </tr>
               <tr>
@@ -1357,5 +1375,7 @@ python scripts/skill_hub.py install --agents all</pre>
         .catch(esconder);
     })();
   </script>
+<script src="hub/totais.js"></script>
+<script>document.addEventListener('DOMContentLoaded',function(){if(window.LAY_TOTAIS){document.querySelectorAll('.js-total-skills').forEach(function(el){el.textContent=window.LAY_TOTAIS.skills;});}});</script>
 </body>
 </html>
