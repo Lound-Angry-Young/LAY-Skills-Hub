@@ -43,7 +43,7 @@ def main():
         if not skills and source_id != 'latent-spaces--brag':
             notes.append('Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva.')
         if source_id == 'safishamsi--graphify':
-            notes.append('Fonte adicional da skill Graphify legada; inclui runtime e referências ausentes na cópia local.')
+            notes.append('Fonte adicional da skill Graphify; inclui runtime e referências.')
         if source_id == 'leonxlnx--taste-skill':
             notes.append('URLs Leonxlnx/leonxlnx deduplicadas: GitHub trata o nome sem distinção de maiúsculas.')
         if source_id == 'latent-spaces--brag':
