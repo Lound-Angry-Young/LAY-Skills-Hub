@@ -3,1648 +3,877 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LAY® SKILLS HUB — Central de Habilidades & Engenharia de Agentes</title>
-  <meta name="description" content="Repertório oficial de skills de alto padrão para agentes de IA (Google Antigravity, OpenAI Codex, Claude Code). Engenharia de software, orquestração e evidências comprovadas.">
+  <title>LAY® SKILLS HUB — Escolha um especialista pelo domínio</title>
+  <meta name="description" content="Escolha um especialista LAY pelo domínio. Veja o que cada um usa, de onde vem e onde fica instalado.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;0,800;1,700&family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     /* ==========================================================================
-       DESIGN TOKENS
+       TOKENS: identidade brutalista LAY (paleta e fontes da versão original)
        ========================================================================== */
     :root {
-      --color-blaze-yellow: #fff201;
-      --color-absolute-magenta: #ff3eb5;
-      --color-blood-red: #c21818;
-      --color-toxic-green: #77b82a;
-      --color-retro-cyan: #00ffff;
-      --color-dark-purple: #1f0e3e;
-      --color-rich-black: #060709;
-      --color-graphite-surface: #101218;
-      --color-graphite-card: #151821;
-      --color-graphite-hover: #1c202d;
-      --color-bone-white: #faf5e9;
-      --color-off-white: #dcd6c8;
-      --color-muted-grey: #697386;
-      --color-border-dark: #232734;
-      --color-border-light: rgba(250, 245, 233, 0.2);
-
-      --font-display: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-
-      --shadow-hard-s: 3px 3px 0px #000000;
-      --shadow-hard-m: 5px 5px 0px #000000;
-      --shadow-hard-l: 8px 8px 0px #000000;
-      --shadow-yellow: 5px 5px 0px var(--color-blaze-yellow);
-      --shadow-magenta: 5px 5px 0px var(--color-absolute-magenta);
-      --shadow-cyan: 5px 5px 0px var(--color-retro-cyan);
+      --amarelo: #fff201;
+      --magenta: #ff3eb5;
+      --ciano: #00ffff;
+      --verde: #77b82a;
+      --vermelho: #c21818;
+      --roxo-lay: #5f27cd;
+      --preto: #060709;
+      --grafite: #101218;
+      --cartao: #151821;
+      --cartao-escuro: #0b0d12;
+      --osso: #faf5e9;
+      --cinza: #9aa3b5;
+      --borda: #2a2f3d;
+      --fonte-titulo: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --fonte-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      --realce-amarelo: drop-shadow(6px 6px 0 var(--amarelo));
+      --transicao: 280ms ease-in-out;
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    ::selection {
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-    }
-
+    /* ==========================================================================
+       BASE
+       ========================================================================== */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    [hidden] { display: none !important; }
     html {
+      background: var(--preto);
+      color: var(--osso);
+      font-family: var(--fonte-titulo);
       scroll-behavior: smooth;
-      background-color: var(--color-rich-black);
-      color: var(--color-bone-white);
-      font-family: var(--font-display);
+      -webkit-text-size-adjust: 100%;
     }
+    body { min-height: 100vh; background: var(--preto); line-height: 1.5; }
+    ::selection { background: var(--amarelo); color: #000; }
+    :focus-visible { outline: 3px solid var(--amarelo); outline-offset: 3px; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    button, input, select { font: inherit; color: inherit; }
+    label { font: 700 10px/1.2 var(--fonte-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--cinza); }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+    .container { position: relative; z-index: 1; width: min(1200px, calc(100% - 32px)); margin-inline: auto; }
+    .skip-link { position: absolute; left: 16px; top: -80px; z-index: 200; padding: 8px 12px; background: var(--amarelo); color: #000; font: 800 12px var(--fonte-mono); }
+    .skip-link:focus { top: 8px; }
 
-    body {
-      min-height: 100vh;
-      overflow-x: hidden;
-      background-color: var(--color-rich-black);
-      background-image: 
-        radial-gradient(rgba(255, 242, 1, 0.04) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(16, 18, 24, 0.8), rgba(6, 7, 9, 0.98));
-      background-size: 28px 28px, 100% 100%;
-      background-attachment: fixed;
-      position: relative;
-    }
+    /* ==========================================================================
+       FUNDO HALFTONE (canvas fixo atrás do conteúdo, sem eventos de ponteiro)
+       ========================================================================== */
+    .fundo-halftone { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    #halftone-canvas { width: 100%; height: 100%; display: block; }
 
-    .bg-binary-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background-image: url('hub/assets/lay/Binary Pattern.png');
-      background-repeat: repeat;
-      background-size: 320px;
-      opacity: 0.035;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    .container {
+    /* ==========================================================================
+       TICKER (faixa amarela no topo, em loop)
+       ========================================================================== */
+    .ticker {
       position: relative;
       z-index: 2;
-      max-width: 1560px;
-      margin: 0 auto;
-      padding: 0 24px 100px 24px;
-    }
-
-    /* ==========================================================================
-       TOP INDUSTRIAL TICKER / MARQUEE
-       ========================================================================== */
-    .ticker-wrapper {
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
       overflow: hidden;
+      overflow: clip;
       white-space: nowrap;
+      background: var(--amarelo);
+      color: #000;
       border-bottom: 2px solid #000;
-      padding: 6px 0;
-      display: flex;
+      font: 800 11px/1 var(--fonte-mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
       user-select: none;
     }
-
-    .ticker-content {
-      display: inline-block;
-      animation: ticker 32s linear infinite;
-    }
-
+    .ticker-trilha { display: flex; width: max-content; padding: 10px 0; animation: ticker 40s linear infinite; }
+    .ticker:hover .ticker-trilha { animation-play-state: paused; }
+    .ticker-grupo { display: flex; flex: none; }
+    .ticker-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 22px; }
+    .ticker-item b { padding: 3px 6px; background: #000; color: var(--amarelo); font-weight: 800; }
     @keyframes ticker {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-
-    .ticker-item {
-      display: inline-block;
-      padding: 0 20px;
-    }
-    .ticker-item span {
-      background: var(--color-rich-black);
-      color: var(--color-blaze-yellow);
-      padding: 1px 6px;
-      margin-right: 6px;
+      from { transform: translate3d(0, 0, 0); }
+      to { transform: translate3d(-50%, 0, 0); }
     }
 
     /* ==========================================================================
-       MAIN APP HEADER
+       CABEÇALHO (marca à esquerda, status e selo girando à direita)
        ========================================================================== */
-    .main-header {
-      padding: 24px 0 20px 0;
-      border-bottom: 2px solid var(--color-border-dark);
+    .cabecalho {
+      position: relative;
+      z-index: 1;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-      gap: 20px;
       flex-wrap: wrap;
-    }
-
-    .brand-block {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .lay-logo-img {
-      height: 44px;
-      width: 44px;
-      object-fit: contain;
-      filter: drop-shadow(2px 2px 0px var(--color-blaze-yellow));
-    }
-
-    .brand-title-wrap {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .brand-title {
-      font-size: 22px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      color: var(--color-bone-white);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .brand-title .badge-reg {
-      color: var(--color-blaze-yellow);
-      font-size: 14px;
-    }
-
-    .brand-subtitle {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      color: var(--color-muted-grey);
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
       gap: 16px;
+      padding: 22px 0 18px;
+      border-bottom: 2px solid var(--borda);
     }
-
-    .system-status-box {
-      background: var(--color-graphite-surface);
-      border: 2px solid var(--color-border-dark);
-      padding: 6px 14px;
-      font-family: var(--font-mono);
-      font-size: 11px;
+    .marca { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .marca-logo { width: 48px; height: 48px; flex: none; filter: drop-shadow(2px 2px 0 #000); }
+    .marca-titulo { font: 900 20px/1 var(--fonte-titulo); letter-spacing: -.01em; text-transform: uppercase; }
+    .marca-reg { margin-left: 2px; color: var(--amarelo); font-size: .6em; vertical-align: super; }
+    .marca-sub { margin-top: 6px; font: 600 10px/1.3 var(--fonte-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--cinza); }
+    .cabecalho-direita { display: flex; align-items: center; gap: 14px; flex: none; }
+    .status {
       display: flex;
       align-items: center;
       gap: 8px;
-      box-shadow: var(--shadow-hard-s);
+      padding: 7px 10px;
+      background: #000;
+      border: 2px solid var(--osso);
+      box-shadow: 3px 3px 0 #000;
+      font: 800 11px/1 var(--fonte-mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
     }
-
-    .status-dot-pulse {
+    .status-ponto {
       width: 8px;
       height: 8px;
-      background: var(--color-toxic-green);
-      box-shadow: 0 0 8px var(--color-toxic-green);
-      animation: pulseGreen 1.4s infinite;
+      border-radius: 50%;
+      background: var(--verde);
+      animation: pulso 2s ease-in-out infinite;
     }
-
-    @keyframes pulseGreen {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.4; transform: scale(0.85); }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    .seal-wrap {
-      position: relative;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .lay-seal-img {
-      width: 100%;
-      height: 100%;
+    .selo {
+      width: 56px;
+      height: 56px;
       object-fit: contain;
-      animation: spinSlow 30s linear infinite;
       filter: drop-shadow(2px 2px 0 #000);
+      transform-origin: 50% 50%;
+      animation: girar 30s linear infinite;
     }
-
-    @keyframes spinSlow {
+    @keyframes girar {
       from { transform: rotate(0deg); }
       to { transform: rotate(360deg); }
     }
+    @keyframes pulso {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(119, 184, 42, .55); }
+      70% { box-shadow: 0 0 0 8px rgba(119, 184, 42, 0); }
+    }
 
     /* ==========================================================================
-       HERO BRUTALIST SECTION
+       BOTÕES E CARTÕES (hover: sombra amarela; saída com ease-in-out)
        ========================================================================== */
-    .hero-section {
-      padding: 48px 0 36px 0;
+    .botao {
       position: relative;
-      border-bottom: 2px solid var(--color-border-dark);
-      overflow: hidden;
-    }
-
-    .hero-shark-watermark {
-      position: absolute;
-      right: -20px;
-      bottom: -30px;
-      width: 380px;
-      opacity: 0.12;
-      pointer-events: none;
-      user-select: none;
-      filter: contrast(150%) brightness(80%);
-      transform: rotate(-6deg);
-      z-index: 0;
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 1080px;
-    }
-
-    .hero-eyebrow {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
-      background: var(--color-rich-black);
-      border: 2px solid var(--color-blaze-yellow);
-      color: var(--color-blaze-yellow);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      padding: 5px 12px;
-      box-shadow: 3px 3px 0 var(--color-blaze-yellow);
-      margin-bottom: 20px;
-      transform: rotate(-1deg);
-    }
-
-    .hero-heading {
-      font-size: clamp(38px, 4.5vw, 68px);
-      font-weight: 900;
-      text-transform: uppercase;
-      line-height: 0.95;
-      letter-spacing: -0.04em;
-      color: var(--color-bone-white);
-      margin-bottom: 20px;
-    }
-
-    .hero-heading .highlight-yellow {
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-      padding: 0 8px;
-      display: inline-block;
-      transform: rotate(0.8deg);
-      box-shadow: 4px 4px 0 #000;
-    }
-
-    .hero-heading .highlight-magenta {
-      background: var(--color-absolute-magenta);
-      color: var(--color-bone-white);
-      padding: 0 8px;
-      display: inline-block;
-      transform: rotate(-1deg);
-      box-shadow: 4px 4px 0 #000;
-    }
-
-    .hero-description {
-      font-size: 16px;
-      line-height: 1.6;
-      color: var(--color-off-white);
-      max-width: 860px;
-      margin-bottom: 32px;
-    }
-
-    .hero-description strong {
-      color: var(--color-blaze-yellow);
-      font-weight: 700;
-    }
-
-    /* Stats Grid */
-    .stats-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-
-    .stat-box {
-      background: var(--color-graphite-surface);
-      border: 2px solid var(--color-border-dark);
-      padding: 18px 20px;
-      box-shadow: var(--shadow-hard-m);
-      position: relative;
-      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .stat-box:hover {
-      transform: translate(-3px, -3px);
-      border-color: var(--color-blaze-yellow);
-      box-shadow: 6px 6px 0 var(--color-blaze-yellow);
-    }
-
-    .stat-box-val {
-      font-family: var(--font-display);
-      font-size: 38px;
-      font-weight: 900;
-      color: var(--color-bone-white);
-      line-height: 1;
-      display: flex;
-      align-items: baseline;
-      gap: 4px;
-    }
-
-    .stat-box-val .accent-char {
-      color: var(--color-blaze-yellow);
-      font-size: 24px;
-    }
-
-    .stat-box-lbl {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--color-muted-grey);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-top: 6px;
-    }
-
-    /* Hero CTA Actions */
-    .hero-actions-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .btn-brutal {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 13px 24px;
-      border: 2px solid #000;
-      cursor: pointer;
-      text-decoration: none;
-      box-shadow: var(--shadow-hard-m);
-      transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
-      user-select: none;
-    }
-
-    .btn-brutal:hover {
-      transform: translate(-3px, -3px);
-    }
-
-    .btn-brutal:active {
-      transform: translate(1px, 1px);
-      box-shadow: 2px 2px 0 #000;
-    }
-
-    .btn-primary-yellow {
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-    }
-    .btn-primary-yellow:hover {
-      box-shadow: 7px 7px 0 var(--color-absolute-magenta);
-    }
-
-    .btn-primary-magenta {
-      background: var(--color-absolute-magenta);
-      color: var(--color-bone-white);
-    }
-    .btn-primary-magenta:hover {
-      box-shadow: 7px 7px 0 var(--color-blaze-yellow);
-    }
-
-    .btn-outline-white {
-      background: var(--color-graphite-surface);
-      color: var(--color-bone-white);
-      border: 2px solid var(--color-bone-white);
-    }
-    .btn-outline-white:hover {
-      background: var(--color-bone-white);
-      color: var(--color-rich-black);
-      box-shadow: 7px 7px 0 var(--color-retro-cyan);
-    }
-
-    /* ==========================================================================
-       CONTROL CONSOLE (Filters, Search, Categories)
-       ========================================================================== */
-    .console-section {
-      padding: 28px 0;
-      position: sticky;
-      top: 0;
-      z-index: 40;
-      background: rgba(6, 7, 9, 0.94);
-      backdrop-filter: blur(8px);
-      border-bottom: 2px solid var(--color-border-dark);
-      margin-bottom: 28px;
-    }
-
-    .console-top-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: stretch;
-      margin-bottom: 18px;
-    }
-
-    .search-console-box {
-      flex: 1 1 360px;
-      display: flex;
-      align-items: center;
-      background: #000;
-      border: 2px solid var(--color-border-dark);
-      padding: 0 14px;
-      box-shadow: var(--shadow-hard-s);
-      transition: border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .search-console-box:focus-within {
-      border-color: var(--color-blaze-yellow);
-      box-shadow: 4px 4px 0 var(--color-blaze-yellow);
-    }
-
-    .prompt-prefix {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--color-blaze-yellow);
-      margin-right: 10px;
-      user-select: none;
-      white-space: nowrap;
-    }
-
-    .search-console-input {
-      flex: 1;
+      min-height: 44px;
+      padding: 10px 16px;
+      border: 2px solid var(--osso);
       background: transparent;
-      border: none;
-      color: var(--color-bone-white);
-      font-family: var(--font-mono);
-      font-size: 13px;
-      padding: 12px 0;
-      outline: none;
-    }
-
-    .search-console-input::placeholder {
-      color: var(--color-muted-grey);
-    }
-
-    .console-select {
-      background: var(--color-graphite-surface);
-      border: 2px solid var(--color-border-dark);
-      color: var(--color-bone-white);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
+      color: var(--osso);
+      font: 800 12px/1.2 var(--fonte-mono);
+      letter-spacing: .06em;
       text-transform: uppercase;
-      padding: 0 16px;
-      height: 48px;
-      cursor: pointer;
-      outline: none;
-      box-shadow: var(--shadow-hard-s);
-      transition: border-color 0.15s ease;
-    }
-
-    .console-select:focus, .console-select:hover {
-      border-color: var(--color-bone-white);
-    }
-
-    /* Category switch buttons */
-    .category-switchboard {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    .cat-btn {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      padding: 7px 14px;
-      border: 2px solid var(--color-border-dark);
-      background: var(--color-graphite-surface);
-      color: var(--color-bone-white);
-      cursor: pointer;
-      box-shadow: 2px 2px 0 #000;
-      transition: all 0.1s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      user-select: none;
-    }
-
-    .cat-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 4px 4px 0 #000;
-      border-color: var(--color-bone-white);
-    }
-
-    .cat-btn.active {
-      background: var(--color-rich-black);
-      color: var(--color-blaze-yellow);
-      border-color: var(--color-blaze-yellow);
-      box-shadow: 4px 4px 0 var(--color-blaze-yellow);
-      transform: translate(-2px, -2px);
-    }
-
-    /* Individual category theme borders */
-    .cat-btn[data-cat="design"].active { color: var(--color-absolute-magenta); border-color: var(--color-absolute-magenta); box-shadow: 4px 4px 0 var(--color-absolute-magenta); }
-    .cat-btn[data-cat="seguranca"].active { color: #ff4757; border-color: #ff4757; box-shadow: 4px 4px 0 #ff4757; }
-    .cat-btn[data-cat="testes"].active { color: var(--color-toxic-green); border-color: var(--color-toxic-green); box-shadow: 4px 4px 0 var(--color-toxic-green); }
-    .cat-btn[data-cat="engenharia"].active { color: var(--color-retro-cyan); border-color: var(--color-retro-cyan); box-shadow: 4px 4px 0 var(--color-retro-cyan); }
-    .cat-btn[data-cat="contexto"].active { color: var(--color-blaze-yellow); border-color: var(--color-blaze-yellow); box-shadow: 4px 4px 0 var(--color-blaze-yellow); }
-    .cat-btn[data-cat="midia"].active { color: #f368e0; border-color: #f368e0; box-shadow: 4px 4px 0 #f368e0; }
-
-    /* Results Header Bar */
-    .results-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--color-muted-grey);
-      margin-bottom: 20px;
-      padding-bottom: 8px;
-      border-bottom: 1px dashed var(--color-border-dark);
-    }
-
-    .results-count-bold {
-      color: var(--color-bone-white);
-      background: var(--color-graphite-surface);
-      padding: 3px 8px;
-      border: 1px solid var(--color-border-dark);
-    }
-
-    /* ==========================================================================
-       SKILLS GRID & BRUTALIST CARDS
-       ========================================================================== */
-    .skills-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-      gap: 20px;
-    }
-
-    .skill-card {
-      background: var(--color-graphite-card);
-      border: 2px solid var(--color-border-dark);
-      padding: 22px;
-      display: flex;
-      flex-direction: column;
-      box-shadow: var(--shadow-hard-m);
-      position: relative;
-      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .skill-card:hover {
-      transform: translate(-3px, -3px);
-      border-color: var(--color-blaze-yellow);
-      box-shadow: 7px 7px 0px var(--color-blaze-yellow);
-    }
-
-    .skill-card.selected-in-plan {
-      border-color: var(--color-toxic-green);
-      box-shadow: 6px 6px 0px var(--color-toxic-green);
-    }
-
-    .card-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .source-block {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .source-img {
-      width: 32px;
-      height: 32px;
-      object-fit: cover;
-      background: #000;
-      border: 2px solid var(--color-border-dark);
-    }
-
-    .source-info {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .source-author-name {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--color-muted-grey);
-      letter-spacing: 0.05em;
-    }
-
-    .source-repo-link {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--color-retro-cyan);
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    .source-repo-link:hover {
-      text-decoration: underline;
-      color: var(--color-blaze-yellow);
-    }
-
-    .category-tag-badge {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border: 1px solid #000;
-      letter-spacing: 0.06em;
-      white-space: nowrap;
-    }
-
-    .badge-cat-design { background: var(--color-absolute-magenta); color: #fff; }
-    .badge-cat-engenharia { background: var(--color-retro-cyan); color: #000; }
-    .badge-cat-seguranca { background: #ff4757; color: #fff; }
-    .badge-cat-testes { background: var(--color-toxic-green); color: #000; }
-    .badge-cat-contexto { background: var(--color-blaze-yellow); color: #000; }
-    .badge-cat-operacoes { background: #1e90ff; color: #fff; }
-    .badge-cat-midia { background: #f368e0; color: #000; }
-    .badge-cat-produto { background: #00d2d3; color: #000; }
-    .badge-cat-pesquisa { background: #5f27cd; color: #fff; }
-    .badge-cat-documentacao { background: #c8d6e5; color: #000; }
-
-    .skill-title-text {
-      font-family: var(--font-display);
-      font-size: 18px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      color: var(--color-bone-white);
-      margin-bottom: 10px;
-      line-height: 1.2;
-    }
-
-    .skill-desc-text {
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--color-off-white);
-      margin-bottom: 18px;
-      flex-grow: 1;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    .card-footer-actions {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      padding-top: 14px;
-      border-top: 2px solid var(--color-border-dark);
-    }
-
-    .btn-card-action {
-      flex: 1;
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      padding: 8px 10px;
-      border: 2px solid #000;
       cursor: pointer;
-      text-align: center;
-      box-shadow: 2px 2px 0 #000;
-      transition: all 0.1s ease;
+      transition:
+        transform var(--transicao),
+        filter var(--transicao),
+        background-color var(--transicao),
+        color var(--transicao),
+        border-color var(--transicao);
+    }
+    .botao:hover { transform: translate(-2px, -2px); filter: var(--realce-amarelo); border-color: var(--amarelo); }
+    .botao:active { transform: translate(0, 0); filter: none; }
+    .botao:disabled { opacity: .5; cursor: not-allowed; transform: none; filter: none; }
+    .botao-primario { background: var(--amarelo); color: #000; border-color: #000; }
+    .botao-secundario { background: #000; }
+    .botao-magenta { background: var(--magenta); color: #000; border-color: #000; }
+    .botao-link { padding-inline: 4px; border-color: transparent; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 5px; }
+    .botao-link:hover { transform: none; filter: none; border-color: transparent; color: var(--amarelo); text-decoration-color: var(--amarelo); }
+    .botao-compacto { min-height: 36px; padding: 6px 12px; font-size: 11px; }
+    .botao-fechar { flex: none; min-height: 40px; padding-inline: 12px; background: #000; }
+    .botao-texto { padding: 4px 0; border: 0; background: none; color: var(--ciano); font: 700 11px var(--fonte-mono); text-decoration: underline; cursor: pointer; }
+    .gh-stars { display: inline-block; margin-left: 8px; padding: 2px 6px; border: 2px solid #000; background: var(--amarelo); color: #000; font: 800 11px var(--fonte-mono); }
+    .gh-stars.is-hidden { display: none; }
+
+    .card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 18px;
+      background: var(--cartao);
+      border: 2px solid var(--borda);
+      box-shadow: 4px 4px 0 #000;
+      transition:
+        transform var(--transicao),
+        filter var(--transicao),
+        border-color var(--transicao);
+    }
+    .card:hover { transform: translate(-3px, -3px); filter: var(--realce-amarelo); border-color: var(--amarelo); }
+
+    /* ==========================================================================
+       HERO (texto de apresentação, proposta de valor, números e tubarão)
+       ========================================================================== */
+    .principal { position: relative; z-index: 1; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      overflow: clip;
+      padding: 56px 0 48px;
+      border-bottom: 2px solid var(--borda);
+    }
+    .hero-tubarao {
+      position: absolute;
+      right: -90px;
+      bottom: -70px;
+      z-index: 0;
+      width: min(560px, 80vw);
+      height: auto;
+      opacity: .14;
+      transform: rotate(-6deg);
+      pointer-events: none;
       user-select: none;
     }
-
-    .btn-card-action:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: 4px 4px 0 #000;
-    }
-
-    .btn-copy-prompt {
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-    }
-    .btn-copy-prompt:hover {
-      background: var(--color-blaze-yellow);
-      box-shadow: 4px 4px 0 var(--color-absolute-magenta);
-    }
-
-    .btn-inspect-spec {
-      background: var(--color-graphite-surface);
-      color: var(--color-bone-white);
-      border-color: var(--color-border-dark);
-      flex: 0 0 auto;
-      padding: 8px 12px;
-    }
-    .btn-inspect-spec:hover {
-      background: var(--color-bone-white);
-      color: var(--color-rich-black);
-      border-color: #000;
-    }
-
-    .btn-select-toggle {
-      background: var(--color-graphite-surface);
-      color: var(--color-muted-grey);
-      border-color: var(--color-border-dark);
-      flex: 0 0 auto;
-      padding: 8px 12px;
-    }
-    .btn-select-toggle.is-selected {
-      background: var(--color-toxic-green);
-      color: var(--color-rich-black);
-      border-color: #000;
-      box-shadow: 3px 3px 0 #000;
-    }
-
-    /* ==========================================================================
-       FLOATING PROJECT SELECTION DRAWER
-       ========================================================================== */
-    .selection-drawer-bar {
-      position: fixed;
-      bottom: 24px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 90;
-      background: #000;
-      border: 2px solid var(--color-blaze-yellow);
-      padding: 12px 24px;
-      box-shadow: 6px 6px 0px #000;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .selection-drawer-bar.hidden {
-      transform: translateX(-50%) translateY(120px);
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .drawer-label {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: var(--color-bone-white);
-    }
-
-    .drawer-counter {
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-      padding: 2px 8px;
-      margin-right: 6px;
-    }
-
-    /* ==========================================================================
-       MODALS (3px solid borders, hard shadows)
-       ========================================================================== */
-    .modal-backdrop {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: 100;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .modal-brutal-box {
-      background: var(--color-graphite-surface);
-      border: 3px solid var(--color-blaze-yellow);
-      box-shadow: 12px 12px 0px #000000;
-      width: 100%;
-      max-width: 920px;
-      max-height: 88vh;
-      display: flex;
-      flex-direction: column;
-      position: relative;
-      animation: modalPop 0.15s ease-out;
-    }
-
-    @keyframes modalPop {
-      from { transform: scale(0.97) translateY(10px); opacity: 0; }
-      to { transform: scale(1) translateY(0); opacity: 1; }
-    }
-
-    .modal-tape-header {
-      background: #000;
-      border-bottom: 2px solid var(--color-blaze-yellow);
-      padding: 16px 22px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .modal-header-info {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .modal-header-info h3 {
-      font-size: 18px;
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.02em;
-      color: var(--color-bone-white);
-    }
-
-    .modal-btn-close {
-      background: var(--color-blood-red);
-      color: var(--color-bone-white);
-      border: 2px solid #000;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
-      padding: 6px 12px;
-      cursor: pointer;
-      box-shadow: 2px 2px 0 #000;
-    }
-
-    .modal-btn-close:hover {
-      background: #ff3333;
-      transform: translate(-1px, -1px);
-    }
-
-    .modal-scroll-body {
-      padding: 24px;
-      overflow-y: auto;
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--color-bone-white);
-    }
-
-    .modal-scroll-body pre {
-      background: #000;
-      border: 2px solid var(--color-border-dark);
-      padding: 16px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--color-blaze-yellow);
-      overflow-x: auto;
-      margin: 16px 0;
-      box-shadow: 3px 3px 0 #000;
-    }
-
-    .modal-scroll-body code {
-      font-family: var(--font-mono);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--color-retro-cyan);
-      padding: 2px 6px;
-    }
-
-    .modal-scroll-body h1, .modal-scroll-body h2, .modal-scroll-body h3 {
-      text-transform: uppercase;
-      margin: 20px 0 10px 0;
-      color: var(--color-blaze-yellow);
-      letter-spacing: -0.02em;
-    }
-
-    .modal-tape-footer {
-      background: #000;
-      border-top: 2px solid var(--color-border-dark);
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    /* Toast Notification */
-    .brutal-toast {
-      position: fixed;
-      bottom: 24px;
-      right: 24px;
-      background: var(--color-blaze-yellow);
-      color: var(--color-rich-black);
-      border: 2px solid #000;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      padding: 14px 20px;
-      box-shadow: 5px 5px 0 #000;
-      z-index: 200;
-      transform: translateY(120px);
-      opacity: 0;
-      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .brutal-toast.show {
-      transform: translateY(0);
-      opacity: 1;
-    }
-
-    /* ==========================================================================
-       SUBAGENTES (seção de agentes)
-       ========================================================================== */
-    .agents-section {
-      padding: 48px 0 40px 0;
-      border-bottom: 2px solid var(--color-border-dark);
-    }
-
-    .section-kicker {
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
-      color: var(--color-blaze-yellow);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-    }
-
-    .section-title {
-      font-size: clamp(28px, 3.2vw, 44px);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      color: var(--color-bone-white);
-      margin-bottom: 14px;
-    }
-
-    .section-lead {
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--color-off-white);
-      max-width: 860px;
-      margin-bottom: 28px;
-    }
-
-    .section-lead strong {
-      color: var(--color-blaze-yellow);
-    }
-
-    .section-lead code {
-      font-family: var(--font-mono);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--color-retro-cyan);
-      padding: 1px 6px;
-    }
-
-    .agent-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 16px;
-    }
-
-    .agent-card {
-      background: var(--color-graphite-card);
-      border: 2px solid var(--color-border-dark);
-      padding: 18px;
-      box-shadow: var(--shadow-hard-s);
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .agent-card:hover {
-      transform: translate(-3px, -3px);
-      border-color: var(--color-blaze-yellow);
-      box-shadow: 6px 6px 0 var(--color-blaze-yellow);
-    }
-
-    .agent-name {
-      font-family: var(--font-mono);
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--color-bone-white);
-      word-break: break-word;
-    }
-
-    .agent-domain {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--color-retro-cyan);
-    }
-
-    .agent-use {
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--color-off-white);
-      flex-grow: 1;
-    }
-
-    .agent-tag {
-      align-self: flex-start;
-      font-family: var(--font-mono);
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      padding: 3px 8px;
-      border: 1px solid #000;
-      background: var(--color-blaze-yellow);
-      color: #000;
-    }
-
-    .agent-tag.tag-leitura { background: var(--color-retro-cyan); }
-    .agent-tag.tag-sem-bash { background: var(--color-toxic-green); }
-
-    .agent-flow {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-      margin: 28px 0;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .agent-flow span {
-      background: var(--color-graphite-surface);
-      border: 2px solid var(--color-border-dark);
-      padding: 8px 12px;
-      box-shadow: 3px 3px 0 #000;
-      color: var(--color-bone-white);
-    }
-
-    .agent-flow .arrow {
-      background: none;
-      border: none;
-      box-shadow: none;
-      color: var(--color-blaze-yellow);
-      padding: 0;
-    }
-
-    .agent-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 14px;
-      align-items: center;
-    }
-
-    .agent-note {
-      margin-top: 18px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--color-muted-grey);
-      line-height: 1.7;
-      word-break: break-word;
-    }
-
-    /* ==========================================================================
-       CONTADOR DE ESTRELAS (botão do repositório)
-       ========================================================================== */
-    .gh-stars {
+    .hero > *:not(.hero-tubarao) { position: relative; z-index: 1; }
+    .rotulo {
       display: inline-block;
-      margin-left: 6px;
-      padding: 2px 8px;
-      border: 2px solid var(--color-blaze-yellow);
-      background: #000;
-      color: var(--color-blaze-yellow);
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
+      margin-bottom: 18px;
+      padding: 6px 10px;
+      border: 2px solid #000;
+      background: var(--magenta);
+      color: #000;
+      box-shadow: 4px 4px 0 #000;
+      font: 800 11px/1.2 var(--fonte-mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
     }
-
-    .gh-stars.is-hidden {
-      display: none;
+    .titulo-principal {
+      max-width: 22ch;
+      font-family: var(--fonte-titulo);
+      font-size: clamp(2.2rem, 6.4vw, 4.8rem);
+      font-weight: 900;
+      line-height: .98;
+      letter-spacing: -.035em;
+      text-transform: uppercase;
     }
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {
-      .skills-grid { grid-template-columns: 1fr; }
-      .console-top-row { flex-direction: column; }
-      .selection-drawer-bar { width: calc(100% - 32px); justify-content: space-between; }
+    .destaque-amarelo {
+      padding: 0 .12em;
+      background: var(--amarelo);
+      color: #000;
+      box-decoration-break: clone;
+      -webkit-box-decoration-break: clone;
     }
+    .destaque-magenta { color: var(--magenta); }
+    .impacto {
+      max-width: 34ch;
+      margin-top: 26px;
+      padding-left: 16px;
+      border-left: 6px solid var(--amarelo);
+      font: 800 clamp(1.15rem, 2.4vw, 1.5rem)/1.25 var(--fonte-titulo);
+    }
+    .intro { max-width: 66ch; margin-top: 18px; font-size: 16px; opacity: .92; }
+    .intro .nome { color: var(--amarelo); font-weight: 700; }
+    .indicadores {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      max-width: 620px;
+      margin-top: 32px;
+      list-style: none;
+    }
+    .indicador {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 14px 14px 12px;
+      background: var(--cartao);
+      border: 2px solid var(--osso);
+      box-shadow: 4px 4px 0 #000;
+      transition: transform var(--transicao), filter var(--transicao), border-color var(--transicao);
+    }
+    .indicador:hover { transform: translate(-2px, -2px); filter: var(--realce-amarelo); border-color: var(--amarelo); }
+    .ind-valor {
+      color: var(--amarelo);
+      font-family: var(--fonte-titulo);
+      font-size: clamp(1.8rem, 4vw, 2.4rem);
+      font-variant-numeric: tabular-nums;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .ind-rotulo { font: 700 10px/1.3 var(--fonte-mono); letter-spacing: .08em; text-transform: uppercase; }
+    .acoes { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
 
     /* ==========================================================================
-       COMPONENTES ANIMADOS (resumo das skills e fluxo de instalação)
+       ESPECIALISTAS (abas da hero: cada um abre o próprio painel de detalhes)
        ========================================================================== */
-    .comp-subtitulo {
-      font-family: var(--font-mono);
-      font-size: 13px;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      color: var(--color-blaze-yellow);
-      margin: 36px 0 14px 0;
-    }
-
-    .comp-passos {
-      list-style: none;
-      display: grid;
-      gap: 14px;
-    }
-
-    .comp-passo {
-      display: grid;
-      grid-template-columns: 40px minmax(0, 1fr);
-      gap: 14px;
-      background: var(--color-graphite-surface);
-      border: 2px solid var(--color-border-dark);
-      box-shadow: var(--shadow-hard-s);
-      padding: 16px;
-      min-width: 0;
-    }
-
-    .comp-passo > div {
-      min-width: 0;
-    }
-
-    .comp-num {
+    .especialistas { position: relative; z-index: 1; padding: 44px 0 16px; }
+    .cabecalho-aba {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 40px;
-      height: 40px;
-      background: var(--color-blaze-yellow);
-      color: #000;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 22px;
+      padding-left: 14px;
+      border-left: 6px solid var(--magenta);
+    }
+    .kicker { font: 800 11px/1.2 var(--fonte-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--magenta); }
+    .titulo-secao {
+      font-family: var(--fonte-titulo);
+      font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      text-transform: uppercase;
+    }
+    .grade-especialistas { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+    .grade-especialistas > .extra { display: none; }
+    .grade-especialistas.expandida > .extra { display: flex; }
+    .card-especialista { scroll-margin-top: 24px; }
+    .ce-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .ce-nome { font: 900 17px/1.2 var(--fonte-mono); letter-spacing: -.01em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .ce-contagem {
+      flex: none;
+      padding: 4px 6px;
       border: 2px solid #000;
-      font-family: var(--font-mono);
-      font-size: 16px;
-      font-weight: 800;
+      background: var(--osso);
+      color: #000;
+      font: 800 10px/1 var(--fonte-mono);
+      text-transform: uppercase;
     }
-
-    .comp-passo p {
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--color-off-white);
-      margin-bottom: 10px;
-    }
-
-    .comp-passo p code,
-    .comp-nota code {
-      font-family: var(--font-mono);
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--color-retro-cyan);
-      padding: 1px 6px;
+    .ce-resumo { font-size: 14px; opacity: .9; }
+    .ce-rodape { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; }
+    .ce-cliente { color: var(--cinza); font: 600 11px/1.3 var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; }
+    .ce-detalhe { padding-top: 14px; border-top: 2px dashed var(--borda); }
+    .lista-campos { display: grid; gap: 12px; }
+    .campo-linha { display: grid; gap: 4px; }
+    .campo-linha dt { color: var(--amarelo); font: 800 10px/1.2 var(--fonte-mono); letter-spacing: .08em; text-transform: uppercase; }
+    .campo-linha dd { margin: 0; font-size: 13px; }
+    .campo-linha p, .caminhos p { margin-top: 4px; color: var(--cinza); font-size: 12px; }
+    code {
+      padding: 1px 5px;
+      border: 1px solid var(--borda);
+      background: var(--cartao-escuro);
+      font: 600 .88em var(--fonte-mono);
       overflow-wrap: anywhere;
     }
+    .acesso { display: inline-block; padding: 3px 7px; border: 2px solid #000; color: #000; font: 800 10px/1.2 var(--fonte-mono); text-transform: uppercase; }
+    .acesso-amarelo { background: var(--amarelo); }
+    .acesso-verde { background: var(--verde); }
+    .acesso-ciano { background: var(--ciano); }
+    .acesso-neutro { background: var(--osso); }
+    .ferr { margin-top: 4px; color: var(--cinza); font: 600 11px/1.5 var(--fonte-mono); }
+    .chips, .fontes-lista, .caminhos, .lista-fontes { list-style: none; }
+    .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+    .chip { padding: 4px 7px; border: 1px solid var(--borda); background: var(--cartao-escuro); font: 600 11px/1 var(--fonte-mono); }
+    .fontes-lista, .caminhos { display: grid; gap: 6px; margin-top: 6px; }
+    .fontes-lista a, .lista-fontes a { color: var(--ciano); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    .fonte-autor { color: var(--cinza); font-size: 12px; }
+    .mais-fontes { color: var(--cinza); font: 600 11px var(--fonte-mono); }
+    .caminhos li { font-size: 12px; overflow-wrap: anywhere; }
+    .nota-perfil { margin-top: 10px; color: var(--amarelo); font-size: 12px; }
+    .aviso, .aviso-sem-js, .vazio {
+      padding: 14px;
+      border: 2px dashed var(--borda);
+      font: 600 13px/1.5 var(--fonte-mono);
+    }
+    .lista-sem-js { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; list-style: none; }
+    .lista-sem-js a { display: inline-block; padding: 6px 10px; border: 2px solid var(--osso); font: 700 12px var(--fonte-mono); text-decoration: none; }
+    .acoes-secao { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 22px; }
+    .link-secao { color: var(--ciano); font: 700 12px var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; text-underline-offset: 4px; }
 
-    .comp-cmd {
-      display: block;
-      font-family: var(--font-mono);
-      font-size: 13px;
-      color: var(--color-blaze-yellow);
+    /* ==========================================================================
+       CATÁLOGO (busca em estilo terminal, filtros e cartões de skill)
+       ========================================================================== */
+    .secao { position: relative; z-index: 1; padding: 56px 0 24px; border-top: 2px solid var(--borda); }
+    .busca-fixa { margin-top: 22px; }
+    .campo-busca {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      border: 2px solid var(--osso);
       background: #000;
-      border: 2px solid var(--color-border-dark);
-      padding: 10px 12px;
+      box-shadow: 4px 4px 0 var(--amarelo);
+      transition: box-shadow var(--transicao), border-color var(--transicao);
+    }
+    .campo-busca:focus-within { border-color: var(--amarelo); box-shadow: 6px 6px 0 var(--amarelo); }
+    .prompt-prefixo { flex: none; color: var(--verde); font: 700 12px var(--fonte-mono); }
+    .campo-busca input {
+      flex: 1;
+      min-width: 0;
+      min-height: 48px;
+      border: 0;
+      outline: none;
+      background: transparent;
+      font: 600 14px var(--fonte-mono);
+    }
+    .campo-busca input::placeholder { color: var(--cinza); }
+    .barra-filtros { display: grid; gap: 12px; margin-top: 18px; }
+    .chips-categorias { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip-categoria {
+      min-height: 36px;
+      padding: 6px 10px;
+      border: 2px solid var(--osso);
+      background: transparent;
+      font: 700 11px/1.2 var(--fonte-mono);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        transform var(--transicao),
+        filter var(--transicao),
+        background-color var(--transicao),
+        color var(--transicao),
+        border-color var(--transicao);
+    }
+    .chip-categoria:hover { transform: translate(-2px, -2px); filter: var(--realce-amarelo); border-color: var(--amarelo); }
+    .chip-categoria[aria-pressed="true"] { border-color: #000; background: var(--amarelo); color: #000; }
+    .linha-filtros { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px; }
+    .campo-categoria, .campo { display: grid; gap: 6px; min-width: 0; }
+    .campo-categoria { flex: 1 1 260px; }
+    .select {
+      width: 100%;
+      min-height: 44px;
+      padding: 8px 10px;
+      border: 2px solid var(--osso);
+      background: #000;
+      font: 600 14px var(--fonte-titulo);
+    }
+    .select:hover, .select:focus-visible { border-color: var(--amarelo); }
+    .painel-filtros {
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      padding: 14px;
+      border: 2px solid var(--borda);
+      background: var(--cartao-escuro);
+    }
+    .painel-filtros.is-aberto { display: grid; }
+    .barra-resultado { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 22px 0 18px; }
+    .status-resultado { color: var(--ciano); font: 700 12px/1.4 var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; }
+    .grade-skills { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 18px; }
+    .card-skill { gap: 12px; padding: 20px; overflow: hidden; }
+    .card-skill::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 5px;
+      background: var(--amarelo);
+      transition: width var(--transicao);
+    }
+    .card-skill:hover::before { width: 100%; }
+    .cs-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .cs-fonte { color: var(--cinza); font: 600 11px/1.4 var(--fonte-mono); overflow-wrap: anywhere; }
+    .cs-fonte a { color: var(--ciano); }
+    .cs-titulo {
+      align-self: flex-start;
+      font: 800 18px/1.25 var(--fonte-titulo);
+      overflow-wrap: anywhere;
+      background: linear-gradient(var(--amarelo), var(--amarelo)) no-repeat 0 100% / 0 3px;
+      transition: background-size var(--transicao), color var(--transicao);
+    }
+    .card-skill:hover .cs-titulo { background-size: 100% 3px; color: var(--amarelo); }
+    .cs-resumo { font-size: 14px; opacity: .9; }
+    .cs-acoes { display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto; }
+    .botao-acao {
+      min-height: 36px;
+      padding: 6px 10px;
+      border: 2px solid var(--osso);
+      background: transparent;
+      font: 700 11px/1 var(--fonte-mono);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        transform var(--transicao),
+        filter var(--transicao),
+        background-color var(--transicao),
+        color var(--transicao),
+        border-color var(--transicao);
+    }
+    .botao-acao:hover { transform: translate(-2px, -2px); filter: var(--realce-amarelo); border-color: #000; background: var(--amarelo); color: #000; }
+    .botao-acao[aria-pressed="true"] { border-color: #000; background: var(--magenta); color: #000; }
+    .badge {
+      flex: none;
+      padding: 4px 7px;
+      border: 2px solid #000;
+      background: var(--osso);
+      color: #000;
+      font: 800 10px/1.2 var(--fonte-mono);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
+    .badge[data-cat="design"] { background: var(--magenta); }
+    .badge[data-cat="contexto"] { background: var(--amarelo); }
+    .badge[data-cat="engenharia"] { background: var(--ciano); }
+    .badge[data-cat="testes"] { background: var(--verde); }
+    .badge[data-cat="produto"] { background: #ffb86b; }
+    .badge[data-cat="seguranca"] { background: var(--vermelho); color: var(--osso); }
+    .badge[data-cat="operacoes"] { background: #8fd3ff; }
+    .badge[data-cat="midia"] { background: #c9a2ff; }
+    .badge[data-cat="pesquisa"] { background: #ffe066; }
+    .mais-skills { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
+
+    /* ==========================================================================
+       RODAPÉ (fontes upstream mantidas)
+       ========================================================================== */
+    .rodape {
+      position: relative;
+      z-index: 1;
+      margin-top: 48px;
+      padding: 28px 0 96px;
+      border-top: 3px solid var(--amarelo);
+      background: #000;
+    }
+    .rodape-interno { display: grid; gap: 14px; }
+    .rodape-marca { font: 900 clamp(1.4rem, 3vw, 2rem)/1 var(--fonte-titulo); letter-spacing: -.01em; text-transform: uppercase; }
+    .rodape-links { display: flex; flex-wrap: wrap; gap: 10px 22px; }
+    .rodape-links a {
+      color: var(--osso);
+      font: 700 12px var(--fonte-mono);
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 5px;
+      text-transform: uppercase;
+      transition: text-decoration-color var(--transicao), color var(--transicao);
+    }
+    .rodape-links a:hover { color: var(--amarelo); text-decoration-color: var(--amarelo); }
+    .fontes summary { padding: 8px 0; cursor: pointer; font: 800 12px var(--fonte-mono); letter-spacing: .06em; text-transform: uppercase; }
+    .fontes summary:hover { color: var(--amarelo); }
+    .lista-fontes { display: grid; gap: 8px; margin-top: 10px; font-size: 14px; }
+    @media (min-width: 720px) {
+      .lista-fontes { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    /* ==========================================================================
+       BARRA DO PLANO, MODAIS E AVISO
+       ========================================================================== */
+    .barra-plano {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px max(16px, calc((100% - 1200px) / 2 + 16px));
+      border-top: 3px solid #000;
+      background: var(--amarelo);
+      color: #000;
+    }
+    .plano-resumo { font: 800 12px/1 var(--fonte-mono); text-transform: uppercase; }
+    .plano-n { display: inline-block; min-width: 28px; margin-right: 6px; padding: 2px 6px; background: #000; color: var(--amarelo); text-align: center; }
+    .plano-acoes { display: flex; gap: 8px; }
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(6, 7, 9, .86);
+    }
+    .modal-caixa {
+      display: flex;
+      flex-direction: column;
+      width: min(860px, 100%);
+      max-height: calc(100vh - 32px);
+      border: 3px solid var(--amarelo);
+      background: var(--grafite);
+      box-shadow: 8px 8px 0 var(--amarelo);
+      outline: none;
+    }
+    .modal-topo { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding: 18px 20px; border-bottom: 2px solid var(--borda); }
+    .modal-cabecalho { display: grid; gap: 6px; min-width: 0; }
+    .modal-autor { color: var(--cinza); font: 700 11px/1.4 var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; overflow-wrap: anywhere; }
+    .modal-titulo {
+      font: 900 clamp(1.25rem, 3vw, 1.7rem)/1.15 var(--fonte-titulo);
+      text-transform: uppercase;
+      overflow-wrap: anywhere;
+    }
+    .modal-intro { margin-bottom: 14px; font-size: 14px; opacity: .9; }
+    .modal-corpo { flex: 1 1 auto; overflow: auto; padding: 18px 20px; font-size: 15px; line-height: 1.6; }
+    .modal-rodape { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px; padding: 14px 20px; border-top: 2px solid var(--borda); }
+    .bloco-texto {
+      max-height: 52vh;
+      padding: 14px;
+      overflow: auto;
+      border: 2px solid var(--borda);
+      background: #000;
+      font: 500 12.5px/1.6 var(--fonte-mono);
       white-space: pre-wrap;
       overflow-wrap: anywhere;
     }
-
-    #componentes-animados p a {
-      color: var(--color-blaze-yellow);
-      text-decoration: underline;
-      text-underline-offset: 3px;
+    .carregando { font: 600 13px var(--fonte-mono); }
+    .erro { color: var(--magenta); font: 600 13px var(--fonte-mono); }
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      z-index: 120;
+      max-width: min(92vw, 520px);
+      padding: 12px 16px;
+      border: 2px solid #000;
+      background: var(--amarelo);
+      box-shadow: 4px 4px 0 #000;
+      color: #000;
+      font: 800 12px/1.4 var(--fonte-mono);
+      text-transform: uppercase;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(-50%, 16px);
+      transition: opacity var(--transicao), transform var(--transicao);
     }
+    .toast.is-visivel { opacity: 1; transform: translate(-50%, 0); }
+    body.com-plano .toast { bottom: 84px; }
 
-    .comp-nota {
-      margin-top: 20px;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      line-height: 1.7;
-      color: var(--color-off-white);
+    /* ==========================================================================
+       MARKDOWN DO MODAL (títulos, listas, tabelas, citações e código)
+       ========================================================================== */
+    .md > :first-child { margin-top: 0; }
+    .md h3 { margin: 26px 0 10px; color: var(--amarelo); font: 900 19px/1.25 var(--fonte-titulo); letter-spacing: -.01em; text-transform: uppercase; }
+    .md h4 { margin: 20px 0 8px; color: var(--osso); font: 800 16px/1.3 var(--fonte-titulo); }
+    .md h5 { margin: 16px 0 6px; color: var(--magenta); font: 800 13px/1.3 var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; }
+    .md p { margin: 0 0 12px; }
+    .md ul, .md ol { display: grid; gap: 6px; margin: 0 0 14px 22px; }
+    .md ul { list-style: square; }
+    .md ol { list-style: decimal; }
+    .md li::marker { color: var(--amarelo); }
+    .md li > ul, .md li > ol { margin: 6px 0 0 18px; }
+    .md code { color: var(--amarelo); }
+    .md pre { margin: 0 0 14px; padding: 14px; overflow-x: auto; border: 2px solid var(--borda); background: #000; }
+    .md pre code { display: block; padding: 0; border: 0; background: none; color: var(--osso); font: 500 12.5px/1.6 var(--fonte-mono); white-space: pre; }
+    .md blockquote { margin: 0 0 14px; padding: 10px 14px; border-left: 5px solid var(--magenta); background: var(--cartao-escuro); }
+    .md blockquote p { margin: 0; }
+    .md a { color: var(--ciano); text-underline-offset: 3px; }
+    .md strong { color: #fff; }
+    .md hr { margin: 22px 0; border: 0; border-top: 2px dashed var(--borda); }
+    .md-tabela { margin: 0 0 14px; overflow-x: auto; border: 2px solid var(--borda); }
+    .md table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .md th, .md td { padding: 8px 10px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--borda); }
+    .md th { background: var(--amarelo); color: #000; font: 800 11px var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; }
+
+    /* ==========================================================================
+       MOVIMENTO REDUZIDO (animações param; cores e sombras ficam)
+       ========================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+      }
+      .ticker-trilha, .selo { animation: none !important; }
     }
 
     /* ==========================================================================
-       MOVIMENTO REDUZIDO (animações do site respeitam prefers-reduced-motion)
+       TELAS PEQUENAS (375 px sem rolagem horizontal)
        ========================================================================== */
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-      }
+    @media (max-width: 720px) {
+      .hero { padding: 40px 0 36px; }
+      .hero-tubarao { right: -70px; bottom: -40px; width: 300px; opacity: .1; }
+      .marca-sub { display: none; }
+      .selo { width: 44px; height: 44px; }
+      .indicadores { gap: 8px; }
+      .acoes .botao { flex: 1 1 100%; }
+      .botao-link { justify-content: flex-start; }
+      .grade-especialistas, .grade-skills { grid-template-columns: 1fr; }
+      .modal { padding: 8px; }
+      .modal-caixa { max-height: calc(100vh - 16px); }
+      .barra-plano { padding: 10px 12px; }
+      .ocultar-mobile { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="bg-binary-overlay"></div>
+  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
 
-  <!-- Audio feedback element (removido) -->
+  <div class="fundo-halftone" aria-hidden="true">
+    <canvas id="halftone-canvas"></canvas>
+  </div>
 
-  <!-- Top Industrial Ticker -->
-  <div class="ticker-wrapper">
-    <div class="ticker-content">
-      <div class="ticker-item"><span>LAY® HUB</span> <span class="js-total-skills">136</span> SKILLS SINCRONIZADAS</div>
-      <div class="ticker-item"><span>STATUS</span> ANTIGRAVITY • CODEX • CLAUDE CODE 100% OK</div>
-      <div class="ticker-item"><span>CRAFT</span> ENGENHARIA DE ELITE // PADRÃO MUNDIAL</div>
-      <div class="ticker-item"><span>EVIDÊNCIA</span> GRAPHIFY v0.9.73 + METODOLOGIA DETERMINÍSTICA</div>
-      <div class="ticker-item"><span>CREATIVE</span> VANTA 3D • REACT BITS • LENIS SMOOTH SCROLL • LIBRARIES.DEV</div>
-      <!-- Repetição para loop contínuo -->
-      <div class="ticker-item"><span>LAY® HUB</span> <span class="js-total-skills">136</span> SKILLS SINCRONIZADAS</div>
-      <div class="ticker-item"><span>STATUS</span> ANTIGRAVITY • CODEX • CLAUDE CODE 100% OK</div>
-      <div class="ticker-item"><span>CRAFT</span> ENGENHARIA DE ELITE // PADRÃO MUNDIAL</div>
-      <div class="ticker-item"><span>EVIDÊNCIA</span> GRAPHIFY v0.9.73 + METODOLOGIA DETERMINÍSTICA</div>
-      <div class="ticker-item"><span>CREATIVE</span> VANTA 3D • REACT BITS • LENIS SMOOTH SCROLL • LIBRARIES.DEV</div>
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-trilha">
+      <div class="ticker-grupo">
+        <span class="ticker-item"><b>LAY® HUB</b><span data-total="skills">—</span> skills no catálogo</span>
+        <span class="ticker-item"><b>ESPECIALISTAS</b><span data-total="subagentes">—</span> subagentes por domínio</span>
+        <span class="ticker-item"><b>FONTES</b><span data-total="fontes">—</span> fontes upstream</span>
+        <span class="ticker-item"><b>CLIENTES</b>Antigravity • Codex • Claude Code</span>
+        <span class="ticker-item"><b>CREATIVE</b>Vanta 3D • React Bits • Lenis Smooth Scroll • Libraries.dev</span>
+        <span class="ticker-item"><b>COMPONENTES</b>Pixel-Perfect • Componentry</span>
+      </div>
+      <div class="ticker-grupo">
+        <span class="ticker-item"><b>LAY® HUB</b><span data-total="skills">—</span> skills no catálogo</span>
+        <span class="ticker-item"><b>ESPECIALISTAS</b><span data-total="subagentes">—</span> subagentes por domínio</span>
+        <span class="ticker-item"><b>FONTES</b><span data-total="fontes">—</span> fontes upstream</span>
+        <span class="ticker-item"><b>CLIENTES</b>Antigravity • Codex • Claude Code</span>
+        <span class="ticker-item"><b>CREATIVE</b>Vanta 3D • React Bits • Lenis Smooth Scroll • Libraries.dev</span>
+        <span class="ticker-item"><b>COMPONENTES</b>Pixel-Perfect • Componentry</span>
+      </div>
     </div>
   </div>
 
   <div class="container">
-    <!-- Main App Header -->
-    <header class="main-header">
-      <div class="brand-block">
-        <img src="hub/assets/lay/Somente as caveiras/Caveira-01.svg" alt="LAY®" class="lay-logo-img">
-        <div class="brand-title-wrap">
-          <div class="brand-title">
-            SKILLS HUB <span class="badge-reg">®</span>
-          </div>
-          <div class="brand-subtitle">
-            REPERTÓRIO CENTRAL DE CAPACIDADES & REGRAS PARA AGENTES
-          </div>
+    <header class="cabecalho">
+      <div class="marca">
+        <img class="marca-logo" src="hub/assets/lay/Somente as caveiras/Caveira-01.svg" alt="LAY®" width="48" height="48">
+        <div>
+          <p class="marca-titulo">Skills Hub<span class="marca-reg">®</span></p>
+          <p class="marca-sub">Repertório central de capacidades &amp; regras para agentes</p>
         </div>
       </div>
-
-      <div class="header-right">
-        <div class="system-status-box">
-          <span class="status-dot-pulse"></span>
-          <span><span class="js-total-skills">136</span> SKILLS ONLINE / 0 ERROS NA VALIDAÇÃO</span>
-        </div>
-        <div class="seal-wrap" title="Selo Pernambuco para o Mundo">
-          <img src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Oficial" class="lay-seal-img">
-        </div>
+      <div class="cabecalho-direita">
+        <p class="status"><span class="status-ponto" aria-hidden="true"></span><span><span data-total="skills">—</span> skills</span></p>
+        <img class="selo" src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Pernambuco para o Mundo" width="56" height="56">
       </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-      <img src="hub/assets/lay/tUBARAO_BI-WAITE.png" alt="Tubarão Recife" class="hero-shark-watermark">
-      
-      <div class="hero-content">
-        <div class="hero-eyebrow">
-          <span>⚡</span> ARQUITETURA MODULAR • ENGENHARIA DE ELITE • EVIDÊNCIAS DETERMINÍSTICAS
+    <main id="conteudo" class="principal" tabindex="-1">
+      <section class="hero" aria-labelledby="titulo-principal">
+        <img class="hero-tubarao" src="hub/assets/lay/tubarao-hero.webp" alt="" width="900" height="428" loading="lazy" decoding="async" aria-hidden="true">
+        <p class="rotulo">Arquitetura modular • evidências determinísticas</p>
+        <h1 class="titulo-principal" id="titulo-principal">Ecossistema total <span class="destaque-amarelo">de skills de agentes</span> <span class="destaque-magenta">Pernambuco → mundo</span></h1>
+        <p class="impacto">Skills construídas com componentes de última geração e alta performance.</p>
+        <p class="intro">Hub visual interativo reunindo capacidades especializadas e fontes de referência de elite mundial: orquestração central de agentes (<strong class="nome">lay-orchestrator</strong>, <strong class="nome">Caveman</strong>, <strong class="nome">Graphify</strong>), referências de ponta (<strong class="nome">Addy Osmani</strong>, <strong class="nome">Vercel Labs</strong>, <strong class="nome">Semgrep</strong>, <strong class="nome">Playwright</strong>) e bibliotecas criativas (<strong class="nome">Vanta 3D</strong>, <strong class="nome">React Bits</strong>, <strong class="nome">Lenis Smooth Scroll</strong> e <strong class="nome">Libraries.dev</strong>). Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.</p>
+        <ul class="indicadores" aria-label="Números do hub">
+          <li class="indicador"><span class="ind-valor" data-total="skills">—</span><span class="ind-rotulo">skills</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="fontes">—</span><span class="ind-rotulo">fontes upstream</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="subagentes">—</span><span class="ind-rotulo">especialistas</span></li>
+        </ul>
+        <div class="acoes">
+          <button type="button" class="botao botao-primario" id="btn-prompt-mestre">Copiar prompt mestre</button>
+          <a class="botao botao-secundario" href="instalacao.html#subagentes">Instalar subagentes</a>
+          <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
+        </div>
+      </section>
+
+      <section class="especialistas" id="especialistas" aria-labelledby="titulo-especialistas">
+        <div class="cabecalho-aba">
+          <p class="kicker">Especialistas • Claude Code</p>
+          <h2 class="titulo-secao" id="titulo-especialistas">Escolha pelo domínio</h2>
+        </div>
+        <div class="grade-especialistas" id="grade-especialistas"></div>
+        <noscript>
+          <ul class="lista-sem-js">
+            <li><a href="instalacao.html#subagentes">lay-3d</a></li>
+            <li><a href="instalacao.html#subagentes">lay-banco-de-dados</a></li>
+            <li><a href="instalacao.html#subagentes">lay-contexto</a></li>
+            <li><a href="instalacao.html#subagentes">lay-design</a></li>
+            <li><a href="instalacao.html#subagentes">lay-devops</a></li>
+            <li><a href="instalacao.html#subagentes">lay-documentacao</a></li>
+            <li><a href="instalacao.html#subagentes">lay-engenharia</a></li>
+            <li><a href="instalacao.html#subagentes">lay-frontend</a></li>
+            <li><a href="instalacao.html#subagentes">lay-omniroute</a></li>
+            <li><a href="instalacao.html#subagentes">lay-qa</a></li>
+            <li><a href="instalacao.html#subagentes">lay-seguranca</a></li>
+          </ul>
+          <p class="aviso-sem-js">Sem JavaScript, esta lista mostra só os nomes. Domínio, acesso e fontes ficam em <a href="instalacao.html#subagentes">a página de subagentes</a>.</p>
+        </noscript>
+        <div class="acoes-secao">
+          <button type="button" class="botao botao-secundario botao-compacto" id="btn-mais-especialistas" aria-controls="grade-especialistas" aria-expanded="false" hidden>Ver os outros</button>
+          <a class="link-secao" href="instalacao.html#subagentes">Página de subagentes</a>
+          <a class="link-secao" href="instalacao.html#prompts">Prompts para copiar</a>
+        </div>
+      </section>
+
+      <section class="secao" id="catalogo" aria-labelledby="titulo-catalogo">
+        <div class="cabecalho-aba">
+          <p class="kicker">Catálogo</p>
+          <h2 class="titulo-secao" id="titulo-catalogo">Skills</h2>
         </div>
 
-        <h1 class="hero-heading">
-          ECOSSISTEMA TOTAL <br>
-          <span class="highlight-yellow">DE SKILLS DE AGENTES</span> <br>
-          <span class="highlight-magenta">PERNAMBUCO → MUNDO</span>
-        </h1>
-
-        <p class="hero-description">
-          Hub visual interativo reunindo <strong><span class="js-total-skills">136</span> capacidades especializadas</strong> e <strong>17 fontes de referência de elite mundial</strong>:
-          orquestração central de agentes (lay-orchestrator, Caveman, Graphify), referências de ponta (Addy Osmani, Vercel Labs, Semgrep, Playwright)
-          e bibliotecas criativas (<strong>Vanta 3D</strong>, <strong>React Bits</strong>, <strong>Lenis Smooth Scroll</strong> e <strong>Libraries.dev</strong>).
-          Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.
-        </p>
-
-        <!-- Stats Strip -->
-        <div class="stats-strip">
-          <div class="stat-box">
-            <div class="stat-box-val"><span id="stat-total-skills">136</span> <span class="accent-char">/</span></div>
-            <div class="stat-box-lbl">Skills Ativas</div>
+        <div class="busca-fixa">
+          <div class="campo-busca">
+            <span class="prompt-prefixo" aria-hidden="true">root@lay:~$</span>
+            <input id="busca" type="search" placeholder="Buscar skill, autor ou fonte" aria-label="Buscar skill, autor ou fonte" autocomplete="off">
           </div>
-          <div class="stat-box">
-            <div class="stat-box-val"><span id="stat-total-sources">17</span> <span class="accent-char">#</span></div>
-            <div class="stat-box-lbl">Fontes Upstream</div>
+        </div>
+
+        <div class="barra-filtros">
+          <div class="chips-categorias" id="chips-categorias" role="group" aria-label="Categorias"></div>
+          <div class="linha-filtros">
+            <div class="campo-categoria">
+              <label for="select-categoria">Categoria</label>
+              <select id="select-categoria" class="select"></select>
+            </div>
+            <button type="button" class="botao botao-secundario" id="btn-filtros" aria-expanded="false" aria-controls="painel-filtros">Filtros</button>
           </div>
-          <div class="stat-box">
-            <div class="stat-box-val">10 <span class="accent-char">§</span></div>
-            <div class="stat-box-lbl">Categorias Técnicas</div>
+          <div class="painel-filtros" id="painel-filtros">
+            <div class="campo">
+              <label for="select-fonte">Fonte</label>
+              <select id="select-fonte" class="select"></select>
+            </div>
+            <div class="campo">
+              <label for="select-ordem">Ordenação</label>
+              <select id="select-ordem" class="select">
+                <option value="default">Ordem padrão</option>
+                <option value="name">Nome (A–Z)</option>
+                <option value="category">Categoria</option>
+              </select>
+            </div>
           </div>
-          <div class="stat-box">
-            <div class="stat-box-val">3 <span class="accent-char">✓</span></div>
-            <div class="stat-box-lbl">Clientes (Antigravity/Codex/Claude)</div>
-          </div>
         </div>
 
-        <!-- Hero Actions -->
-        <div class="hero-actions-row">
-          <button class="btn-brutal btn-primary-yellow" onclick="openMasterPromptModal()">
-            <span>📋</span> COPIAR PROMPT MESTRE DE PROJETOS
-          </button>
-          <button class="btn-brutal btn-primary-magenta" onclick="openProjectPlannerModal()">
-            <span>🎯</span> PLANEJADOR CUSTOMIZADO POR SELEÇÃO
-          </button>
-          <a class="btn-brutal btn-outline-white" href="instalacao.html">
-            <span>👥</span> INSTALAR SUBAGENTES
-          </a>
-          <a class="btn-brutal btn-outline-white" href="componentes.html">
-            COMPONENTES ANIMADOS
-          </a>
-          <a class="btn-brutal btn-outline-white" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener">
-            <span>↗</span> REPOSITÓRIO GITHUB
-            <span class="gh-stars" data-gh-stars>★ …</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Subagentes Claude Code -->
-    <section class="agents-section" id="subagentes">
-      <div class="section-kicker">SUBAGENTES • CLAUDE CODE</div>
-      <h2 class="section-title">11 especialistas<br>um por domínio</h2>
-      <p class="section-lead">
-        Além das skills, o hub instala <strong>11 subagentes</strong> para o Claude Code. Cada um recebe as skills do seu domínio e só as
-        ferramentas que o trabalho exige. A conversa principal escolhe o especialista, delega a tarefa e junta a resposta.
-        Subagentes não chamam outros subagentes.
-      </p>
-
-      <div class="agent-grid">
-        <div class="agent-card">
-          <div class="agent-name">lay-omniroute</div>
-          <div class="agent-domain">routing-and-proxy</div>
-          <div class="agent-use">Roteamento entre modelos, providers, combos, custos e limites de gasto.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-frontend</div>
-          <div class="agent-domain">frontend</div>
-          <div class="agent-use">Telas, componentes, landing pages, layout e animação. Escolhe componente animado pelo custo, instala só na hora do uso e pergunta antes de gerar tela.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-engenharia</div>
-          <div class="agent-domain">engineering</div>
-          <div class="agent-use">Arquitetura, revisão de código, depuração, migração e performance.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-contexto</div>
-          <div class="agent-domain">context</div>
-          <div class="agent-use">Grafo do projeto, planejamento, levantamento de requisitos e compressão de contexto.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-devops</div>
-          <div class="agent-domain">devops</div>
-          <div class="agent-use">Commits, branches, releases, pipelines de CI/CD e deploy.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-qa</div>
-          <div class="agent-domain">qa</div>
-          <div class="agent-use">Testes, falhas de CI e validação antes de merge. Confere componente animado: imports, movimento reduzido, WebGL por rota, toque, licença e tsc.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-seguranca</div>
-          <div class="agent-domain">security</div>
-          <div class="agent-use">Vulnerabilidades, auditoria, segredos, autenticação e chaves de API.</div>
-          <span class="agent-tag tag-leitura">Só leitura</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-3d</div>
-          <div class="agent-domain">creative-3d</div>
-          <div class="agent-use">3D, Blender, shaders, fundos animados e efeitos WebGL.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-documentacao</div>
-          <div class="agent-domain">documentation</div>
-          <div class="agent-use">Revisão de texto, registro de decisões (ADR) e prosa para publicação.</div>
-          <span class="agent-tag tag-sem-bash">Sem comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-design</div>
-          <div class="agent-domain">design</div>
-          <div class="agent-use">Identidade visual, moodboard e mockups. Não escreve código de interface: use lay-frontend.</div>
-          <span class="agent-tag tag-sem-bash">Sem comandos</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">lay-banco-de-dados</div>
-          <div class="agent-domain">database</div>
-          <div class="agent-use">Backup, restauração, snapshots e cache de respostas do LLM.</div>
-          <span class="agent-tag">Leitura, edição e comandos</span>
-        </div>
-      </div>
-
-      <div class="agent-flow">
-        <span>1 · Pedido</span><span class="arrow">→</span>
-        <span>2 · Domínio</span><span class="arrow">→</span>
-        <span>3 · HANDOFF</span><span class="arrow">→</span>
-        <span>4 · RESULT</span><span class="arrow">→</span>
-        <span>5 · Resposta</span>
-      </div>
-
-      <div class="agent-actions">
-        <a class="btn-brutal btn-primary-yellow" href="instalacao.html">📘 COMO INSTALAR E USAR</a>
-        <a class="btn-brutal btn-primary-magenta" href="instalacao.html#prompts">📋 PROMPT DE INSTALAÇÃO</a>
-      </div>
-      <p class="agent-note">
-        instalar: python scripts/skill_hub.py install --agents claude<br>
-        projeto: .claude/agents/ (versionado) · global: ~/.claude/agents/ (todos os projetos)
-      </p>
-    </section>
-
-    <!-- Componentes animados: resumo das skills e fluxo de instalação -->
-    <section class="agents-section" id="componentes-animados">
-      <div class="section-kicker">COMPONENTES ANIMADOS • PIXEL-PERFECT E COMPONENTRY</div>
-      <h2 class="section-title">Escolher, instalar<br>e conferir</h2>
-      <p class="section-lead">
-        Componentes animados dos registros <strong>Pixel-Perfect</strong> e <strong>Componentry</strong>. A escolha considera o custo
-        (T1, T2 ou T3). A skill de escolha não baixa nada: o item só é instalado na hora do uso, pelo CLI do shadcn.
-        O catálogo, com busca e filtros, está em <a href="componentes.html">componentes.html</a>.
-      </p>
-
-      <div class="agent-grid">
-        <div class="agent-card">
-          <div class="agent-name">selecting-animated-ui-components</div>
-          <div class="agent-domain">frontend</div>
-          <div class="agent-use">Escolhe o componente pela necessidade da tela e pelo custo: CSS e DOM, biblioteca ou canvas 2D, WebGL.</div>
-          <span class="agent-tag">lay-frontend</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">integrating-external-ui-components</div>
-          <div class="agent-domain">frontend</div>
-          <div class="agent-use">Instala o item escolhido com o CLI do shadcn e prepara utils, tipos e pacotes. Adapta movimento reduzido, toque, "use client" e lil-gui.</div>
-          <span class="agent-tag">lay-frontend</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">clarifying-screen-requirements</div>
-          <div class="agent-domain">frontend</div>
-          <div class="agent-use">Faz perguntas antes de gerar a tela, para não decidir por suposição.</div>
-          <span class="agent-tag">lay-frontend</span>
-        </div>
-        <div class="agent-card">
-          <div class="agent-name">verifying-animated-component-compliance</div>
-          <div class="agent-domain">qa</div>
-          <div class="agent-use">Confere imports, "use client", movimento reduzido, WebGL por rota, toque, lil-gui, licença e tsc. Só lê os arquivos.</div>
-          <span class="agent-tag">lay-qa</span>
-        </div>
-      </div>
-
-      <h3 class="comp-subtitulo">Fluxo de instalação</h3>
-      <ol class="comp-passos">
-        <li class="comp-passo">
-          <span class="comp-num">1</span>
-          <div>
-            <p>Quando o item importa <code>@/lib/utils</code>, instale o helper antes. O CLI não traz esse arquivo sozinho.</p>
-            <code class="comp-cmd">npx shadcn@latest add utils -y</code>
-          </div>
-        </li>
-        <li class="comp-passo">
-          <span class="comp-num">2</span>
-          <div>
-            <p>Instale o item pela URL dele. O CLI traz a cadeia de dependências do registro, na maioria dos casos. A coluna "Instalar antes" diz o que instalar à mão.</p>
-            <code class="comp-cmd">npx shadcn@latest add &lt;url-do-item&gt; -y</code>
-          </div>
-        </li>
-        <li class="comp-passo">
-          <span class="comp-num">3</span>
-          <div>
-            <p>Rode o tsc. Se aparecer erro de tipo, instale <code>@types/three</code> na versão do three, ou o pacote que o componente importa e não declara (ex.: <code>class-variance-authority</code> para o button do shadcn).</p>
-            <code class="comp-cmd">npx tsc --noEmit</code>
-          </div>
-        </li>
-      </ol>
-      <p class="comp-nota">Verificado em 12/10/2026 num projeto React/TypeScript de teste: tsc sem erros nos itens testados.</p>
-
-      <div class="agent-actions">
-        <a class="btn-brutal btn-primary-yellow" href="componentes.html">VER O CATÁLOGO DE COMPONENTES</a>
-        <a class="btn-brutal btn-primary-magenta" href="componentes.html#cuidados">CUIDADOS ANTES DE PUBLICAR</a>
-      </div>
-    </section>
-
-    <!-- Console Section (Search, Filters, Switchboard) -->
-    <section class="console-section">
-      <div class="console-top-row">
-        <div class="search-console-box">
-          <span class="prompt-prefix">root@lay:~$</span>
-          <input type="text" id="search-input" class="search-console-input" placeholder="Buscar skill, tecnologia ou autor (ex: vanta, lenis, tdd, react-bits, security)..." oninput="handleSearch()">
+        <div class="barra-resultado">
+          <p class="status-resultado" id="status-resultado" role="status" tabindex="-1">Carregando skills…</p>
+          <button type="button" class="botao botao-magenta" id="btn-plano-abrir">Montar plano</button>
         </div>
 
-        <select id="source-select" class="console-select" onchange="handleFilterChange()">
-          <option value="all">TODAS AS FONTES (SKILLS REFATORADAS)</option>
-        </select>
-
-        <select id="sort-select" class="console-select" onchange="handleFilterChange()">
-          <option value="default">ORDENAÇÃO PADRÃO</option>
-          <option value="name">ORDEM ALFABÉTICA (A-Z)</option>
-          <option value="category">POR CATEGORIA TÉCNICA</option>
-        </select>
-      </div>
-
-      <!-- Category Switchboard -->
-      <div class="category-switchboard" id="category-pills-container">
-        <!-- Rendered dynamically -->
-      </div>
-    </section>
-
-    <!-- Results Status Bar -->
-    <div class="results-status-bar">
-      <div>CATÁLOGO: EXIBINDO <span class="results-count-bold" id="filtered-count">136</span> DE <span class="js-total-skills">136</span> SKILLS</div>
-      <div id="active-filter-text">FILTRO ATIVO: TODOS</div>
-    </div>
-
-    <!-- Skills Cards Grid -->
-    <main class="skills-grid" id="skills-grid">
-      <!-- Rendered dynamically from data.js -->
+        <div class="grade-skills" id="grade-skills"></div>
+        <noscript><p class="aviso-sem-js">A lista de skills precisa de JavaScript. Os comandos de instalação estão em <a href="instalacao.html">instalacao.html</a>.</p></noscript>
+        <div class="mais-skills">
+          <button type="button" class="botao botao-secundario" id="btn-mais-skills" hidden>Mostrar mais</button>
+          <button type="button" class="botao botao-secundario" id="btn-tudo-skills" hidden>Mostrar tudo</button>
+        </div>
+      </section>
     </main>
   </div>
 
-  <!-- Floating Selection Drawer -->
-  <div class="selection-drawer-bar hidden" id="selection-drawer">
-    <div class="drawer-label">
-      <span class="drawer-counter" id="selected-skills-count">0</span> SKILLS SELECIONADAS NO PLANO
+  <footer class="rodape">
+    <div class="container rodape-interno">
+      <p class="rodape-marca">LAY® Skills Hub</p>
+      <nav class="rodape-links" aria-label="Links do rodapé">
+        <a href="instalacao.html">Instalação dos subagentes</a>
+        <a href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub<span class="sr-only"> (abre em nova aba)</span></a>
+      </nav>
+      <details class="fontes" id="bloco-fontes">
+        <summary>Fontes upstream (<span data-total="fontes">—</span>)</summary>
+        <ul class="lista-fontes" id="lista-fontes"></ul>
+      </details>
     </div>
-    <div style="display: flex; gap: 10px;">
-      <button class="btn-brutal btn-primary-magenta" style="padding: 8px 16px; font-size: 11px;" onclick="openProjectPlannerModal()">
-        GERAR PROMPT SOB MEDIDA ↗
-      </button>
-      <button class="btn-brutal btn-outline-white" style="padding: 8px 12px; font-size: 11px;" onclick="clearSelectedSkills()">
-        LIMPAR
-      </button>
+  </footer>
+
+  <div class="barra-plano" id="barra-plano" hidden>
+    <p class="plano-resumo"><span class="plano-n" id="plano-n">0</span><span class="ocultar-mobile">skills </span>no plano</p>
+    <div class="plano-acoes">
+      <button type="button" class="botao botao-magenta botao-compacto" id="btn-gerar-prompt">Gerar prompt</button>
+      <button type="button" class="botao botao-secundario botao-compacto" id="btn-limpar-plano">Limpar</button>
     </div>
   </div>
 
-  <!-- Modal: Detail / SKILL.md Inspector -->
-  <div class="modal-backdrop" id="detail-modal" onclick="closeModalOnBackdrop(event, 'detail-modal')">
-    <div class="modal-brutal-box">
-      <div class="modal-tape-header">
-        <div class="modal-header-info">
-          <img id="modal-source-avatar" class="source-img" src="" alt="">
-          <div>
-            <div id="modal-source-author" style="font-family: var(--font-mono); font-size: 10px; color: var(--color-muted-grey); text-transform: uppercase;"></div>
-            <h3 id="modal-title">INSPEÇÃO DE SKILL</h3>
-          </div>
+  <div class="modal" id="modal-skill" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-skill-titulo" tabindex="-1">
+      <div class="modal-topo">
+        <div class="modal-cabecalho">
+          <p class="modal-autor" id="modal-skill-autor"></p>
+          <h2 class="modal-titulo" id="modal-skill-titulo">Inspeção de skill</h2>
         </div>
-        <button class="modal-btn-close" onclick="closeModal('detail-modal')">[X FECHAR]</button>
+        <button type="button" class="botao botao-fechar" data-fechar>Fechar</button>
       </div>
-      <div class="modal-scroll-body" id="modal-body-content">
-        <!-- Markdown content rendered here -->
-      </div>
-      <div class="modal-tape-footer">
-        <a id="modal-repo-link" class="btn-brutal btn-outline-white" style="font-size: 11px; padding: 8px 14px;" href="#" target="_blank">
-          <span>↗</span> REPOSITÓRIO FONTE
-        </a>
-        <button id="modal-copy-prompt-btn" class="btn-brutal btn-primary-yellow" style="font-size: 11px; padding: 8px 18px;" onclick="copyModalSkillPrompt()">
-          <span>📋</span> COPIAR PROMPT DESTA SKILL
-        </button>
+      <div class="modal-corpo md" id="modal-skill-corpo" tabindex="0"></div>
+      <div class="modal-rodape">
+        <a class="botao botao-secundario" id="modal-skill-repo" href="#" target="_blank" rel="noopener noreferrer">Repositório fonte<span class="sr-only"> (abre em nova aba)</span></a>
+        <button type="button" class="botao botao-primario" id="modal-skill-prompt">Copiar prompt desta skill</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal: Master Prompt -->
-  <div class="modal-backdrop" id="master-prompt-modal" onclick="closeModalOnBackdrop(event, 'master-prompt-modal')">
-    <div class="modal-brutal-box">
-      <div class="modal-tape-header">
-        <div class="modal-header-info">
-          <img src="hub/assets/lay/Somente as caveiras/Caveira-01.svg" class="source-img" alt="">
-          <h3>PROMPT MESTRE GERAL — BASE PARA NOVOS PROJETOS</h3>
+  <div class="modal" id="modal-prompt-mestre" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-mestre-titulo" tabindex="-1">
+      <div class="modal-topo">
+        <div class="modal-cabecalho">
+          <h2 class="modal-titulo" id="modal-mestre-titulo">Prompt mestre geral: base para novos projetos</h2>
         </div>
-        <button class="modal-btn-close" onclick="closeModal('master-prompt-modal')">[X FECHAR]</button>
+        <button type="button" class="botao botao-fechar" data-fechar>Fechar</button>
       </div>
-      <div class="modal-scroll-body">
-        <p style="color: var(--color-off-white); margin-bottom: 12px; font-size: 13px;">
-          Copie este prompt e cole no seu agente (Google Antigravity, OpenAI Codex ou Claude Code) ao iniciar qualquer projeto.
-          Ele amarra o hub local, as práticas de engenharia de software, o diagnóstico Graphify e a árvore de 118 skills.
-        </p>
-        <pre id="master-prompt-text">
-# PROMPT MESTRE DE PROJETO — REPERTÓRIO OFICIAL DE SKILLS
+      <div class="modal-corpo" tabindex="0">
+        <p class="modal-intro">Copie este prompt e cole no seu agente (Google Antigravity, OpenAI Codex ou Claude Code) ao iniciar qualquer projeto. Ele amarra o hub local, as práticas de engenharia de software, o diagnóstico Graphify e a árvore de <span data-total="skills">—</span> skills.</p>
+        <pre class="bloco-texto" id="prompt-mestre-texto"># PROMPT MESTRE DE PROJETO — REPERTÓRIO OFICIAL DE SKILLS
 Você é o agente líder técnico e de engenharia operando com este repositório de habilidades.
 
 ## REPOSITÓRIO NO GITHUB & SINCRONIZAÇÃO DE SKILLS
@@ -1659,7 +888,7 @@ if (-not (Test-Path "$env:USERPROFILE\.lay-skills-repo")) {
     git -C "$env:USERPROFILE\.lay-skills-repo" pull --recurse-submodules
 }
 
-# 2. Instalar e distribuir as <span class="js-total-skills">136</span> skills nos agentes (Antigravity, Codex, Claude Code)
+# 2. Instalar e distribuir as <span data-total="skills">—</span> skills nos agentes (Antigravity, Codex, Claude Code)
 powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\.lay-skills-repo\install.ps1"
 ```
 *(No Linux / macOS: `bash "$HOME/.lay-skills-repo/install.sh"`)*
@@ -1681,471 +910,1105 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
 - TDD Rigoroso: Red-Green-Refactor loop em qualquer alteração comportamental.
 - Segurança de Código: Auditoria contínua de entradas não confiáveis, segredos e OWASP Top 10 (Semgrep).
 - Navegação por Grafo: Consulte sempre o grafo de conhecimento antes de refatorações estruturais.
-- Comunicação Caveman: Respostas densas, precisas, em português direto e fundamentadas em evidências do código.
-        </pre>
+- Comunicação Caveman: Respostas densas, precisas, em português direto e fundamentadas em evidências do código.</pre>
       </div>
-      <div class="modal-tape-footer">
-        <button class="btn-brutal btn-primary-yellow" onclick="copyMasterPrompt()">
-          <span>📋</span> COPIAR PROMPT MESTRE
-        </button>
+      <div class="modal-rodape">
+        <button type="button" class="botao botao-primario" id="btn-copiar-mestre">Copiar prompt mestre</button>
       </div>
     </div>
   </div>
 
-  <!-- Modal: Custom Project Planner -->
-  <div class="modal-backdrop" id="planner-modal" onclick="closeModalOnBackdrop(event, 'planner-modal')">
-    <div class="modal-brutal-box">
-      <div class="modal-tape-header">
-        <div class="modal-header-info">
-          <img src="hub/assets/lay/Somente as caveiras/Caveira-03.svg" class="source-img" alt="">
-          <h3>PLANEJADOR SOB MEDIDA DE NOVO PROJETO</h3>
+  <div class="modal" id="modal-planejador" hidden>
+    <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-plano-titulo" tabindex="-1">
+      <div class="modal-topo">
+        <div class="modal-cabecalho">
+          <h2 class="modal-titulo" id="modal-plano-titulo">Planejador sob medida de novo projeto</h2>
         </div>
-        <button class="modal-btn-close" onclick="closeModal('planner-modal')">[X FECHAR]</button>
+        <button type="button" class="botao botao-fechar" data-fechar>Fechar</button>
       </div>
-      <div class="modal-scroll-body">
-        <p style="color: var(--color-off-white); margin-bottom: 12px; font-size: 13px;">
-          Prompt gerado dinamicamente com base nas skills selecionadas para o seu projeto:
-        </p>
-        <pre id="custom-planner-prompt-text"></pre>
+      <div class="modal-corpo" tabindex="0">
+        <p class="modal-intro">Prompt gerado com base nas skills selecionadas para o seu projeto. Sem seleção, usa as primeiras skills do catálogo.</p>
+        <pre class="bloco-texto" id="planejador-texto"></pre>
       </div>
-      <div class="modal-tape-footer">
-        <button class="btn-brutal btn-primary-magenta" onclick="copyCustomPlannerPrompt()">
-          <span>📋</span> COPIAR PROMPT SOB MEDIDA
-        </button>
+      <div class="modal-rodape">
+        <button type="button" class="botao botao-magenta" id="btn-copiar-planejador">Copiar prompt sob medida</button>
       </div>
     </div>
   </div>
 
-  <div class="brutal-toast" id="brutal-toast">
-    <span style="font-size: 18px;">⚡</span>
-    <span id="toast-message">PROMPT COPIADO COM SUCESSO!</span>
-  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <!-- Load Dataset -->
   <script src="hub/data.js"></script>
+  <script src="hub/totais.js"></script>
+  <script src="hub/agentes.js"></script>
 
   <script>
+  (function () {
+    'use strict';
+
     // =========================================================================
-    // LAY® SKILLS HUB — CLIENT LOGIC & INTERACTION
+    // CONSTANTES
     // =========================================================================
-    let allSkills = [];
-    let filteredSkills = [];
-    let selectedSkillIds = new Set();
-    let currentCategory = 'all';
-    let currentSource = 'all';
-    let currentSort = 'default';
-    let searchQuery = '';
-    let activeModalSkill = null;
+    var LOTE = 24;
+    var VISIVEIS_ESPECIALISTAS = 4;
+    var VISIVEIS_CHIPS = 8;
+    var SKILLS_PLANO_PADRAO = 8;
 
-    // Audio SFX Helper (desativado por completo)
-    function playAudioSfx() {}
+    // Rótulos exatos de categoria. tests/test_build_hub.py confere estes pares com o build.
+    var CATEGORIAS = [
+      { id: 'design', label: 'DESIGN & UI/UX' },
+      { id: 'contexto', label: 'CONTEXTO & AGENTES' },
+      { id: 'engenharia', label: 'ENGENHARIA' },
+      { id: 'testes', label: 'TESTES & QUALIDADE' },
+      { id: 'produto', label: 'PRODUTO & SPECS' },
+      { id: 'seguranca', label: 'SEGURANÇA & SCAN' },
+      { id: 'operacoes', label: 'OPERAÇÕES & CI/CD' },
+      { id: 'midia', label: 'MÍDIA & IMAGENS' },
+      { id: 'pesquisa', label: 'PESQUISA' },
+      { id: 'documentacao', label: 'DOCUMENTAÇÃO' }
+    ];
 
-    // Initialize Hub
-    window.addEventListener('DOMContentLoaded', () => {
-      if (window.LAY_SKILLS && Array.isArray(window.LAY_SKILLS)) {
-        allSkills = window.LAY_SKILLS;
-      } else {
-        console.warn('LAY_SKILLS dataset not loaded or empty.');
-      }
+    var ACESSO_CLASSE = {
+      'Edita e roda comandos': 'acesso-amarelo',
+      'Edita, sem comandos': 'acesso-verde',
+      'Não edita · tem Bash': 'acesso-ciano'
+    };
 
-      document.getElementById('stat-total-skills').textContent = allSkills.length;
-      document.querySelectorAll('.js-total-skills').forEach((el) => { el.textContent = allSkills.length; });
-      
-      initSourceDropdown();
-      initCategorySwitchboard();
-      applyFilters();
-    });
+    var NOTAS_PERFIL = {
+      'lay-seguranca': 'Não edita arquivos, por instrução do perfil. Tem Bash.',
+      'lay-design': 'Não escreve código de interface. Para isso, use lay-frontend.'
+    };
 
-    // Populate Source Dropdown
-    function initSourceDropdown() {
-      const select = document.getElementById('source-select');
-      const sourcesMap = new Map();
+    // =========================================================================
+    // DADOS (gerados; nenhum total digitado à mão)
+    // =========================================================================
+    var SKILLS = Array.isArray(window.LAY_SKILLS) ? window.LAY_SKILLS : [];
+    var AGENTES = Array.isArray(window.LAY_AGENTES) ? window.LAY_AGENTES : null;
+    var TOTAIS = window.LAY_TOTAIS || {};
+    var FONTES = (window.LAY_SOURCES && typeof window.LAY_SOURCES === 'object') ? window.LAY_SOURCES : null;
 
-      allSkills.forEach(s => {
-        const srcKey = s.source || 'local';
-        if (!sourcesMap.has(srcKey)) {
-          sourcesMap.set(srcKey, {
-            title: s.sourceTitle || srcKey,
-            author: s.author || ''
-          });
-        }
-      });
+    var estado = { categoria: 'all', fonte: 'all', ordem: 'default', busca: '' };
+    var filtradas = [];
+    var exibidas = 0;
+    var selecionadas = new Set();
+    var modalAberto = null;
+    var focoOrigem = null;
+    var temporizadorToast = 0;
 
-      document.getElementById('stat-total-sources').textContent = window.LAY_SOURCES_COUNT ?? sourcesMap.size;
+    // =========================================================================
+    // UTILITÁRIOS
+    // =========================================================================
+    function $(id) { return document.getElementById(id); }
 
-      sourcesMap.forEach((info, key) => {
-        const opt = document.createElement('option');
-        opt.value = key;
-        opt.textContent = `${info.title.toUpperCase()} (${info.author})`;
-        select.appendChild(opt);
-      });
-    }
-
-    // Build Category Switchboard
-    function initCategorySwitchboard() {
-      const container = document.getElementById('category-pills-container');
-      container.innerHTML = '';
-
-      const categories = [
-        { id: 'all', label: `TODAS (${allSkills.length})` },
-        { id: 'design', label: 'DESIGN & UI/UX' },
-        { id: 'contexto', label: 'CONTEXTO & AGENTES' },
-        { id: 'engenharia', label: 'ENGENHARIA' },
-        { id: 'testes', label: 'TESTES & QUALIDADE' },
-        { id: 'produto', label: 'PRODUTO & SPECS' },
-        { id: 'seguranca', label: 'SEGURANÇA & SCAN' },
-        { id: 'operacoes', label: 'OPERAÇÕES & CI/CD' },
-        { id: 'midia', label: 'MÍDIA & IMAGENS' },
-        { id: 'pesquisa', label: 'PESQUISA' },
-        { id: 'documentacao', label: 'DOCUMENTAÇÃO' }
-      ];
-
-      categories.forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = `cat-btn ${cat.id === 'all' ? 'active' : ''}`;
-        btn.dataset.cat = cat.id;
-        btn.textContent = cat.label;
-        btn.onclick = () => selectCategory(cat.id);
-        container.appendChild(btn);
-      });
-    }
-
-    function selectCategory(catId) {
-      currentCategory = catId;
-      document.querySelectorAll('.cat-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.cat === catId);
-      });
-      applyFilters();
-    }
-
-    function handleFilterChange() {
-      currentSource = document.getElementById('source-select').value;
-      currentSort = document.getElementById('sort-select').value;
-      applyFilters();
-    }
-
-    function handleSearch() {
-      searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
-      applyFilters();
-    }
-
-    // Filter & Sort Core
-    function applyFilters() {
-      filteredSkills = allSkills.filter(skill => {
-        // Source
-        if (currentSource !== 'all' && skill.source !== currentSource) {
-          return false;
-        }
-
-        // Category
-        if (currentCategory !== 'all') {
-          if (!skill.categories || !skill.categories.includes(currentCategory)) {
-            return false;
-          }
-        }
-
-        // Search Query
-        if (searchQuery) {
-          const matchId = (skill.id || '').toLowerCase().includes(searchQuery);
-          const matchName = (skill.name || '').toLowerCase().includes(searchQuery);
-          const matchDesc = (skill.description || '').toLowerCase().includes(searchQuery);
-          const matchAuthor = (skill.author || '').toLowerCase().includes(searchQuery);
-          const matchSource = (skill.sourceTitle || '').toLowerCase().includes(searchQuery);
-          if (!matchId && !matchName && !matchDesc && !matchAuthor && !matchSource) {
-            return false;
-          }
-        }
-
-        return true;
-      });
-
-      // Sorting
-      if (currentSort === 'name') {
-        filteredSkills.sort((a, b) => a.name.localeCompare(b.name));
-      } else if (currentSort === 'category') {
-        filteredSkills.sort((a, b) => {
-          const catA = (a.categories && a.categories[0]) || '';
-          const catB = (b.categories && b.categories[0]) || '';
-          return catA.localeCompare(catB);
-        });
-      }
-
-      // Update UI readouts
-      document.getElementById('filtered-count').textContent = filteredSkills.length;
-      document.getElementById('active-filter-text').textContent = 
-        `FILTRO: ${currentCategory.toUpperCase()} | FONTE: ${currentSource.toUpperCase()}`;
-
-      renderSkillsGrid();
-    }
-
-    // Render Skill Cards
-    function renderSkillsGrid() {
-      const grid = document.getElementById('skills-grid');
-      grid.innerHTML = '';
-
-      if (filteredSkills.length === 0) {
-        grid.innerHTML = `
-          <div style="grid-column: 1 / -1; padding: 60px 20px; text-align: center; border: 2px dashed var(--color-border-dark); background: var(--color-graphite-surface);">
-            <div style="font-size: 32px; margin-bottom: 12px;">⚡</div>
-            <div style="font-family: var(--font-mono); font-size: 14px; font-weight: 800; color: var(--color-blaze-yellow); text-transform: uppercase;">
-              NENHUMA SKILL ENCONTRADA PARA OS CRITÉRIOS ATUAIS
-            </div>
-            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--color-muted-grey); margin-top: 6px;">
-              Tente redefinir os filtros ou buscar por outro termo técnico.
-            </div>
-          </div>
-        `;
-        return;
-      }
-
-      filteredSkills.forEach(skill => {
-        const isSelected = selectedSkillIds.has(skill.id);
-        const card = document.createElement('div');
-        card.className = `skill-card ${isSelected ? 'selected-in-plan' : ''}`;
-        card.id = `card-${skill.id}`;
-
-        const primeCat = (skill.categories && skill.categories[0]) || 'geral';
-        const badgeCatClass = `badge-cat-${primeCat}`;
-
-        // Fallback for avatar: use local skull if local source
-        let avatarSrc = skill.sourceAvatar;
-        if (skill.source === 'local') {
-          avatarSrc = 'hub/assets/lay/Somente as caveiras/Caveira-02.svg';
-        }
-
-        card.innerHTML = `
-          <div class="card-top">
-            <div class="source-block">
-              <img class="source-img" src="${avatarSrc}" alt="" onerror="this.src='hub/assets/lay/Somente as caveiras/Caveira-02.svg'">
-              <div class="source-info">
-                <span class="source-author-name">${escapeHtml(skill.author || 'LAY®')}</span>
-                <a class="source-repo-link" href="${escapeHtml(skill.sourceUrl || '#')}" target="_blank" rel="noopener">
-                  ${escapeHtml(skill.sourceTitle || 'Upstream')} ↗
-                </a>
-              </div>
-            </div>
-            <span class="category-tag-badge ${badgeCatClass}">${primeCat}</span>
-          </div>
-
-          <div class="skill-title-text">${escapeHtml(skill.name)}</div>
-          <div class="skill-desc-text">${escapeHtml(skill.description || '')}</div>
-
-          <div class="card-footer-actions">
-            <button class="btn-card-action btn-copy-prompt" onclick="copySingleSkillPrompt('${skill.id}')">
-              <span>📋</span> PROMPT
-            </button>
-            <button class="btn-card-action btn-inspect-spec" title="Ver SKILL.md completo" onclick="openSkillModal('${skill.id}')">
-              [ + ]
-            </button>
-            <button class="btn-card-action btn-select-toggle ${isSelected ? 'is-selected' : ''}" title="Adicionar ao Planejador" onclick="toggleSkillSelection('${skill.id}')">
-              ${isSelected ? '✓ PLANO' : '+ PLANO'}
-            </button>
-          </div>
-        `;
-
-        grid.appendChild(card);
-      });
-    }
-
-    // Modal Details
-    function openSkillModal(skillId) {
-      const skill = allSkills.find(s => s.id === skillId);
-      if (!skill) return;
-
-      activeModalSkill = skill;
-
-      let avatarSrc = skill.sourceAvatar;
-      if (skill.source === 'local') {
-        avatarSrc = 'hub/assets/lay/Somente as caveiras/Caveira-02.svg';
-      }
-
-      document.getElementById('modal-source-avatar').src = avatarSrc;
-      document.getElementById('modal-source-author').textContent = `${skill.author} // ${skill.sourceTitle}`;
-      document.getElementById('modal-title').textContent = skill.name.toUpperCase();
-      document.getElementById('modal-repo-link').href = skill.sourceUrl || '#';
-
-      // Render markdown content
-      const contentEl = document.getElementById('modal-body-content');
-      contentEl.innerHTML = renderSimpleMarkdown(skill.content || skill.description || 'Sem especificações.');
-
-      document.getElementById('detail-modal').classList.add('open');
-      playAudioSfx();
-    }
-
-    function copyModalSkillPrompt() {
-      if (activeModalSkill) {
-        copySingleSkillPrompt(activeModalSkill.id);
-      }
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('open');
-    }
-
-    function closeModalOnBackdrop(e, modalId) {
-      if (e.target.id === modalId) {
-        closeModal(modalId);
-      }
-    }
-
-    // Copy Prompt Helper
-    function copySingleSkillPrompt(skillId) {
-      const skill = allSkills.find(s => s.id === skillId);
-      if (!skill) return;
-
-      const promptText = skill.prompt || `Ative e aplique a skill \`${skill.id}\` mantendo rigor técnico e evidências.`;
-      navigator.clipboard.writeText(promptText).then(() => {
-        showToast(`PROMPT DE [${skill.name.toUpperCase()}] COPIADO!`);
-        playAudioSfx();
-      });
-    }
-
-    // Master Prompt Modal
-    function openMasterPromptModal() {
-      document.getElementById('master-prompt-modal').classList.add('open');
-      playAudioSfx();
-    }
-
-    function copyMasterPrompt() {
-      const text = document.getElementById('master-prompt-text').innerText;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('PROMPT MESTRE COPIADO COM SUCESSO!');
-        playAudioSfx();
-        closeModal('master-prompt-modal');
-      });
-    }
-
-    // Selection Drawer & Project Planner
-    function toggleSkillSelection(skillId) {
-      if (selectedSkillIds.has(skillId)) {
-        selectedSkillIds.delete(skillId);
-      } else {
-        selectedSkillIds.add(skillId);
-      }
-
-      updateSelectionDrawer();
-      renderSkillsGrid();
-      playAudioSfx();
-    }
-
-    function clearSelectedSkills() {
-      selectedSkillIds.clear();
-      updateSelectionDrawer();
-      renderSkillsGrid();
-    }
-
-    function updateSelectionDrawer() {
-      const drawer = document.getElementById('selection-drawer');
-      const countEl = document.getElementById('selected-skills-count');
-      const count = selectedSkillIds.size;
-
-      countEl.textContent = count;
-      if (count > 0) {
-        drawer.classList.remove('hidden');
-      } else {
-        drawer.classList.add('hidden');
-      }
-    }
-
-    function openProjectPlannerModal() {
-      const selected = allSkills.filter(s => selectedSkillIds.has(s.id));
-      const targetSkills = selected.length > 0 ? selected : allSkills.slice(0, 8);
-
-      let customPrompt = `# PLANO DE PROJETO SOB MEDIDA — REPERTÓRIO LAY®\n`;
-      customPrompt += `Você é o agente líder técnico implementando este projeto. Siga rigorosamente as diretrizes da LAY®.\n\n`;
-      customPrompt += `## REPOSITÓRIO GITHUB & SINCRONIZAÇÃO DE SKILLS:\n`;
-      customPrompt += `Repositório: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n`;
-      customPrompt += `Se as skills não estiverem alocadas na máquina, execute:\n`;
-      customPrompt += `git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n`;
-      customPrompt += `powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n`;
-      customPrompt += `## DIAGNÓSTICO DO PROJETO:\n`;
-      customPrompt += `python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n`;
-      customPrompt += `## SKILLS SELECIONADAS PARA ESTE PROJETO (${targetSkills.length} SKILLS):\n`;
-
-      const byCat = {};
-      targetSkills.forEach(s => {
-        const cat = (s.categories && s.categories[0]) || 'geral';
-        if (!byCat[cat]) byCat[cat] = [];
-        byCat[cat].push(s);
-      });
-
-      for (const [cat, list] of Object.entries(byCat)) {
-        customPrompt += `\n### [${cat.toUpperCase()}]\n`;
-        list.forEach(s => {
-          customPrompt += `- \`${s.id}\`: ${s.description}\n`;
-        });
-      }
-
-      customPrompt += `\n## DIRETRIZES DE ENGENHARIA & QUALIDADE:\n`;
-      customPrompt += `- Qualidade de Interface: Design limpo, hierarquia tipográfica e contraste acessível (WCAG AA).\n`;
-      customPrompt += `- TDD e Segurança: Red-Green-Refactor e validação contínua de segurança (Semgrep/OWASP).\n`;
-      customPrompt += `- Navegação por Grafo: Consulta prévia a relacionamentos e arquitetura antes de refatorações.\n`;
-
-      document.getElementById('custom-planner-prompt-text').textContent = customPrompt;
-      document.getElementById('planner-modal').classList.add('open');
-      playAudioSfx();
-    }
-
-    function copyCustomPlannerPrompt() {
-      const text = document.getElementById('custom-planner-prompt-text').textContent;
-      navigator.clipboard.writeText(text).then(() => {
-        showToast('PROMPT SOB MEDIDA COPIADO!');
-        playAudioSfx();
-        closeModal('planner-modal');
-      });
-    }
-
-    // Toast Helper
-    function showToast(msg) {
-      const toast = document.getElementById('brutal-toast');
-      document.getElementById('toast-message').textContent = msg;
-      toast.classList.add('show');
-      setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2600);
-    }
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str)
+    function esc(valor) {
+      return String(valor === null || valor === undefined ? '' : valor)
         .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
     }
 
-    // Basic markdown to HTML renderer for SKILL.md modal
-    function renderSimpleMarkdown(md) {
-      if (!md) return '';
-      let html = escapeHtml(md);
+    function lista(valor) { return Array.isArray(valor) ? valor : []; }
 
-      // Headers
-      html = html.replace(/^### (.*$)/gim, '<h3>$1</h3>');
-      html = html.replace(/^## (.*$)/gim, '<h2>$1</h2>');
-      html = html.replace(/^# (.*$)/gim, '<h1>$1</h1>');
+    function contagem(n, um, varios) { return n + ' ' + (n === 1 ? um : varios); }
 
-      // Code blocks
-      html = html.replace(/```([\s\S]*?)```/gm, '<pre><code>$1</code></pre>');
-
-      // Inline code
-      html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
-
-      // Bold & Italic
-      html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
-      html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-
-      // Blockquotes
-      html = html.replace(/^> (.*$)/gim, '<blockquote style="border-left: 3px solid var(--color-blaze-yellow); padding-left: 12px; margin: 12px 0; color: var(--color-off-white);">$1</blockquote>');
-
-      // Unordered lists
-      html = html.replace(/^\- (.*$)/gim, '<li style="margin-left: 20px;">$1</li>');
-
-      // Paragraphs
-      html = html.replace(/\n\n/g, '<br><br>');
-
-      return html;
+    function total(chave) {
+      if (typeof TOTAIS[chave] === 'number') return TOTAIS[chave];
+      if (chave === 'skills') return SKILLS.length > 0 ? SKILLS.length : null;
+      if (chave === 'subagentes') return AGENTES ? AGENTES.length : null;
+      if (chave === 'fontes') return typeof window.LAY_SOURCES_COUNT === 'number' ? window.LAY_SOURCES_COUNT : null;
+      return null;
     }
+
+    function preencherTotais() {
+      document.querySelectorAll('[data-total]').forEach(function (el) {
+        var valor = total(el.getAttribute('data-total'));
+        el.textContent = valor === null ? '—' : String(valor);
+      });
+    }
+
+    function categoriaPorRotulo(rotulo) {
+      for (var i = 0; i < CATEGORIAS.length; i++) {
+        if (CATEGORIAS[i].label === rotulo) return CATEGORIAS[i].id;
+      }
+      return 'neutro';
+    }
+
+    function rotuloPorId(id) {
+      for (var i = 0; i < CATEGORIAS.length; i++) {
+        if (CATEGORIAS[i].id === id) return CATEGORIAS[i].label;
+      }
+      return null;
+    }
+
+    // Carregamento do conteúdo sob demanda (file://: sem fetch).
+    function carregarConteudo(caminho) {
+      if (window.LAY_CONTEUDO) return Promise.resolve(window.LAY_CONTEUDO);
+      if (!window.__carregamentoConteudo) {
+        window.__carregamentoConteudo = new Promise(function (resolve, reject) {
+          var s = document.createElement('script');
+          s.src = caminho;
+          s.onload = function () { resolve(window.LAY_CONTEUDO); };
+          s.onerror = function () { window.__carregamentoConteudo = null; s.remove(); reject(new Error('falha ao carregar ' + caminho)); };
+          document.head.appendChild(s);
+        });
+      }
+      return window.__carregamentoConteudo;
+    }
+
+    function promptPadrao(skill) {
+      return 'Ative e aplique a skill `' + skill.id + '` mantendo rigor técnico e evidências.';
+    }
+
+    function mostrarToast(mensagem) {
+      var toast = $('toast');
+      toast.textContent = mensagem;
+      toast.classList.add('is-visivel');
+      clearTimeout(temporizadorToast);
+      temporizadorToast = setTimeout(function () { toast.classList.remove('is-visivel'); }, 2600);
+    }
+
+    function copiarTexto(texto) {
+      function porFallback() {
+        var area = document.createElement('textarea');
+        area.value = texto;
+        area.setAttribute('readonly', '');
+        area.style.position = 'fixed';
+        area.style.opacity = '0';
+        document.body.appendChild(area);
+        area.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) { ok = false; }
+        area.remove();
+        return ok;
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(texto).then(function () { return true; }, function () { return porFallback(); });
+      }
+      return Promise.resolve(porFallback());
+    }
+
+    // Resumo de skill: corta antes das marcas de gatilho e limita a 120 caracteres.
+    function resumoSkill(texto) {
+      var t = String(texto || '').trim();
+      var marcas = ['Use this skill when', 'Do NOT use', 'Use quando', 'Não use para'];
+      var corte = t.length;
+      marcas.forEach(function (m) {
+        var i = t.indexOf(m);
+        if (i > 0 && i < corte) corte = i;
+      });
+      var base = t.slice(0, corte).trim() || t;
+      if (base.length <= 120) return base;
+      var curto = base.slice(0, 119);
+      var espaco = curto.lastIndexOf(' ');
+      var recorte = espaco > 60 ? curto.slice(0, espaco) : curto;
+      return recorte.replace(/[,;:.\s]+$/, '') + '…';
+    }
+
+    // Markdown do modal, por blocos: títulos, listas (com um nível aninhado), tabelas, citações e código.
+    // O texto é escapado antes de qualquer marcação; links só aceitam http e https.
+    var RE_CERCA = /^\s*```/;
+    var RE_TITULO = /^\s{0,3}(#{1,6})\s+(.+?)\s*#*\s*$/;
+    var RE_HORIZONTAL = /^\s*([-*_])(\s*\1){2,}\s*$/;
+    var RE_ITEM = /^(\s*)([-*+]|\d+[.)])\s+(.*)$/;
+    var RE_CITACAO = /^\s*>/;
+    var RE_SEPARADOR = /^\s*\|?\s*:?-{3,}:?\s*(\|\s*:?-{3,}:?\s*)*\|?\s*$/;
+
+    function indentacao(linha) {
+      return linha.length - linha.replace(/^\s+/, '').length;
+    }
+
+    function inlineParaHtml(texto) {
+      var trechos = [];
+      var s = esc(texto).replace(/`([^`]+)`/g, function (_, codigo) {
+        trechos.push('<code>' + codigo + '</code>');
+        return '\u0001' + (trechos.length - 1) + '\u0001';
+      });
+      s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+      s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      s = s.replace(/(^|[^*\w])\*([^*\s][^*]*)\*/g, '$1<em>$2</em>');
+      return s.replace(/\u0001(\d+)\u0001/g, function (_, i) { return trechos[Number(i)]; });
+    }
+
+    function celulasDaLinha(linha) {
+      return linha.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map(function (c) { return c.trim(); });
+    }
+
+    function ehTabela(linhas, i) {
+      return i + 1 < linhas.length && linhas[i].indexOf('|') !== -1 && RE_SEPARADOR.test(linhas[i + 1]);
+    }
+
+    function ehInicioDeBloco(linhas, i) {
+      var linha = linhas[i];
+      return RE_CERCA.test(linha) || RE_TITULO.test(linha) || RE_HORIZONTAL.test(linha) ||
+        RE_CITACAO.test(linha) || RE_ITEM.test(linha) || ehTabela(linhas, i);
+    }
+
+    function tabelaParaHtml(linhas, i) {
+      var cabecalho = celulasDaLinha(linhas[i]);
+      var corpo = [];
+      i += 2;
+      while (i < linhas.length && linhas[i].trim() && linhas[i].indexOf('|') !== -1) {
+        corpo.push(celulasDaLinha(linhas[i]));
+        i++;
+      }
+      var th = cabecalho.map(function (c) { return '<th>' + inlineParaHtml(c) + '</th>'; }).join('');
+      var tr = corpo.map(function (linha) {
+        return '<tr>' + linha.map(function (c) { return '<td>' + inlineParaHtml(c) + '</td>'; }).join('') + '</tr>';
+      }).join('');
+      return {
+        html: '<div class="md-tabela"><table><thead><tr>' + th + '</tr></thead><tbody>' + tr + '</tbody></table></div>',
+        proximo: i
+      };
+    }
+
+    function listaParaHtml(linhas, i, base) {
+      var ordenada = /^\s*\d/.test(linhas[i]);
+      var itens = [];
+      while (i < linhas.length) {
+        if (!linhas[i].trim()) {
+          // Linha em branco só mantém a lista se o próximo item estiver no mesmo nível.
+          var prox = i + 1;
+          while (prox < linhas.length && !linhas[prox].trim()) prox++;
+          if (prox < linhas.length && RE_ITEM.test(linhas[prox]) && indentacao(linhas[prox]) === base) {
+            i = prox;
+            continue;
+          }
+          break;
+        }
+        var m = RE_ITEM.exec(linhas[i]);
+        if (!m || indentacao(linhas[i]) !== base) break;
+        var partes = [m[3]];
+        var sub = '';
+        i++;
+        while (i < linhas.length && linhas[i].trim() && indentacao(linhas[i]) > base) {
+          if (RE_ITEM.test(linhas[i])) {
+            var aninhada = listaParaHtml(linhas, i, indentacao(linhas[i]));
+            sub += aninhada.html;
+            i = aninhada.proximo;
+          } else {
+            partes.push(linhas[i].trim());
+            i++;
+          }
+        }
+        itens.push('<li>' + inlineParaHtml(partes.join(' ')) + sub + '</li>');
+      }
+      var tag = ordenada ? 'ol' : 'ul';
+      return { html: '<' + tag + '>' + itens.join('') + '</' + tag + '>', proximo: i };
+    }
+
+    function markdownParaHtml(md) {
+      var texto = Array.isArray(md) ? md.join('\n') : String(md || '');
+      var linhas = texto.replace(/\r\n?/g, '\n').split('\n');
+      var saida = [];
+      var i = 0;
+      while (i < linhas.length) {
+        var linha = linhas[i];
+        if (!linha.trim()) { i++; continue; }
+
+        if (RE_CERCA.test(linha)) {
+          // Código não recebe marcação: o conteúdo segue literal até a cerca de fechamento.
+          var codigo = [];
+          i++;
+          while (i < linhas.length && !RE_CERCA.test(linhas[i])) { codigo.push(linhas[i]); i++; }
+          i++;
+          saida.push('<pre><code>' + esc(codigo.join('\n')) + '</code></pre>');
+          continue;
+        }
+
+        var titulo = RE_TITULO.exec(linha);
+        if (titulo) {
+          var nivel = titulo[1].length;
+          var etiqueta = nivel <= 2 ? 'h3' : (nivel === 3 ? 'h4' : 'h5');
+          saida.push('<' + etiqueta + '>' + inlineParaHtml(titulo[2]) + '</' + etiqueta + '>');
+          i++;
+          continue;
+        }
+
+        if (RE_HORIZONTAL.test(linha)) { saida.push('<hr>'); i++; continue; }
+
+        if (ehTabela(linhas, i)) {
+          var tabela = tabelaParaHtml(linhas, i);
+          saida.push(tabela.html);
+          i = tabela.proximo;
+          continue;
+        }
+
+        if (RE_CITACAO.test(linha)) {
+          var citacao = [];
+          while (i < linhas.length && RE_CITACAO.test(linhas[i])) {
+            citacao.push(linhas[i].replace(/^\s*>\s?/, ''));
+            i++;
+          }
+          saida.push('<blockquote><p>' + inlineParaHtml(citacao.join(' ')) + '</p></blockquote>');
+          continue;
+        }
+
+        if (RE_ITEM.test(linha)) {
+          var lista = listaParaHtml(linhas, i, indentacao(linha));
+          saida.push(lista.html);
+          i = lista.proximo;
+          continue;
+        }
+
+        var paragrafo = [linha.trim()];
+        i++;
+        while (i < linhas.length && linhas[i].trim() && !ehInicioDeBloco(linhas, i)) {
+          paragrafo.push(linhas[i].trim());
+          i++;
+        }
+        saida.push('<p>' + inlineParaHtml(paragrafo.join(' ')) + '</p>');
+      }
+      return saida.join('\n');
+    }
+
+    // =========================================================================
+    // MODAIS (Esc fecha; foco preso no diálogo; retorno ao botão de origem)
+    // =========================================================================
+    function focaveis(raiz) {
+      return Array.prototype.slice.call(raiz.querySelectorAll(
+        'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex="0"]'
+      )).filter(function (el) {
+        return !el.hidden && el.getClientRects().length > 0;
+      });
+    }
+
+    function abrirModal(modal, origem) {
+      if (modalAberto) fecharModal();
+      focoOrigem = origem || document.activeElement;
+      modalAberto = modal;
+      modal.hidden = false;
+      var caixa = modal.querySelector('[role="dialog"]');
+      var primeiro = focaveis(caixa)[0] || caixa;
+      primeiro.focus();
+    }
+
+    function fecharModal() {
+      if (!modalAberto) return;
+      var modal = modalAberto;
+      modal.hidden = true;
+      modalAberto = null;
+      if (focoOrigem && typeof focoOrigem.focus === 'function' && document.body.contains(focoOrigem)) {
+        focoOrigem.focus();
+      }
+      focoOrigem = null;
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (!modalAberto) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        fecharModal();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      var caixa = modalAberto.querySelector('[role="dialog"]');
+      var itens = focaveis(caixa);
+      if (itens.length === 0) { e.preventDefault(); caixa.focus(); return; }
+      var primeiro = itens[0];
+      var ultimo = itens[itens.length - 1];
+      var ativo = document.activeElement;
+      if (e.shiftKey && (ativo === primeiro || !caixa.contains(ativo))) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && (ativo === ultimo || !caixa.contains(ativo))) {
+        e.preventDefault();
+        primeiro.focus();
+      }
+    });
+
+    document.querySelectorAll('.modal').forEach(function (modal) {
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) fecharModal();
+      });
+    });
+
+    document.addEventListener('click', function (e) {
+      if (e.target.closest && e.target.closest('[data-fechar]')) fecharModal();
+    });
+
+    // =========================================================================
+    // ESPECIALISTAS (faixa do hero)
+    // =========================================================================
+    function cardEspecialista(a, indice) {
+      var nome = esc(a.nome);
+      var extra = indice >= VISIVEIS_ESPECIALISTAS ? ' extra' : '';
+      var skills = lista(a.skills);
+      var ativas = typeof a.skills_ativas === 'number' ? a.skills_ativas : skills.length;
+      var cliente = a.subagente_em || 'Claude Code';
+      var outros = lista(a.clientes_com_skills).filter(function (c) { return c !== cliente; });
+      var caminhos = a.configurado || {};
+      var nota = NOTAS_PERFIL[a.nome];
+
+      var chips = skills.map(function (s, i) {
+        var extraChip = i >= VISIVEIS_CHIPS;
+        return '<li class="chip' + (extraChip ? ' chip-extra' : '') + '"' + (extraChip ? ' hidden' : '') + '>' + esc(s) + '</li>';
+      }).join('');
+      var botaoChips = skills.length > VISIVEIS_CHIPS
+        ? '<button type="button" class="botao-texto" data-chips="ch-' + nome + '" data-n="' + ativas + '" aria-expanded="false" aria-controls="ch-' + nome + '">Mostrar todas (' + ativas + ')</button>'
+        : '';
+
+      var fontes = lista(a.fontes_upstream);
+      var fontesHtml = fontes.length
+        ? fontes.slice(0, 5).map(function (f) {
+            return '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo) + '<span class="sr-only"> (abre em nova aba)</span></a> <span class="fonte-autor">' + esc(f.autor) + '</span></li>';
+          }).join('') + (fontes.length > 5 ? '<li class="mais-fontes">+' + (fontes.length - 5) + '</li>' : '')
+        : '<li>Só skills LAY, sem fonte upstream direta</li>';
+
+      var projetoTexto = caminhos.projeto
+        ? 'Projeto: <code>' + esc(caminhos.projeto_caminho) + '</code>'
+        : 'Projeto: sem arquivo em .claude/agents/ no último build';
+      var globalTexto = 'Global: <code>' + esc(caminhos.global_caminho) + '</code>';
+
+      var notaCliente = outros.length ? ' As skills também valem em ' + esc(outros.join(' e ')) + '.' : '';
+
+      return '<article class="card card-especialista' + extra + '" data-nome="' + nome + '">' +
+        '<div class="ce-topo"><h3 class="ce-nome">' + nome + '</h3><span class="ce-contagem">' + esc(contagem(ativas, 'SKILL', 'SKILLS')) + '</span></div>' +
+        '<span class="badge" data-cat="' + esc(categoriaPorRotulo(a.categoria)) + '">' + esc(a.categoria) + '</span>' +
+        '<p class="ce-resumo">' + esc(a.resumo) + '</p>' +
+        '<div class="ce-rodape">' +
+          '<p class="ce-cliente">Cliente: ' + esc(cliente) + '</p>' +
+          '<button type="button" class="botao botao-secundario botao-compacto" aria-expanded="false" aria-controls="det-' + nome + '" data-detalhe="det-' + nome + '">Detalhes<span class="sr-only"> de ' + nome + '</span></button>' +
+        '</div>' +
+        '<div class="ce-detalhe" id="det-' + nome + '" hidden>' +
+          '<dl class="lista-campos">' +
+            '<div class="campo-linha"><dt>Domínio</dt><dd><code>' + esc(a.dominio) + '</code></dd></div>' +
+            '<div class="campo-linha"><dt>Acesso</dt><dd><span class="acesso ' + (ACESSO_CLASSE[a.acesso] || 'acesso-neutro') + '">' + esc(a.acesso) + '</span><p class="ferr">' + esc(lista(a.ferramentas).join(', ')) + '</p></dd></div>' +
+            '<div class="campo-linha"><dt>Skills ativas (' + ativas + ')</dt><dd><ul class="chips" id="ch-' + nome + '">' + chips + '</ul>' + botaoChips + '</dd></div>' +
+            '<div class="campo-linha"><dt>Fontes de upstream</dt><dd><ul class="fontes-lista">' + fontesHtml + '</ul></dd></div>' +
+            '<div class="campo-linha"><dt>Configurado</dt><dd><ul class="caminhos"><li>' + projetoTexto + '</li><li>' + globalTexto + '</li></ul><p>Se os dois existirem, vale o do projeto.</p></dd></div>' +
+            '<div class="campo-linha"><dt>Cliente</dt><dd>' + esc(cliente) + '.' + notaCliente + '</dd></div>' +
+          '</dl>' +
+          (nota ? '<p class="nota-perfil">' + esc(nota) + '</p>' : '') +
+        '</div>' +
+      '</article>';
+    }
+
+    function montarEspecialistas() {
+      var grade = $('grade-especialistas');
+      var botao = $('btn-mais-especialistas');
+      if (!AGENTES || AGENTES.length === 0) {
+        grade.innerHTML = '<p class="aviso">Lista de especialistas indisponível. <a href="instalacao.html">Ver a página de instalação</a>.</p>';
+        botao.hidden = true;
+        return;
+      }
+      grade.innerHTML = AGENTES.map(function (a, i) { return cardEspecialista(a, i); }).join('');
+      var extras = AGENTES.length - VISIVEIS_ESPECIALISTAS;
+      if (extras > 0) {
+        botao.hidden = false;
+        botao.textContent = 'Ver os outros ' + extras;
+      } else {
+        botao.hidden = true;
+      }
+    }
+
+    // =========================================================================
+    // CATÁLOGO DE SKILLS (lotes de 24)
+    // =========================================================================
+    function montarControles() {
+      var todas = 'TODAS (' + SKILLS.length + ')';
+      $('chips-categorias').innerHTML =
+        '<button type="button" class="chip-categoria" data-categoria="all" aria-pressed="true">' + esc(todas) + '</button>' +
+        CATEGORIAS.map(function (c) {
+          return '<button type="button" class="chip-categoria" data-categoria="' + c.id + '" aria-pressed="false">' + esc(c.label) + '</button>';
+        }).join('');
+
+      $('select-categoria').innerHTML = '<option value="all">' + esc(todas) + '</option>' +
+        CATEGORIAS.map(function (c) { return '<option value="' + c.id + '">' + esc(c.label) + '</option>'; }).join('');
+
+      var vistas = {};
+      var opcoesFonte = '<option value="all">Todas as fontes</option>';
+      SKILLS.forEach(function (s) {
+        var chave = s.source || 'local';
+        if (vistas[chave]) return;
+        vistas[chave] = true;
+        opcoesFonte += '<option value="' + esc(chave) + '">' + esc(s.sourceTitle || chave) + '</option>';
+      });
+      $('select-fonte').innerHTML = opcoesFonte;
+    }
+
+    function passaFiltros(s) {
+      if (estado.fonte !== 'all' && s.source !== estado.fonte) return false;
+      if (estado.categoria !== 'all' && !(s.categories || []).includes(estado.categoria)) return false;
+      if (estado.busca) {
+        var campos = [s.id, s.name, s.description, s.author, s.sourceTitle];
+        var achou = campos.some(function (v) {
+          return String(v || '').toLowerCase().indexOf(estado.busca) !== -1;
+        });
+        if (!achou) return false;
+      }
+      return true;
+    }
+
+    function primeiraCategoria(s) {
+      return (s.categories && s.categories[0]) || '';
+    }
+
+    function ordenarFiltradas() {
+      if (estado.ordem === 'name') {
+        filtradas.sort(function (a, b) { return String(a.name).localeCompare(String(b.name), 'pt-BR'); });
+      } else if (estado.ordem === 'category') {
+        filtradas.sort(function (a, b) { return primeiraCategoria(a).localeCompare(primeiraCategoria(b), 'pt-BR'); });
+      }
+    }
+
+    // Nome sem marcas nem pontuação: "LAY® Core Ecosystem" e "LAY Core Ecosystem" são o mesmo nome.
+    function chaveDeNome(texto) {
+      return String(texto || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+    }
+
+    function autorDaFonte(s) {
+      if (!s.author || chaveDeNome(s.author) === chaveDeNome(s.sourceTitle)) return '';
+      return esc(s.author) + ' · ';
+    }
+
+    function cardSkill(s) {
+      var id = esc(s.id);
+      var cat = primeiraCategoria(s);
+      var rotulo = rotuloPorId(cat) || (cat ? cat.toUpperCase() : 'GERAL');
+      var marcado = selecionadas.has(s.id);
+      var fonteNome = esc(s.sourceTitle || 'Fonte');
+      var fonteHtml = s.sourceUrl
+        ? '<a href="' + esc(s.sourceUrl) + '" target="_blank" rel="noopener noreferrer">' + fonteNome + '<span class="sr-only"> (abre em nova aba)</span></a>'
+        : fonteNome;
+      return '<article class="card card-skill" data-id="' + id + '">' +
+        '<div class="cs-topo">' +
+          '<p class="cs-fonte">' + autorDaFonte(s) + fonteHtml + '</p>' +
+          '<span class="badge" data-cat="' + esc(cat || 'neutro') + '">' + esc(rotulo) + '</span>' +
+        '</div>' +
+        '<h3 class="cs-titulo">' + esc(s.name) + '</h3>' +
+        '<p class="cs-resumo">' + esc(resumoSkill(s.description)) + '</p>' +
+        '<div class="cs-acoes">' +
+          '<button type="button" class="botao-acao botao-acao-prompt" data-acao="prompt" data-id="' + id + '">Prompt</button>' +
+          '<button type="button" class="botao-acao" data-acao="detalhe" data-id="' + id + '" aria-haspopup="dialog">Detalhe</button>' +
+          '<button type="button" class="botao-acao" data-acao="plano" data-id="' + id + '" aria-pressed="' + (marcado ? 'true' : 'false') + '">' + (marcado ? '✓ Plano' : 'Plano') + '</button>' +
+        '</div>' +
+      '</article>';
+    }
+
+    function atualizarStatus() {
+      var status = $('status-resultado');
+      if (filtradas.length === 0) {
+        status.textContent = 'Nenhuma skill encontrada para os critérios atuais';
+      } else {
+        status.textContent = 'Exibindo ' + exibidas + ' de ' + filtradas.length + ' skills';
+      }
+    }
+
+    function atualizarMais() {
+      var botao = $('btn-mais-skills');
+      var restante = filtradas.length - exibidas;
+      botao.hidden = restante <= 0;
+      $('btn-tudo-skills').hidden = restante <= 0;
+      botao.textContent = 'Mostrar mais';
+    }
+
+    function aplicarFiltros() {
+      filtradas = SKILLS.filter(passaFiltros);
+      ordenarFiltradas();
+      exibidas = Math.min(LOTE, filtradas.length);
+      var grade = $('grade-skills');
+      if (filtradas.length === 0) {
+        grade.innerHTML = '<p class="vazio">Nenhuma skill encontrada. Tente outro termo ou limpe os filtros.</p>';
+      } else {
+        grade.innerHTML = filtradas.slice(0, exibidas).map(cardSkill).join('');
+      }
+      atualizarStatus();
+      atualizarMais();
+    }
+
+    function acrescentarLote() {
+      var proximo = Math.min(LOTE, filtradas.length - exibidas);
+      if (proximo <= 0) return;
+      $('grade-skills').insertAdjacentHTML('beforeend', filtradas.slice(exibidas, exibidas + proximo).map(cardSkill).join(''));
+      exibidas += proximo;
+      atualizarStatus();
+      atualizarMais();
+    }
+
+    function acrescentarTudo() {
+      if (filtradas.length <= exibidas) return;
+      $('grade-skills').insertAdjacentHTML('beforeend', filtradas.slice(exibidas).map(cardSkill).join(''));
+      exibidas = filtradas.length;
+      atualizarStatus();
+      atualizarMais();
+    }
+
+    function definirCategoria(id) {
+      estado.categoria = id;
+      document.querySelectorAll('[data-categoria]').forEach(function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-categoria') === id ? 'true' : 'false');
+      });
+      $('select-categoria').value = id;
+      aplicarFiltros();
+    }
+
+    function sincronizarPlano() {
+      document.querySelectorAll('[data-acao="plano"]').forEach(function (b) {
+        var marcado = selecionadas.has(b.getAttribute('data-id'));
+        b.setAttribute('aria-pressed', marcado ? 'true' : 'false');
+        b.textContent = marcado ? '✓ Plano' : 'Plano';
+      });
+      var n = selecionadas.size;
+      $('plano-n').textContent = String(n);
+      $('barra-plano').hidden = n === 0;
+      document.body.classList.toggle('com-plano', n > 0);
+    }
+
+    function alternarPlano(id) {
+      if (selecionadas.has(id)) selecionadas.delete(id);
+      else selecionadas.add(id);
+      sincronizarPlano();
+    }
+
+    function abrirDetalhe(id, origem) {
+      var skill = SKILLS.find(function (s) { return s.id === id; });
+      if (!skill) return;
+      var autor = skill.author && chaveDeNome(skill.author) !== chaveDeNome(skill.sourceTitle) ? skill.author + ' // ' : '';
+      $('modal-skill-autor').textContent = autor + (skill.sourceTitle || '');
+      $('modal-skill-titulo').textContent = skill.name;
+      var repo = $('modal-skill-repo');
+      repo.hidden = !skill.sourceUrl;
+      repo.setAttribute('href', skill.sourceUrl || '#');
+      var corpo = $('modal-skill-corpo');
+      corpo.innerHTML = '<p class="carregando">Carregando…</p>';
+      $('modal-skill-prompt').onclick = function () { copiarPromptSkill(id); };
+      abrirModal($('modal-skill'), origem);
+
+      carregarConteudo('hub/conteudo.js').then(function (todos) {
+        if (modalAberto !== $('modal-skill')) return;
+        var c = (todos || {})[skill.id] || {};
+        corpo.innerHTML = markdownParaHtml(c.content || skill.description || 'Sem especificações.');
+      }).catch(function () {
+        if (modalAberto !== $('modal-skill')) return;
+        corpo.innerHTML = '';
+        var erro = document.createElement('p');
+        erro.className = 'erro';
+        erro.textContent = 'Não foi possível carregar o conteúdo completo desta skill.';
+        var descricao = document.createElement('p');
+        descricao.textContent = skill.description || 'Sem especificações.';
+        corpo.appendChild(erro);
+        corpo.appendChild(descricao);
+      });
+    }
+
+    function copiarPromptSkill(id) {
+      var skill = SKILLS.find(function (s) { return s.id === id; });
+      if (!skill) return;
+      var aoCopiar = function (todos) {
+        var c = (todos || {})[skill.id] || {};
+        return copiarTexto(c.prompt || promptPadrao(skill));
+      };
+      // Com o conteúdo já carregado, a cópia começa no mesmo gesto do usuário.
+      var promessa = window.LAY_CONTEUDO
+        ? Promise.resolve(aoCopiar(window.LAY_CONTEUDO))
+        : carregarConteudo('hub/conteudo.js').then(aoCopiar);
+      promessa.then(function (ok) {
+        mostrarToast(ok ? 'Prompt de [' + skill.name.toUpperCase() + '] copiado!' : 'Não foi possível copiar');
+      }).catch(function () {
+        mostrarToast('Não foi possível carregar o prompt desta skill');
+      });
+    }
+
+    // =========================================================================
+    // PLANEJADOR E PROMPT MESTRE
+    // =========================================================================
+    function textoPlanejador() {
+      var escolhidas = SKILLS.filter(function (s) { return selecionadas.has(s.id); });
+      var alvo = escolhidas.length > 0 ? escolhidas : SKILLS.slice(0, SKILLS_PLANO_PADRAO);
+      var texto = '# PLANO DE PROJETO SOB MEDIDA — REPERTÓRIO LAY®\n';
+      texto += 'Você é o agente líder técnico implementando este projeto. Siga rigorosamente as diretrizes da LAY®.\n\n';
+      texto += '## REPOSITÓRIO GITHUB & SINCRONIZAÇÃO DE SKILLS:\n';
+      texto += 'Repositório: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n';
+      texto += 'Se as skills não estiverem alocadas na máquina, execute:\n';
+      texto += 'git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n';
+      texto += 'powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n';
+      texto += '## DIAGNÓSTICO DO PROJETO:\n';
+      texto += 'python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n';
+      texto += '## SKILLS SELECIONADAS PARA ESTE PROJETO (' + alvo.length + ' SKILLS):\n';
+      var grupos = {};
+      alvo.forEach(function (s) {
+        var cat = primeiraCategoria(s) || 'geral';
+        (grupos[cat] = grupos[cat] || []).push(s);
+      });
+      Object.keys(grupos).forEach(function (cat) {
+        texto += '\n### [' + cat.toUpperCase() + ']\n';
+        grupos[cat].forEach(function (s) {
+          texto += '- `' + s.id + '`: ' + resumoSkill(s.description) + '\n';
+        });
+      });
+      texto += '\n## DIRETRIZES DE ENGENHARIA & QUALIDADE:\n';
+      texto += '- Qualidade de Interface: Design limpo, hierarquia tipográfica e contraste acessível (WCAG AA).\n';
+      texto += '- TDD e Segurança: Red-Green-Refactor e validação contínua de segurança (Semgrep/OWASP).\n';
+      texto += '- Navegação por Grafo: Consulta prévia a relacionamentos e arquitetura antes de refatorações.\n';
+      return texto;
+    }
+
+    function abrirPlanejador(origem) {
+      $('planejador-texto').textContent = textoPlanejador();
+      abrirModal($('modal-planejador'), origem);
+    }
+
+    // =========================================================================
+    // FONTES (rodapé)
+    // =========================================================================
+    function montarFontes() {
+      var bloco = $('bloco-fontes');
+      if (!FONTES) { bloco.hidden = true; return; }
+      var itens = Object.keys(FONTES).map(function (k) { return FONTES[k]; });
+      itens.sort(function (a, b) { return String(a.title || '').localeCompare(String(b.title || ''), 'pt-BR'); });
+      $('lista-fontes').innerHTML = itens.map(function (f) {
+        return '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.title) + '<span class="sr-only"> (abre em nova aba)</span></a> · ' + esc(f.author) + '</li>';
+      }).join('');
+    }
+
+    // =========================================================================
+    // EVENTOS
+    // =========================================================================
+    function reduzidoMovimento() {
+      return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+    }
+
+    function ligarEventos() {
+      $('btn-prompt-mestre').addEventListener('click', function () {
+        abrirModal($('modal-prompt-mestre'), this);
+      });
+
+      $('btn-copiar-mestre').addEventListener('click', function () {
+        copiarTexto($('prompt-mestre-texto').textContent).then(function (ok) {
+          mostrarToast(ok ? 'Prompt mestre copiado com sucesso!' : 'Não foi possível copiar');
+          if (ok) fecharModal();
+        });
+      });
+
+      $('btn-copiar-planejador').addEventListener('click', function () {
+        copiarTexto($('planejador-texto').textContent).then(function (ok) {
+          mostrarToast(ok ? 'Prompt sob medida copiado!' : 'Não foi possível copiar');
+          if (ok) fecharModal();
+        });
+      });
+
+      $('btn-plano-abrir').addEventListener('click', function () { abrirPlanejador(this); });
+      $('btn-gerar-prompt').addEventListener('click', function () { abrirPlanejador(this); });
+      $('btn-limpar-plano').addEventListener('click', function () {
+        selecionadas.clear();
+        sincronizarPlano();
+      });
+
+      $('busca').addEventListener('input', function () {
+        estado.busca = this.value.trim().toLowerCase();
+        aplicarFiltros();
+      });
+
+      $('chips-categorias').addEventListener('click', function (e) {
+        var b = e.target.closest('[data-categoria]');
+        if (b) definirCategoria(b.getAttribute('data-categoria'));
+      });
+
+      $('select-categoria').addEventListener('change', function () {
+        definirCategoria(this.value);
+      });
+
+      $('select-fonte').addEventListener('change', function () {
+        estado.fonte = this.value;
+        aplicarFiltros();
+      });
+
+      $('select-ordem').addEventListener('change', function () {
+        estado.ordem = this.value;
+        aplicarFiltros();
+      });
+
+      $('btn-filtros').addEventListener('click', function () {
+        var aberto = $('painel-filtros').classList.toggle('is-aberto');
+        this.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+      });
+
+      $('btn-mais-skills').addEventListener('click', function () {
+        acrescentarLote();
+        if ($('btn-mais-skills').hidden) $('status-resultado').focus();
+      });
+
+      $('btn-tudo-skills').addEventListener('click', function () {
+        acrescentarTudo();
+        $('status-resultado').focus();
+      });
+
+      $('grade-skills').addEventListener('click', function (e) {
+        var botao = e.target.closest('[data-acao]');
+        if (!botao) return;
+        var id = botao.getAttribute('data-id');
+        var acao = botao.getAttribute('data-acao');
+        if (acao === 'plano') alternarPlano(id);
+        else if (acao === 'detalhe') abrirDetalhe(id, botao);
+        else if (acao === 'prompt') copiarPromptSkill(id);
+      });
+
+      $('grade-especialistas').addEventListener('click', function (e) {
+        var botao = e.target.closest('button');
+        if (!botao) return;
+        if (botao.hasAttribute('data-detalhe')) {
+          var painel = $(botao.getAttribute('data-detalhe'));
+          var aberto = botao.getAttribute('aria-expanded') === 'true';
+          botao.setAttribute('aria-expanded', aberto ? 'false' : 'true');
+          painel.hidden = aberto;
+          if (!aberto) painel.scrollIntoView({ block: 'nearest', behavior: reduzidoMovimento() ? 'auto' : 'smooth' });
+          return;
+        }
+        if (botao.hasAttribute('data-chips')) {
+          var lista = $(botao.getAttribute('data-chips'));
+          var mostrando = botao.getAttribute('aria-expanded') === 'true';
+          lista.querySelectorAll('.chip-extra').forEach(function (li) { li.hidden = mostrando; });
+          botao.setAttribute('aria-expanded', mostrando ? 'false' : 'true');
+          botao.textContent = mostrando ? 'Mostrar todas (' + botao.getAttribute('data-n') + ')' : 'Mostrar menos';
+        }
+      });
+
+      $('btn-mais-especialistas').addEventListener('click', function () {
+        var grade = $('grade-especialistas');
+        var expandida = grade.classList.toggle('expandida');
+        this.setAttribute('aria-expanded', expandida ? 'true' : 'false');
+        this.textContent = expandida ? 'Mostrar menos' : 'Ver os outros ' + (AGENTES.length - VISIVEIS_ESPECIALISTAS);
+      });
+    }
+
+    function iniciar() {
+      preencherTotais();
+      montarControles();
+      montarEspecialistas();
+      montarFontes();
+      aplicarFiltros();
+      sincronizarPlano();
+      ligarEventos();
+    }
+
+    iniciar();
+  })();
   </script>
+
+  <script>
+  // =========================================================================
+  // FUNDO HALFTONE (canvas fixo atrás do conteúdo, sem eventos de ponteiro)
+  // Inspirado em currency-sky-background (Pixel-Perfect, MIT) e dither-gradient (Componentry, MIT).
+  // Código escrito para este projeto; nenhum trecho foi copiado.
+  // O fundo pertence à página: ao rolar, as barrinhas de pontos sobem junto com o conteúdo e se repetem sem fim.
+  // Cor: --roxo-lay (#5F27CD). Pontos pequenos: raio até 22% do espaçamento; opacidade de 5% a 28%.
+  // Movimento reduzido: quadro estático, sem laço e sem acompanhar a rolagem.
+  // Até 60 quadros por segundo; cai para 30 se um quadro passar de 25 ms por 3 s seguidos.
+  // Pausa com a aba oculta.
+  // =========================================================================
+  (function () {
+    'use strict';
+    var canvas = document.getElementById('halftone-canvas');
+    if (!canvas || !canvas.getContext) return;
+    var ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    var TAU = Math.PI * 2;
+    var FAIXAS = [0.05, 0.10, 0.18, 0.28];
+    var LIMITE_PONTOS = 6000;
+    var PERIODO_BARRINHA = 420;     // px entre duas barrinhas, na vertical
+    var ONDA_Y = TAU / PERIODO_BARRINHA;
+    var ONDA_X = TAU / 1400;        // inclinação leve das barrinhas
+    var OMEGA = TAU / 60;           // deriva lenta no tempo: uma volta a cada 60 s
+    var RAIO_MAX = 0.22;            // raio máximo, em fração do espaçamento
+    var RAIO_MIN_DESENHO = 0.3;     // pontos menores que isso não são desenhados
+    var FPS_MAX = 60;
+    var FPS_LENTO = 30;
+    var MS_QUADRO_LENTO = 25;
+    var MS_LENTO_SEGUIDO = 3000;
+    var reduzido = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
+
+    var largura = 1;
+    var altura = 1;
+    var dpr = 1;
+    var grade = null;
+    var cor = corDoToken();
+    var ativo = false;
+    var rafId = 0;
+    var ultimoDesenho = -Infinity;
+    var intervaloMs = 1000 / FPS_MAX;
+    var lentoDesde = 0;
+    var ultimoW = -1;
+    var ultimoH = -1;
+    var temporizadorResize = 0;
+
+    function corDoToken() {
+      var valor = getComputedStyle(document.documentElement).getPropertyValue('--roxo-lay').trim();
+      var m = /^#([0-9a-f]{6})$/i.exec(valor);
+      if (!m) return [95, 39, 205];
+      var n = parseInt(m[1], 16);
+      return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+    }
+
+    // Espaçamento menor em telas pequenas: a trama continua fina em qualquer largura.
+    function espacamento(w) {
+      if (w < 640) return 12;
+      if (w < 1024) return 14;
+      return 16;
+    }
+
+    // Cada ponto guarda a fase da sua posição no documento: a barrinha segue a página ao rolar.
+    function montarGrade(w, h) {
+      var s = espacamento(w);
+      var cols;
+      var rows;
+      var n;
+      while (true) {
+        cols = Math.ceil(w / s);
+        rows = Math.ceil(h / s) + 2;   // duas linhas extras para o deslocamento da rolagem
+        n = cols * rows;
+        if (n <= LIMITE_PONTOS) break;
+        s += 2;
+      }
+      var offX = (w - cols * s) / 2;
+      var xs = new Float32Array(n);
+      var ys = new Float32Array(n);
+      var fases = new Float32Array(n);
+      var i = 0;
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c < cols; c++) {
+          var x = offX + (c + 0.5) * s;
+          var y = (r + 0.5) * s;
+          xs[i] = x;
+          ys[i] = y;
+          fases[i] = ONDA_X * x + ONDA_Y * y;
+          i++;
+        }
+      }
+      return {
+        n: n,
+        passo: s,
+        xs: xs,
+        ys: ys,
+        fases: fases,
+        rs: new Float32Array(n),
+        bd: new Uint8Array(n),
+        rMin: 0.35,
+        rMax: RAIO_MAX * s
+      };
+    }
+
+    // Rolagem da página em px. Com movimento reduzido, o fundo não acompanha a rolagem.
+    function rolagemAtual() {
+      if (reduzido.matches) return 0;
+      return window.scrollY || window.pageYOffset || 0;
+    }
+
+    function desenhar(t, rolagem) {
+      if (!grade) return;
+      var g = grade;
+      var n = g.n;
+      var s = g.passo;
+      // A parte inteira da rolagem, em linhas, define a fase; a parte fracionária desloca o desenho.
+      var linhas = Math.floor(rolagem / s);
+      var desloca = rolagem - linhas * s;
+      var fase = -OMEGA * t + ONDA_Y * linhas * s;
+      var span = g.rMax - g.rMin;
+      for (var i = 0; i < n; i++) {
+        var v = 0.5 + 0.5 * Math.sin(g.fases[i] + fase);
+        g.rs[i] = g.rMin + span * v;
+        var b = (4 * v * v) | 0;
+        g.bd[i] = b > 3 ? 3 : b;
+      }
+      ctx.clearRect(0, 0, largura, altura);
+      ctx.save();
+      ctx.translate(0, -desloca);
+      var prefixo = 'rgba(' + cor[0] + ',' + cor[1] + ',' + cor[2] + ',';
+      for (var f = 0; f < 4; f++) {
+        ctx.beginPath();
+        for (var j = 0; j < n; j++) {
+          if (g.bd[j] !== f) continue;
+          var r = g.rs[j];
+          if (r < RAIO_MIN_DESENHO) continue;
+          ctx.moveTo(g.xs[j] + r, g.ys[j]);
+          ctx.arc(g.xs[j], g.ys[j], r, 0, TAU);
+        }
+        ctx.fillStyle = prefixo + FAIXAS[f] + ')';
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+
+    function quadro(agora) {
+      rafId = 0;
+      if (!ativo) return;
+      if (agora - ultimoDesenho >= intervaloMs - 2) {
+        ultimoDesenho = agora;
+        var inicio = performance.now();
+        desenhar(agora / 1000, rolagemAtual());
+        var gasto = performance.now() - inicio;
+        if (gasto > MS_QUADRO_LENTO) {
+          if (!lentoDesde) lentoDesde = agora;
+          if (intervaloMs < 1000 / FPS_LENTO && agora - lentoDesde >= MS_LENTO_SEGUIDO) {
+            intervaloMs = 1000 / FPS_LENTO;
+          }
+        } else {
+          lentoDesde = 0;
+        }
+      }
+      rafId = requestAnimationFrame(quadro);
+    }
+
+    function iniciarLaco() {
+      if (ativo) return;
+      ativo = true;
+      rafId = requestAnimationFrame(quadro);
+    }
+
+    function pararLaco() {
+      ativo = false;
+      if (rafId) cancelAnimationFrame(rafId);
+      rafId = 0;
+    }
+
+    function dimensionar() {
+      largura = document.documentElement.clientWidth || window.innerWidth || 1;
+      altura = document.documentElement.clientHeight || window.innerHeight || 1;
+      dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = Math.max(1, Math.round(largura * dpr));
+      canvas.height = Math.max(1, Math.round(altura * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      grade = montarGrade(largura, altura);
+      ultimoW = largura;
+      ultimoH = altura;
+    }
+
+    function aplicarModo() {
+      pararLaco();
+      if (reduzido.matches) {
+        desenhar(0, 0);
+        return;
+      }
+      if (!document.hidden) iniciarLaco();
+    }
+
+    window.addEventListener('resize', function () {
+      clearTimeout(temporizadorResize);
+      temporizadorResize = setTimeout(function () {
+        var w = document.documentElement.clientWidth || window.innerWidth;
+        var h = document.documentElement.clientHeight || window.innerHeight;
+        if (w === ultimoW && Math.abs(h - ultimoH) < 80) return;
+        dimensionar();
+        if (reduzido.matches) desenhar(0, 0);
+      }, 200);
+    });
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden) { pararLaco(); return; }
+      if (!reduzido.matches) iniciarLaco();
+    });
+
+    if (reduzido.addEventListener) reduzido.addEventListener('change', aplicarModo);
+    else if (reduzido.addListener) reduzido.addListener(aplicarModo);
+
+    dimensionar();
+    document.documentElement.classList.add('halftone-ativo');
+    aplicarModo();
+  })();
+  </script>
+
   <script>
     // Contagem de estrelas do repositório (API pública do GitHub). Cache de 30 min no navegador;
     // se a API não responder ou o limite do IP estourar, o chip some e o botão continua valendo.
