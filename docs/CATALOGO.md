@@ -44,6 +44,7 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-clarifying-screen-requirements` | [clarifying-screen-requirements](../refactored_skills/frontend/clarifying-screen-requirements/SKILL.md) | frontend | refactored |
 | `lay-converting-images-to-code` | [converting-images-to-code](../refactored_skills/frontend/converting-images-to-code/SKILL.md) | frontend | refactored |
 | `lay-crafting-high-end-visuals` | [crafting-high-end-visuals](../refactored_skills/frontend/crafting-high-end-visuals/SKILL.md) | frontend | refactored |
+| `lay-designing-industrial-brutalist-interfaces` | [designing-industrial-brutalist-interfaces](../refactored_skills/frontend/designing-industrial-brutalist-interfaces/SKILL.md) | frontend | refactored |
 | `lay-designing-minimalist-interfaces` | [designing-minimalist-interfaces](../refactored_skills/frontend/designing-minimalist-interfaces/SKILL.md) | frontend | refactored |
 | `lay-elevating-frontend-taste` | [elevating-frontend-taste](../refactored_skills/frontend/elevating-frontend-taste/SKILL.md) | frontend | refactored |
 | `lay-enforcing-full-code-output` | [enforcing-full-code-output](../refactored_skills/frontend/enforcing-full-code-output/SKILL.md) | frontend | refactored |
@@ -69,7 +70,6 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-driving-test-driven-development` | [driving-test-driven-development](../refactored_skills/qa/driving-test-driven-development/SKILL.md) | qa | refactored |
 | `lay-enforcing-green-pull-requests` | [enforcing-green-pull-requests](../refactored_skills/qa/enforcing-green-pull-requests/SKILL.md) | qa | refactored |
 | `lay-evaluating-model-benchmarks` | [evaluating-model-benchmarks](../refactored_skills/qa/evaluating-model-benchmarks/SKILL.md) | qa | refactored |
-| `lay-running-playwright-dev-tools` | [running-playwright-dev-tools](../refactored_skills/qa/running-playwright-dev-tools/SKILL.md) | qa | refactored |
 | `lay-scanning-codebase-quality` | [scanning-codebase-quality](../refactored_skills/qa/scanning-codebase-quality/SKILL.md) | qa | refactored |
 | `lay-sweeping-failing-ci-builds` | [sweeping-failing-ci-builds](../refactored_skills/qa/sweeping-failing-ci-builds/SKILL.md) | qa | refactored |
 | `lay-testing-in-browser-with-devtools` | [testing-in-browser-with-devtools](../refactored_skills/qa/testing-in-browser-with-devtools/SKILL.md) | qa | refactored |

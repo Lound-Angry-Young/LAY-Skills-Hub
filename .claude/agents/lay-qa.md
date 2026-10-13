@@ -20,8 +20,6 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Inspects and prepares the selected pull request queue against its exact current base, repairs authorized defects with contributor credit and reports full versus partial validation. Use this skill when: a maintainer pre-greens selected pull 
 - `evaluating-model-benchmarks`: `refactored_skills/qa/evaluating-model-benchmarks/SKILL.md`
   Creates and runs evaluation suites, watches live benchmark progress, views scorecards, compares model performance and integrates eval runs with CI workflows from the CLI. Use this skill when: benchmarking or comparing models through evaluat
-- `running-playwright-dev-tools`: `refactored_skills/qa/running-playwright-dev-tools/SKILL.md`
-  Runs development workflows for the playwright-cli repository, such as rolling dependencies, releasing and other repository maintenance tasks. Use this skill when: maintaining the playwright-cli repository itself. Do NOT use this skill when:
 - `scanning-codebase-quality`: `refactored_skills/qa/scanning-codebase-quality/SKILL.md`
   Runs a scoped, read-only quality scan that reports exact-candidate evidence, failures and frozen debt, for ad-hoc gate sweeps or release preparation. Use this skill when: an ad-hoc quality gate sweep or release preparation needs a read-only
 - `sweeping-failing-ci-builds`: `refactored_skills/qa/sweeping-failing-ci-builds/SKILL.md`

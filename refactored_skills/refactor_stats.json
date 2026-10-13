@@ -105,7 +105,7 @@
       ]
     },
     "frontend": {
-      "count": 21,
+      "count": 22,
       "skills": [
         "animating-react-bits-components",
         "animating-react-view-transitions",
@@ -117,6 +117,7 @@
         "clarifying-screen-requirements",
         "converting-images-to-code",
         "crafting-high-end-visuals",
+        "designing-industrial-brutalist-interfaces",
         "designing-minimalist-interfaces",
         "elevating-frontend-taste",
         "enforcing-full-code-output",
@@ -131,13 +132,12 @@
       ]
     },
     "qa": {
-      "count": 10,
+      "count": 9,
       "skills": [
         "automating-browser-tests",
         "driving-test-driven-development",
         "enforcing-green-pull-requests",
         "evaluating-model-benchmarks",
-        "running-playwright-dev-tools",
         "scanning-codebase-quality",
         "sweeping-failing-ci-builds",
         "testing-in-browser-with-devtools",

@@ -376,8 +376,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-3ecd0fc01906",
-      "sha256": "3ecd0fc0190667ea9e899923a85bfe051f671a34e6882a7f5920788fdbb1af2b",
+      "commit": "content-1ea4bdc45ff3",
+      "sha256": "1ea4bdc45ff38a09a7e01112563845cd888271af61513ecbd651264df956146b",
       "url": ""
     },
     {
@@ -391,8 +391,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-2b6c5401bf95",
-      "sha256": "2b6c5401bf95138177dade2091a61da2a7319a88c4e1d18b4f4c070a37979d4d",
+      "commit": "content-e6b78845437c",
+      "sha256": "e6b78845437c7bbdf8026e9e6f7db8b53b71e425100f0ff7e5eb9a04c3970f66",
       "url": ""
     },
     {
@@ -406,8 +406,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-e412427ecbe9",
-      "sha256": "e412427ecbe99a50a88167e253087818af5b11ebef4029dfa607928ad7aa4254",
+      "commit": "content-bc39344416a4",
+      "sha256": "bc39344416a4c7925fbab01f0c89beadca4bebc20938e1208c63b45920db7efc",
       "url": ""
     },
     {
@@ -421,8 +421,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-ce1f4aa571a7",
-      "sha256": "ce1f4aa571a76a64157c9c8efcc0ca7a2000c9e6caea015a7dd3b157a33022c1",
+      "commit": "content-b5af459cc008",
+      "sha256": "b5af459cc0089a2647abc8baa5d5f167c03bc12ee9542b81929fc63c4e13e335",
       "url": ""
     },
     {
@@ -648,8 +648,8 @@
         "documentacao"
       ],
       "version": "refactored",
-      "commit": "content-62b22fb27d0e",
-      "sha256": "62b22fb27d0e17628e85ae15b37bdc5815172d618c3502093250d13e4406475c",
+      "commit": "content-6602762b4cec",
+      "sha256": "6602762b4cecaeb592af59d44785a5c33f64a8a1013c0830ed18cab859b879aa",
       "url": ""
     },
     {
@@ -663,8 +663,8 @@
         "documentacao"
       ],
       "version": "refactored",
-      "commit": "content-c93b5e31c5b9",
-      "sha256": "c93b5e31c5b9499ee99bcd2ee59caacd068938038ddb89ae7cef357d2b0a87e6",
+      "commit": "content-c4ed0aca0341",
+      "sha256": "c4ed0aca0341c4bd314cba5a48694258f10b95d7fdf9043dd774dd04d7858acf",
       "url": ""
     },
     {
@@ -679,8 +679,8 @@
         "seguranca"
       ],
       "version": "refactored",
-      "commit": "content-30c5c22c423d",
-      "sha256": "30c5c22c423ddf211c3691dd0ea816bffc1378b1cf252cf01295bd5e0a6efad3",
+      "commit": "content-05573a8a5a9f",
+      "sha256": "05573a8a5a9f6ac1c629b480479fcc0435b7203fe98ec71f354dd3193d1f9c27",
       "url": ""
     },
     {
@@ -789,8 +789,8 @@
         "engenharia"
       ],
       "version": "refactored",
-      "commit": "content-46a0d839a2f7",
-      "sha256": "46a0d839a2f755470055e9460c5f077eb99731401c0f1615320177f5bf2e90d8",
+      "commit": "content-490f3a595e7b",
+      "sha256": "490f3a595e7badef12ef76c009d376924f0fa346430a788d1f07a4617ce958d6",
       "url": ""
     },
     {
@@ -835,8 +835,8 @@
         "engenharia"
       ],
       "version": "refactored",
-      "commit": "content-43729b4d970a",
-      "sha256": "43729b4d970ac5b873d723c70cb83b5eac5d64e1cfc9508f06da513d56615315",
+      "commit": "content-2ea237c7552a",
+      "sha256": "2ea237c7552a02c7e0c454b6a66e0dae962c0750d734ee41f04ba3293c8c9b39",
       "url": ""
     },
     {
@@ -865,8 +865,8 @@
         "engenharia"
       ],
       "version": "refactored",
-      "commit": "content-dd35121f6bf2",
-      "sha256": "dd35121f6bf2a644eacd189e2a38ecc8a2d73e3f184574dc2a6a9f03f377042e",
+      "commit": "content-420100ca00f4",
+      "sha256": "420100ca00f425a86aaa9515dbc728ed5b75e95274f5085ac39920bb192dd629",
       "url": ""
     },
     {
@@ -911,8 +911,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-c7e4396eb547",
-      "sha256": "c7e4396eb54759b6e064f0374155cc4cfd1cbcc249868fdf00ab20365497f55c",
+      "commit": "content-7c4bacb566a2",
+      "sha256": "7c4bacb566a24353ff7e68fa7978fd8504a71cbbf142e8d7b84efc316c47322b",
       "url": ""
     },
     {
@@ -973,8 +973,8 @@
         "engenharia"
       ],
       "version": "refactored",
-      "commit": "content-2014ea1d9b9c",
-      "sha256": "2014ea1d9b9cf28ae736abffca6d1205952d06441da8f756c8175f32fc48fd06",
+      "commit": "content-8492fce93ee8",
+      "sha256": "8492fce93ee85ca1b298df32428d3154265c28beb97e5c8cf2fd6ae79658a650",
       "url": ""
     },
     {
@@ -1018,8 +1018,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-e471e2ab4d5b",
-      "sha256": "e471e2ab4d5b3cf19cc185dcad428fb1f665ca798a6653fccec99606595c1725",
+      "commit": "content-42061d85cbcc",
+      "sha256": "42061d85cbcc13ff9952cb05c90bff8a8fe17993f3e3df84d9902b363a8983d6",
       "url": ""
     },
     {
@@ -1064,8 +1064,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-14d09f56786f",
-      "sha256": "14d09f56786f75fcbf2a4bfe56dbd792829660c264968aaa952f2415adde6e27",
+      "commit": "content-8f9f5a29cbfa",
+      "sha256": "8f9f5a29cbfab1ecef2f452301e739a85809ec0384cbe1251858844d6e4442d6",
       "url": ""
     },
     {
@@ -1094,8 +1094,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-d5af73fcfcbd",
-      "sha256": "d5af73fcfcbd04260320d2bd79c6522f1dd90ff2c4bb3be3604754b4f40577bb",
+      "commit": "content-e5be471eedfe",
+      "sha256": "e5be471eedfee99b4a3841ec4ba743ea064d46109401b54b7da7e6d37ffae57c",
       "url": ""
     },
     {
@@ -1109,8 +1109,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-15f0d1cad07e",
-      "sha256": "15f0d1cad07e1c9249cc21e395e9f65375baf69e14ee49bcb3be9159acae0eea",
+      "commit": "content-333387d3bfd9",
+      "sha256": "333387d3bfd9b65984e8a27ce562ddd465ebbd9e3c94b6c92df6f24ab6734d7c",
       "url": ""
     },
     {
@@ -1124,8 +1124,23 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-23535a05bdcb",
-      "sha256": "23535a05bdcbdb5b3cd08fa97b229345068f6691feedbbe29eb3b747f02bef50",
+      "commit": "content-2faa1541bf69",
+      "sha256": "2faa1541bf69666c609af924d00f61c1f92b95aea966a3b5465fab398a661265",
+      "url": ""
+    },
+    {
+      "id": "lay-designing-industrial-brutalist-interfaces",
+      "name": "designing-industrial-brutalist-interfaces",
+      "description": "Designs raw industrial interfaces that fuse Swiss typographic print with tactical telemetry: rigid visible grids, extreme type-scale contrast, one utilitarian accent and light analog degradation. Use this skill when: the user explicitly asks for an industrial, brutalist, Swiss- print or telemetry style for a dashboard, portfolio or editorial site. Do NOT use this skill when: the product must follow the LAY brand identity (use governing-lay-brand-aesthetics), a calm minimalist or pastel look is wanted (use designing-minimalist-interfaces), or the user has not chosen this direction.",
+      "source": "local",
+      "path": "refactored_skills/frontend/designing-industrial-brutalist-interfaces/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-3c2dc0e62482",
+      "sha256": "3c2dc0e624828a04fa2bb4e5878aacf10ec1e0e24a0f2c62d6d535ef660aeddb",
       "url": ""
     },
     {
@@ -1139,8 +1154,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-4d5a3b1c4847",
-      "sha256": "4d5a3b1c484746fcf6711e1aad5d4a6a120de0ef7b63d6f3d50fec6b7cba5daf",
+      "commit": "content-59e4f0296191",
+      "sha256": "59e4f0296191f2e1126d03e5b9181f595dbe59f3990c6d3b4ef0e2d1dea6bb03",
       "url": ""
     },
     {
@@ -1154,8 +1169,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-ebc151d84fb1",
-      "sha256": "ebc151d84fb1d07c63ca3064265539f788eaec7d744878858e7471186da2c302",
+      "commit": "content-c9ffad3400fb",
+      "sha256": "c9ffad3400fbda0148335c2e1b9e203239fc7f28660e09cd96fff62b98c92deb",
       "url": ""
     },
     {
@@ -1170,8 +1185,8 @@
         "documentacao"
       ],
       "version": "refactored",
-      "commit": "content-db1bc512acaf",
-      "sha256": "db1bc512acaf2b4aadd3da4491ade79424aeb418da14a8ffa3d10a0eed608fc0",
+      "commit": "content-1874ff2c71e3",
+      "sha256": "1874ff2c71e395364f1cf4991582f026ac2aba4a7b7a4581dad3e491a532b655",
       "url": ""
     },
     {
@@ -1192,7 +1207,7 @@
     {
       "id": "lay-engineering-gsap-motion-uis",
       "name": "engineering-gsap-motion-uis",
-      "description": "Engineers high-end UX/UI with advanced GSAP motion: Python-driven randomization for layout variance, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use this skill when: a page needs scroll-driven GSAP motion with an editorial layout. Do NOT use this skill when: only smooth scrolling is needed (use orchestrating-smooth-scroll) or for route transitions (use animating-react-view-transitions).",
+      "description": "Engineers high-end UX/UI with advanced GSAP motion: a recorded choice of layout variants so pages do not repeat, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use this skill when: a page needs scroll-driven GSAP motion with an editorial layout. Do NOT use this skill when: only smooth scrolling is needed (use orchestrating-smooth-scroll) or for route transitions (use animating-react-view-transitions).",
       "source": "local",
       "path": "refactored_skills/frontend/engineering-gsap-motion-uis/SKILL.md",
       "kind": "skill",
@@ -1200,8 +1215,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-660702e5d53c",
-      "sha256": "660702e5d53c79b3f163ab037e543667956e72a070eac20090155451d3d85bdd",
+      "commit": "content-6fd738f56ed0",
+      "sha256": "6fd738f56ed002fd224311500f453d3ae310bb4fb03957e7d474fa48cc2dba25",
       "url": ""
     },
     {
@@ -1230,8 +1245,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-2f7095723d95",
-      "sha256": "2f7095723d9509268f371cdef95d0374a17443e63f9979ca3084a534b1b4e2b8",
+      "commit": "content-ce5dfa08b8f9",
+      "sha256": "ce5dfa08b8f90b5eb51e63b4c4caea64ee48e34c134be0d38151402f10523efe",
       "url": ""
     },
     {
@@ -1277,8 +1292,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-f09dc4e69d17",
-      "sha256": "f09dc4e69d17a33fffabe86ac05cd6d68738d39af05b5958329afffb84077cd1",
+      "commit": "content-ac0fe4278247",
+      "sha256": "ac0fe42782475d0340d41c9d695ba49dd7c61edcc5f3641229c0658506bd9cd2",
       "url": ""
     },
     {
@@ -1292,8 +1307,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-c1eabcdb5adf",
-      "sha256": "c1eabcdb5adfac540db46fb0f4e390bcc5594abc5033d43777a5d6e0c45c7583",
+      "commit": "content-91667bbbbda8",
+      "sha256": "91667bbbbda843f63440bce09ebc0e52a66bec6fc5ef788fc2e80cd2c8997b2f",
       "url": ""
     },
     {
@@ -1307,8 +1322,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-6e6f3e4eae43",
-      "sha256": "6e6f3e4eae4305bfebb332221b69603778599631c422a6cb5ce104fe435d2847",
+      "commit": "content-8898673f8aac",
+      "sha256": "8898673f8aacaa4c0b855c9ba945109f3eb9fde13bbacdc9fdf206ddd07b710d",
       "url": ""
     },
     {
@@ -1354,21 +1369,6 @@
       "version": "refactored",
       "commit": "content-33aed2a7b027",
       "sha256": "33aed2a7b027455e94e120819631d5ae7e8109c9a84bcdaa531a97bb3c429ad5",
-      "url": ""
-    },
-    {
-      "id": "lay-running-playwright-dev-tools",
-      "name": "running-playwright-dev-tools",
-      "description": "Runs development workflows for the playwright-cli repository, such as rolling dependencies, releasing and other repository maintenance tasks. Use this skill when: maintaining the playwright-cli repository itself. Do NOT use this skill when: writing browser tests for an application (use automating-browser-tests).",
-      "source": "local",
-      "path": "refactored_skills/qa/running-playwright-dev-tools/SKILL.md",
-      "kind": "skill",
-      "categories": [
-        "testes"
-      ],
-      "version": "refactored",
-      "commit": "content-f9f085677871",
-      "sha256": "f9f085677871ae89fa7641f8d66e7462ae4c09f2d748f005abdf734b16ed2e8a",
       "url": ""
     },
     {
@@ -1442,8 +1442,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-ef5155a14f7a",
-      "sha256": "ef5155a14f7a30877ce5590aa4f81c12ddc3a3ca7d584f2f1fb616b32152b59d",
+      "commit": "content-9ba8921c0e3a",
+      "sha256": "9ba8921c0e3a7e6c2c525e2463a1031e3e3c138b89ae2b8fb4acd3d96c5275c9",
       "url": ""
     },
     {
@@ -2044,8 +2044,8 @@
         "seguranca"
       ],
       "version": "refactored",
-      "commit": "content-63eab51ccc22",
-      "sha256": "63eab51ccc227ca1b9435ad80694f8ae745e43e2d57a2937522cd0d470d2632d",
+      "commit": "content-6d456b3316ec",
+      "sha256": "6d456b3316ec3e8742c0b821f7a1385a9c31357f8b9fb9a517e4e6a7010ce469",
       "url": ""
     },
     {

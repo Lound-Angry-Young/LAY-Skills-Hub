@@ -32,6 +32,8 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Converts a visually important website into code by first generating section-specific design images, analyzing them in depth and implementing the site to match them as closely as possible, with a clean, readable hero. Use this skill when: tu
 - `crafting-high-end-visuals`: `refactored_skills/frontend/crafting-high-end-visuals/SKILL.md`
   Teaches the agent to design like a high-end agency, defining the fonts, spacing, shadows, card structures and animations that make a website feel premium, and blocking common defaults that look cheap or generic. Use this skill when: a websi
+- `designing-industrial-brutalist-interfaces`: `refactored_skills/frontend/designing-industrial-brutalist-interfaces/SKILL.md`
+  Designs raw industrial interfaces that fuse Swiss typographic print with tactical telemetry: rigid visible grids, extreme type-scale contrast, one utilitarian accent and light analog degradation. Use this skill when: the user explicitly ask
 - `designing-minimalist-interfaces`: `refactored_skills/frontend/designing-minimalist-interfaces/SKILL.md`
   Designs clean editorial-style interfaces with a warm monochrome palette, typographic contrast, flat bento grids and muted pastels, without gradients or heavy shadows. Use this skill when: a minimalist, editorial or calm interface is request
 - `elevating-frontend-taste`: `refactored_skills/frontend/elevating-frontend-taste/SKILL.md`
@@ -41,7 +43,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `engineering-frontend-interfaces`: `refactored_skills/frontend/engineering-frontend-interfaces/SKILL.md`
   Builds production-quality, accessible and responsive user-facing UIs: components, layouts, state management and WCAG accessibility, so the output looks and works production-ready rather than AI-generated. Use this skill when: building or mo
 - `engineering-gsap-motion-uis`: `refactored_skills/frontend/engineering-gsap-motion-uis/SKILL.md`
-  Engineers high-end UX/UI with advanced GSAP motion: Python-driven randomization for layout variance, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use t
+  Engineers high-end UX/UI with advanced GSAP motion: a recorded choice of layout variants so pages do not repeat, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrub
 - `governing-anti-slop-aesthetics`: `refactored_skills/frontend/governing-anti-slop-aesthetics/SKILL.md`
   Applies anti-slop design guidelines to interfaces: avoids generic AI-generated visual patterns and enforces deliberate visual tension, typographic voice, solid shadows, texture and information density, with WCAG AA contrast and reduced-moti
 - `integrating-external-ui-components`: `refactored_skills/frontend/integrating-external-ui-components/SKILL.md`
