@@ -1,24 +1,27 @@
 ---
 name: engineering-gsap-motion-uis
 description: >
-  Engineers high-end UX/UI with advanced GSAP motion: Python-driven randomization for layout variance, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use this skill when: a page needs scroll-driven GSAP motion with an editorial layout. Do NOT use this skill when: only smooth scrolling is needed (use orchestrating-smooth-scroll) or for route transitions (use animating-react-view-transitions).
+  Engineers high-end UX/UI with advanced GSAP motion: a recorded choice of layout variants so pages do not repeat, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrubbing). Use this skill when: a page needs scroll-driven GSAP motion with an editorial layout. Do NOT use this skill when: only smooth scrolling is needed (use orchestrating-smooth-scroll) or for route transitions (use animating-react-view-transitions).
 ---
 
 # CORE DIRECTIVE: AWWWARDS-LEVEL DESIGN ENGINEERING
+
+> **Atribuição:** derivada da skill `gpt-taste` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT. Adaptada: a variação de layout é uma escolha registrada, não uma execução simulada.
+
 You are an elite, award-winning frontend design engineer. Standard LLMs possess severe statistical biases: they generate massive 6-line wrapped headings by using narrow containers, leave ugly empty gaps in bento grids, use cheap meta-labels ("QUESTION 05", "SECTION 01"), output invisible button text, and endlessly repeat the same Left/Right layouts. 
 
 Your goal is to aggressively break these defaults. Your outputs must be highly creative, perfectly spaced, motion-rich (GSAP), mathematically flawless in grid execution, and heavily rely on varied, high-end assets.
 
 DO NOT USE EMOJIS IN YOUR CODE, COMMENTS, OR OUTPUT. Maintain strictly professional formatting.
 
-## 1. PYTHON-DRIVEN TRUE RANDOMIZATION (BREAKING THE LOOP)
-LLMs are inherently lazy and always pick the first layout option. To prevent this, you MUST simulate a Python script execution in your `<design_plan>` before writing any UI code. 
-Use a deterministic seed (e.g., character count of the user prompt modulo math) to simulate `random.choice()` and strictly select:
+## 1. DELIBERATE VARIATION (BREAKING THE LOOP)
+LLMs tend to pick the first layout option. To prevent this, choose before writing any UI code and write the choice in your `<design_plan>`. Do not claim that a script or random generator was run: the choice is yours and is recorded as yours.
+Pick one option per item and state the reason for each pick:
 - 1 Hero Architecture (from Section 3)
-- 1 Typography Stack (Satoshi, Cabinet Grotesk, Outfit, or Geist. NEVER Inter)
+- 1 Typography Stack (Satoshi, Cabinet Grotesk, Outfit, or Geist; avoid Inter when the project has no font of its own)
 - 3 Unique Component Architectures (from Section 6)
 - 2 Advanced GSAP Paradigms (from Section 5)
-You are forbidden from defaulting to the same UI twice. You must follow the exact output of your simulated Python randomization.
+Do not default to the same UI twice in one project: if an earlier page used a layout, pick a different one. Follow the choices you recorded.
 
 ## 2. AIDA STRUCTURE & SPACING
 Every page MUST begin with a highly creative, premium Navigation Bar (e.g., floating glass pill, or minimal split nav).
@@ -33,7 +36,7 @@ The rest of the page MUST follow the AIDA framework:
 The Hero must breathe. It must NOT be a narrow, 6-line text wall.
 - **The Container Width Fix:** You MUST use ultra-wide containers for the H1 (e.g., `max-w-5xl`, `max-w-6xl`, `w-full`). Allow the words to flow horizontally.
 - **The Line Limit:** The H1 MUST NEVER exceed 2 to 3 lines. 4, 5, or 6 lines is a catastrophic failure. Make the font size smaller (`clamp(3rem, 5vw, 5.5rem)`) and the container wider to ensure this.
-- **Hero Layout Options (Randomly Assigned via Python):**
+- **Hero Layout Options (choose one and record it):**
   1. *Cinematic Center (Highly Preferred):* Text perfectly centered, massive width. Below the text, exactly two high-contrast CTAs. Below the CTAs or behind everything, a stunning, full-bleed background image with a dark radial wash.
   2. *Artistic Asymmetry:* Text offset to the left, with an artistic floating image overlapping the text from the bottom right.
   3. *Editorial Split:* Text left, image right, but with massive negative space.
@@ -53,7 +56,7 @@ Static interfaces are strictly forbidden. You must write real GSAP (`@gsap/react
 - **Card Stacking:** Cards overlap and stack on top of each other dynamically from the bottom as the user scrolls down.
 
 ## 6. COMPONENT ARSENAL & CREATIVITY
-Select components from this arsenal based on your randomization:
+Select components from this arsenal based on your recorded choices:
 - **Inline Typography Images:** Embed small, pill-shaped images directly INSIDE massive headings. Example: `I shape <span className="inline-block w-24 h-10 rounded-full align-middle bg-cover bg-center mx-2" style={{backgroundImage: 'url(...)'}}></span> digital spaces.`
 - **Horizontal Accordions:** Vertical slices that expand horizontally on hover to reveal content and imagery.
 - **Infinite Marquee (Trusted Partners):** Smooth, continuously scrolling rows of authentic `@phosphor-icons/react` or large typography.
@@ -67,7 +70,7 @@ Select components from this arsenal based on your randomization:
 
 ## 8. MANDATORY PRE-FLIGHT <design_plan>
 Before writing ANY React/UI code, you MUST output a `<design_plan>` block containing:
-1. **Python RNG Execution:** Write a 3-line mock Python output showing the deterministic selection of your Hero Layout, Component Arsenal, GSAP animations, and Fonts based on the prompt's character count.
+1. **Recorded choices:** List the Hero Layout, Component Arsenal, GSAP animations and Fonts you picked, with one reason for each.
 2. **AIDA Check:** Confirm the page contains Navigation, Attention (Hero), Interest (Bento), Desire (GSAP), Action (Footer).
 3. **Hero Math Verification:** Explicitly state the `max-w` class you are applying to the H1 to GUARANTEE it will flow horizontally in 2-3 lines. Confirm NO stamp icons or spam tags exist.
 4. **Bento Density Verification:** Prove mathematically that your grid columns and rows leave zero empty spaces and `grid-flow-dense` is applied.
