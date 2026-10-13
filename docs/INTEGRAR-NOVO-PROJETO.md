@@ -76,7 +76,7 @@ No PowerShell, se `$HOME` não apontar para o perfil esperado, use o caminho abs
 |---|---|---|
 | Descoberta | Quem precisa fazer o quê? | `interview-me`, `idea-refine` |
 | Planejamento | Qual é a menor entrega verificável? | `spec-driven-development`, `planning-and-task-breakdown` |
-| Design | Qual hierarquia e linguagem visual servem à intenção? | `taste-skill`, `frontend-ui-engineering`, `design-reference` |
+| Design | Qual hierarquia e linguagem visual servem à intenção? | `taste-skill`, `frontend-ui-engineering`, `consulting-design-references` |
 | Implementação | Que mudança resolve o próximo problema? | `incremental-implementation`, skills da stack escolhida |
 | Segurança | Onde entram dados, identidade, segredos e permissões? | `code-security`, `security-scan`, `semgrep` quando executável estiver disponível |
 | Validação | O fluxo e o resultado visível funcionam? | `quality`, `playwright-cli`, `web-design-guidelines` quando pertinentes |

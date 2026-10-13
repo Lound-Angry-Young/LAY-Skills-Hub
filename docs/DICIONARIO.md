@@ -13,29 +13,29 @@ O repositório guarda **13 fontes completas** em submódulos Git: 12 URLs única
 | [latent-spaces/brag](https://github.com/latent-spaces/brag) | Skill de vídeo de lançamento | Fonte preservada por constar no pedido; entrada global suspensa porque exige Hyperframes, removido. |
 | [leonxlnx/taste-skill](https://github.com/leonxlnx/taste-skill) | Direções de design, identidade, interfaces e imagem de referência | Escolha uma direção para o produto; não imponha visual “anti-slop” como estética única. |
 | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | React, composição, performance, interface e deploy Vercel | Regras de React/Vercel são condicionais à stack. |
-| [voltagent/awesome-design-md](https://github.com/voltagent/awesome-design-md) | Biblioteca de sistemas visuais e referências de design | Sem `SKILL.md` público; a skill local `design-reference` seleciona exemplos sem copiar uma marca. |
+| [voltagent/awesome-design-md](https://github.com/voltagent/awesome-design-md) | Biblioteca de sistemas visuais e referências de design | Sem `SKILL.md` público; a skill local `consulting-design-references` seleciona exemplos sem copiar uma marca. |
 | [microsoft/playwright-cli](https://github.com/microsoft/playwright-cli) | Automação de browser e verificação de fluxo | A CLI e os navegadores exigem instalação/configuração próprias. |
-| [anil-matcha/open-generative-ai](https://github.com/anil-matcha/open-generative-ai) | Repertório e projetos de IA generativa | Sem `SKILL.md` público; a skill local `generative-ai-reference` pesquisa exemplos. Aplicativos não se tornam serviços após copiar arquivos. |
-| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | Fonte completa da skill legada Graphify, com runtime e referências | A skill antiga contém caminhos de referências ausentes; prefira a variante atual da fonte para executar. |
+| [anil-matcha/open-generative-ai](https://github.com/anil-matcha/open-generative-ai) | Repertório e projetos de IA generativa | Sem `SKILL.md` público; a skill local `architecting-generative-ai-apps` pesquisa exemplos. Aplicativos não se tornam serviços após copiar arquivos. |
+| [Graphify-Labs/graphify](https://github.com/Graphify-Labs/graphify) | Fonte completa do Graphify, com runtime e referências | Para executar, prefira a variante atual da fonte; o instalador aponta a skill `generating-knowledge-graphs` para o bundle dela. |
 | [tengbao/vanta](https://github.com/tengbao/vanta) | Fundos animados 3D com WebGL e Three.js (Waves, Net, Rings, Birds, Cells, Globe) | Requer Three.js/p5.js; precisa de cleanup com `destroy()` e respeito a `prefers-reduced-motion`. |
 | [DavidHDev/react-bits](https://github.com/DavidHDev/react-bits) | Componentes de animação modulares para React (Text FX, SpotlightCard, Hyperspeed) | Modularidade individual; integre os componentes sem sobrecarregar bundles desnecessariamente. |
 | [darkroomengineering/lenis](https://github.com/darkroomengineering/lenis) | Motor de rolagem inercial suave independente de framerate com sync GSAP | Zero dependências; sincroniza com ScrollTrigger; preserve touch nativo onde apropriado. |
 | [Jakubantalik/Libraries.dev](https://github.com/Jakubantalik/Libraries.dev) | Diretório supremo de 1.000+ bibliotecas modernas para desenvolvimento web criativo | Repertório consultivo para seleção de ferramentas de 3D, áudio, física e shaders. |
 
-## Skills locais preservadas & adicionadas
+## Skills locais
 
 | Nome | Uso | Observação |
 |---|---|---|
-| `graphify` | Grafo de código e dependências | Cópia legada intacta; consulte variante atual Windows/Codex na fonte completa. |
-| `caveman` | Comunicação concisa | Mantenha legibilidade e informação decisiva; porcentagem legada não foi medida aqui. |
+| `generating-knowledge-graphs` | Grafo de código e dependências | Versão LAY em `refactored_skills/context/generating-knowledge-graphs`; consulte a variante atual Windows/Codex na fonte completa. |
+| `compressing-agent-messages` | Comunicação concisa | Versão LAY em `refactored_skills/context/compressing-agent-messages`; mantenha legibilidade e informação decisiva; porcentagem de economia não foi medida aqui. |
 | `quality` | Checagens proporcionais de lint, tipos, testes e build | Adapte ao projeto; o exemplo original tem foco web. |
 | `taste` | Princípios de identidade visual | Ponto de partida, não paleta ou estilo obrigatório. |
 | `impeccable` | Refinamento e acessibilidade visual | Confirme contraste, teclado e comportamento no resultado. |
 | `ui-ux-pro` | Usabilidade e ergonomia | Use diretrizes pertinentes à plataforma e ao público. |
-| `vanta-backgrounds` | Fundos 3D WebGL com Three.js/p5.js | Destrua no unmount (`destroy()`); desligue movimento quando reduzido. |
-| `react-bits-animations` | Microinterações e efeitos de texto em React | Efeitos como DecryptedText, BlurText, SpotlightCard e Hyperspeed. |
-| `lenis-smooth-scroll` | Rolagem suave com GSAP ScrollTrigger | Suporte a delta-time independente de Hz e Next.js App Router. |
-| `creative-libraries-hub` | Seleção de ferramentas criativas modernas | Curadoria arquitetural a partir de 1.000+ bibliotecas do Libraries.dev. |
+| `rendering-vanta-backgrounds` | Fundos 3D WebGL com Three.js/p5.js | Destrua no unmount (`destroy()`); desligue movimento quando reduzido. |
+| `animating-react-bits-components` | Microinterações e efeitos de texto em React | Efeitos como DecryptedText, BlurText, SpotlightCard e Hyperspeed. |
+| `orchestrating-smooth-scroll` | Rolagem suave com GSAP ScrollTrigger | Suporte a delta-time independente de Hz e Next.js App Router. |
+| `selecting-creative-libraries` | Seleção de ferramentas criativas modernas | Curadoria arquitetural a partir de 1.000+ bibliotecas do Libraries.dev. |
 
 ## Termos
 
