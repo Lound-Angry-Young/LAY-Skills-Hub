@@ -222,7 +222,7 @@ window.LAY_CONTEUDO = {
       "",
       "Full docs + examples: https://github.com/DietrichGebert/ponytail"
     ],
-    "prompt": "Ative e aplique a skill `lay-guiding-ponytail-minimalism` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-guiding-ponytail-minimalism` para este escopo. Siga rigorosamente as instruções da fonte `Dietrich Gebert` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-interviewing-user-requirements": {
     "content": [
@@ -609,7 +609,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-applying-legacy-design-taste` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-applying-legacy-design-taste` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-architecting-react-composition": {
     "content": [
@@ -745,7 +745,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-authoring-stitch-design-systems` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-authoring-stitch-design-systems` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-building-react-native-interfaces": {
     "content": [
@@ -979,7 +979,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-converting-images-to-code` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-converting-images-to-code` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-crafting-high-end-visuals": {
     "content": [
@@ -1079,7 +1079,7 @@ window.LAY_CONTEUDO = {
       "- [ ] `backdrop-blur` is only applied to fixed/sticky elements, never to scrolling content",
       "- [ ] The overall impression reads as \"$150k agency build\", not \"template with nice fonts\""
     ],
-    "prompt": "Ative e aplique a skill `lay-crafting-high-end-visuals` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-crafting-high-end-visuals` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-designing-apis-and-interfaces": {
     "content": [
@@ -1136,7 +1136,7 @@ window.LAY_CONTEUDO = {
       "- Use `designing-minimalist-interfaces` for calm editorial layouts with muted pastels.",
       "- Use `applying-legacy-design-taste` only when exact taste-skill v1 behaviour is required."
     ],
-    "prompt": "Ative e aplique a skill `lay-designing-industrial-brutalist-interfaces` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-designing-industrial-brutalist-interfaces` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-designing-minimalist-interfaces": {
     "content": [
@@ -1223,7 +1223,7 @@ window.LAY_CONTEUDO = {
       "6. Ensure sections have visual depth through imagery, ambient gradients, or subtle textures — no empty flat backgrounds.",
       "7. Provide code that reflects this high-end, uncluttered, editorial aesthetic natively without requiring manual adjustments."
     ],
-    "prompt": "Ative e aplique a skill `lay-designing-minimalist-interfaces` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-designing-minimalist-interfaces` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-elevating-frontend-taste": {
     "content": [
@@ -1259,7 +1259,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-elevating-frontend-taste` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-elevating-frontend-taste` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-enforcing-full-code-output": {
     "content": [
@@ -1310,7 +1310,7 @@ window.LAY_CONTEUDO = {
       "- Code blocks contain actual runnable code, not descriptions of what code would do",
       "- Nothing was shortened to save space"
     ],
-    "prompt": "Ative e aplique a skill `lay-enforcing-full-code-output` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-enforcing-full-code-output` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-engineering-frontend-interfaces": {
     "content": [
@@ -1410,7 +1410,7 @@ window.LAY_CONTEUDO = {
       "5. **Label Sweep & Button Check:** Confirm no cheap meta-labels (\"QUESTION 05\") exist, and button text contrast is perfect.",
       "Only output the UI code after this rigorous verification is complete."
     ],
-    "prompt": "Ative e aplique a skill `lay-engineering-gsap-motion-uis` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-engineering-gsap-motion-uis` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-generating-brandkit-identities": {
     "content": [
@@ -1602,7 +1602,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-generating-brandkit-identities` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-generating-brandkit-identities` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-generating-mobile-ui-mockups": {
     "content": [
@@ -1732,7 +1732,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-generating-mobile-ui-mockups` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-generating-mobile-ui-mockups` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-generating-web-ui-references": {
     "content": [
@@ -1836,7 +1836,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-generating-web-ui-references` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-generating-web-ui-references` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-governing-anti-slop-aesthetics": {
     "content": [
@@ -1896,7 +1896,7 @@ window.LAY_CONTEUDO = {
       "- [ ] As sombras são sólidas e com personalidade, sem blur genérico?",
       "- [ ] Há suporte a `prefers-reduced-motion` e a modo de redução de efeitos?"
     ],
-    "prompt": "Ative e aplique a skill `lay-governing-anti-slop-aesthetics` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-governing-anti-slop-aesthetics` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-installing-blender-headless": {
     "content": [
@@ -2075,7 +2075,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-redesigning-legacy-interfaces` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-redesigning-legacy-interfaces` para este escopo. Siga rigorosamente as instruções da fonte `Leonxlnx` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-rendering-vanta-backgrounds": {
     "content": [
@@ -2364,7 +2364,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-polishing-user-facing-prose` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-polishing-user-facing-prose` para este escopo. Siga rigorosamente as instruções da fonte `Guillaume Meyer` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-stripping-ai-provenance-marks": {
     "content": [
@@ -2399,7 +2399,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-stripping-ai-provenance-marks` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-stripping-ai-provenance-marks` para este escopo. Siga rigorosamente as instruções da fonte `Guillaume Meyer` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-auditing-codebase-bloat": {
     "content": [
@@ -2499,7 +2499,7 @@ window.LAY_CONTEUDO = {
       "",
       "One-shot report, changes no code."
     ],
-    "prompt": "Ative e aplique a skill `lay-auditing-codebase-bloat` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-auditing-codebase-bloat` para este escopo. Siga rigorosamente as instruções da fonte `Dietrich Gebert` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-authenticating-api-sessions": {
     "content": [
@@ -2700,7 +2700,7 @@ window.LAY_CONTEUDO = {
       "One-shot display. Edits nothing, changes no mode.",
       "\"stop ponytail\" or \"normal mode\": revert."
     ],
-    "prompt": "Ative e aplique a skill `lay-measuring-code-savings` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-measuring-code-savings` para este escopo. Siga rigorosamente as instruções da fonte `Dietrich Gebert` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-migrating-legacy-architectures": {
     "content": [
@@ -2760,7 +2760,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-minimizing-code-overengineering` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-minimizing-code-overengineering` para este escopo. Siga rigorosamente as instruções da fonte `Dietrich Gebert` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-optimizing-fullstack-performance": {
     "content": [
@@ -2964,7 +2964,7 @@ window.LAY_CONTEUDO = {
       "",
       "Lists findings, changes no code."
     ],
-    "prompt": "Ative e aplique a skill `lay-reviewing-code-minimalism` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-reviewing-code-minimalism` para este escopo. Siga rigorosamente as instruções da fonte `Dietrich Gebert` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-reviewing-multi-axis-code-quality": {
     "content": [
@@ -3077,7 +3077,7 @@ window.LAY_CONTEUDO = {
       "ledger to a file (e.g. `PONYTAIL-DEBT.md`). One-shot. \"stop ponytail-debt\" or",
       "\"normal mode\" to revert."
     ],
-    "prompt": "Ative e aplique a skill `lay-tracking-technical-debt-ledgers` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-tracking-technical-debt-ledgers` para este escopo. Siga rigorosamente as instruções da fonte `Dietrich Gebert` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-analyzing-usage-call-logs": {
     "content": [
@@ -5294,7 +5294,7 @@ window.LAY_CONTEUDO = {
       "versions and uncovered scope. A scan is complete only when all planned scanners have a recorded",
       "state and every displayed snippet has passed redaction."
     ],
-    "prompt": "Ative e aplique a skill `lay-scanning-dependency-vulnerabilities` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-scanning-dependency-vulnerabilities` para este escopo. Siga rigorosamente as instruções da fonte `Ray0907` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-securing-llm-applications": {
     "content": [
@@ -5402,7 +5402,7 @@ window.LAY_CONTEUDO = {
       "## Reference Documentation",
       "Consulte a documentação técnica completa: [Referência Técnica](reference.md)."
     ],
-    "prompt": "Ative e aplique a skill `lay-automating-browser-tests` para este escopo. Siga rigorosamente as instruções da fonte `LAY® Core Ecosystem` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
+    "prompt": "Ative e aplique a skill `lay-automating-browser-tests` para este escopo. Siga rigorosamente as instruções da fonte `Microsoft` mantendo comunicação concisa (Caveman) e validação baseada em evidências."
   },
   "lay-driving-test-driven-development": {
     "content": [

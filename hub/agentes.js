@@ -169,6 +169,12 @@ window.LAY_AGENTES = [
         "titulo": "Awesome Design MD",
         "autor": "VoltAgent",
         "url": "https://github.com/voltagent/awesome-design-md"
+      },
+      {
+        "id": "leonxlnx--taste-skill",
+        "titulo": "Taste Skill & Brandkit",
+        "autor": "Leonxlnx",
+        "url": "https://github.com/leonxlnx/taste-skill"
       }
     ],
     "subagente_em": "Claude Code",
@@ -253,7 +259,14 @@ window.LAY_AGENTES = [
       "polishing-user-facing-prose",
       "stripping-ai-provenance-marks"
     ],
-    "fontes_upstream": [],
+    "fontes_upstream": [
+      {
+        "id": "guillaumemeyer--watermarks-remover",
+        "titulo": "Watermarks Remover",
+        "autor": "Guillaume Meyer",
+        "url": "https://github.com/guillaumemeyer/watermarks-remover"
+      }
+    ],
     "subagente_em": "Claude Code",
     "clientes_com_skills": [
       "Claude Code",
@@ -307,7 +320,14 @@ window.LAY_AGENTES = [
       "stress-testing-architecture-decisions",
       "tracking-technical-debt-ledgers"
     ],
-    "fontes_upstream": [],
+    "fontes_upstream": [
+      {
+        "id": "dietrichgebert--ponytail",
+        "titulo": "Ponytail Minimalist Dev",
+        "autor": "Dietrich Gebert",
+        "url": "https://github.com/DietrichGebert/ponytail"
+      }
+    ],
     "subagente_em": "Claude Code",
     "clientes_com_skills": [
       "Claude Code",
@@ -369,6 +389,12 @@ window.LAY_AGENTES = [
         "titulo": "React Bits UI FX",
         "autor": "David H. Dev",
         "url": "https://github.com/DavidHDev/react-bits"
+      },
+      {
+        "id": "leonxlnx--taste-skill",
+        "titulo": "Taste Skill & Brandkit",
+        "autor": "Leonxlnx",
+        "url": "https://github.com/leonxlnx/taste-skill"
       },
       {
         "id": "darkroomengineering--lenis",
@@ -485,7 +511,14 @@ window.LAY_AGENTES = [
       "validating-green-release-gates",
       "verifying-animated-component-compliance"
     ],
-    "fontes_upstream": [],
+    "fontes_upstream": [
+      {
+        "id": "microsoft--playwright-cli",
+        "titulo": "Playwright CLI",
+        "autor": "Microsoft",
+        "url": "https://github.com/microsoft/playwright-cli"
+      }
+    ],
     "subagente_em": "Claude Code",
     "clientes_com_skills": [
       "Claude Code",
@@ -526,7 +559,14 @@ window.LAY_AGENTES = [
       "scanning-dependency-vulnerabilities",
       "securing-llm-applications"
     ],
-    "fontes_upstream": [],
+    "fontes_upstream": [
+      {
+        "id": "ray0907--security-scan",
+        "titulo": "Security Scan",
+        "autor": "Ray0907",
+        "url": "https://github.com/Ray0907/security-scan"
+      }
+    ],
     "subagente_em": "Claude Code",
     "clientes_com_skills": [
       "Claude Code",
