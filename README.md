@@ -1,205 +1,282 @@
-# LAY Skills Hub
+<div align="center">
 
-Base de skills, subagentes e um site estático para agentes de IA que usam Claude Code, OpenAI Codex ou Google Antigravity. Serve a quem configura esses agentes e quer instruções reutilizáveis por domínio, em vez de repetir as mesmas regras em cada projeto.
+# ⚡ LAY Skills Hub
 
-Números do repositório:
+**Base de habilidades, subagentes e regras para agentes de IA**
 
-- 136 skills públicas, em 11 domínios.
-- 11 subagentes para o Claude Code, um por domínio.
-- 17 fontes upstream, incluídas como submódulos.
-- 357 itens no catálogo de referência de componentes animados (300 do Pixel-Perfect e 57 do Componentry). Os agentes consultam o catálogo. Os componentes não ficam instalados no hub.
+Google Antigravity · OpenAI Codex · Claude Code
 
-## Como funciona
+![Stars](https://img.shields.io/github/stars/Lound-Angry-Young/LAY-Skills-Hub?style=for-the-badge&logo=github&color=fff201&labelColor=060709)
+![Release](https://img.shields.io/badge/release-v1.0.0-blue?style=for-the-badge&logo=git)
+![Skills](https://img.shields.io/badge/skills-136%20online-00f0ff?style=for-the-badge&logo=probot)
+![Agents](https://img.shields.io/badge/agents-Antigravity%20%7C%20Codex%20%7C%20Claude-fff201?style=for-the-badge)
+![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
+![GitHub Pages](https://img.shields.io/badge/pages-ready-brightgreen?style=for-the-badge&logo=github)
 
-O repositório tem três camadas.
+<br>
 
-### 1. Skills por domínio
+<a href="https://lound-angry-young.github.io/LAY-Skills-Hub/">
+  <img src="docs/assets/screenshots/01-hero.png" alt="Hub de skills LAY: hero com 136 skills, 17 fontes upstream e 11 subagentes" width="100%">
+</a>
 
-Cada skill é uma pasta em `refactored_skills/<domínio>/<nome>/`, com um `SKILL.md` que descreve o que ela faz, quando usá-la e os passos. Algumas têm um `reference.md` com material de apoio. Os 11 domínios são `routing-and-proxy`, `frontend`, `engineering`, `context`, `devops`, `qa`, `security`, `creative-3d`, `documentation`, `design` e `database`. Cada domínio tem um `SKILL.md` de entrada na própria pasta.
+<br><br>
 
-A skill de orquestração fica em `skills/lay-orchestrator/SKILL.md`.
+[**🌐 Dashboard**](https://lound-angry-young.github.io/LAY-Skills-Hub/) &nbsp;·&nbsp;
+[**📘 Guia dos subagentes**](https://lound-angry-young.github.io/LAY-Skills-Hub/instalacao.html) &nbsp;·&nbsp;
+[**⬇️ Instalação**](#-instalação) &nbsp;·&nbsp;
+[**🤖 Subagentes**](#-subagentes-para-claude-code)
 
-### 2. Catálogo e subagentes gerados
+</div>
 
-- `catalog/skills.json` é o catálogo das skills. `docs/CATALOGO.md` é gerado por `python scripts/skill_hub.py catalog`.
-- `agents/perfis.json` define os 11 subagentes. `scripts/build_agents.py` gera cada um em `.claude/agents/`.
-- `python scripts/nova_skill.py regenerar` valida as skills e regenera catálogo, hub e subagentes. Se a validação falhar, nada é regenerado.
+---
 
-### 3. Site estático
+## 📑 Sumário
 
-`index.html` (dashboard) lê `hub/data.js`, `hub/totais.js` e `hub/agentes.js`; `instalacao.html` (guia dos subagentes) lê `hub/totais.js` e `hub/agentes.js`. `scripts/build_hub.py` gera os quatro arquivos de `hub/`:
+- [Visão geral](#-visão-geral)
+- [Galeria](#-galeria)
+- [Subagentes para Claude Code](#-subagentes-para-claude-code)
+- [Componentes animados](#-componentes-animados)
+- [Adicionar skills](#-adicionar-skills)
+- [Instalação](#-instalação)
+- [Taxonomia das 136 habilidades](#-taxonomia-das-136-habilidades)
+- [Publicação no GitHub Pages](#-publicação-no-github-pages)
+- [Créditos](#-créditos)
+- [Mídia](#-mídia)
 
-- `hub/data.js` (`window.LAY_SKILLS`): metadados das skills, sem o conteúdo.
-- `hub/conteudo.js` (`window.LAY_CONTEUDO`): conteúdo completo das skills, separado de `data.js`. Cada skill tem `content` (uma linha do markdown por item do array, para leitura direta no editor) e `prompt`. `index.html` o carrega só ao abrir uma skill.
-- `hub/agentes.js` (`window.LAY_AGENTES`): dados dos especialistas, lidos por `index.html` e `instalacao.html`.
-- `hub/totais.js` (`window.LAY_TOTAIS`): contagens.
+---
 
-O workflow `.github/workflows/deploy-pages.yml` publica a raiz do repositório no GitHub Pages a cada push na `main`. Ele também pode ser disparado manualmente. Endereços:
+## 🎯 Visão geral
 
-- Dashboard: https://lound-angry-young.github.io/LAY-Skills-Hub/
-- Guia dos subagentes: https://lound-angry-young.github.io/LAY-Skills-Hub/instalacao.html
+O **LAY Skills Hub** abastece assistentes de código e agentes autônomos (**Google Antigravity**, **OpenAI Codex** e **Claude Code**) com **136 habilidades** e diretrizes técnicas, além de **11 subagentes** especialistas para o Claude Code.
 
-Em um fork, ative o Pages em Settings > Pages, com a fonte "GitHub Actions".
+Em vez de respostas genéricas, o hub injeta na camada de contexto dos agentes contratos de arquitetura, metodologia de testes (TDD), regras de segurança (OWASP Top 10), bibliotecas criativas contemporâneas e componentes animados de referência.
 
-## Instalação e uso
+| | |
+| :--- | :--- |
+| 🧠 **136 skills homologadas** | Curadoria de práticas da indústria: Addy Osmani, Vercel Labs, Semgrep e Microsoft Playwright. |
+| 🤖 **11 subagentes** | Um especialista por domínio para o Claude Code, instalado globalmente ou versionado no projeto. |
+| 🎛️ **Dashboard visual** | Interface estática (`index.html`), pronta para uso local ou no GitHub Pages. |
+| 🧾 **Prompts sob medida** | Monte uma seleção de skills e copie o plano de projeto formatado com um clique. |
+| 🧭 **Contexto e grafos** | Diagnóstico inicial com `lay-orchestrator`, grafos com **Graphify** e comunicação concisa com **Caveman**. |
+| 🎬 **Stack criativa** | Suporte a **Vanta 3D**, **React Bits**, **Lenis Smooth Scroll**, **Libraries.dev** e 357 componentes animados de referência. |
 
-### Dashboard local
+---
 
-Abra `index.html` no navegador.
+## 🖼️ Galeria
 
-### Clonar com as fontes
+Capturas do site atual, tiradas em Chrome headless a 1440×900 (2x) e, no celular, a 390×844 (2x).
+
+<table>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/assets/screenshots/01-hero.png" alt="Hero do dashboard com métricas" width="100%"><br>
+      <sub><b>Dashboard</b>: hero, métricas e atalhos do hub</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/assets/screenshots/03-catalogo.png" alt="Catálogo com busca, filtros por categoria e cards" width="100%"><br>
+      <sub><b>Catálogo</b>: busca, filtros por categoria e cards com ações</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/assets/screenshots/04-detalhe-skill.png" alt="Janela com a especificação de uma skill" width="100%"><br>
+      <sub><b>Especificação</b>: o <code>SKILL.md</code> completo, com a fonte</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/assets/screenshots/05-prompt-mestre.png" alt="Janela do prompt mestre" width="100%"><br>
+      <sub><b>Prompt mestre</b>: inicialização pronta para qualquer projeto novo</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" width="50%">
+      <img src="docs/assets/screenshots/06-planejador.png" alt="Planejador com as skills selecionadas" width="100%"><br>
+      <sub><b>Planejador</b>: só as skills selecionadas entram no prompt</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="docs/assets/screenshots/07-celular.png" alt="Dashboard no celular" width="60%"><br>
+      <sub><b>Celular</b>: o dashboard funciona sem rolagem horizontal</sub>
+    </td>
+  </tr>
+</table>
+
+### 🤖 Subagentes e guia de instalação
+
+<table>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="docs/assets/screenshots/02-especialistas.png" alt="Seção de escolha pelo domínio, com os subagentes" width="100%"><br>
+      <sub><b>Escolha pelo domínio</b>: os subagentes do Claude Code, um por domínio</sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2">
+      <img src="docs/assets/screenshots/08-guia-subagentes.png" alt="Guia de instalação dos subagentes em três passos" width="100%"><br>
+      <sub><b>Guia de instalação</b>: instalar, conferir e usar os subagentes</sub>
+    </td>
+  </tr>
+</table>
+
+---
+
+## 🤖 Subagentes para Claude Code
+
+O hub traz **11 subagentes** para o Claude Code, um especialista por domínio. Cada um recebe as skills do seu domínio e só as ferramentas que o trabalho exige. A conversa principal escolhe o especialista, delega a tarefa e junta a resposta. **Subagentes não chamam outros subagentes.**
+
+| Subagente | Domínio | Use quando | Ferramentas |
+| :--- | :--- | :--- | :--- |
+| `lay-omniroute` | routing-and-proxy | roteamento entre modelos, providers, combos, custos e limites de gasto | leitura, edição e comandos |
+| `lay-frontend` | frontend | telas, componentes, landing pages, layout e animação de interface | leitura, edição e comandos |
+| `lay-engenharia` | engineering | arquitetura, revisão de código, depuração, refatoração, migração e performance | leitura, edição e comandos |
+| `lay-contexto` | context | grafo do projeto, planejamento, requisitos, economia de contexto e compressão de prompts | leitura, edição e comandos |
+| `lay-devops` | devops | commits, branches, releases, tags, CI/CD e deploy | leitura, edição e comandos |
+| `lay-qa` | qa | testes, cobertura, falhas de CI, validação antes de merge e conferência de componente animado | leitura, edição e comandos |
+| `lay-seguranca` | security | vulnerabilidades, auditoria, segredos, autenticação e chaves de API | leitura e comandos, sem edição |
+| `lay-3d` | creative-3d | 3D, Blender, shaders, fundos animados e bibliotecas de efeitos visuais | leitura, edição e comandos |
+| `lay-documentacao` | documentation | revisão de texto, ADRs e prosa para publicação | sem comandos (sem Bash) |
+| `lay-design` | design | identidade visual, moodboard, mockups e referências de design | sem comandos (sem Bash) |
+| `lay-banco-de-dados` | database | backup, restauração, snapshots e cache de respostas do LLM | leitura, edição e comandos |
+
+### Como chamar
+
+- **Automático:** escreva o pedido normalmente. O Claude escolhe o subagente pela `description`, que traz os gatilhos "Use quando" e "Não use para".
+- **Pelo nome:** `use o subagente lay-qa para cobrir o checkout com testes`.
+- Subagente novo não aparece? Reinicie a sessão: os perfis são carregados no início.
+
+### Onde ficam
+
+- **Global**, em `~/.claude/agents/`: vale em todos os seus projetos.
+- **Projeto**, em [`.claude/agents/`](.claude/agents/): versionado neste repositório. Quando os dois existem, o do projeto prevalece.
+
+### Orquestração
+
+As regras de roteamento estão na seção "Orquestração de subagentes" do [`CLAUDE.md`](CLAUDE.md). O contrato de handoff está em [`agents/wiring/HANDOFF.md`](agents/wiring/HANDOFF.md) e o índice em [`agents/README.md`](agents/README.md).
+
+📘 **Guia completo, com prompts para copiar:** [instalação e uso dos subagentes](https://lound-angry-young.github.io/LAY-Skills-Hub/instalacao.html).
+
+---
+
+## 🧩 Componentes animados
+
+Os registros **Pixel-Perfect** e **Componentry** somam **357 componentes animados** de referência: 300 do Pixel-Perfect e 57 do Componentry. Os agentes consultam o catálogo em [`refactored_skills/frontend/selecting-animated-ui-components/reference.md`](refactored_skills/frontend/selecting-animated-ui-components/reference.md).
+
+Nada é instalado no hub. Cada componente é baixado só quando escolhido, pela skill `integrating-external-ui-components`, e conferido depois por `verifying-animated-component-compliance`. A seleção considera custo de renderização, movimento reduzido, componentes cliente e alternativa para toque.
+
+```bash
+python scripts/gerar_catalogo_componentes.py    # lê os registros ao vivo e atualiza o catálogo de referência
+```
+
+As licenças e ressalvas de cada registro estão em [Créditos](#-créditos).
+
+---
+
+## ➕ Adicionar skills
+
+Uma skill ou um lote inteiro entra no padrão com um comando. O gerador confere o formato, atualiza os roteadores do domínio e regenera catálogo, dashboard e subagentes. Se algo estiver fora do padrão, nada é gravado.
+
+```bash
+python scripts/nova_skill.py dominios                      # domínios, skills e subagente de cada um
+python scripts/nova_skill.py nova <nome> --dominio <dominio> --descricao "<texto>" --corpo corpo.md
+python scripts/nova_skill.py lote <pasta>                  # pasta <dominio>/<nome>/SKILL.md, tudo ou nada
+python scripts/nova_skill.py regenerar
+```
+
+📘 Passo a passo, formato e skills privadas: [docs/ADICIONAR_SKILLS.md](docs/ADICIONAR_SKILLS.md).
+
+---
+
+## ⬇️ Instalação
+
+<details open>
+<summary><b>Opção 1: dashboard local, sem instalar nada</b></summary>
+
+Dê um duplo clique em [`index.html`](index.html), ou rode no PowerShell:
+
+```powershell
+Start-Process "index.html"
+```
+
+</details>
+
+<details open>
+<summary><b>Opção 2: clonar com as fontes (submódulos)</b></summary>
 
 ```bash
 git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
 cd LAY-Skills-Hub
 ```
 
-Se o clone foi feito sem submódulos:
+Já clonou sem submódulos? Rode `git submodule update --init --recursive`.
 
-```bash
-git submodule update --init --recursive
-```
+</details>
 
-### Instalar nos agentes
+<details open>
+<summary><b>Opção 3: instalar nos agentes</b></summary>
 
-```bash
-python scripts/skill_hub.py install --agents all
-python scripts/skill_hub.py doctor
-```
+Distribui as skills para os perfis globais do **Google Antigravity**, **OpenAI Codex** e **Claude Code**, incluindo os 11 subagentes.
 
-`install --agents all` instala as skills para Codex, Antigravity e Claude Code. Para o Claude Code, grava os 11 subagentes em `~/.claude/agents/`. Para um cliente só, troque `all` pelo nome do cliente: `python scripts/skill_hub.py install --agents claude` (ou `codex`, ou `antigravity`). `doctor` confere a instalação.
-
-Os scripts `install.ps1` (Windows) e `install.sh` (Linux e macOS) executam `install` e `doctor` do mesmo instalador:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File ".\install.ps1"
-```
-
-```bash
-bash ./install.sh
-```
+| Sistema | Comando |
+| :--- | :--- |
+| Windows (PowerShell) | `powershell -ExecutionPolicy Bypass -File ".\install.ps1"` |
+| Linux / macOS | `bash "./install.sh"` |
+| Só Claude Code | `python scripts/skill_hub.py install --agents claude` |
+| Conferir a instalação | `python scripts/skill_hub.py doctor` |
 
 Atualizar e remover:
 
 ```bash
-python scripts/skill_hub.py sync --check   # consulta as fontes
-python scripts/skill_hub.py sync --apply   # aplica as atualizações
-python scripts/skill_hub.py uninstall      # remove o que o instalador registrou
+python scripts/skill_hub.py sync --check     # consulta as fontes, não altera nada
+python scripts/skill_hub.py sync --apply     # aplica atualizações (explícito)
+python scripts/skill_hub.py install --agents all
+python scripts/skill_hub.py uninstall
 ```
 
-### Adicionar skills
+<details>
+<summary>Regra de atualização das fontes</summary>
 
-```bash
-python scripts/nova_skill.py dominios
-python scripts/nova_skill.py nova <nome> --dominio <dominio> --descricao "<texto>" --corpo corpo.md
-python scripts/nova_skill.py lote <pasta>
-python scripts/nova_skill.py regenerar
-```
+1. **Consulta:** automática no início de sessão, por projeto. Não altera nenhum arquivo.
+2. **Aplicação:** explícita, com `sync --apply`. Só fast-forward limpo; alterações locais são preservadas.
+3. **Commit:** cada fonte atualizada vira um commit `chore(upstream): atualizar <fonte> para <sha7>`.
+4. **Reflexo nos agentes:** depois, `install --agents all`.
 
-- `dominios` lista os domínios, as skills e o subagente de cada um.
-- `nova` cria uma skill no padrão. `lote` adiciona uma pasta `<dominio>/<nome>/SKILL.md`.
-- Formato, skills privadas e exemplos estão em [docs/ADICIONAR_SKILLS.md](docs/ADICIONAR_SKILLS.md).
+</details>
 
-## Subagentes
+</details>
 
-O hub traz 11 subagentes para o Claude Code, um por domínio. Cada perfil tem uma `description` com os gatilhos "Use quando" e "Não use para". É ela que o Claude usa para decidir quando delegar. Também dá para pedir um especialista pelo nome. Subagentes não chamam outros subagentes: o roteamento fica na conversa principal.
+---
 
-| Subagente | Domínio | Use quando (resumo) | Ferramentas |
-| :--- | :--- | :--- | :--- |
-| `lay-omniroute` | routing-and-proxy | roteamento entre modelos, providers, combos, custos e limites de gasto no OmniRoute | completo |
-| `lay-frontend` | frontend | criar ou revisar telas, componentes, landing pages, layout e animação de interface | completo |
-| `lay-engenharia` | engineering | arquitetura, revisão de código, depuração, refatoração, migração e performance | completo |
-| `lay-contexto` | context | grafo do projeto, planejamento, requisitos e compressão de contexto ou de prompts | completo |
-| `lay-devops` | devops | commits, branches, releases, CI/CD, deploy e lançamento | completo |
-| `lay-qa` | qa | testes, cobertura, falhas de CI, validação antes de merge e conferência de componente animado | completo |
-| `lay-seguranca` | security | vulnerabilidades, auditoria, segredos, autenticação e chaves de API | sem Edit e Write |
-| `lay-3d` | creative-3d | 3D, Blender, shaders, fundos animados e WebGL | completo |
-| `lay-documentacao` | documentation | revisão de texto, ADRs e prosa para publicação | sem Bash |
-| `lay-design` | design | identidade visual, moodboard, mockups e referências antes de implementar | sem Bash |
-| `lay-banco-de-dados` | database | backup, restauração, snapshots e cache de respostas do LLM | completo |
+## 🏛️ Taxonomia das 136 habilidades
 
-Ferramentas: "completo" são Read, Grep, Glob, Bash, Edit e Write. "sem Edit e Write" são Read, Grep, Glob e Bash, e o `lay-seguranca` só lê e analisa. "sem Bash" são Read, Grep, Glob, Edit e Write.
-
-Onde ficam:
-
-- Global, em `~/.claude/agents/`: vale para todos os projetos.
-- Projeto, em `.claude/agents/`: versionado neste repositório. Quando os dois existem, vale o do projeto.
-
-As regras de roteamento estão em [CLAUDE.md](CLAUDE.md). O contrato de handoff está em [agents/wiring/HANDOFF.md](agents/wiring/HANDOFF.md) e o índice em [agents/README.md](agents/README.md). O guia com prompts prontos está em [instalacao.html](https://lound-angry-young.github.io/LAY-Skills-Hub/instalacao.html).
-
-## Skills de componentes animados
-
-Novidade desta versão. Estas skills escolhem, instalam e conferem componentes animados dos registros Pixel-Perfect e Componentry. Os componentes não fazem parte deste repositório. Os agentes consultam o catálogo de referência, e a instalação baixa só o item escolhido, pela URL do registro.
-
-| Skill | Domínio | O que faz |
+| Domínio | Fontes & Destaques | Capacidades Chave |
 | :--- | :--- | :--- |
-| [`selecting-animated-ui-components`](refactored_skills/frontend/selecting-animated-ui-components/SKILL.md) | frontend | Escolhe um componente pela necessidade e pelo custo: T1 (CSS e DOM), T2 (biblioteca de animação ou canvas 2D) e T3 (WebGL). Não baixa nada. |
-| [`integrating-external-ui-components`](refactored_skills/frontend/integrating-external-ui-components/SKILL.md) | frontend | Instala o item escolhido sob demanda, pelo CLI do shadcn, e prepara utils, tipos e pacotes faltantes. |
-| [`clarifying-screen-requirements`](refactored_skills/frontend/clarifying-screen-requirements/SKILL.md) | frontend | Faz perguntas antes de gerar uma tela, para não decidir por suposição. |
-| [`verifying-animated-component-compliance`](refactored_skills/qa/verifying-animated-component-compliance/SKILL.md) | qa | Confere imports, "use client", movimento reduzido, WebGL por rota, toque, lil-gui, licença e tsc. Só lê e não altera arquivos. |
+| **Engenharia & Arquitetura** | Addy Osmani (`agent-skills`), Vercel Labs | TDD rigoroso, interfaces estáveis, simplificação de código, refatoração segura, composition patterns. |
+| **Segurança & Auditoria** | Semgrep (`skills`), Ray0907 (`security-scan`) | Análise estática (SAST), regras OWASP Top 10, proteção contra prompt injection em LLMs (OWASP Top 10 for LLM 2025). |
+| **Interface & Design** | Vercel Labs, Leon Lin (`taste-skill`), Voltagent | Diretrizes de acessibilidade WCAG AA, design systems de referência, transições nativas (`ViewTransition`), microinterações. |
+| **Criatividade & 3D WebGL** | Darkroom Engineering, Tengbao, DavidHDev, Jakub Antalik | Rolagem inercial (**Lenis**), fundos 3D reativos (**Vanta.js**), componentes animados (**React Bits**), catálogo **Libraries.dev**. |
+| **Qualidade & E2E** | Microsoft Playwright CLI, Dietrich Gebert (`ponytail`) | Automação e inspeção de navegadores reais via CLI, auditoria de código redundante (YAGNI). |
+| **Contexto & Orquestração** | `lay-orchestrator`, Julius Brussee (`caveman`), Safi Shamsi (`graphify`) | Diagnóstico inicial de projetos, grafos persistentes de arquitetura, modo conciso de comunicação direta. |
 
-### Catálogo e gerador
+---
 
-O catálogo de referência é [`refactored_skills/frontend/selecting-animated-ui-components/reference.md`](refactored_skills/frontend/selecting-animated-ui-components/reference.md). Ele tem 357 itens: 300 do Pixel-Perfect e 57 do Componentry, lidos ao vivo em 2026-10-12 (seção 5 do arquivo). A instalação baixa a versão atual do registro, que pode ser mais nova que o catálogo.
+## 🌐 Publicação no GitHub Pages
 
-O gerador é `scripts/gerar_catalogo_componentes.py`:
+O repositório já está pronto para o **GitHub Pages**: há o arquivo [`.nojekyll`](.nojekyll) na raiz e o workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml).
 
-```bash
-python scripts/gerar_catalogo_componentes.py
-python scripts/gerar_catalogo_componentes.py --pixel-perfect <clone-local>
-python scripts/gerar_catalogo_componentes.py --componentry <clone-local>
-```
+<details>
+<summary>Como ativar em um fork ou repositório seu</summary>
 
-Sem argumentos, lê os registros publicados ao vivo. Com `--pixel-perfect` ou `--componentry`, lê um clone local, sem rede. Os clones não são submódulos do hub. `--site <arquivo.js>` grava um arquivo de dados opcional, que o site atual não usa. Sem essa opção, nenhum arquivo do site é gravado.
+1. Acesse **Settings** > **Pages** no GitHub.
+2. Em **Build and deployment**, selecione **GitHub Actions** (ou **Deploy from a branch** > `main` / `/ (root)`).
+3. O dashboard ficará em `https://<seu-usuario>.github.io/<seu-repositorio>/`.
 
-### Fluxo
+</details>
 
-1. Se faltar objetivo, dispositivo, stack, tolerância a movimento ou direção visual, `clarifying-screen-requirements` faz as perguntas antes de gerar a tela, uma por vez.
-2. `selecting-animated-ui-components` escolhe o item. Quando CSS ou SVG resolvem, escolha T1. T3 (WebGL) fica para pedido explícito, porque renderiza na GPU a cada quadro. Se nenhum item servir, a skill diz isso e propõe CSS próprio ou um componente novo.
-3. `integrating-external-ui-components` instala o item com o CLI do shadcn, sempre com `-y`:
+---
 
-   ```bash
-   npx shadcn@latest add https://www.pixel-perfect.space/r/<nome>.json -y
-   npx shadcn@latest add https://componentry.dev/r/<nome>.json -y
-   ```
-
-   A instalação exige `components.json` na raiz do projeto. Sem ele, a skill para e aguarda confirmação. Ela não sobrescreve arquivo existente e não roda `shadcn init` sem confirmação. Nunca clona repositório e nunca baixa o catálogo inteiro.
-4. `verifying-animated-component-compliance` confere os arquivos criados e relata. Não corrige nada.
-
-### Regras de uso
-
-- No máximo um componente WebGL (T3) por tela. A verificação conta por rota.
-- Movimento reduzido: todo efeito tem um estado final estático, que aparece quando o usuário pede movimento reduzido. Use `useReducedMotion` (Framer Motion), `gsap.matchMedia()` (GSAP) ou `window.matchMedia("(prefers-reduced-motion: reduce)")`.
-- Toque: efeito que depende de ponteiro (`mousemove`, `pointermove`, `mouseenter`) precisa de caminho para toque. Desative a animação em `(hover: none)` e mostre o estado final.
-- "use client": no Next.js App Router, o arquivo que usa hook ou evento começa com `"use client"` na primeira linha. Se um arquivo de servidor importar o componente, mova o uso para um componente cliente.
-- lil-gui: é um painel de depuração. Antes de publicar, remova a importação e os controles, mantenha os valores padrão como constantes e rode `npm uninstall lil-gui`. São 17 itens do catálogo que importam lil-gui.
-- Licença: mantenha o aviso MIT do arquivo copiado quando o original tiver cabeçalho. Registre a nota de cada biblioteca usada (GSAP, Three.js, Framer Motion ou Motion) em `THIRD_PARTY_NOTICES` ou no README do projeto.
-- GSAP: o README do Componentry alerta que `image-trail` e `layered-stack` exigem atenção à licença do GSAP. Confira a licença na fonte antes de usar esses itens.
-- Antes de publicar, `npx tsc --noEmit` e o build do projeto precisam passar.
-
-## Manutenção e validação
-
-```bash
-python scripts/nova_skill.py regenerar
-python scripts/validate_skills.py
-python -m unittest discover -s tests -p "test_*.py"
-python scripts/gerar_catalogo_componentes.py
-```
-
-- `nova_skill.py regenerar` valida as skills e regenera catálogo, hub e subagentes. Se a validação falhar, nada é regenerado. Rode depois de adicionar ou alterar skills.
-- `validate_skills.py` valida as skills em `refactored_skills/`.
-- `unittest` roda os testes da pasta `tests/`.
-- `gerar_catalogo_componentes.py` regenera o catálogo de componentes. Depois, confira a origem e a data na seção 5 de `reference.md` e rode `validate_skills.py`.
-
-### Atualização das fontes
-
-A regra completa está em [docs/OPERACAO.md](docs/OPERACAO.md). Em resumo: a consulta é automática no início da sessão e não altera arquivos; a aplicação é explícita, com `python scripts/skill_hub.py sync --apply`, e só faz fast-forward limpo, sem descartar alterações locais; cada fonte atualizada vira um commit `chore(upstream): atualizar <fonte> para <sha7>`; depois, `python scripts/skill_hub.py install --agents all` reflete a mudança nos agentes.
-
-## Créditos
+## 📜 Créditos
 
 ### Fontes upstream
 
-O hub usa 17 fontes upstream. Os repositórios estão em `upstream/`, como submódulos (ver `.gitmodules`). As licenças são as de cada repositório. Este README não resume os termos delas.
+O hub usa 17 fontes upstream. Os repositórios estão em `upstream/`, como submódulos (ver `.gitmodules`). As licenças são as de cada repositório. Este README não resume os termos delas. Skills LAY derivadas trazem, no próprio `SKILL.md`, a linha de atribuição com a fonte e a licença.
 
 | Repositório | Autor |
 | :--- | :--- |
@@ -249,3 +326,28 @@ O fundo halftone do site é inspirado em duas referências visuais. O fundo não
 ### Planejamento
 
 Planejamento do projeto: Georges. Perfil: https://github.com/GeorgesBallister
+
+---
+
+## 📂 Mídia
+
+Capturas usadas neste README, em `docs/assets/screenshots/`:
+
+| Arquivo | Conteúdo |
+| :--- | :--- |
+| [`01-hero.png`](docs/assets/screenshots/01-hero.png) | Hero do dashboard, com métricas (1440×900 @2x) |
+| [`02-especialistas.png`](docs/assets/screenshots/02-especialistas.png) | Escolha pelo domínio, com os subagentes |
+| [`03-catalogo.png`](docs/assets/screenshots/03-catalogo.png) | Catálogo com busca, filtros e cards |
+| [`04-detalhe-skill.png`](docs/assets/screenshots/04-detalhe-skill.png) | Janela de especificação de skill |
+| [`05-prompt-mestre.png`](docs/assets/screenshots/05-prompt-mestre.png) | Janela do prompt mestre |
+| [`06-planejador.png`](docs/assets/screenshots/06-planejador.png) | Planejador sob medida |
+| [`07-celular.png`](docs/assets/screenshots/07-celular.png) | Dashboard no celular (390×844 @2x) |
+| [`08-guia-subagentes.png`](docs/assets/screenshots/08-guia-subagentes.png) | Guia de instalação dos subagentes |
+
+---
+
+<div align="center">
+
+Desenvolvido para máxima performance e autonomia de agentes de IA • Padrão de Engenharia de Elite
+
+</div>
