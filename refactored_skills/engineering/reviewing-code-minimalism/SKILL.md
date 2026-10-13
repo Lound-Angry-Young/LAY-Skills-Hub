@@ -4,6 +4,8 @@ description: >
   Reviews a change for correctness, safety, behavior under real load, test coverage of risky code, speed and whether every line is needed, reading the connected code and not only the diff. Use this skill when: asked to review code, a pull request or the last commit, or to judge whether code is over-engineered. Do NOT use this skill when: auditing the whole repository (use auditing-codebase-bloat).
 ---
 
+> **Atribuição:** derivada da skill `ponytail-review` do projeto [ponytail](https://github.com/DietrichGebert/ponytail), de DietrichGebert, licença MIT.
+
 Review a change like the senior developer who will be paged when it breaks.
 Order of importance: correct, safe, holds under load, tested, fast, lean.
 Lean still matters: every extra line must be read, tested and fixed later.

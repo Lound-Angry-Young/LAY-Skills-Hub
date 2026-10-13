@@ -6,6 +6,8 @@ description: >
 
 # Ponytail Help
 
+> **Atribuição:** derivada da skill `ponytail-help` do projeto [ponytail](https://github.com/DietrichGebert/ponytail), de DietrichGebert, licença MIT.
+
 Display this reference card when invoked. One-shot, do NOT change mode,
 write flag files, or persist anything.
 

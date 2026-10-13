@@ -6,6 +6,8 @@ description: >
 
 # Browser Automation with playwright-cli
 
+> **Atribuição:** derivada da skill `playwright-cli` do projeto [playwright-cli](https://github.com/microsoft/playwright-cli), da Microsoft, licença Apache-2.0.
+
 ## Sections
 - Quick start
 - Commands

@@ -4,6 +4,8 @@ description: >
   Audits a whole repository for bugs, security holes, behavior under real load, risky code without tests, slow paths, and code to delete, merge or split, with ranked findings explained in plain English. Produces a one-shot report and changes nothing. Use this skill when: asked to audit the codebase, review the whole repo, find bloat or decide what can be deleted. Do NOT use this skill when: reviewing a single change or pull request (use reviewing-code-minimalism or reviewing-multi-axis-code-quality).
 ---
 
+> **Atribuição:** derivada da skill `ponytail-audit` do projeto [ponytail](https://github.com/DietrichGebert/ponytail), de DietrichGebert, licença MIT.
+
 Audit the whole repo like the senior developer who just inherited it and
 will be paged when it breaks. Order of importance: correct, safe, holds under
 load, tested, fast, lean. Lean still matters: every extra line must be read,

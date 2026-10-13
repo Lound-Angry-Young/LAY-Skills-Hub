@@ -6,6 +6,8 @@ description: >
 
 # High-Agency Frontend Skill
 
+> **Atribuição:** derivada da skill `taste-skill-v1` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+
 ## Sections
 - 1. ACTIVE BASELINE CONFIGURATION
 - 2. DEFAULT ARCHITECTURE & CONVENTIONS

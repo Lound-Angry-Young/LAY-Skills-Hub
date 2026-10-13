@@ -6,6 +6,8 @@ description: >
 
 # Stitch Design Taste — Semantic Design System Skill
 
+> **Atribuição:** derivada da skill `stitch-skill` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+
 ## Sections
 - Overview
 - Prerequisites

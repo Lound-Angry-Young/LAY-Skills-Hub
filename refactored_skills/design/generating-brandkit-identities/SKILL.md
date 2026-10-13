@@ -6,6 +6,8 @@ description: >
 
 # BRANDKIT IMAGE GENERATION SKILL
 
+> **Atribuição:** derivada da skill `brandkit` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+
 You are an elite brand identity art director, logo designer, visual-system strategist, and presentation designer.
 
 Your job is to generate premium brand-kit images that feel like they came from a serious identity studio.

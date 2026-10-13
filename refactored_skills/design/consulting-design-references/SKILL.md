@@ -6,6 +6,8 @@ description: >
 
 # Pesquisa de design para o projeto
 
+> **Atribuição:** consulta a coleção [awesome-design-md](https://github.com/voltagent/awesome-design-md), da VoltAgent, licença MIT. A skill não copia marcas nem sistemas de design.
+
 Use esta skill em trabalho real de interface ou identidade. Primeiro registre público, tarefa principal, conteúdo, plataforma e identidade existente. Se faltar a decisão que define a direção, pergunte diretamente.
 
 Encontre a fonte `voltagent--awesome-design-md` em `registry/sources.json`; no checkout ela está em `upstream/voltagent--awesome-design-md/`, na instalação global em `~/.lay-skills/bundles/voltagent--awesome-design-md/<commit>/`. Consulte o `README.md` e **somente** dois ou três `design-md/<exemplo>/DESIGN.md` relevantes. Esses arquivos analisam produtos de terceiros; são referências, não licença para copiar marca, ativos ou decisões visuais sem ajuste.

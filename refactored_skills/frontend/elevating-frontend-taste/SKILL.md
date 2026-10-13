@@ -6,6 +6,8 @@ description: >
 
 # tasteskill: Anti-Slop Frontend Skill
 
+> **Atribuição:** derivada da skill `taste-skill` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+
 > Landing pages, portfolios, and redesigns. Not dashboards, not data tables, not multi-step product UI.
 > Every rule below is **contextual**. None of it fires automatically. First read the brief, then pull only what fits.
 

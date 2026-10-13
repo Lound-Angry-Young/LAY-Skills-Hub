@@ -6,6 +6,8 @@ description: >
 
 # HARD OUTPUT RULE — READ FIRST
 
+> **Atribuição:** derivada da skill `imagegen-frontend-web` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+
 **Generate one separate horizontal image PER section. Always. No exceptions.**
 
 - 1 section requested -> 1 image

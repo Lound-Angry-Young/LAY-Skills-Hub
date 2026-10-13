@@ -4,6 +4,8 @@ description: >
   Lists every shortcut comment (and older ponytail comments) as a technical debt ledger, as a one-shot report that changes nothing. Use this skill when: asked what was deferred, to list shortcuts or to produce the debt ledger. Do NOT use this skill when: the request is to fix or remove the shortcuts (use simplifying-code-complexity).
 ---
 
+> **Atribuição:** derivada da skill `ponytail-debt` do projeto [ponytail](https://github.com/DietrichGebert/ponytail), de DietrichGebert, licença MIT.
+
 Every deliberate ponytail shortcut is marked with a `shortcut:` comment naming
 its ceiling and upgrade path (older code may say `ponytail:`). This collects them into one ledger so a deferral
 can't quietly become permanent.

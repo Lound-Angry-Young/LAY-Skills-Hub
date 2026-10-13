@@ -6,6 +6,8 @@ description: >
 
 # Clean user-facing text
 
+> **Atribuição:** derivada da skill `clean-user-facing-text` do projeto [watermarks-remover](https://github.com/guillaumemeyer/watermarks-remover), de Guillaume Meyer e colaboradores, licença MIT.
+
 Apply a final text-hygiene pass to prose the user owns or is authorized to process. Treat Unicode cleanup as deterministic and statistical-watermark reduction as best-effort; never claim that a rewrite proves human authorship or is undetectable. Preserve required academic, legal, platform, and regulatory disclosures.
 
 ## Sections

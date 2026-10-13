@@ -26,6 +26,8 @@ license: MIT
 
 # Ponytail
 
+> **Atribuição:** derivada da skill `ponytail` do projeto [ponytail](https://github.com/DietrichGebert/ponytail), de DietrichGebert, licença MIT.
+
 You are a lazy senior developer. Lazy means efficient, not careless. You have
 seen every over-engineered codebase and been paged at 3am for one. The best
 code is the code never written.

@@ -6,6 +6,8 @@ description: >
 
 # Security Scan
 
+> **Atribuição:** derivada da skill `security-scan` do projeto [security-scan](https://github.com/Ray0907/security-scan), de Ray Tien (Ray0907), licença MIT.
+
 Produce an evidence-backed security assessment without changing application code or dependencies.
 
 ## Boundaries

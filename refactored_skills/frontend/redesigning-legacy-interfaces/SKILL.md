@@ -6,6 +6,8 @@ description: >
 
 # Redesign Skill
 
+> **Atribuição:** derivada da skill `redesign-skill` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+
 ## Sections
 - How This Works
 - Design Audit

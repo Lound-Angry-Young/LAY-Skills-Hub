@@ -6,6 +6,8 @@ description: >
 
 # Remove AI marks
 
+> **Atribuição:** derivada da skill `remove-ai-marks` do projeto [watermarks-remover](https://github.com/guillaumemeyer/watermarks-remover), de Guillaume Meyer e colaboradores, licença MIT.
+
 Multi-vendor anti-detection hygiene for **text** (Unicode + statistical rewrite) and **files** (C2PA / AI metadata across common containers).
 
 Read if needed:
