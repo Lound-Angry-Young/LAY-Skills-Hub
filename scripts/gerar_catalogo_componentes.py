@@ -25,7 +25,8 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
 SAIDA_PADRAO = REPO / 'refactored_skills' / 'frontend' / 'selecting-animated-ui-components' / 'reference.md'
-SITE_PADRAO = REPO / 'componentes' / 'catalogo.js'
+# Página de componentes removida da interface: o arquivo de dados só é gravado com --site explícito.
+SITE_PADRAO = None
 
 FONTES = {
     'pixel-perfect': {
@@ -461,7 +462,7 @@ def escrever(itens, origens, saida):
 
 
 def gerar_site(itens, origens, saida, gerado_em):
-    """Escreve o arquivo de dados da página componentes.html. Só contém o que sai dos registros."""
+    """Escreve o arquivo de dados opcional do catálogo. Só contém o que sai dos registros."""
     por_fonte = Counter(i['fonte'] for i in itens)
     dominios = []
     for chave, (titulo, descricao) in DOMINIOS.items():
@@ -511,7 +512,7 @@ def principal(argv=None):
     p.add_argument('--pixel-perfect', default=None, help='clone local do Pixel-Perfect (offline); sem ele, lê ao vivo')
     p.add_argument('--componentry', default=None, help='clone local do Componentry (offline); sem ele, lê ao vivo')
     p.add_argument('--saida', default=str(SAIDA_PADRAO), help='arquivo reference.md de saída')
-    p.add_argument('--site', default=str(SITE_PADRAO), help='arquivo JS de dados da página componentes.html')
+    p.add_argument('--site', default=None, help='(opcional) arquivo JS de dados; sem ele, nenhum arquivo de site é gravado')
     args = p.parse_args(argv)
     clones = {'pixel-perfect': args.pixel_perfect, 'componentry': args.componentry}
     origens = {}
@@ -522,7 +523,8 @@ def principal(argv=None):
             origens[fonte] = f'lido ao vivo em {date.today().isoformat()} a partir de {FONTES[fonte]["indice"]}'
     itens = coletar(clones)
     total = escrever(itens, origens, Path(args.saida))
-    gerar_site(itens, origens, Path(args.site), date.today().isoformat())
+    if args.site:
+        gerar_site(itens, origens, Path(args.site), date.today().isoformat())
     print(f'itens: {total}  saída: {args.saida}  site: {args.site}')
     for fonte, origem in origens.items():
         print(f'  {fonte}: {origem}')
