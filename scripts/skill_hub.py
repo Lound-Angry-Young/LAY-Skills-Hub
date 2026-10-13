@@ -536,7 +536,7 @@ def install(home, agents, root=ROOT, skip_tools=False):
             original = source_paths[e['source']] / e['path']
             if sha(original) != e['sha256']:
                 raise ValueError(f'Integridade inválida: {original}')
-            description = e['description'][:400]
+            description = e['description']
             body = (f"---\nname: {e['id']}\ndescription: {json.dumps(description, ensure_ascii=False)}\n---\n\n"
                     f"# {e['name']}\n\nFonte integral: [{e['name']}](<{original.as_posix()}>).\n"
                     f"Leia esse arquivo quando esta capacidade for relevante. Resolva referências relativas a partir de `{original.parent.as_posix()}`.\n"

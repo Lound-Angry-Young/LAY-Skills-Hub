@@ -107,6 +107,20 @@ class HubIntegrationTests(unittest.TestCase):
         installed = json.loads((self.home / '.lay-skills/runtime/catalog/installed.json').read_text(encoding='utf-8'))
         self.assertIn('lay-private-skill', [e['id'] for e in installed['skills']])
 
+    def test_installed_wrapper_keeps_full_trigger_boundaries(self):
+        # Descrições acima de 400 caracteres perdiam a cláusula "Do NOT use this skill when:" no wrapper instalado.
+        longa = 'Desenha layouts responsivos com tokens consistentes em múltiplas telas. ' * 8
+        descricao = longa + 'Use this skill when: a page needs responsive layout. Do NOT use this skill when: backend only.'
+        self.assertGreater(len(descricao), 400)
+        skill = self.root / 'refactored_skills/design/long-page'
+        skill.mkdir(parents=True)
+        (skill / 'SKILL.md').write_text(f'---\nname: long-page\ndescription: {descricao}\n---\nUse design.\n', encoding='utf-8')
+        with contextlib.redirect_stdout(io.StringIO()):
+            state = hub.install(self.home, ['codex'], self.root)
+        wrapper = next(w for w in state['wrappers'] if w['id'] == 'lay-long-page')
+        texto = (Path(wrapper['path']) / 'SKILL.md').read_text(encoding='utf-8')
+        self.assertIn('Do NOT use this skill when: backend only.', texto)
+
     def test_collision_preserves_existing_skill(self):
         dest = self.home / '.agents/skills/lay-design-page'
         dest.mkdir(parents=True)
