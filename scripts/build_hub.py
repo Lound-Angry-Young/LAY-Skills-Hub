@@ -197,6 +197,35 @@ LOCAL_ATTRIBUTIONS = {
     "orchestrating-smooth-scroll": "darkroomengineering--lenis",
     "selecting-creative-libraries": "Jakubantalik--Libraries.dev",
     "consulting-design-references": "voltagent--awesome-design-md",
+    # ponytail (DietrichGebert, MIT)
+    "auditing-codebase-bloat": "dietrichgebert--ponytail",
+    "measuring-code-savings": "dietrichgebert--ponytail",
+    "tracking-technical-debt-ledgers": "dietrichgebert--ponytail",
+    "reviewing-code-minimalism": "dietrichgebert--ponytail",
+    "minimizing-code-overengineering": "dietrichgebert--ponytail",
+    "guiding-ponytail-minimalism": "dietrichgebert--ponytail",
+    # taste-skill (Leonxlnx, MIT)
+    "applying-legacy-design-taste": "leonxlnx--taste-skill",
+    "elevating-frontend-taste": "leonxlnx--taste-skill",
+    "governing-anti-slop-aesthetics": "leonxlnx--taste-skill",
+    "crafting-high-end-visuals": "leonxlnx--taste-skill",
+    "designing-minimalist-interfaces": "leonxlnx--taste-skill",
+    "redesigning-legacy-interfaces": "leonxlnx--taste-skill",
+    "authoring-stitch-design-systems": "leonxlnx--taste-skill",
+    "converting-images-to-code": "leonxlnx--taste-skill",
+    "generating-web-ui-references": "leonxlnx--taste-skill",
+    "generating-mobile-ui-mockups": "leonxlnx--taste-skill",
+    "generating-brandkit-identities": "leonxlnx--taste-skill",
+    "enforcing-full-code-output": "leonxlnx--taste-skill",
+    "engineering-gsap-motion-uis": "leonxlnx--taste-skill",
+    "designing-industrial-brutalist-interfaces": "leonxlnx--taste-skill",
+    # playwright-cli (Microsoft, Apache-2.0)
+    "automating-browser-tests": "microsoft--playwright-cli",
+    # security-scan (Ray Tien, MIT)
+    "scanning-dependency-vulnerabilities": "ray0907--security-scan",
+    # watermarks-remover (Guillaume Meyer e colaboradores, MIT)
+    "polishing-user-facing-prose": "guillaumemeyer--watermarks-remover",
+    "stripping-ai-provenance-marks": "guillaumemeyer--watermarks-remover",
 }
 
 # Id do filtro de categoria de index.html para cada domínio.
