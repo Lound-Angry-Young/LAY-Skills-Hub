@@ -199,10 +199,10 @@ def regenerar():
     if validacao.returncode != 0:
         raise SystemExit('validação falhou; nada regenerado:\n' + validacao.stdout)
     catalogo = build_catalog(REPO)
+    from scripts import build_agents
+    build_agents.main()  # antes do hub: hub/agentes.js confere os arquivos de .claude/agents/
     from scripts import build_hub
     build_hub.build_data()
-    from scripts import build_agents
-    build_agents.main()
     return len(catalogo['skills'])
 
 

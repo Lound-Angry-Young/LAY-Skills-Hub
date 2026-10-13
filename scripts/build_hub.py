@@ -2,13 +2,20 @@
 """Builds the comprehensive, self-contained visual LAY Skills Hub web application."""
 import json
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from scripts.skill_hub import DESTINATIONS, load_profiles  # noqa: E402
+
 CATALOG_PATH = ROOT / "catalog/skills.json"
 SOURCES_PATH = ROOT / "registry/sources.json"
 HUB_DIR = ROOT / "hub"
 DATA_JS_PATH = HUB_DIR / "data.js"
+CONTEUDO_JS_PATH = HUB_DIR / "conteudo.js"
+AGENTES_JS_PATH = HUB_DIR / "agentes.js"
 TOTAIS_JS_PATH = HUB_DIR / "totais.js"
 
 SOURCE_METADATA = {
@@ -176,34 +183,294 @@ SOURCE_METADATA = {
     }
 }
 
+# Campos pesados: saem de data.js e vão para conteudo.js, carregado sob demanda.
+CAMPOS_PESADOS = ("content", "prompt")
+
+# Chaves de versões antigas das skills. Nenhuma confere com o catálogo atual,
+# então nenhuma skill sai atribuída a fonte upstream (ver fontes_upstream).
+# Skills LAY inspiradas e citadas em fontes upstream: a fonte exibida é a upstream.
+# Só entram pares confirmados pela própria SKILL.md. architecting-generative-ai-apps
+# (anil-matcha--open-generative-ai) fica de fora até confirmação.
+LOCAL_ATTRIBUTIONS = {
+    "rendering-vanta-backgrounds": "tengbao--vanta",
+    "animating-react-bits-components": "DavidHDev--react-bits",
+    "orchestrating-smooth-scroll": "darkroomengineering--lenis",
+    "selecting-creative-libraries": "Jakubantalik--Libraries.dev",
+    "consulting-design-references": "voltagent--awesome-design-md",
+}
+
+# Id do filtro de categoria de index.html para cada domínio.
+CATEGORIA_FILTRO = {
+    "frontend": "design",
+    "creative-3d": "design",
+    "design": "design",
+    "routing-and-proxy": "operacoes",
+    "devops": "operacoes",
+    "database": "operacoes",
+    "engineering": "engenharia",
+    "context": "contexto",
+    "qa": "testes",
+    "security": "seguranca",
+    "documentation": "documentacao",
+}
+
+# Rótulos exatos do campo label no array de categorias de index.html.
+# tests/test_build_hub.py confere cada um com o arquivo: se o site mudar, o teste avisa.
+ROTULOS_CATEGORIA = {
+    "design": "DESIGN & UI/UX",
+    "contexto": "CONTEXTO & AGENTES",
+    "engenharia": "ENGENHARIA",
+    "testes": "TESTES & QUALIDADE",
+    "seguranca": "SEGURANÇA & SCAN",
+    "operacoes": "OPERAÇÕES & CI/CD",
+    "documentacao": "DOCUMENTAÇÃO",
+}
+
+# Marcas da description do perfil (agents/perfis.json) e limites dos textos curtos dos cards.
+MARCA_USE_QUANDO = "Use quando:"
+MARCA_NAO_USE_PARA = "Não use para:"
+LIMITE_RESUMO = 100
+LIMITE_NAO_USE_PARA = 140
+
+# Clientes que recebem as skills, em ordem de exibição. Os ids devem existir em DESTINATIONS (skill_hub.py).
+CLIENTES_COM_SKILLS = [("claude", "Claude Code"), ("codex", "Codex"), ("antigravity", "Antigravity")]
+
+# Os subagentes do projeto são arquivos do Claude Code em .claude/agents/.
+SUBAGENTE_EM = "Claude Code"
+
+
 def clean_markdown_body(raw: str) -> str:
     # Remove frontmatter
     text = re.sub(r'^---\s*[\r\n]+.*?[\r\n]+---\s*[\r\n]+', '', raw, flags=re.DOTALL)
     return text.strip()
+
+def fonte_efetiva(item, atribuicoes=None):
+    """Fonte da skill no hub: a atribuição upstream, se existir; senão a fonte do catálogo."""
+    atribuicoes = LOCAL_ATTRIBUTIONS if atribuicoes is None else atribuicoes
+    return atribuicoes.get(item["name"], atribuicoes.get(item["id"], item["source"]))
+
+
+def dominio_da_skill(item):
+    """Domínio público da skill: refactored_skills/<dominio>/<nome>/SKILL.md."""
+    partes = item["path"].split("/")
+    if len(partes) < 3 or partes[0] != "refactored_skills":
+        raise ValueError(f"skill fora de refactored_skills/: {item['path']}")
+    return partes[1]
+
+
+def dividir_conteudo(skills):
+    """Separa content e prompt do restante de cada skill. Devolve (skills leves, {id: campos pesados}) sem alterar a entrada."""
+    leves, conteudo = [], {}
+    for skill in skills:
+        if skill["id"] in conteudo:
+            raise ValueError(f"id duplicado: {skill['id']}")
+        conteudo[skill["id"]] = {campo: skill[campo] for campo in CAMPOS_PESADOS}
+        leves.append({chave: valor for chave, valor in skill.items() if chave not in CAMPOS_PESADOS})
+    return leves, conteudo
+
+
+def formatar_data_js(skills, metadados, total_fontes):
+    """data.js: skills sem content e prompt, metadados das fontes e contagem de fontes."""
+    return (f"// LAY SKILLS HUB - GENERATED DATASET ({len(skills)} SKILLS)\n"
+            f"window.LAY_SKILLS = {json.dumps(skills, ensure_ascii=False, indent=2)};\n"
+            f"window.LAY_SOURCES = {json.dumps(metadados, ensure_ascii=False, indent=2)};\n"
+            f"window.LAY_SOURCES_COUNT = {total_fontes};\n")
+
+
+def linhas_do_conteudo(texto):
+    """Linhas do markdown de uma skill, sem espaço no fim e sem linhas vazias nas bordas."""
+    linhas = [linha.rstrip() for linha in str(texto or "").replace("\r\n", "\n").replace("\r", "\n").split("\n")]
+    while linhas and not linhas[-1]:
+        linhas.pop()
+    while linhas and not linhas[0]:
+        linhas.pop(0)
+    return linhas
+
+
+def formatar_conteudo_js(conteudo):
+    """conteudo.js: cada linha do markdown ocupa uma linha do arquivo, para leitura direta no editor e em
+    iterações futuras. O site junta as linhas ao exibir a skill; o prompt segue como uma string."""
+    linhas = [f"// LAY SKILLS HUB - CONTEUDO GERADO ({len(conteudo)} SKILLS)", "window.LAY_CONTEUDO = {"]
+    itens = list(conteudo.items())
+    for posicao, (skill_id, campos) in enumerate(itens):
+        virgula = "," if posicao < len(itens) - 1 else ""
+        trechos = linhas_do_conteudo(campos.get("content"))
+        linhas.append(f"  {json.dumps(skill_id, ensure_ascii=False)}: {{")
+        linhas.append('    "content": [')
+        for indice, trecho in enumerate(trechos):
+            fim = "," if indice < len(trechos) - 1 else ""
+            linhas.append(f"      {json.dumps(trecho, ensure_ascii=False)}{fim}")
+        linhas.append("    ],")
+        linhas.append(f'    "prompt": {json.dumps(campos.get("prompt", ""), ensure_ascii=False)}')
+        linhas.append(f"  }}{virgula}")
+    linhas.append("};")
+    return "\n".join(linhas) + "\n"
+
+
+def fontes_upstream(skills, registro, metadados, atribuicoes=None):
+    """Fontes upstream que contribuem às skills (fonte efetiva diferente de 'local').
+    id e url vêm do registro, sem o sufixo .git; título e autor, de SOURCE_METADATA."""
+    ids = []
+    for skill in skills:
+        fonte = fonte_efetiva(skill, atribuicoes)
+        if fonte != "local" and fonte not in ids:
+            ids.append(fonte)
+    por_id = {fonte["id"]: fonte for fonte in registro}
+    saida = []
+    for fonte_id in ids:
+        if fonte_id not in por_id or fonte_id not in metadados:
+            raise ValueError(f"fonte upstream sem registro ou sem metadados: {fonte_id}")
+        url = por_id[fonte_id]["url"]
+        saida.append({"id": fonte_id,
+                      "titulo": metadados[fonte_id]["title"],
+                      "autor": metadados[fonte_id]["author"],
+                      "url": url[:-len(".git")] if url.endswith(".git") else url})
+    return saida
+
+
+def gatilhos_do_perfil(descricao):
+    """Separa a description do perfil em (use_quando, nao_use_para_completo).
+
+    use_quando: o que vem depois de 'Use quando:' até 'Não use para:', sem o ponto final.
+    nao_use_para_completo: o que vem depois de 'Não use para:', sem corte.
+    Sem 'Use quando:', vale a descrição inteira; sem 'Não use para:', o segundo valor fica vazio.
+    """
+    texto = " ".join(descricao.split())
+    resto = texto.split(MARCA_USE_QUANDO, 1)[1] if MARCA_USE_QUANDO in texto else texto
+    if MARCA_NAO_USE_PARA in resto:
+        quando, nao_use = resto.split(MARCA_NAO_USE_PARA, 1)
+    else:
+        quando, nao_use = resto, ""
+    quando = quando.strip()
+    if quando.endswith("."):
+        quando = quando[:-1].rstrip()
+    return quando, nao_use.strip()
+
+
+# Palavras de ligação e artigos que não encerram um resumo cortado (comparação sem diferenciar maiúsculas).
+LIGACOES_DO_FIM = frozenset({
+    "de", "da", "do", "das", "dos", "em", "no", "na", "nos", "nas", "para", "por", "com", "sem", "ou", "e",
+    "a", "o", "as", "os", "que", "ao", "aos", "à", "às", "sobre", "entre",
+})
+
+
+def tirar_ligacoes_do_fim(texto):
+    """Retira do fim do texto as palavras de LIGACOES_DO_FIM e a pontuação solta que sobrar."""
+    palavras = texto.split(" ")
+    while palavras and palavras[-1].rstrip(",;:.!?").lower() in LIGACOES_DO_FIM:
+        palavras.pop()
+    return " ".join(palavras).rstrip(",;: ")
+
+
+def cortar_palavras(texto, limite):
+    """Corta no último espaço que cabe em `limite` caracteres, sem reticências e sem partir palavra.
+
+    Texto que já cabe volta igual. Quando há corte, retira pontuação solta no fim e as palavras de ligação
+    que ficarem no fim (tirar_ligacoes_do_fim). Se o corte ficar vazio, vale o corte sem essa retirada.
+    """
+    texto = " ".join(texto.split())
+    if len(texto) <= limite:
+        return texto
+    cortado = ""
+    for palavra in texto.split(" "):
+        candidato = palavra if not cortado else cortado + " " + palavra
+        if len(candidato) > limite:
+            break
+        cortado = candidato
+    if not cortado:
+        raise ValueError(f"primeira palavra com mais de {limite} caracteres: {texto.split(' ')[0]!r}")
+    cortado = cortado.rstrip(",;: ")
+    return tirar_ligacoes_do_fim(cortado) or cortado
+
+
+def rotulo_acesso(ferramentas):
+    """Rótulo de acesso pelas ferramentas do perfil: escrita (Edit ou Write) e Bash."""
+    edita = bool({"Edit", "Write"} & set(ferramentas))
+    comandos = "Bash" in ferramentas
+    if edita and comandos:
+        return "Edita e roda comandos"
+    if edita:
+        return "Edita, sem comandos"
+    if comandos:
+        return "Não edita · tem Bash"
+    return "Só leitura"
+
+
+def categoria_do_dominio(dominio):
+    """Rótulo do filtro de categoria de index.html para o domínio do perfil."""
+    return ROTULOS_CATEGORIA[CATEGORIA_FILTRO[dominio]]
+
+
+def construir_agentes(perfis, catalogo, registro, metadados, tem_subagente, atribuicoes=None):
+    """Um objeto por Especialista, em ordem alfabética pelo nome. Entra só o que o build verifica: perfis,
+    catálogo, registro de fontes, metadados e a existência do subagente em .claude/agents/ no momento do build."""
+    ids_clientes = {cliente for cliente, _ in CLIENTES_COM_SKILLS}
+    if ids_clientes != set(DESTINATIONS):
+        raise ValueError(f"clientes do hub divergem do instalador: {sorted(ids_clientes ^ set(DESTINATIONS))}")
+    por_dominio = {}
+    for item in catalogo:
+        if item["source"] == "local" and item.get("kind", "skill") == "skill":
+            por_dominio.setdefault(dominio_da_skill(item), []).append(item)
+    agentes = []
+    for perfil in sorted(perfis, key=lambda p: p["nome"]):
+        nome, dominio = perfil["nome"], perfil["dominio"]
+        if dominio not in CATEGORIA_FILTRO:
+            raise ValueError(f"domínio sem categoria no hub: {dominio}")
+        ativas = sorted(por_dominio.get(dominio, []), key=lambda item: item["name"])
+        use_quando, nao_use_completo = gatilhos_do_perfil(perfil["descricao"])
+        agentes.append({
+            "nome": nome,
+            "dominio": dominio,
+            "categoria": categoria_do_dominio(dominio),
+            "descricao": perfil["descricao"],
+            "ferramentas": list(perfil["ferramentas"]),
+            "use_quando": use_quando,
+            "nao_use_para": cortar_palavras(nao_use_completo, LIMITE_NAO_USE_PARA),
+            "nao_use_para_completo": nao_use_completo,
+            "resumo": cortar_palavras(use_quando, LIMITE_RESUMO),
+            "acesso": rotulo_acesso(perfil["ferramentas"]),
+            "skills_ativas": len(ativas),
+            "skills": [item["name"] for item in ativas],
+            "fontes_upstream": fontes_upstream(ativas, registro, metadados, atribuicoes),
+            "subagente_em": SUBAGENTE_EM,
+            "clientes_com_skills": [cliente_nome for _, cliente_nome in CLIENTES_COM_SKILLS],
+            "configurado": {
+                "projeto": bool(tem_subagente(nome)),
+                "projeto_caminho": f".claude/agents/{nome}.md",
+                "global_caminho": f"~/.claude/agents/{nome}.md",
+            },
+        })
+    return agentes
+
+
+def formatar_agentes_js(agentes):
+    """agentes.js: window.LAY_AGENTES, um objeto por Especialista."""
+    return (f"// LAY SKILLS HUB - AGENTES GERADOS ({len(agentes)} ESPECIALISTAS)\n"
+            f"window.LAY_AGENTES = {json.dumps(agentes, ensure_ascii=False, indent=2)};\n")
+
+
+def formatar_totais_js(skills, fontes, subagentes, dominios):
+    """totais.js: contagens pequenas para páginas que não carregam data.js (ex.: instalacao.html)."""
+    totais = {"skills": skills, "fontes": fontes, "subagentes": subagentes, "dominios": dominios}
+    return f"// LAY SKILLS HUB - TOTAIS GERADOS\nwindow.LAY_TOTAIS = {json.dumps(totais, ensure_ascii=False)};\n"
+
+
+def chave_de_ordem(skill, origem):
+    """Ordem de data.js: skills de origem local primeiro; depois categoria e nome.
+
+    `origem` é o source do catálogo, não a fonte efetiva: uma atribuição upstream não tira a skill do bloco LAY.
+    """
+    return (0 if origem == "local" else 1, skill["categories"][0], skill["name"])
+
 
 def build_data():
     HUB_DIR.mkdir(parents=True, exist_ok=True)
     catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
     skills_list = []
 
-    LOCAL_ATTRIBUTIONS = {
-        "vanta-backgrounds": "tengbao--vanta",
-        "react-bits-animations": "DavidHDev--react-bits",
-        "lenis-smooth-scroll": "darkroomengineering--lenis",
-        "creative-libraries-hub": "Jakubantalik--Libraries.dev",
-        "generative-ai-reference": "anil-matcha--open-generative-ai",
-        "design-reference": "voltagent--awesome-design-md",
-        "lay-core-vanta-backgrounds": "tengbao--vanta",
-        "lay-core-react-bits-animations": "DavidHDev--react-bits",
-        "lay-core-lenis-smooth-scroll": "darkroomengineering--lenis",
-        "lay-core-creative-libraries-hub": "Jakubantalik--Libraries.dev",
-        "lay-core-generative-ai-reference": "anil-matcha--open-generative-ai",
-        "lay-core-design-reference": "voltagent--awesome-design-md",
-    }
-
     for item in catalog["skills"]:
         source_key = item["source"]
-        effective_source = LOCAL_ATTRIBUTIONS.get(item["name"], LOCAL_ATTRIBUTIONS.get(item["id"], source_key))
+        effective_source = fonte_efetiva(item)
         meta = SOURCE_METADATA.get(effective_source, {
             "author": source_key,
             "title": source_key,
@@ -257,17 +524,28 @@ def build_data():
             "kind": item.get("kind", "skill")
         })
 
-    # Sort skills logically: local first, then by category and name
-    skills_list.sort(key=lambda s: (0 if s["source"] == "local" else 1, s["categories"][0], s["name"]))
+    # Ordem de data.js: origem do catálogo (LAY primeiro), depois categoria e nome. A fonte efetiva não entra,
+    # para que uma atribuição upstream não tire a skill do bloco LAY.
+    origem_por_id = {item["id"]: item["source"] for item in catalog["skills"]}
+    skills_list.sort(key=lambda s: chave_de_ordem(s, origem_por_id[s["id"]]))
 
     # Fontes de referência do registro (upstream). Não é a contagem de origens dos cards, que só lista as presentes.
-    sources_count = len(json.loads(SOURCES_PATH.read_text(encoding="utf-8"))["sources"])
-    output_js = f"// LAY SKILLS HUB - GENERATED DATASET ({len(skills_list)} SKILLS)\nwindow.LAY_SKILLS = {json.dumps(skills_list, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES = {json.dumps(SOURCE_METADATA, ensure_ascii=False, indent=2)};\nwindow.LAY_SOURCES_COUNT = {sources_count};\n"
-    DATA_JS_PATH.write_text(output_js, encoding="utf-8")
-    # Totais pequenos, para páginas que não carregam data.js (ex.: instalacao.html).
-    totais_js = f"// LAY SKILLS HUB - TOTAIS GERADOS\nwindow.LAY_TOTAIS = {json.dumps({'skills': len(skills_list), 'fontes': sources_count}, ensure_ascii=False)};\n"
-    TOTAIS_JS_PATH.write_text(totais_js, encoding="utf-8")
-    print(f"[OK] Generated {DATA_JS_PATH} with {len(skills_list)} skills.")
+    registro = json.loads(SOURCES_PATH.read_text(encoding="utf-8"))["sources"]
+    sources_count = len(registro)
+
+    leves, conteudo = dividir_conteudo(skills_list)
+    DATA_JS_PATH.write_text(formatar_data_js(leves, SOURCE_METADATA, sources_count), encoding="utf-8")
+    CONTEUDO_JS_PATH.write_text(formatar_conteudo_js(conteudo), encoding="utf-8")
+
+    perfis = load_profiles(ROOT)
+    agentes = construir_agentes(perfis, catalog["skills"], registro, SOURCE_METADATA,
+                                lambda nome: (ROOT / ".claude/agents" / f"{nome}.md").is_file())
+    AGENTES_JS_PATH.write_text(formatar_agentes_js(agentes), encoding="utf-8")
+
+    dominios = len({dominio_da_skill(item) for item in catalog["skills"]})
+    TOTAIS_JS_PATH.write_text(formatar_totais_js(len(skills_list), sources_count, len(perfis), dominios),
+                              encoding="utf-8")
+    print(f"[OK] Generated {DATA_JS_PATH}, {CONTEUDO_JS_PATH}, {AGENTES_JS_PATH} and {TOTAIS_JS_PATH} with {len(skills_list)} skills.")
 
 if __name__ == "__main__":
     build_data()
