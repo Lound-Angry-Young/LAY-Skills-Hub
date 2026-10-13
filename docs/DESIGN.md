@@ -9,6 +9,6 @@ Use este fluxo quando a tarefa tiver interface, marca ou apresentação visual. 
 5. **Valide o uso real.** Confirme contraste, navegação por teclado, foco, redução de movimento, alvos de toque e comportamento em larguras relevantes. Teste o resultado renderizado quando houver interação; estado interno isolado não comprova interface correta.
 6. **Refine onde dói.** Remova ruído, inconsciência tipográfica, cópia vaga e animação sem função. Compare o resultado ao objetivo declarado, não a uma pontuação estética inventada.
 
-Para imagens, use referências autorizadas e registre proveniência. A skill `watermarks-remover` só entra em mídia cuja edição tenha direitos e autorização.
+Para imagens, use referências autorizadas e registre proveniência. A skill `stripping-ai-provenance-marks` só entra em conteúdo cuja edição tenha direitos e autorização, e seu escopo está em revisão.
 
 Escreva decisões em frases curtas: **“Ação principal: X; hierarquia: Y; prova: teste Z.”** Se o briefing estiver claro, avance. Se estiver ambíguo, resolva uma pergunta por vez.

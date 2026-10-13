@@ -76,10 +76,10 @@ No PowerShell, se `$HOME` não apontar para o perfil esperado, use o caminho abs
 |---|---|---|
 | Descoberta | Quem precisa fazer o quê? | `interview-me`, `idea-refine` |
 | Planejamento | Qual é a menor entrega verificável? | `spec-driven-development`, `planning-and-task-breakdown` |
-| Design | Qual hierarquia e linguagem visual servem à intenção? | `taste-skill`, `frontend-ui-engineering`, `consulting-design-references` |
+| Design | Qual hierarquia e linguagem visual servem à intenção? | `elevating-frontend-taste`, `frontend-ui-engineering`, `consulting-design-references` |
 | Implementação | Que mudança resolve o próximo problema? | `incremental-implementation`, skills da stack escolhida |
-| Segurança | Onde entram dados, identidade, segredos e permissões? | `code-security`, `security-scan`, `semgrep` quando executável estiver disponível |
-| Validação | O fluxo e o resultado visível funcionam? | `quality`, `playwright-cli`, `web-design-guidelines` quando pertinentes |
+| Segurança | Onde entram dados, identidade, segredos e permissões? | `code-security`, `scanning-dependency-vulnerabilities`, `semgrep` quando executável estiver disponível |
+| Validação | O fluxo e o resultado visível funcionam? | `quality`, `automating-browser-tests`, `web-design-guidelines` quando pertinentes |
 | Entrega | Como operar e observar o que foi construído? | `ci-cd-and-automation`, `observability-and-instrumentation` |
 
 Graphify orienta a leitura de dependências durante o trabalho; Caveman mantém respostas curtas e precisas. Skills adicionais entram quando há uma lacuna concreta. Para design, sintetize referências em critérios próprios, conforme [DESIGN.md](DESIGN.md). Runtimes externos, credenciais e serviços citados por uma skill não são concedidos automaticamente pela instalação.
