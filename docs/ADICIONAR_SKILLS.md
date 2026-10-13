@@ -94,7 +94,7 @@ O lote é **tudo ou nada**: se uma skill falhar, nenhuma é gravada, e o relató
 1. Grava a skill (e o `reference.md`, se houver) no domínio.
 2. Acrescenta a linha nas tabelas de roteamento do domínio: `SKILL.md` (roteador) e `reference.md`. Se a linha já existir, não duplica.
 3. Valida a árvore inteira com `scripts/validate_skills.py`. Se houver erro, desfaz tudo.
-4. Regenera: `docs/CATALOGO.md` e `catalog/skills.json`, `hub/data.js` (o dashboard) e os subagentes (`.claude/agents/`, `agents/`).
+4. Regenera: `docs/CATALOGO.md` e `catalog/skills.json`, o hub (`hub/data.js`, `hub/conteudo.js`, `hub/agentes.js` e `hub/totais.js`) e os subagentes (`.claude/agents/`, `agents/`).
 5. Mostra o subagente que recebe a skill.
 
 Para só validar e gravar, sem regenerar: adicione `--sem-regerar`. Para regenerar depois, sem adicionar nada:

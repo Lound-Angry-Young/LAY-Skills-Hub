@@ -18,7 +18,7 @@ Quando duas skills discordarem, escolha pela intenção, stack e evidência do p
 4. Regenere ou atualize Graphify quando a tarefa e o runtime disponível justificarem. Use a documentação da versão presente. Dependências de extração profunda, modelos, credenciais e envio de dados precisam ser avaliados antes da execução.
 5. Depois de mudanças arquiteturais, atualize o mapa pertinente ou marque explicitamente que ficou desatualizado. Não afirme cobertura de arquivos ignorados ou não processados.
 
-Preservamos a skill Graphify original e uma fonte upstream completa registrada. Não invente referências ausentes na cópia legada, caminhos de interpretador, custos, cobertura ou resultados.
+Preservamos a fonte upstream completa do Graphify, registrada em `registry/sources.json`. Não invente referências ausentes, caminhos de interpretador, custos, cobertura ou resultados.
 
 ## Caveman sempre, com clareza
 
@@ -26,7 +26,7 @@ Use português direto enquanto esse for o idioma do usuário. Corte repetição,
 
 Mantenha negações, condições, unidades, nomes técnicos, comandos exatos, evidência, incerteza e riscos concretos. Compressão não justifica omitir bloqueio, vulnerabilidade, teste não executado ou pergunta essencial. As atualizações curtas exigidas pelo ambiente continuam valendo. Não use frases quebradas que dificultem a compreensão.
 
-Não há garantia de redução percentual de tokens. As alegações do arquivo legado não são benchmark deste hub. Uma medição exige tarefa, modelo, janela de contexto, entrada, saída, comparação e resultado observados.
+Não há garantia de redução percentual de tokens. Alegações percentuais de economia de tokens, de qualquer fonte, não são benchmark deste hub. Uma medição exige tarefa, modelo, janela de contexto, entrada, saída, comparação e resultado observados.
 
 ## Um problema por vez
 
