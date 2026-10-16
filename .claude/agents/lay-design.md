@@ -15,11 +15,11 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `consulting-design-references`: `refactored_skills/design/consulting-design-references/SKILL.md`
   Selects a product-specific visual direction from the awesome-design-md collection and compares design systems before an interface is implemented, consulting source designs selectively while preserving the project's brand. Use this skill whe
 - `generating-brandkit-identities`: `refactored_skills/design/generating-brandkit-identities/SKILL.md`
-  Generates premium brand-kit image boards for brand guidelines, logo systems, identity decks and visual-world presentations, with intentional logo concepting, sparse typography, symbolic meaning and art-directed imagery. Use this skill when:
+  Generates complete brand-kit identities following agency-grade design standards: monogram meaning, metaphor fusion, calibrated palettes, negative space, typography pairings, and vector assets. Use this skill when: designing brand identities
 - `generating-mobile-ui-mockups`: `refactored_skills/design/generating-mobile-ui-mockups/SKILL.md`
-  Generates premium, app-native mobile screen concepts and flows for iOS, Android and cross-platform products, shown inside a phone mockup with clean hierarchy, readable text and consistent multi-screen styling. Use this skill when: generatin
+  Generates complete, high-impact mobile UI mockups: screen-first layouts, strict safe-area handling, tactile micro-interactions, mobile bento grids, and calibrated contrast for iOS and Android. Use this skill when: designing mobile applicati
 - `generating-web-ui-references`: `refactored_skills/design/generating-web-ui-references/SKILL.md`
-  Generates premium, conversion-aware website design reference images, producing one separate horizontal image per page section with varied composition, CTAs and hero scales under one consistent palette so developers can recreate the page. Us
+  Generates combinatorially varied, high-agency web UI references: asymmetric editorial layouts, 2-line minimal hero directives, dramatic dark-tech contrasts, and anti-slop guidelines. Use this skill when: conceptualizing web layouts, landing
 
 ## Regras de atuação
 

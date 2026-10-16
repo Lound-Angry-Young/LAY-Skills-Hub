@@ -15,7 +15,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `animating-react-bits-components`: `refactored_skills/frontend/animating-react-bits-components/SKILL.md`
   Builds modern, production-grade animated UI components inspired by react-bits: text effects (DecryptedText, BlurText, SplitText, ShinyText, TrueFocus), animated backgrounds (Hyperspeed, Waves, Squares, LiquidChrome, Ballpit) and interactive
 - `animating-react-view-transitions`: `refactored_skills/frontend/animating-react-view-transitions/SKILL.md`
-  Implements native-feeling animations with React's View Transition API (ViewTransition component, addTransitionType and CSS view-transition pseudo-elements), covering page and route transitions, shared elements, enter and exit animations, li
+  Implements seamless page transitions and shared-element layout animations in React using the View Transitions API and CSS animations with reduced-motion support. Use this skill when: adding animated screen transitions, tab switches or morph
 - `applying-legacy-design-taste`: `refactored_skills/frontend/applying-legacy-design-taste/SKILL.md`
   Applies the original v1 taste guidance (design-taste-frontend-v1), kept for projects that depend on its exact behavior. Use this skill when: exact backward compatibility with taste-skill v1 is required. Do NOT use this skill when: a new pro
 - `architecting-react-composition`: `refactored_skills/frontend/architecting-react-composition/SKILL.md`
@@ -37,11 +37,11 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `designing-minimalist-interfaces`: `refactored_skills/frontend/designing-minimalist-interfaces/SKILL.md`
   Designs clean editorial-style interfaces with a warm monochrome palette, typographic contrast, flat bento grids and muted pastels, without gradients or heavy shadows. Use this skill when: a minimalist, editorial or calm interface is request
 - `elevating-frontend-taste`: `refactored_skills/frontend/elevating-frontend-taste/SKILL.md`
-  Anti-slop frontend guidance for landing pages, portfolios and redesigns: reads the brief, infers the right design direction and ships interfaces that do not look templated, using real design systems where applicable and an audit-first appro
+  Elevates frontend design taste: brief inference, three-dial configuration (expressiveness, density, polish), deliberate typographic pairings, custom color systems and layout variance to eliminate generic AI aesthetic tropes. Use this skill 
 - `enforcing-full-code-output`: `refactored_skills/frontend/enforcing-full-code-output/SKILL.md`
   Overrides default LLM truncation behavior to enforce complete, unabridged code generation: bans placeholder patterns and handles token-limit splits cleanly. Use this skill when: a task needs exhaustive, complete output with no omitted code.
 - `engineering-frontend-interfaces`: `refactored_skills/frontend/engineering-frontend-interfaces/SKILL.md`
-  Builds production-quality, accessible and responsive user-facing UIs: components, layouts, state management and WCAG accessibility, so the output looks and works production-ready rather than AI-generated. Use this skill when: building or mo
+  Architects and implements high-quality frontend interfaces: component hierarchy, state management, compound components, separation of concerns and robust typing. Use this skill when: building or refactoring frontend UI components and interf
 - `engineering-gsap-motion-uis`: `refactored_skills/frontend/engineering-gsap-motion-uis/SKILL.md`
   Engineers high-end UX/UI with advanced GSAP motion: a recorded choice of layout variants so pages do not repeat, AIDA page structure, wide editorial typography, gapless bento grids and strict GSAP ScrollTrigger use (pinning, stacking, scrub
 - `governing-anti-slop-aesthetics`: `refactored_skills/frontend/governing-anti-slop-aesthetics/SKILL.md`
@@ -53,7 +53,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `orchestrating-smooth-scroll`: `refactored_skills/frontend/orchestrating-smooth-scroll/SKILL.md`
   Implements butter-smooth scrolling and scroll orchestration with Lenis, including React wrappers, virtual scroll, touch momentum, anchor navigation and GSAP ScrollTrigger synchronization. Use this skill when: adding Lenis smooth scrolling o
 - `redesigning-legacy-interfaces`: `refactored_skills/frontend/redesigning-legacy-interfaces/SKILL.md`
-  Upgrades existing websites and apps to premium quality: audits the current design, identifies generic AI patterns and applies high-end standards without breaking functionality, with any CSS framework or vanilla CSS. Use this skill when: imp
+  Upgrades dated, cluttered or generic UIs to contemporary standards while preserving all existing functionality: design audit, fix priorities, typography upgrades, contrast fixes and layout cleanup. Use this skill when: modernizing an existi
 - `selecting-animated-ui-components`: `refactored_skills/frontend/selecting-animated-ui-components/SKILL.md`
   Selects an animated UI component from the Pixel-Perfect and Componentry registries for a screen need, ranking options by rendering cost tier, reduced-motion handling, client-component requirements, touch fallback and missing local files. Us
 

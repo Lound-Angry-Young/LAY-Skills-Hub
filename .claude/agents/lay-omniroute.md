@@ -33,7 +33,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `enforcing-spending-budgets`: `refactored_skills/routing-and-proxy/enforcing-spending-budgets/SKILL.md`
   Configures spending limits, token quotas and rate-limit policies per API key or globally, inspects current consumption and enforces cost controls across providers. Use this skill when: capping spend, tokens or request rates for a key or the
 - `executing-omniroute-inference`: `refactored_skills/routing-and-proxy/executing-omniroute-inference/SKILL.md`
-  Runs the core OpenAI-compatible inference endpoints: chat completions, embeddings, images, audio (TTS and STT), moderations, rerank and the Responses API, the primary integration surface for AI agents. Use this skill when: an application or
+  Executes OpenAI-compatible chat completions and streaming inference through OmniRoute: formats payloads, handles streaming responses, tests fallback routing and measures latency. Use this skill when: sending inference requests to OmniRoute 
 - `handling-omniroute-webhooks`: `refactored_skills/routing-and-proxy/handling-omniroute-webhooks/SKILL.md`
   Registers, lists, tests and removes webhook endpoints, configures event subscriptions (request.completed, request.failed, quota.exceeded and others) and manages delivery retries. Use this skill when: notifying external systems about OmniRou
 - `importing-github-agent-skills`: `refactored_skills/routing-and-proxy/importing-github-agent-skills/SKILL.md`

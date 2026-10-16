@@ -131,7 +131,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Answers questions about a codebase, its architecture, file relationships or project content by building and querying a persistent knowledge graph with graphify over code, docs, papers, images and videos, treating graphify-out/ as the first source when it exists. Use this skill when: asked about architecture, file relationships or project content, especially when graphify-out/ exists. Do NOT use this skill when: the question is a single-file edit with no structural context.",
+    "description": "Transforms codebases into persistent knowledge graphs using Graphify: extracts AST nodes, analyzes dependencies, clusters modules, and surfaces high-coupling god nodes for safe refactoring. Use this skill when: exploring an unfamiliar codebase, mapping module dependencies, planning architectural refactors, or tracing cross-file relationships. Do NOT use this skill when: running unit tests (use driving-test-driven-development) or doing single-file edits.",
     "kind": "skill"
   },
   {
@@ -171,7 +171,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Extracts what the user actually wants through a one-question-at-a-time interview until intent is about 95% clear, when a request is underspecified or the user asks to be interviewed or challenged. Use this skill when: an ask is underspecified (for whom or why now is missing), or the user asks to be interviewed, grilled or to stress-test a plan. Do NOT use this skill when: the requirements are already explicit and only need to be broken into tasks (use breaking-down-task-plans).",
+    "description": "Extracts what the user actually wants through a one-question-at-a-time interview, testing assumptions, establishing hard constraints and identifying must-haves versus nice-to-haves before designing or coding. Use this skill when: a new feature, project or significant change is requested, requirements are vague, or constraints are unstated. Do NOT use this skill when: the user has already provided clear, complete requirements and constraints (use planning-and-task-breakdown or authoring-specifications-first).",
     "kind": "skill"
   },
   {
@@ -346,7 +346,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Implements native-feeling animations with React's View Transition API (ViewTransition component, addTransitionType and CSS view-transition pseudo-elements), covering page and route transitions, shared elements, enter and exit animations, list reorder and directional navigation in Next.js. Use this skill when: adding page transitions, route change animations or shared element animations in React without third-party animation libraries. Do NOT use this skill when: animating decorative components (use animating-react-bits-components) or scroll-driven motion (use engineering-gsap-motion-uis).",
+    "description": "Implements seamless page transitions and shared-element layout animations in React using the View Transitions API and CSS animations with reduced-motion support. Use this skill when: adding animated screen transitions, tab switches or morphing shared elements in a React app. Do NOT use this skill when: the project is mobile React Native (use building-react-native-interfaces) or only needs GSAP timeline choreography (use engineering-gsap-motion-uis).",
     "kind": "skill"
   },
   {
@@ -633,7 +633,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Anti-slop frontend guidance for landing pages, portfolios and redesigns: reads the brief, infers the right design direction and ships interfaces that do not look templated, using real design systems where applicable and an audit-first approach to redesigns. Use this skill when: building or redesigning a landing page, portfolio or marketing page that must not look generic. Do NOT use this skill when: building dashboards, data tables or multi-step product UI (use engineering-frontend-interfaces).",
+    "description": "Elevates frontend design taste: brief inference, three-dial configuration (expressiveness, density, polish), deliberate typographic pairings, custom color systems and layout variance to eliminate generic AI aesthetic tropes. Use this skill when: designing, writing or reviewing user-facing frontend code where aesthetics, personality or visual quality matters. Do NOT use this skill when: the task is purely structural or backend logic with no visual impact.",
     "kind": "skill"
   },
   {
@@ -672,7 +672,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Builds production-quality, accessible and responsive user-facing UIs: components, layouts, state management and WCAG accessibility, so the output looks and works production-ready rather than AI-generated. Use this skill when: building or modifying interfaces and pages, creating components, implementing layouts, meeting WCAG requirements or managing UI state. Do NOT use this skill when: the request is purely visual direction without implementation (use elevating-frontend-taste) or React performance tuning (use optimizing-react-performance).",
+    "description": "Architects and implements high-quality frontend interfaces: component hierarchy, state management, compound components, separation of concerns and robust typing. Use this skill when: building or refactoring frontend UI components and interfaces. Do NOT use this skill when: doing pure visual styling with no structural changes (use elevating-frontend-taste) or building mobile React Native apps (use building-react-native-interfaces).",
     "kind": "skill"
   },
   {
@@ -710,7 +710,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Generates premium brand-kit image boards for brand guidelines, logo systems, identity decks and visual-world presentations, with intentional logo concepting, sparse typography, symbolic meaning and art-directed imagery. Use this skill when: creating a brand identity overview image or logo direction for a minimalist, editorial, luxury, cultural, security, gaming, developer-tool or consumer-app brand. Do NOT use this skill when: producing mobile app screens (use generating-mobile-ui-mockups), web page sections (use generating-web-ui-references) or writing brand code or tokens.",
+    "description": "Generates complete brand-kit identities following agency-grade design standards: monogram meaning, metaphor fusion, calibrated palettes, negative space, typography pairings, and vector assets. Use this skill when: designing brand identities, monograms, logos, or brand systems from scratch. Do NOT use this skill when: writing marketing copy (use authoring-specifications-first) or generating single UI components (use engineering-frontend-interfaces).",
     "kind": "skill"
   },
   {
@@ -729,7 +729,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Generates premium, app-native mobile screen concepts and flows for iOS, Android and cross-platform products, shown inside a phone mockup with clean hierarchy, readable text and consistent multi-screen styling. Use this skill when: generating images of mobile app screens or multi-screen flows for design review. Do NOT use this skill when: building or implementing mobile UI in code (use frontend skills), generating web landing pages (use generating-web-ui-references) or creating a brand identity board (use generating-brandkit-identities).",
+    "description": "Generates complete, high-impact mobile UI mockups: screen-first layouts, strict safe-area handling, tactile micro-interactions, mobile bento grids, and calibrated contrast for iOS and Android. Use this skill when: designing mobile application interfaces, mobile web experiences, or native mobile screens. Do NOT use this skill when: designing desktop-only dashboards (use generating-web-ui-references) or implementing mobile code directly (use building-react-native-interfaces).",
     "kind": "skill"
   },
   {
@@ -748,7 +748,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Generates premium, conversion-aware website design reference images, producing one separate horizontal image per page section with varied composition, CTAs and hero scales under one consistent palette so developers can recreate the page. Use this skill when: creating visual references for a landing page, marketing site or product comp, section by section. Do NOT use this skill when: generating mobile app screens (use generating-mobile-ui-mockups), writing the page code or creating a brand identity board (use generating-brandkit-identities).",
+    "description": "Generates combinatorially varied, high-agency web UI references: asymmetric editorial layouts, 2-line minimal hero directives, dramatic dark-tech contrasts, and anti-slop guidelines. Use this skill when: conceptualizing web layouts, landing pages, or digital product interfaces before coding. Do NOT use this skill when: writing implementation code directly (use engineering-frontend-interfaces) or designing mobile apps (use generating-mobile-ui-mockups).",
     "kind": "skill"
   },
   {
@@ -805,7 +805,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Uses the Libraries.dev UI effect components correctly, covering border beam, thinking orbs, gooey, voice glow, bot avatars, liquid metal and image effects, and finds where each fits in a project. Use this skill when: adding a Libraries.dev UI effect to a web project. Do NOT use this skill when: choosing among creative libraries in general (use selecting-creative-libraries) or adding an animated Vanta background (use rendering-vanta-backgrounds).",
+    "description": "Installs, integrates and configures creative web libraries, WebGL shaders, physics engines and canvas animations with hardware-aware fallbacks and performance boundaries. Use this skill when: a creative library is already selected and must be wired into a web application. Do NOT use this skill when: choosing which library to use (use selecting-creative-libraries) or applying Vanta.js specifically (use rendering-vanta-backgrounds).",
     "kind": "skill"
   },
   {
@@ -863,7 +863,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Upgrades existing websites and apps to premium quality: audits the current design, identifies generic AI patterns and applies high-end standards without breaking functionality, with any CSS framework or vanilla CSS. Use this skill when: improving the visual quality of an existing site or app. Do NOT use this skill when: building a new interface from scratch (use elevating-frontend-taste) or reviewing compliance only (use auditing-web-design-guidelines).",
+    "description": "Upgrades dated, cluttered or generic UIs to contemporary standards while preserving all existing functionality: design audit, fix priorities, typography upgrades, contrast fixes and layout cleanup. Use this skill when: modernizing an existing interface or redesigning an older screen. Do NOT use this skill when: reviewing code without redesigning (use auditing-web-design-guidelines) or starting a new design from scratch (use elevating-frontend-taste).",
     "kind": "skill"
   },
   {
@@ -959,7 +959,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Records architecture decisions as ADRs and documents the reasoning behind design choices, public API changes and shipped features for future engineers and agents. Use this skill when: documenting an architecture decision, changing a public API, shipping a feature or recording context a future maintainer needs. Do NOT use this skill when: writing user-facing prose (use polishing-user-facing-prose) or auditing general writing style (use auditing-writing-guidelines).",
+    "description": "Records architecture and technical decisions using the Architecture Decision Record (ADR) format, keeping decisions discoverable, dated, and with context, alternatives considered, consequences, and current status. Use this skill when: a significant architecture decision is made, an existing decision is superseded, or technical context must be preserved for future developers. Do NOT use this skill when: writing end-user documentation or API references (use designing-apis-and-interfaces).",
     "kind": "skill"
   },
   {
@@ -1017,7 +1017,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Removes multi-vendor AI provenance marks from text and files: invisible Unicode, statistical text watermarks through rewriting, and C2PA, EXIF, XMP and container metadata on images and documents. Use this skill when: cleaning provenance marks from content the user owns or is authorized to edit. Do NOT use this skill when: the content does not belong to the user or no authorization exists, or when the goal is to hide AI authorship from a disclosure requirement or platform policy.",
+    "description": "Removes synthetic provenance markers, C2PA manifests, invisible metadata, and tool-watermark artifacts from authorized user-owned assets and media. Use this skill when: preparing authorized creative or textual assets for clean publication without synthetic provenance tags. Do NOT use this skill when: violating copyright or stripping legal attribution notices (use auditing-code-security).",
     "kind": "skill"
   },
   {
@@ -1115,7 +1115,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Runs the full deprecation cycle for obsolete interfaces, endpoints and components: semantic annotations, sunset timelines and removal of legacy endpoints without breaking dependents. Use this skill when: marking code as deprecated, setting a grace period or removing legacy endpoints safely. Do NOT use this skill when: performing an active database or architecture migration (use migrating-legacy-architectures) or refactoring internals that keep public contracts unchanged.",
+    "description": "Plans and executes API and feature deprecations safely: marks deprecation notices, provides clear migration paths, establishes sunset timelines and verifies zero broken clients before removal. Use this skill when: obsoleting an API, function, parameter or feature. Do NOT use this skill when: actively migrating live infrastructure or data schemas (use migrating-legacy-architectures).",
     "kind": "skill"
   },
   {
@@ -1672,7 +1672,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Deploys applications and websites to Vercel, including production deployments and preview links, when the user asks to deploy an app, push it live or create a preview deployment. Use this skill when: the user asks to deploy an app to Vercel or to create a preview deployment. Do NOT use this skill when: deploying with token-based CLI authentication (use deploying-with-vercel-tokens) or optimizing an existing deployment (use optimizing-vercel-deployments).",
+    "description": "Deploys applications to the Vercel platform: inspects project configuration, framework preset and build output, runs production or preview deployments, and verifies URL reachability. Use this skill when: deploying a project to Vercel. Do NOT use this skill when: using token-based authentication on a remote CI machine (use deploying-with-vercel-tokens) or optimizing costs of an already-deployed project (use optimizing-vercel-deployments).",
     "kind": "skill"
   },
   {
@@ -1729,7 +1729,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Runs the core OpenAI-compatible inference endpoints: chat completions, embeddings, images, audio (TTS and STT), moderations, rerank and the Responses API, the primary integration surface for AI agents. Use this skill when: an application or agent must call models through OmniRoute's inference API. Do NOT use this skill when: sending a quick chat from the terminal (use chatting-via-omniroute-cli) or managing providers (use managing-omniroute-providers).",
+    "description": "Executes OpenAI-compatible chat completions and streaming inference through OmniRoute: formats payloads, handles streaming responses, tests fallback routing and measures latency. Use this skill when: sending inference requests to OmniRoute from code or curl. Do NOT use this skill when: chatting interactively from the terminal (use chatting-via-omniroute-cli) or submitting batch jobs (use submitting-batch-inference-jobs).",
     "kind": "skill"
   },
   {
@@ -2356,7 +2356,7 @@ window.LAY_SKILLS = [
     ],
     "version": "refactored",
     "commit": "content-",
-    "description": "Hardens code against vulnerabilities by checking input handlers, authentication, data storage, external integrations, dependency risk and OWASP Top Ten exposure. Use this skill when: auditing an input handler, handling untrusted input, user sessions or third-party services, triaging dependency audit findings, or handling personal data under GDPR or CCPA. Do NOT use this skill when: only running a Semgrep pattern scan (use scanning-code-with-semgrep) or securing an LLM application specifically (use securing-llm-applications).",
+    "description": "Hardens code against vulnerabilities by checking input handlers, authentication, data storage, external integrations, dependency risk and OWASP Top Ten exposure. Use this skill when: auditing an input handler, handling untrusted input, user storage, authentication, data boundaries, or hardening code against common vulnerability classes. Do NOT use this skill when: fixing a single known vulnerable dependency package (use scanning-dependency-vulnerabilities) or reviewing general non-security logic.",
     "kind": "skill"
   },
   {

@@ -1,105 +1,57 @@
 ---
 name: generating-web-ui-references
 description: >
-  Generates premium, conversion-aware website design reference images, producing one separate horizontal image per page section with varied composition, CTAs and hero scales under one consistent palette so developers can recreate the page. Use this skill when: creating visual references for a landing page, marketing site or product comp, section by section. Do NOT use this skill when: generating mobile app screens (use generating-mobile-ui-mockups), writing the page code or creating a brand identity board (use generating-brandkit-identities).
+  Generates combinatorially varied, high-agency web UI references: asymmetric editorial layouts, 2-line minimal hero directives, dramatic dark-tech contrasts, and anti-slop guidelines. Use this skill when: conceptualizing web layouts, landing pages, or digital product interfaces before coding. Do NOT use this skill when: writing implementation code directly (use engineering-frontend-interfaces) or designing mobile apps (use generating-mobile-ui-mockups).
 ---
 
-# HARD OUTPUT RULE — READ FIRST
+# Geração de Referências de Interfaces Web
 
-> **Atribuição:** derivada da skill `imagegen-frontend-web` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+Gera conceitos e especificações de layouts web de vanguarda, aplicando a regra de hero minimalista em 2 linhas, grids assimétricos editoriais, contrastes dramáticos dark-tech e variação combinatória anti-slop.
 
-**Generate one separate horizontal image PER section. Always. No exceptions.**
+## Input/Output Signature
+Input:
+- productTrope: string # Nicho do produto (ex: ai-gateway, dev-infrastructure, luxury-fintech, creative-studio)
+- visualAtmosphere: string # Atmosfera pretendida (dark-tech, industrial-minimal, high-fashion-editorial)
+- primaryActionGoal: string # Ação principal esperada do visitante (ex: testar demo, instalar CLI, solicitar acesso)
+Output:
+- layoutSpecification: object # Estrutura completa da página dividida por seções numeradas
+- heroArchitecture: object # Redação e diagramação estrita da seção hero com título em 2 linhas
+- typographyAndColorRules: object # Definição de escala tipográfica assimétrica e paleta de alto contraste
+- interactiveSectionsGuide: array # Guia detalhado de microinterações, carrosséis e efeitos de scroll
 
-- 1 section requested -> 1 image
-- 4 sections requested -> 4 images
-- 8 sections requested -> 8 images
-- 12 sections requested -> 12 images
-- "landing page" with no count -> default to 6 sections -> 6 images
-- "full website template" -> default to 8 sections -> 8 images
+## Router and Selection Matrix
+| Atmosfera Visual | Princípio de Composição | Grau de Liberdade |
+|---|---|---|
+| Dark-Tech / Developer Tools | Fundo preto puro ou carvão (#080808), tipografia mono pontual, linhas de 1px e badges | [FLEXÍVEL] Aplica grid técnico sem poluição visual |
+| Editorial / Minimalismo Utilitário | Tipografia de display em escala dramática, espaços em branco generosos e colunas assimétricas | [FLEXÍVEL] Cria tensão visual equilibrada com blocos de texto concisos |
+| Industrial / Neo-Brutalist | Tipografia condensada em caixa alta, separadores marcados, molduras evidentes e alto contraste | [FRÁGIL] Rejeita gradientes pastéis suaves e cantos arredondados genéricos |
+| Luxury / High-Agency | Grids elegantes com microinterações refinadas, tipografia com contraste óptico e assets táteis | [FRÁGIL] Baniu elementos genéricos de templates SaaS comuns |
 
-Each image is one section, generated as its own image call. Never combine multiple sections into one frame. Never return a single tall image that contains the whole page.
+## Imperative Execution Workflow
+1. Configurar Regra de Hero em 2 Linhas [FRÁGIL]:
+   - Redija o título principal do hero em exatamente duas linhas com impacto direto, seguido de parágrafo explicativo conciso.
+2. Definir Padrão de Variação Combinatória [FLEXÍVEL]:
+   - Selecione a combinação única de fonte de display, paleta de acento e estrutura de grid para escapar de fórmulas previsíveis.
+3. Estruturar Hierarquia de Seções em AIDA [FRÁGIL]:
+   - Organize a página: Atenção (Hero), Interesse (Recurso Chave / Métricas), Desejo (Bento Grid com Provas), Ação (CTA Claro).
+4. Diagramar Seções Bento com Assimetria Funcional [FLEXÍVEL]:
+   - Crie cartões de diferentes proporções (2x1, 1x1, 1x2) onde cada bloco revela um detalhe técnico ou interativo único.
+5. Validar Diretivas Anti-Slop e Performance [FRÁGIL]:
+   - Elimine gradientes genéricos em mesh, mockups flutuantes vazios e carrosséis infinitos sem controle manual.
 
-If you can only render one image at a time, output them sequentially in the same response, one after the other, until every section has its own image. Announce each one ("Section 1 of 8: Hero", "Section 2 of 8: Trust bar", etc.).
+## Execution Checklist
+- [ ] Aplicar a regra de título do hero em 2 linhas concisas
+- [ ] Estabelecer paleta de alto contraste sem gradientes clichês
+- [ ] Desenhar seções bento com variação proporcional assimétrica
+- [ ] Garantir posicionamento claro e desobstruído da chamada para ação
+- [ ] Auditar o conceito contra as diretrizes anti-slop
 
-This rule overrides any model default that wants to collapse output into a single image.
-
----
-
-# HERO COMPOSITION BIAS — READ FIRST
-
-The default **left-text / right-image hero is the most overused AI pattern**. It is allowed, but it should not be your first instinct.
-
-Before reaching for it, consider these alternatives and pick whichever fits the brand best:
-- centered over background image
-- bottom-left over image
-- bottom-right over image
-- top-left lead
-- stacked center
-- image-as-canvas
-- off-grid editorial
-- mini minimalist
-- right-text / left-image (inverted classic)
-
-Use left-text / right-image only when it is genuinely the strongest choice — not by default.
-
----
-
-# CORE DIRECTIVE: AWWWARDS-LEVEL IMAGE ART DIRECTION
-You are an elite frontend image art director.
-
-Your job is not to generate generic AI art.
-Your job is to generate highly creative, premium, frontend design reference images that feel like real high-end website concepts.
-
-Standard image generation tends to collapse into repetitive defaults:
-- centered dark hero
-- purple/blue AI glow
-- floating meaningless blobs
-- generic dashboard card spam
-- weak typography hierarchy
-- cloned sections
-- "luxury" that is just beige serif text
-- "creative" that is actually messy and unreadable
-- text-heavy layouts with not enough imagery
-- overly dense sections with no breathing room
-
-Your goal is to aggressively break these defaults.
-
-The output must feel:
-- art-directed
-- premium
-- visually memorable
-- structured
-- readable
-- implementation-friendly
-- clearly usable as a frontend reference
-
-Do not generate random mood art unless explicitly asked.
-Default to website design comps.
-
----
-
-## Sections
-- 1. ACTIVE BASELINE CONFIGURATION
-- 2. THE COMBINATORIAL VARIATION ENGINE
-- 3. FRONTEND REFERENCE RULE
-- 4. HERO MINIMALISM RULES
-- 5. IMAGE COUNT & PAGE SLICING
-- 6. CREATIVITY ESCALATION RULE
-- 7. IMAGE-FIRST ART DIRECTION
-- 8. ANTI-AI-SLOP RULES
-- 9. TYPOGRAPHY-FIRST DISCIPLINE
-- 10. SECTION RHYTHM RULE
-- 11. COMPONENT EXECUTION GUIDELINES
-- 12. DENSITY & SPACING DISCIPLINE
-- 13. COLOR & MATERIAL RULES
-- 14. IMAGE / MEDIA DIRECTION
-- 15. DEFAULT SITE PACKS
-- 16. MULTI-IMAGE CONSISTENCY RULE
-- 17. CLARITY CHECK
-- 18. EXTRA CREATIVITY & IMPLEMENTATION EDGE
-- 19. RESPONSE BEHAVIOR
-- 20. EXAMPLE INTERPRETATIONS
-- 21. FINAL GOAL
+## On Failure
+- **Gatilho de Erro**: Hero prolixo excedendo 2 linhas, layout parecendo template genérico de SaaS ou contraste insuficiente de leitura.
+- **Ação Imediata**: Reescrever o hero e reformular a diagramação da primeira dobra.
+- **Rollback**: Descartar estruturas de layout convencionais que reproduzam clichês visuais.
+- **Fallback**: Adotar diagramação minimalista pura focada em tipografia editorial austera e terminal de código.
+- **Logs**: Registrar títulos reprovados, seções descartadas e justificativa da quebra de padrão.
 
 ## Reference Documentation
 Consulte a documentação técnica completa: [Referência Técnica](reference.md).

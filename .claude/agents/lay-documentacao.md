@@ -15,11 +15,11 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `auditing-writing-guidelines`: `refactored_skills/documentation/auditing-writing-guidelines/SKILL.md`
   Reviews docs and prose for Writing Guidelines compliance, checking style, voice and tone against the writing handbook. Use this skill when: asked to review docs, check writing style, audit prose or check a page against the writing handbook.
 - `documenting-architecture-decisions`: `refactored_skills/documentation/documenting-architecture-decisions/SKILL.md`
-  Records architecture decisions as ADRs and documents the reasoning behind design choices, public API changes and shipped features for future engineers and agents. Use this skill when: documenting an architecture decision, changing a public 
+  Records architecture and technical decisions using the Architecture Decision Record (ADR) format, keeping decisions discoverable, dated, and with context, alternatives considered, consequences, and current status. Use this skill when: a sig
 - `polishing-user-facing-prose`: `refactored_skills/documentation/polishing-user-facing-prose/SKILL.md`
   Cleans and finalizes authorized natural-language text for readers by auditing invisible Unicode and rewriting prose while keeping facts, meaning and the writer voice. Use this skill when: asked to clean, humanize, polish or finalize an arti
 - `stripping-ai-provenance-marks`: `refactored_skills/documentation/stripping-ai-provenance-marks/SKILL.md`
-  Removes multi-vendor AI provenance marks from text and files: invisible Unicode, statistical text watermarks through rewriting, and C2PA, EXIF, XMP and container metadata on images and documents. Use this skill when: cleaning provenance mar
+  Removes synthetic provenance markers, C2PA manifests, invisible metadata, and tool-watermark artifacts from authorized user-owned assets and media. Use this skill when: preparing authorized creative or textual assets for clean publication w
 
 ## Regras de atuação
 

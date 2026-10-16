@@ -1,131 +1,58 @@
 ---
 name: generating-mobile-ui-mockups
 description: >
-  Generates premium, app-native mobile screen concepts and flows for iOS, Android and cross-platform products, shown inside a phone mockup with clean hierarchy, readable text and consistent multi-screen styling. Use this skill when: generating images of mobile app screens or multi-screen flows for design review. Do NOT use this skill when: building or implementing mobile UI in code (use frontend skills), generating web landing pages (use generating-web-ui-references) or creating a brand identity board (use generating-brandkit-identities).
+  Generates complete, high-impact mobile UI mockups: screen-first layouts, strict safe-area handling, tactile micro-interactions, mobile bento grids, and calibrated contrast for iOS and Android. Use this skill when: designing mobile application interfaces, mobile web experiences, or native mobile screens. Do NOT use this skill when: designing desktop-only dashboards (use generating-web-ui-references) or implementing mobile code directly (use building-react-native-interfaces).
 ---
 
-# CORE DIRECTIVE: PREMIUM MOBILE APP IMAGE DIRECTION
+# Geração de Mockups de Interfaces Mobile
 
-> **Atribuição:** derivada da skill `imagegen-frontend-mobile` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+Projeta telas de aplicativos móveis de alto impacto visual (iOS e Android), aplicando zonas seguras (safe areas), ergonomia de polegar, grids bento móveis e microinterações táteis expressivas.
 
-You are an elite mobile product design art director.
+## Input/Output Signature
+Input:
+- mobilePlatform: string # Plataforma alvo (ios, android, responsive_mobile_web)
+- screenFlowName: string # Nome do fluxo de telas (ex: onboarding, checkout, dashboard_carteira)
+- designTheme: string # Tema visual (dark_luxury, minimal_tech, vibrant_arcade)
+- requiredScreenCount: number # Quantidade de telas consecutivas no fluxo (mínimo 3)
+Output:
+- screenMockupSpecs: array # Especificações detalhadas de layout de cada tela do fluxo
+- safeAreaDirectives: object # Coordenadas de entalhe (notch), barra de status e barra de navegação
+- tactileInteractionsMap: array # Mapeamento de gestos, estados de toque (press) e feedback
+- colorAndTypographyTokens: object # Tokens tipográficos e paleta ajustados para displays OLED
 
-Your job is not to generate generic app mockups.
-Your job is to generate premium, app-native, highly readable mobile app screen images and flow images.
+## Router and Selection Matrix
+| Plataforma / Tipo de Tela | Diretriz Ergonômica | Grau de Liberdade |
+|---|---|---|
+| iOS Human Interface | Respeita raio de cantos squircle, Dynamic Island e safe areas inferiores de 34pt | [FRÁGIL] Exige áreas de toque mínimas de 44x44pt |
+| Android Material You | Adota elevações tonais, navegação por gestos de borda e safe areas de câmera | [FRÁGIL] Exige áreas de toque mínimas de 48x48dp |
+| Fluxo Contínuo / Carrossel | Garante pistas visuais de continuidade lateral (peek) para guiar o polegar | [FLEXÍVEL] Ajusta percentual de visibilidade do próximo card |
+| Modais e Bottom Sheets | Utiliza gavetas inferiores expansíveis com alça de arraste e overlay com blur | [FLEXÍVEL] Aplica física de mola para fechamento e ancoragem |
 
-This skill is for:
-- onboarding flows
-- auth flows
-- home dashboards
-- profile screens
-- settings screens
-- chat screens
-- ecommerce screens
-- fintech screens
-- health and fitness screens
-- productivity apps
-- social apps
-- utilities
-- multi-screen app concepts
-- premium mobile redesigns
+## Imperative Execution Workflow
+1. Mapear Jornada do Fluxo de Telas [FLEXÍVEL]:
+   - Estabeleça a sequência narrativa das telas (ex: entrada de dados -> confirmação visual -> recibo de conclusão).
+2. Configurar Zonas Seguras e Grid Base [FRÁGIL]:
+   - Calibre as margens para evitar sobreposição com barras de status, recortes de câmera e barras de navegação do sistema.
+3. Posicionar Ações Primárias na Zona do Polegar [FRÁGIL]:
+   - Aloque botões principais de ação e controles interativos críticos na metade inferior da tela para alcance fácil com uma mão.
+4. Estruturar Grids Bento e Cartões com Hierarquia Clara [FLEXÍVEL]:
+   - Agrupe informações relacionadas em cards modulares com bordas sutis e tipografia escalonada para telas menores.
+5. Mapear Estados Interativos de Toque e Transições [FRÁGIL]:
+   - Descreva estados visuais para `active`, `pressed` com leve redução de escala (0.97) e feedback de transição entre telas.
 
-This skill is not for:
-- websites
-- landing pages
-- desktop dashboards
-- image-to-code
-- frontend implementation
-- code generation
+## Execution Checklist
+- [ ] Definir o fluxo narrativo de telas completas
+- [ ] Isolar áreas de safe area superior e inferior
+- [ ] Posicionar chamadas de ação primárias na zona ergonômica de alcance do polegar
+- [ ] Organizar o conteúdo em cards e bento grids modulares
+- [ ] Especificar transições de tela e estados visuais táteis
 
-The output must feel:
-- app-native
-- premium
-- clean
-- highly intentional
-- visually strong
-- readable
-- believable
-- flow-aware
-- platform-aware
-- creatively art-directed
-- non-generic
-- built on a clean, controlled color palette
-- consistent across multiple generated images
-
-Standard AI mobile output tends to collapse into repetitive defaults:
-- fake fintech dashboards with random charts
-- one pretty screen and then generic filler screens
-- too many floating cards
-- too many pills and tags
-- no safe-area awareness
-- weak navigation logic
-- phone-sized websites
-- gradient-heavy dribbble clones
-- glassmorphism without purpose
-- tiny unreadable text
-- too much content above the fold
-- cloned onboarding screens
-- fake complexity instead of good mobile hierarchy
-- sterile flat backgrounds with no texture or visual atmosphere
-- generic palettes
-- default purple-blue startup color clichés
-- random bright colors
-- generic developer-tool icon sets
-- overly simplistic layouts that feel empty instead of elegant
-- screen sets that drift into different design systems
-- inconsistent device mockups and uneven margins around the phone
-- device frames that dominate more than the actual screen content
-
-Your goal is to aggressively break these defaults.
-
-IMPORTANT:
-This skill generates images only.
-Do not switch into coding mode.
-Do not describe code.
-Do not build SwiftUI, React Native, Flutter, or HTML.
-Generate mobile screen images and screen-flow images only.
-
----
-
-## Sections
-- 1. ACTIVE BASELINE CONFIGURATION
-- 2. PLATFORM MODE RULE
-- 3. MANDATORY SCREEN-FIRST RULE
-- 4. GENERATE ENOUGH SCREENS RULE
-- 5. DO NOT CROP OLD IMAGES RULE
-- 6. APP DESIGN BIBLE RULE
-- 7. MULTI-SCREEN CONSISTENCY RULE
-- 8. LOGICAL FLOW RULE
-- 9. DEFAULT MOCKUP PRESENCE RULE
-- 10. DEVICE MOCKUP FRAME RULE
-- 11. ONBOARDING FLOW RULE
-- 12. FIRST SCREEN CLEANLINESS RULE
-- 13. SAFE AREA AND SYSTEM REGION RULE
-- 14. NAVIGATION RULE
-- 15. CLEAN LAYOUT RULE
-- 16. CREATIVE IMAGE DIRECTION RULE
-- 17. BACKGROUND TEXTURE AND SURFACE RULE
-- 18. IMAGE-BEHIND-TEXT RULE
-- 19. CREATIVE ASSET RULE
-- 20. ICONOGRAPHY RULE
-- 21. MOBILE ANTI-AI-TELLS RULE
-- 22. STYLE VARIATION ENGINE
-- 23. COLOR PALETTE RULE
-- 24. NON-GENERICITY RULE
-- 25. NOT ALWAYS SIMPLE RULE
-- 26. IMAGE SYSTEM RULE
-- 27. FIXED MOBILE MEDIA FRAME RULE
-- 28. TEXT RULE
-- 29. TEXT SIZE AND READABILITY RULE
-- 30. TYPOGRAPHY RULE
-- 31. SPACING AND DENSITY RULE
-- 32. SCREEN-TO-SCREEN VARIATION RULE
-- 33. CATEGORY-SPECIFIC BIAS
-- 34. REGENERATION RULE
-- 35. QUALITY CHECK
-- 36. RESPONSE BEHAVIOR
-- 37. EXAMPLE INTERPRETATIONS
-- 38. FINAL GOAL
+## On Failure
+- **Gatilho de Erro**: Botões vitais fora da zona de alcance, sobreposição com elementos nativos do sistema ou densidade excessiva.
+- **Ação Imediata**: Redesenhar a hierarquia da tela e realocar os controles de ação.
+- **Rollback**: Descartar propostas de layouts com zonas de toque comprimidas abaixo dos padrões mínimos.
+- **Fallback**: Quebrar uma tela sobrecarregada em duas etapas progressivas (wizard linear).
+- **Logs**: Registrar dimensões de áreas de toque rejeitadas e elementos em conflito com safe areas.
 
 ## Reference Documentation
 Consulte a documentação técnica completa: [Referência Técnica](reference.md).

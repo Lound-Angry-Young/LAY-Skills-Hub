@@ -19,7 +19,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `debugging-root-causes`: `refactored_skills/engineering/debugging-root-causes/SKILL.md`
   Runs systematic root-cause diagnosis for compile failures, broken tests and unexpected behavior, without random trial-and-error attempts. Use this skill when: investigating bugs, build breaks or behavior that diverged from expectations. Do 
 - `deprecating-obsolete-apis`: `refactored_skills/engineering/deprecating-obsolete-apis/SKILL.md`
-  Runs the full deprecation cycle for obsolete interfaces, endpoints and components: semantic annotations, sunset timelines and removal of legacy endpoints without breaking dependents. Use this skill when: marking code as deprecated, setting 
+  Plans and executes API and feature deprecations safely: marks deprecation notices, provides clear migration paths, establishes sunset timelines and verifies zero broken clients before removal. Use this skill when: obsoleting an API, functio
 - `designing-apis-and-interfaces`: `refactored_skills/engineering/designing-apis-and-interfaces/SKILL.md`
   Guides stable API and interface design: module boundaries, REST or GraphQL endpoints, type contracts between modules and the boundary between frontend and backend. Use this skill when: designing APIs, module boundaries or any public interfa
 - `enforcing-project-constraints`: `refactored_skills/engineering/enforcing-project-constraints/SKILL.md`

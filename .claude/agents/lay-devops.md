@@ -19,7 +19,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `building-ci-validation-pipelines`: `refactored_skills/devops/building-ci-validation-pipelines/SKILL.md`
   Builds and orchestrates continuous integration pipelines with strict quality gates, static scanners, parallel test suites and coverage reports. Use this skill when: configuring CI checks that must pass before a change can be merged. Do NOT 
 - `deploying-to-vercel-platform`: `refactored_skills/devops/deploying-to-vercel-platform/SKILL.md`
-  Deploys applications and websites to Vercel, including production deployments and preview links, when the user asks to deploy an app, push it live or create a preview deployment. Use this skill when: the user asks to deploy an app to Vercel
+  Deploys applications to the Vercel platform: inspects project configuration, framework preset and build output, runs production or preview deployments, and verifies URL reachability. Use this skill when: deploying a project to Vercel. Do NO
 - `deploying-with-vercel-tokens`: `refactored_skills/devops/deploying-with-vercel-tokens/SKILL.md`
   Deploys and manages Vercel projects with token-based CLI authentication instead of interactive login, for setup and deployment on machines or pipelines that use access tokens. Use this skill when: using the Vercel CLI with access tokens. Do
 - `managing-git-branch-workflows`: `refactored_skills/devops/managing-git-branch-workflows/SKILL.md`

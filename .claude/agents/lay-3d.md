@@ -19,7 +19,7 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `installing-blender-headless`: `refactored_skills/creative-3d/installing-blender-headless/SKILL.md`
   Detects hardware accelerators (GPU, CUDA, OptiX) and silently installs Blender without human intervention via winget. Use this skill when: the Blender executable is missing or needs automated installation. Do NOT use this skill when: Blende
 - `integrating-creative-web-toolkits`: `refactored_skills/creative-3d/integrating-creative-web-toolkits/SKILL.md`
-  Uses the Libraries.dev UI effect components correctly, covering border beam, thinking orbs, gooey, voice glow, bot avatars, liquid metal and image effects, and finds where each fits in a project. Use this skill when: adding a Libraries.dev 
+  Installs, integrates and configures creative web libraries, WebGL shaders, physics engines and canvas animations with hardware-aware fallbacks and performance boundaries. Use this skill when: a creative library is already selected and must 
 - `rendering-vanta-backgrounds`: `refactored_skills/creative-3d/rendering-vanta-backgrounds/SKILL.md`
   Integrates interactive 3D WebGL backgrounds (Waves, Net, Halo, Rings, Birds, Cells, Clouds, Globe) powered by Three.js or p5.js from tengbao/vanta, covering React and Next.js dynamic loading, canvas lifecycle, responsive resizing and palett
 - `selecting-creative-libraries`: `refactored_skills/creative-3d/selecting-creative-libraries/SKILL.md`

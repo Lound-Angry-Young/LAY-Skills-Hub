@@ -25,9 +25,9 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
 - `engineering-agent-context`: `refactored_skills/context/engineering-agent-context/SKILL.md`
   Optimizes agent context setup: starting new sessions, recovering from degraded output, switching between tasks and configuring rules files and context for a project. Use this skill when: starting a new session, output quality degrades, swit
 - `generating-knowledge-graphs`: `refactored_skills/context/generating-knowledge-graphs/SKILL.md`
-  Answers questions about a codebase, its architecture, file relationships or project content by building and querying a persistent knowledge graph with graphify over code, docs, papers, images and videos, treating graphify-out/ as the first 
+  Transforms codebases into persistent knowledge graphs using Graphify: extracts AST nodes, analyzes dependencies, clusters modules, and surfaces high-coupling god nodes for safe refactoring. Use this skill when: exploring an unfamiliar codeb
 - `interviewing-user-requirements`: `refactored_skills/context/interviewing-user-requirements/SKILL.md`
-  Extracts what the user actually wants through a one-question-at-a-time interview until intent is about 95% clear, when a request is underspecified or the user asks to be interviewed or challenged. Use this skill when: an ask is underspecifi
+  Extracts what the user actually wants through a one-question-at-a-time interview, testing assumptions, establishing hard constraints and identifying must-haves versus nice-to-haves before designing or coding. Use this skill when: a new feat
 - `managing-cli-context-pipelines`: `refactored_skills/context/managing-cli-context-pipelines/SKILL.md`
   Manages context engineering configurations, RTK filter sets and conversation sessions from the CLI, applying context-relay settings and inspecting active context pipelines. Use this skill when: inspecting or changing context pipelines or se
 - `optimizing-rtk-prompt-contexts`: `refactored_skills/context/optimizing-rtk-prompt-contexts/SKILL.md`

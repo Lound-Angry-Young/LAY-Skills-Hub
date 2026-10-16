@@ -1,193 +1,58 @@
 ---
 name: generating-brandkit-identities
 description: >
-  Generates premium brand-kit image boards for brand guidelines, logo systems, identity decks and visual-world presentations, with intentional logo concepting, sparse typography, symbolic meaning and art-directed imagery. Use this skill when: creating a brand identity overview image or logo direction for a minimalist, editorial, luxury, cultural, security, gaming, developer-tool or consumer-app brand. Do NOT use this skill when: producing mobile app screens (use generating-mobile-ui-mockups), web page sections (use generating-web-ui-references) or writing brand code or tokens.
+  Generates complete brand-kit identities following agency-grade design standards: monogram meaning, metaphor fusion, calibrated palettes, negative space, typography pairings, and vector assets. Use this skill when: designing brand identities, monograms, logos, or brand systems from scratch. Do NOT use this skill when: writing marketing copy (use authoring-specifications-first) or generating single UI components (use engineering-frontend-interfaces).
 ---
 
-# BRANDKIT IMAGE GENERATION SKILL
+# Geração de Brandkits e Identidades Visuais
 
-> **Atribuição:** derivada da skill `brandkit` do projeto [taste-skill](https://github.com/Leonxlnx/taste-skill), de Leonxlnx, licença MIT.
+Gera identidades visuais completas de padrão de agência global: fusão metafórica em monogramas, uso inteligente de espaço negativo, paleta de cores calibrada, tipografia de autoridade e ativos vetoriais.
 
-You are an elite brand identity art director, logo designer, visual-system strategist, and presentation designer.
+## Input/Output Signature
+Input:
+- brandName: string # Nome da marca ou produto
+- coreConceptKeywords: array # Palavras-chave do conceito central (ex: velocidade, segurança, precisão)
+- aestheticArchetype: string # Arquétipo estético (dark-tech, luxury-craft, arcade-brutalist, neo-swiss)
+- targetDeliverables: array # Entregáveis solicitados (monograma, logotipo, paleta, tipografia, tokens)
+Output:
+- brandbookSpec: object # Especificação completa da identidade visual em formato estruturado
+- svgMonogramCode: string # Código vetorial SVG puro do monograma gerado
+- colorPaletteTokens: object # Definições hexadecimais, HSL e papéis semânticos da paleta
+- typographyPairing: object # Seleção de fontes para display, títulos e corpo com escala harmônica
 
-Your job is to generate premium brand-kit images that feel like they came from a serious identity studio.
-
-The output must feel:
-- intentional
-- premium
-- minimal
-- coherent
-- strategic
-- visually expensive
-- brand-system driven
-- presentation-ready
-
-Do not generate generic logos.  
-Do not generate random mockups.  
-Do not generate messy AI moodboards.
-
-Create a complete brand world in one image.
-
----
-
-# REFERENCE STYLE DNA
-
-The desired visual quality is inspired by premium brand-guidelines decks with:
-
-- dark charcoal outer canvas
-- clean grid-based presentation boards
-- strong gutters between panels
-- restrained visual density
-- very sparse typography
-- large negative space
-- cinematic brand atmosphere
-- simple but memorable logo marks
-- UI mockups used as brand applications
-- browser chrome / app headers / terminal frames
-- image-led panels with subtle overlays
-- halftone, grain, scanline, or print texture
-- geometric construction diagrams
-- small labels and page-number details
-- muted but powerful accent colors
-- logo repeated across multiple touchpoints
-- one strong brand idea per board
-
-The references are not a fixed style.  
-They define the quality bar, restraint, and presentation logic.
-
----
-
-# CORE PRINCIPLE
-
-A premium brand kit is not decoration.
-
-It is a visual argument for why the brand exists.
-
-Every generated board must answer:
-
-1. What does this brand represent?
-2. What is the core metaphor?
-3. How does the logo express that?
-4. How does the system scale across UI, print, image, and detail?
-5. Why does the whole thing feel ownable?
-
----
-
-# DEFAULT OUTPUT
-
-Unless the user specifies otherwise:
-
-- Generate one brand-kit overview image
-- Default layout: `3 × 3`
-- Default aspect ratio: `4:3` or `16:10`
-- Use a clean presentation grid
-- Use consistent gutters
-- Use minimal text
-- Make every panel feel connected
-
-Allowed layouts:
-- `3 × 3` full identity system
-- `2 × 3` cinematic brand deck overview
-- `2 × 2` compact concept board
-- `1 × 3` horizontal brand strip
-- `4 × 2` wide contact-sheet layout
-- custom layout when requested
-
-If the user gives references, match their quality and rhythm, not their exact content.
-
----
-
-# BRAND STRATEGY FIRST
-
-Before generating, infer the brand strategy.
-
-Think through:
-
-- category
-- audience
-- product function
-- emotional promise
-- cultural position
-- trust level
-- visual world
-- symbolic metaphor
-- what the brand should avoid
-
-The visual system must be based on meaning.
-
-Examples:
-
-| Category | Core Ideas | Possible Symbol Logic |
+## Router and Selection Matrix
+| Arquétipo Estético | Diretriz de Criação | Grau de Liberdade |
 |---|---|---|
-| Developer tool | building, speed, precision, control | cursor, frame, bolt, scaffold, grid |
-| AI assistant | delegation, intelligence, clarity | spark, orbit, signal, path, node |
-| Security | protection, vigilance, boundary | shield, eye, seal, protected core |
-| Gaming / betting | chance, reward, tension, speed | dice, gem, card, signal, trophy |
-| Voice AI | sound, rhythm, command, flow | waveform, mic, orb, speech path |
-| Compliance | trust, order, rules, protection | seal, dog, badge, document, shield |
-| Drone / robotics | flight, control, vision, mission | wing, owl, crosshair, path, zone |
-| Luxury / editorial | taste, material, ritual, restraint | monogram, seal, paper, emboss, mark |
-| Productivity | focus, momentum, clarity | path, check, block, calendar, light |
+| Dark-Tech / Cyber-Precision | Monograma geométrico afiado com linhas angulares e contrastes luminescentes | [FLEXÍVEL] Aplica geometria de precisão com acentos em tons ciano/neon |
+| Luxury-Craft / Editorial | Monograma com serifa de alto contraste, espaçamento generoso e acabamento tátil | [FLEXÍVEL] Paleta quente, tons carvão profundo, bronze e ouro envelhecido |
+| Neo-Swiss / Utilitário | Geometria pura sem ornamentos, foco em grid rígido e tipografia grotesca | [FRÁGIL] Exige rigor absoluto de alinhamento óptico e proporções áureas |
+| Arcade / Gamificado | Formas pixel-density ou isometricidade controlada com estética retrô premium | [FLEXÍVEL] Contrastes vibrantes com preto absoluto e micro-detalhes |
 
-Do not pick symbols randomly.
+## Imperative Execution Workflow
+1. Mapear Fusão Metafórica e Conceito do Monograma [FLEXÍVEL]:
+   - Combine a inicial da marca com uma metáfora funcional única (ex: letra 'L' + feixe óptico de precisão).
+2. Construir Geometria Vetorial em Espaço Negativo [FRÁGIL]:
+   - Projete as curvas do símbolo garantindo legibilidade tanto em favicon de 16px quanto em empenas gigantes.
+3. Definir Paleta de Cores com Funções Semânticas [FRÁGIL]:
+   - Estabeleça cor de fundo principal, superfícies elevadas, cor de texto primário e exatamente um acento vibrante.
+4. Harmonizar Dupla Tipográfica de Autoridade [FRÁGIL]:
+   - Selecione uma fonte de display distinta para títulos e uma sem serifa altamente legível com suporte a números tabulares.
+5. Gerar Código SVG Puro e Manifesto de Tokens [FRÁGIL]:
+   - Exporte o código SVG sem dependências externas e documente os tokens em formato CSS/Tailwind compatível.
 
----
+## Execution Checklist
+- [ ] Definir a metáfora central e a geometria do monograma
+- [ ] Validar legibilidade do símbolo em escalas extremas (16px a 512px)
+- [ ] Calibrar paleta com contraste estrito e funções semânticas claras
+- [ ] Estabelecer par tipográfico com proporções e pesos balanceados
+- [ ] Gerar arquivo vetorial SVG limpo e exportar tokens de estilo
 
-# LOGO GENERATION STANDARD
-
-The logo must be professional.
-
-It should be:
-- simple
-- memorable
-- symbolic
-- scalable
-- ownable
-- visually balanced
-- connected to the brand idea
-- usable as icon, wordmark, badge, UI mark, and pattern
-
-Avoid:
-- generic lightning bolts unless strongly justified
-- random animals
-- fake luxury crests
-- copied famous marks
-- overcomplicated symbols
-- clipart-style icons
-- meaningless sparkles
-- inconsistent logo variants
-
-The logo should feel like it came from research and reduction.
-
----
-
-# LOGO CONCEPT METHODS
-
-Use one or combine two maximum.
-
-## Sections
-- 1. Monogram + Meaning
-- 2. Product Action
-- 3. Metaphor Fusion
-- 4. Negative Space
-- 5. Construction Geometry
-- 1. Logo Cover
-- 2. Logo Construction
-- 3. Digital Application
-- 4. Brand Essence
-- 5. Color System
-- 6. Typography
-- 7. Physical Application
-- 8. Image Direction
-- 9. System Detail
-- Dark Developer / Builder
-- Dark Product / Operator
-- Dark Nature / Calm System
-- Dark Security / Threat Intelligence
-- Light Editorial / Compliance
-- Luxury / Beauty / Fashion
-- Voice / Communication
-- Cultural / Experimental
+## On Failure
+- **Gatilho de Erro**: Símbolo genérico sem diferenciação, desenho ilegível em tamanhos reduzidos ou contraste de cor inadequado.
+- **Ação Imediata**: Rejeitar a proposta gráfica e retornar à fase de fusão metafórica.
+- **Rollback**: Descartar os arquivos SVG gerados e reverter tokens da paleta.
+- **Fallback**: Optar por tratamento tipográfico puro (wordmark com tracking refinado) sem monograma complexo.
+- **Logs**: Registrar palavras-chave analisadas, tentativas de traçado vetorial e motivos da rejeição.
 
 ## Reference Documentation
 Consulte a documentação técnica completa: [Referência Técnica](reference.md).
