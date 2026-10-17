@@ -153,6 +153,8 @@ cmd_media() {
   local outdir; outdir="$(dirname -- "$abs")"
   resolve_model_args "$model" ""
   local marker; marker="$(mktemp)"
+  local prev=""
+  if [ -s "$abs" ]; then prev="$abs.prev"; mv -f -- "$abs" "$prev"; fi  # evita tratar saida velha como nova; restaurado se falhar
   local full; full="$(cat "$pf")
 
 OUTPUT REQUIREMENT: generate exactly ONE image and save it to this exact absolute path: $(native_path "$abs")
@@ -163,8 +165,8 @@ Do not modify any source code or project file. Do not generate additional varian
   if [ ! -s "$abs" ]; then
     log "arquivo ausente no destino; buscando mídia dos últimos 2 min em $BRAIN_DIR"
     local found
-    found="$(find "$BRAIN_DIR" -type f \( -iname '*.png' -o -iname '*.webp' -o -iname '*.jpg' -o -iname '*.jpeg' \) -mmin -2 -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)"
-    [ -n "$found" ] || { tail -n 20 "$marker.log" >&2; rm -f "$marker"; die 13 "nenhuma mídia gerada nos últimos 2 min. Não repita em loop: revise o prompt/cota."; }
+    found="$(find "$BRAIN_DIR" -type f \( -iname '*.png' -o -iname '*.webp' -o -iname '*.jpg' -o -iname '*.jpeg' \) -mmin -2 -newer "$marker" -printf '%T@ %p\n' 2>/dev/null | sort -rn | head -1 | cut -d' ' -f2-)"
+    [ -n "$found" ] || { tail -n 20 "$marker.log" >&2; rm -f "$marker"; [ -n "$prev" ] && mv -f -- "$prev" "$abs"; die 13 "nenhuma mídia gerada nos últimos 2 min. Não repita em loop: revise o prompt/cota."; }
     local sext dext; sext="$(printf '%s' "${found##*.}" | tr '[:upper:]' '[:lower:]')"; dext="$(printf '%s' "${abs##*.}" | tr '[:upper:]' '[:lower:]')"
     if [ "$sext" != "$dext" ] && [ -n "$PY" ] && "$PY" -c 'import PIL' 2>/dev/null; then
       "$PY" -c 'import sys;from PIL import Image;Image.open(sys.argv[1]).save(sys.argv[2])' "$found" "$abs"
@@ -175,6 +177,7 @@ Do not modify any source code or project file. Do not generate additional varian
     log "recuperado de $found"
   fi
   rm -f "$marker" "$marker.log"
+  [ -n "$prev" ] && rm -f -- "$prev"
   local final="$abs"
   if [ "$transparent" -eq 1 ]; then final="$(make_transparent "$abs")" || exit $?; [ "$final" != "$abs" ] && [ -n "$final" ] && [ "${final%.*}" = "${abs%.*}" ] && [ "$final" != "$abs" ] && rm -f "$abs"; fi
   echo "OUTPUT=$final"
