@@ -1,4 +1,4 @@
-// LAY SKILLS HUB - GENERATED DATASET (136 SKILLS)
+// LAY SKILLS HUB - GENERATED DATASET (137 SKILLS)
 window.LAY_SKILLS = [
   {
     "id": "lay-architecting-generative-ai-apps",
@@ -1077,6 +1077,25 @@ window.LAY_SKILLS = [
     "version": "refactored",
     "commit": "content-",
     "description": "Creates specifications before coding: objectives, scope, requirements, PRDs and a capability map of independently testable modules when a requirement spans several capabilities. Use this skill when: starting a new project, feature or significant change with no specification, or when requirements are vague or ambiguous. Do NOT use this skill when: the specification already exists and only needs implementation (use implementing-incremental-slices).",
+    "kind": "skill"
+  },
+  {
+    "id": "lay-bridging-antigravity-cli",
+    "name": "bridging-antigravity-cli",
+    "source": "local",
+    "author": "LAY® Core Ecosystem",
+    "sourceTitle": "LAY Core Skills",
+    "sourceUrl": "https://github.com/Lound-Angry-Young/LAY-Skills-Hub",
+    "sourceAvatar": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%2307080b' stroke='%2300f0ff' stroke-width='4'/><path d='M55 15 L25 55 L48 55 L42 85 L75 45 L52 45 Z' fill='%2300f0ff'/></svg>",
+    "sourceIcon": "⚡",
+    "sourceBadge": "LAY® Native",
+    "sourceDesc": "Habilidades centrais para orquestração de IA, diagnóstico técnico, automação 3D e comunicação sintética Caveman.",
+    "categories": [
+      "engenharia"
+    ],
+    "version": "refactored",
+    "commit": "content-",
+    "description": "Integra o Google Antigravity CLI (`agy`, OAuth da conta Google AI Pro) ao Claude Code como motor multimodal (imagem Nano Banana, vídeo Omni Flash e Veo 3.1) e como auditor adversário somente leitura de diffs, com o Claude como único escritor de código. Use this skill when: o usuário pedir imagem, ícone, vídeo ou asset visual gerado pelo Antigravity, uma revisão adversária de código por outro modelo (/agy-review), ou configurar o Antigravity no projeto (/antigravity-setup). Do NOT use this skill when: for revisão de código sem o Antigravity (use reviewing-multi-axis-code-quality), compor vídeo em código (use as skills de vídeo do hub) ou quando o pedido exigir chave de API paga, Vertex AI ou servidor MCP cobrado por token.",
     "kind": "skill"
   },
   {

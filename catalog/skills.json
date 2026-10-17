@@ -699,6 +699,21 @@
       "url": ""
     },
     {
+      "id": "lay-bridging-antigravity-cli",
+      "name": "bridging-antigravity-cli",
+      "description": "Integra o Google Antigravity CLI (`agy`, OAuth da conta Google AI Pro) ao Claude Code como motor multimodal (imagem Nano Banana, vídeo Omni Flash e Veo 3.1) e como auditor adversário somente leitura de diffs, com o Claude como único escritor de código. Use this skill when: o usuário pedir imagem, ícone, vídeo ou asset visual gerado pelo Antigravity, uma revisão adversária de código por outro modelo (/agy-review), ou configurar o Antigravity no projeto (/antigravity-setup). Do NOT use this skill when: for revisão de código sem o Antigravity (use reviewing-multi-axis-code-quality), compor vídeo em código (use as skills de vídeo do hub) ou quando o pedido exigir chave de API paga, Vertex AI ou servidor MCP cobrado por token.",
+      "source": "local",
+      "path": "refactored_skills/engineering/bridging-antigravity-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "engenharia"
+      ],
+      "version": "refactored",
+      "commit": "content-d50407ce4a4f",
+      "sha256": "d50407ce4a4feee1d86594e0971ab60bc6733a5246fba1243974eaf32f5adbec",
+      "url": ""
+    },
+    {
       "id": "lay-debugging-root-causes",
       "name": "debugging-root-causes",
       "description": "Runs systematic root-cause diagnosis for compile failures, broken tests and unexpected behavior, without random trial-and-error attempts. Use this skill when: investigating bugs, build breaks or behavior that diverged from expectations. Do NOT use this skill when: building automatic failover or runtime service recovery (use recovering-system-errors).",

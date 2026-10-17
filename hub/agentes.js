@@ -297,10 +297,11 @@ window.LAY_AGENTES = [
     "nao_use_para_completo": "UI visual (use lay-frontend) ou entrega e CI/CD (use lay-devops).",
     "resumo": "o pedido envolver arquitetura, revisão de código, depuração, refatoração, migração ou performance",
     "acesso": "Edita e roda comandos",
-    "skills_ativas": 20,
+    "skills_ativas": 21,
     "skills": [
       "auditing-codebase-bloat",
       "authoring-specifications-first",
+      "bridging-antigravity-cli",
       "debugging-root-causes",
       "deprecating-obsolete-apis",
       "designing-apis-and-interfaces",

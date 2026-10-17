@@ -111,6 +111,7 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 |---|---|---|---|
 | `lay-auditing-codebase-bloat` | [auditing-codebase-bloat](../refactored_skills/engineering/auditing-codebase-bloat/SKILL.md) | engineering | refactored |
 | `lay-authoring-specifications-first` | [authoring-specifications-first](../refactored_skills/engineering/authoring-specifications-first/SKILL.md) | engineering | refactored |
+| `lay-bridging-antigravity-cli` | [bridging-antigravity-cli](../refactored_skills/engineering/bridging-antigravity-cli/SKILL.md) | engineering | refactored |
 | `lay-debugging-root-causes` | [debugging-root-causes](../refactored_skills/engineering/debugging-root-causes/SKILL.md) | engineering | refactored |
 | `lay-deprecating-obsolete-apis` | [deprecating-obsolete-apis](../refactored_skills/engineering/deprecating-obsolete-apis/SKILL.md) | engineering | refactored |
 | `lay-designing-apis-and-interfaces` | [designing-apis-and-interfaces](../refactored_skills/engineering/designing-apis-and-interfaces/SKILL.md) | engineering | refactored |

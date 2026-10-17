@@ -16,6 +16,8 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Audits a whole repository for bugs, security holes, behavior under real load, risky code without tests, slow paths, and code to delete, merge or split, with ranked findings explained in plain English. Produces a one-shot report and changes 
 - `authoring-specifications-first`: `refactored_skills/engineering/authoring-specifications-first/SKILL.md`
   Creates specifications before coding: objectives, scope, requirements, PRDs and a capability map of independently testable modules when a requirement spans several capabilities. Use this skill when: starting a new project, feature or signif
+- `bridging-antigravity-cli`: `refactored_skills/engineering/bridging-antigravity-cli/SKILL.md`
+  Integra o Google Antigravity CLI (`agy`, OAuth da conta Google AI Pro) ao Claude Code como motor multimodal (imagem Nano Banana, vídeo Omni Flash e Veo 3.1) e como auditor adversário somente leitura de diffs, com o Claude como único escrito
 - `debugging-root-causes`: `refactored_skills/engineering/debugging-root-causes/SKILL.md`
   Runs systematic root-cause diagnosis for compile failures, broken tests and unexpected behavior, without random trial-and-error attempts. Use this skill when: investigating bugs, build breaks or behavior that diverged from expectations. Do 
 - `deprecating-obsolete-apis`: `refactored_skills/engineering/deprecating-obsolete-apis/SKILL.md`

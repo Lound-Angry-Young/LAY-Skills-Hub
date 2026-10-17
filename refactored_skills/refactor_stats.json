@@ -1,5 +1,5 @@
 {
-  "total_refactored_skills": 136,
+  "total_refactored_skills": 137,
   "total_domains": 11,
   "skills_with_reference": 82,
   "skills_with_reference_pointer": 82,
@@ -80,10 +80,11 @@
       ]
     },
     "engineering": {
-      "count": 20,
+      "count": 21,
       "skills": [
         "auditing-codebase-bloat",
         "authoring-specifications-first",
+        "bridging-antigravity-cli",
         "debugging-root-causes",
         "deprecating-obsolete-apis",
         "designing-apis-and-interfaces",
