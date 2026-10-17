@@ -188,8 +188,8 @@ cmd_review() {
     --model) model="$2"; shift 2;; --effort) effort="$2"; shift 2;; --out) out="$2"; shift 2;;
     *) die 2 "argumento desconhecido: $1";; esac; done
   [ -f "$pf" ] || die 2 "review exige --prompt-file existente"
-  [ -z "$model" ] && model="$(json_get review_config.model gemini-4-argon)"
-  [ -z "$effort" ] && effort="$(json_get review_config.effort high)"
+  [ -z "$model" ] && model="$(json_get review_config.model gemini-3.8-flash)"
+  [ -z "$effort" ] && effort="$(json_get review_config.effort medium)"
   forbid_claude_model "$model"
   check_agy
   local max; max="$(json_get review_config.max_adversarial_rounds 2)"

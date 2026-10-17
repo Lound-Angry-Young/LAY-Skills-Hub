@@ -60,7 +60,7 @@ Se o arquivo não existir (ou no `/antigravity-setup`): leia o projeto, proponha
     "style_anchor": "ex.: Minimalist SaaS",
     "default_transparent_assets": true
   },
-  "review_config": { "model": "gemini-4-argon", "effort": "high", "max_adversarial_rounds": 2 },
+  "review_config": { "model": "gemini-3.8-flash", "effort": "medium", "max_adversarial_rounds": 2 },
   "media_config": {
     "image_profile": "nano-banana-pro",
     "video_profile": "gemini-omni-flash",
@@ -69,7 +69,7 @@ Se o arquivo não existir (ou no `/antigravity-setup`): leia o projeto, proponha
 }
 ```
 
-Antes de sugerir o modelo, rode `agy models` e use só os que ele lista (modelos `gemini-*` ou `gpt-oss-*`). Esforço: `low|medium|high|xhigh|max`. Recuse modelo Claude.
+**Padrão inicial fixo:** `review_config.model` = `gemini-3.8-flash` e `effort` = `medium`, sempre. No setup, proponha esse par; só use outro se o usuário pedir. Antes de sugerir, rode `agy models` e use só os que ele lista (modelos `gemini-*` ou `gpt-oss-*`). Esforço: `low|medium|high|xhigh|max`. Recuse modelo Claude.
 
 ## Imperative Execution Workflow
 
