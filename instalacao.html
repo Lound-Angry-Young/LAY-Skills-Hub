@@ -912,7 +912,146 @@
       .toast.is-visivel { transform: none; }
     }
 
+    
     /* ==========================================================================
+       LANGUAGE SELECTOR (Portifolio-LAY: popover com bandeiras pt-BR & en)
+       ========================================================================== */
+    .lang-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .globe-btn {
+      height: 38px;
+      width: 38px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--osso, #faf5e9);
+      border: 1px solid var(--osso, #faf5e9);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 #000;
+      transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+    }
+    .globe-btn:hover,
+    .globe-btn[aria-expanded="true"] {
+      background: var(--osso, #faf5e9);
+      color: #000000;
+      transform: translate(-1px, -1px);
+    }
+    .globe-btn:focus-visible {
+      outline: 2px dashed var(--magenta, #ff007f);
+      outline-offset: 2px;
+    }
+    .popover-lang {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 230px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      box-shadow: 4px 4px 0 var(--magenta, #ff007f);
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: popInLang 160ms cubic-bezier(0.34, 1.8, 0.64, 1);
+    }
+    .popover-lang[hidden] { display: none !important; }
+    @keyframes popInLang {
+      from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .popover-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      background: #000000;
+      color: #fff201;
+      font-family: var(--fonte-mono, monospace);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .popover-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .close-lang-btn {
+      background: transparent;
+      border: none;
+      color: #fff201;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    .close-lang-btn:hover { color: var(--magenta, #ff007f); }
+    .lang-list {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      background: #ffffff;
+      color: #000000;
+      font-family: var(--fonte-mono, monospace);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .lang-option:last-child { border-bottom: none; }
+    .lang-option:hover:not([data-active="true"]) { background: #f0ede1; }
+    .lang-option[data-active="true"][data-lang="pt-BR"] {
+      background: #00843d; /* Verde bandeira do Brasil */
+      color: #faf5e9;
+    }
+    .lang-option[data-active="true"][data-lang="en"] {
+      background: #002868; /* Azul marinho da bandeira dos EUA */
+      color: #faf5e9;
+    }
+    .flag-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 1px;
+      overflow: hidden;
+      box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+    }
+    .lang-label {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .lang-name { font-size: 12px; }
+    .lang-code { font-size: 10px; opacity: 0.85; }
+    .lang-check {
+      font-family: var(--fonte-mono, monospace);
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff201;
+    }
+    .lang-option[data-active="true"][data-lang="en"] .lang-check { color: #faf5e9; }
+
+/* ==========================================================================
        MOVIMENTO REDUZIDO
        Sem deslocamento, sem animação. Mudanças de cor continuam.
        ========================================================================== */
@@ -952,19 +1091,73 @@
         </div>
       </div>
       <div class="cabecalho-direita">
-        <a class="botao botao-secundario botao-compacto" href="index.html">← Catálogo</a>
+        <div class="lang-wrap" id="lang-wrap">
+          <button type="button" class="globe-btn" id="lang-btn" aria-expanded="false" aria-haspopup="dialog" aria-label="Alterar idioma / Change language">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </button>
+          <div class="popover-lang" id="lang-popover" role="dialog" aria-label="Seletor de idioma / Language selector" hidden>
+            <div class="popover-bar">
+              <span class="popover-title">🌐 <span data-i18n="lang.title">IDIOMA / LANGUAGE</span></span>
+              <button type="button" class="close-lang-btn" id="lang-close-btn" aria-label="Fechar / Close">×</button>
+            </div>
+            <div class="lang-list" role="listbox" aria-label="Idiomas disponíveis / Available languages">
+              <button type="button" role="option" aria-selected="true" data-active="true" data-lang="pt-BR" class="lang-option">
+                <span class="flag-wrap">
+                  <svg width="24" height="17" viewBox="0 0 24 17" fill="none" aria-hidden="true" style="display:block;flex-shrink:0;">
+                    <rect width="24" height="17" fill="#009739" />
+                    <polygon points="12,2 21.5,8.5 12,15 2.5,8.5" fill="#FFF201" />
+                    <circle cx="12" cy="8.5" r="3.4" fill="#002776" />
+                    <path d="M9.5 8.2 Q12 9.5 14.5 7.6" stroke="#FAF5E9" stroke-width="0.8" fill="none" />
+                  </svg>
+                </span>
+                <span class="lang-label">
+                  <span class="lang-name">Português (Brasil)</span>
+                  <span class="lang-code">pt-BR</span>
+                </span>
+                <span class="lang-check">[✓]</span>
+              </button>
+              <button type="button" role="option" aria-selected="false" data-active="false" data-lang="en" class="lang-option">
+                <span class="flag-wrap">
+                  <svg width="24" height="17" viewBox="0 0 24 17" fill="none" aria-hidden="true" style="display:block;flex-shrink:0;">
+                    <rect width="24" height="17" fill="#FFFFFF" />
+                    <rect y="0" width="24" height="2.4" fill="#C21818" />
+                    <rect y="4.8" width="24" height="2.4" fill="#C21818" />
+                    <rect y="9.6" width="24" height="2.4" fill="#C21818" />
+                    <rect y="14.4" width="24" height="2.6" fill="#C21818" />
+                    <rect width="10.5" height="9.6" fill="#002868" />
+                    <circle cx="2.8" cy="2.4" r="0.75" fill="#FAF5E9" />
+                    <circle cx="7.7" cy="2.4" r="0.75" fill="#FAF5E9" />
+                    <circle cx="5.25" cy="4.8" r="0.75" fill="#FAF5E9" />
+                    <circle cx="2.8" cy="7.2" r="0.75" fill="#FAF5E9" />
+                    <circle cx="7.7" cy="7.2" r="0.75" fill="#FAF5E9" />
+                  </svg>
+                </span>
+                <span class="lang-label">
+                  <span class="lang-name">English (US)</span>
+                  <span class="lang-code">en</span>
+                </span>
+                <span class="lang-check" style="display:none;">[✓]</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <a class="botao botao-secundario botao-compacto" href="index.html" data-i18n="install.back_to_catalog">← Catálogo</a>
         <img class="selo" src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Pernambuco para o Mundo" width="52" height="52">
       </div>
     </header>
 
     <main id="conteudo" class="principal" tabindex="-1">
       <section class="hero" aria-labelledby="titulo-principal">
-        <p class="rotulo">CLAUDE CODE • SUBAGENTES</p>
-        <h1 class="titulo-principal" id="titulo-principal">SUBAGENTES LAY<br><span class="destaque">INSTALE EM 3 PASSOS</span></h1>
-        <p class="lead">Três comandos instalam os subagentes. Depois, confira com o doctor e com /agents.</p>
+        <p class="rotulo" data-i18n="install.kicker">CLAUDE CODE • SUBAGENTES</p>
+        <h1 class="titulo-principal" id="titulo-principal" data-i18n="install.title">SUBAGENTES LAY<br><span class="destaque">INSTALE EM 3 PASSOS</span></h1>
+        <p class="lead" data-i18n="install.lead">Três comandos instalam os subagentes. Depois, confira com o doctor e com /agents.</p>
         <div class="acoes">
-          <a class="botao botao-primario" href="#instalar">COMANDOS DE INSTALAÇÃO</a>
-          <a class="botao botao-secundario" href="#prompts">PROMPTS PARA COPIAR</a>
+          <a class="botao botao-primario" href="#instalar" data-i18n="install.btn_install_cmd">COMANDOS DE INSTALAÇÃO</a>
+          <a class="botao botao-secundario" href="#prompts" data-i18n="install.btn_prompts">PROMPTS PARA COPIAR</a>
           <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">REPOSITÓRIO GITHUB <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
         </div>
         <ul class="indicadores" aria-label="Números da instalação">
@@ -975,9 +1168,9 @@
       </section>
 
       <section class="secao" id="instalar" aria-labelledby="titulo-instalar">
-        <p class="kicker">01 · INSTALAR</p>
-        <h2 class="titulo-secao" id="titulo-instalar">Três comandos</h2>
-        <p class="texto-secao">Execute no terminal, dentro da pasta do repositório clonado.</p>
+        <p class="kicker" data-i18n="install.step1_kicker">01 · INSTALAR</p>
+        <h2 class="titulo-secao" id="titulo-instalar" data-i18n="install.step1_title">Três comandos</h2>
+        <p class="texto-secao" data-i18n="install.step1_desc">Execute no terminal, dentro da pasta do repositório clonado.</p>
 
         <div class="pre-req">
           <p><strong>Pré-requisitos:</strong> Git · Python 3.10+ · Claude Code</p>
@@ -1025,14 +1218,14 @@ cd LAY-Skills-Hub</pre>
       </section>
 
       <section class="secao" id="subagentes" aria-labelledby="titulo-subagentes">
-        <p class="kicker">02 · SUBAGENTES</p>
+        <p class="kicker" data-i18n="install.step2_kicker">02 · SUBAGENTES</p>
         <h2 class="titulo-secao" id="titulo-subagentes">Um por domínio</h2>
         <p class="texto-secao">Cada um recebe só as ferramentas do seu trabalho. Você pode chamar pelo nome.</p>
 
         <ul class="legenda" aria-label="Contagem por tipo de acesso">
-          <li class="legenda-item"><span class="swatch swatch-amarelo" aria-hidden="true"></span><span>Edita e roda comandos: <strong data-acesso="Edita e roda comandos">—</strong></span></li>
-          <li class="legenda-item"><span class="swatch swatch-verde" aria-hidden="true"></span><span>Edita, sem comandos: <strong data-acesso="Edita, sem comandos">—</strong></span></li>
-          <li class="legenda-item"><span class="swatch swatch-ciano" aria-hidden="true"></span><span>Não edita · tem Bash: <strong data-acesso="Não edita · tem Bash">—</strong></span></li>
+          <li class="legenda-item"><span class="swatch swatch-amarelo" aria-hidden="true"></span><span><span data-i18n-access="Edita e roda comandos">Edita e roda comandos</span>: <strong data-acesso="Edita e roda comandos">—</strong></span></li>
+          <li class="legenda-item"><span class="swatch swatch-verde" aria-hidden="true"></span><span><span data-i18n-access="Edita, sem comandos">Edita, sem comandos</span>: <strong data-acesso="Edita, sem comandos">—</strong></span></li>
+          <li class="legenda-item"><span class="swatch swatch-ciano" aria-hidden="true"></span><span><span data-i18n-access="Não edita · tem Bash">Não edita · tem Bash</span>: <strong data-acesso="Não edita · tem Bash">—</strong></span></li>
         </ul>
 
         <div class="grade-subagentes" id="grade-subagentes"></div>
@@ -1065,9 +1258,9 @@ cd LAY-Skills-Hub</pre>
       </section>
 
       <section class="secao" id="chamar" aria-labelledby="titulo-chamar">
-        <p class="kicker">03 · COMO CHAMAR</p>
-        <h2 class="titulo-secao" id="titulo-chamar">Automático ou pelo nome</h2>
-        <p class="texto-secao">Você não precisa decorar nada. Escreva o pedido normalmente, ou nomeie o especialista.</p>
+        <p class="kicker" data-i18n="install.step3_kicker">03 · COMO CHAMAR</p>
+        <h2 class="titulo-secao" id="titulo-chamar" data-i18n="install.step3_title">Automático ou pelo nome</h2>
+        <p class="texto-secao" data-i18n="install.step3_desc">Você não precisa decorar nada. Escreva o pedido normalmente, ou nomeie o especialista.</p>
 
         <div class="grade-2">
           <article class="card">
@@ -1090,9 +1283,9 @@ cd LAY-Skills-Hub</pre>
       </section>
 
       <section class="secao" id="orquestracao" aria-labelledby="titulo-orquestracao">
-        <p class="kicker">04 · ORQUESTRAÇÃO</p>
-        <h2 class="titulo-secao" id="titulo-orquestracao">Quem decide é a conversa</h2>
-        <p class="texto-secao">A conversa principal escolhe o domínio, delega e junta as respostas. Subagentes não chamam outros subagentes.</p>
+        <p class="kicker" data-i18n="install.step4_kicker">04 · ORQUESTRAÇÃO</p>
+        <h2 class="titulo-secao" id="titulo-orquestracao" data-i18n="install.step4_title">Quem decide é a conversa</h2>
+        <p class="texto-secao" data-i18n="install.step4_desc">A conversa principal escolhe o domínio, delega e junta as respostas. Subagentes não chamam outros subagentes.</p>
 
         <ol class="fluxo">
           <li class="fluxo-passo"><p class="fluxo-nome">1 · Pedido</p><p>Você descreve o que quer.</p></li>
@@ -1111,9 +1304,9 @@ cd LAY-Skills-Hub</pre>
       </section>
 
       <section class="secao" id="prompts" aria-labelledby="titulo-prompts">
-        <p class="kicker">05 · PROMPTS PARA COPIAR</p>
-        <h2 class="titulo-secao" id="titulo-prompts">Cole no Claude Code</h2>
-        <p class="texto-secao">Copie o bloco, cole na sessão do Claude Code e envie. Eles não dependem de nenhum dado pessoal.</p>
+        <p class="kicker" data-i18n="install.step5_kicker">05 · PROMPTS PARA COPIAR</p>
+        <h2 class="titulo-secao" id="titulo-prompts" data-i18n="install.step5_title">Cole no Claude Code</h2>
+        <p class="texto-secao" data-i18n="install.step5_desc">Copie o bloco, cole na sessão do Claude Code e envie. Eles não dependem de nenhum dado pessoal.</p>
 
         <div class="coluna">
           <article class="card">
@@ -1173,9 +1366,9 @@ Pedido: [descreva aqui]</pre>
       </section>
 
       <section class="secao" id="atualizar" aria-labelledby="titulo-atualizar">
-        <p class="kicker">06 · ATUALIZAR E REMOVER</p>
-        <h2 class="titulo-secao" id="titulo-atualizar">Sem surpresas</h2>
-        <p class="texto-secao">A abertura de sessão só consulta. Aplicar é sempre um comando seu.</p>
+        <p class="kicker" data-i18n="install.step6_kicker">06 · ATUALIZAR E REMOVER</p>
+        <h2 class="titulo-secao" id="titulo-atualizar" data-i18n="install.step6_title">Sem surpresas</h2>
+        <p class="texto-secao" data-i18n="install.step6_desc">A abertura de sessão só consulta. Aplicar é sempre um comando seu.</p>
 
         <div class="grade-2">
           <article class="card">
@@ -1202,9 +1395,9 @@ python scripts/skill_hub.py install --agents all</pre>
       </section>
 
       <section class="secao" id="problemas" aria-labelledby="titulo-problemas">
-        <p class="kicker">07 · PROBLEMAS COMUNS</p>
-        <h2 class="titulo-secao" id="titulo-problemas">Se algo falhar</h2>
-        <p class="texto-secao">A instalação para quando encontra algo que não pode sobrescrever. Nada é apagado por engano.</p>
+        <p class="kicker" data-i18n="install.step7_kicker">07 · PROBLEMAS COMUNS</p>
+        <h2 class="titulo-secao" id="titulo-problemas" data-i18n="install.step7_title">Se algo falhar</h2>
+        <p class="texto-secao" data-i18n="install.step7_desc">A instalação para quando encontra algo que não pode sobrescrever. Nada é apagado por engano.</p>
 
         <ol class="grade-problemas">
           <li class="card card-problema">
@@ -1264,6 +1457,7 @@ python scripts/skill_hub.py install --agents all</pre>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script src="hub/totais.js"></script>
+  <script src="hub/i18n.js"></script>
   <script src="hub/agentes.js"></script>
 
   <script>
@@ -1383,6 +1577,10 @@ python scripts/skill_hub.py install --agents all</pre>
       var caminhos = a.configurado || {};
       var fontes = lista(a.fontes_upstream);
       var nota = NOTAS_PERFIL[a.nome];
+      var catId = categoriaPorRotulo(a.categoria);
+      var catRotulo = (window.LAY_I18N && window.LAY_I18N.rotuloCategoria(catId, a.categoria)) || a.categoria;
+      var acessoTraduzido = (window.LAY_I18N && window.LAY_I18N.traduzirAcesso(a.acesso)) || a.acesso;
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
 
       var chips = skills.map(function (s, i) {
         var extra = i >= VISIVEIS_CHIPS;
@@ -1404,21 +1602,21 @@ python scripts/skill_hub.py install --agents all</pre>
       var globalTexto = 'Global: <code>' + esc(caminhos.global_caminho) + '</code>';
 
       return '<article class="card card-subagente" data-nome="' + nome + '">' +
-        '<div class="cs-linha"><h3 class="cs-nome">' + nome + '</h3><span class="acesso ' + (ACESSO_CLASSE[a.acesso] || 'acesso-neutro') + '">' + esc(a.acesso) + '</span></div>' +
-        '<p class="cs-dominio"><code>' + esc(a.dominio) + '</code><span class="badge" data-cat="' + esc(categoriaPorRotulo(a.categoria)) + '">' + esc(a.categoria) + '</span></p>' +
+        '<div class="cs-linha"><h3 class="cs-nome">' + nome + '</h3><span class="acesso ' + (ACESSO_CLASSE[a.acesso] || 'acesso-neutro') + '">' + esc(acessoTraduzido) + '</span></div>' +
+        '<p class="cs-dominio"><code>' + esc(a.dominio) + '</code><span class="badge" data-cat="' + esc(catId) + '">' + esc(catRotulo) + '</span></p>' +
         '<p class="cs-resumo">' + esc(a.resumo) + '</p>' +
         '<div class="cs-rodape">' +
           '<span class="cs-contagem">' + esc(contagem(ativas, 'skill', 'skills')) + '</span>' +
-          '<button type="button" class="botao botao-secundario botao-compacto" aria-expanded="false" aria-controls="det-' + nome + '" data-detalhe="det-' + nome + '">Detalhes<span class="sr-only"> de ' + nome + '</span></button>' +
+          '<button type="button" class="botao botao-secundario botao-compacto" aria-expanded="false" aria-controls="det-' + nome + '" data-detalhe="det-' + nome + '">' + esc(t('catalog.btn_detail', 'Detalhes')) + '<span class="sr-only"> de ' + nome + '</span></button>' +
         '</div>' +
         '<div class="cs-detalhe" id="det-' + nome + '" hidden>' +
           '<dl class="lista-campos">' +
-            '<div class="campo-linha"><dt>Use quando</dt><dd>' + esc(a.use_quando) + '</dd></div>' +
-            '<div class="campo-linha"><dt>Não use para</dt><dd>' + esc(a.nao_use_para_completo || a.nao_use_para) + '</dd></div>' +
-            '<div class="campo-linha"><dt>Ferramentas</dt><dd><p class="ferr">' + esc(lista(a.ferramentas).join(', ')) + '</p></dd></div>' +
-            '<div class="campo-linha"><dt>Skills ativas (' + ativas + ')</dt><dd><ul class="chips" id="ch-' + nome + '">' + chips + '</ul>' + botaoChips + '</dd></div>' +
-            '<div class="campo-linha"><dt>Fontes de upstream</dt><dd><ul class="fontes-lista">' + fontesHtml + '</ul></dd></div>' +
-            '<div class="campo-linha"><dt>Configurado</dt><dd><ul class="caminhos"><li>' + projetoTexto + '</li><li>' + globalTexto + '</li></ul><p>Se os dois existirem, vale o do projeto.</p></dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.use_when', 'Use quando')) + '</dt><dd>' + esc(a.use_quando) + '</dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.dont_use', 'Não use para')) + '</dt><dd>' + esc(a.nao_use_para_completo || a.nao_use_para) + '</dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('install.th_tools', 'Ferramentas')) + '</dt><dd><p class="ferr">' + esc(lista(a.ferramentas).join(', ')) + '</p></dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.skills_title', 'Skills ativas')) + ' (' + ativas + ')</dt><dd><ul class="chips" id="ch-' + nome + '">' + chips + '</ul>' + botaoChips + '</dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.sources_title', 'Fontes de upstream')) + '</dt><dd><ul class="fontes-lista">' + fontesHtml + '</ul></dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.config_title', 'Configurado')) + '</dt><dd><ul class="caminhos"><li>' + projetoTexto + '</li><li>' + globalTexto + '</li></ul><p>Se os dois existirem, vale o do projeto.</p></dd></div>' +
           '</dl>' +
           (nota ? '<p class="nota-perfil">' + esc(nota) + '</p>' : '') +
         '</div>' +
@@ -1489,6 +1687,12 @@ python scripts/skill_hub.py install --agents all</pre>
       montarSubagentes();
       montarAtribuicoes();
       ligarEventos();
+
+      window.addEventListener('lay:localechange', function () {
+        montarLegenda();
+        montarSubagentes();
+        montarAtribuicoes();
+      });
     }
 
     iniciar();

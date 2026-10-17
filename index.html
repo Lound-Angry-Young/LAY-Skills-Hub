@@ -881,7 +881,146 @@
     .md th, .md td { padding: 8px 10px; vertical-align: top; text-align: left; border-bottom: 1px solid var(--borda); }
     .md th { background: var(--amarelo); color: #000; font: 800 11px var(--fonte-mono); letter-spacing: .04em; text-transform: uppercase; }
 
+    
     /* ==========================================================================
+       LANGUAGE SELECTOR (Portifolio-LAY: popover com bandeiras pt-BR & en)
+       ========================================================================== */
+    .lang-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+    }
+    .globe-btn {
+      height: 38px;
+      width: 38px;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      color: var(--osso, #faf5e9);
+      border: 1px solid var(--osso, #faf5e9);
+      cursor: pointer;
+      box-shadow: 2px 2px 0 #000;
+      transition: background 120ms ease, color 120ms ease, transform 120ms ease;
+    }
+    .globe-btn:hover,
+    .globe-btn[aria-expanded="true"] {
+      background: var(--osso, #faf5e9);
+      color: #000000;
+      transform: translate(-1px, -1px);
+    }
+    .globe-btn:focus-visible {
+      outline: 2px dashed var(--magenta, #ff007f);
+      outline-offset: 2px;
+    }
+    .popover-lang {
+      position: absolute;
+      top: calc(100% + 8px);
+      right: 0;
+      width: 230px;
+      background: #ffffff;
+      border: 2px solid #000000;
+      box-shadow: 4px 4px 0 var(--magenta, #ff007f);
+      z-index: 120;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      animation: popInLang 160ms cubic-bezier(0.34, 1.8, 0.64, 1);
+    }
+    .popover-lang[hidden] { display: none !important; }
+    @keyframes popInLang {
+      from { opacity: 0; transform: translateY(-6px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .popover-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 10px;
+      background: #000000;
+      color: #fff201;
+      font-family: var(--fonte-mono, monospace);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .popover-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .close-lang-btn {
+      background: transparent;
+      border: none;
+      color: #fff201;
+      font-size: 18px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 0 4px;
+    }
+    .close-lang-btn:hover { color: var(--magenta, #ff007f); }
+    .lang-list {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .lang-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 10px 14px;
+      border: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      background: #ffffff;
+      color: #000000;
+      font-family: var(--fonte-mono, monospace);
+      font-size: 12px;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+      transition: background 150ms ease, color 150ms ease;
+    }
+    .lang-option:last-child { border-bottom: none; }
+    .lang-option:hover:not([data-active="true"]) { background: #f0ede1; }
+    .lang-option[data-active="true"][data-lang="pt-BR"] {
+      background: #00843d; /* Verde bandeira do Brasil */
+      color: #faf5e9;
+    }
+    .lang-option[data-active="true"][data-lang="en"] {
+      background: #002868; /* Azul marinho da bandeira dos EUA */
+      color: #faf5e9;
+    }
+    .flag-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 1px;
+      overflow: hidden;
+      box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.15);
+    }
+    .lang-label {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.2;
+    }
+    .lang-name { font-size: 12px; }
+    .lang-code { font-size: 10px; opacity: 0.85; }
+    .lang-check {
+      font-family: var(--fonte-mono, monospace);
+      font-size: 11px;
+      font-weight: 700;
+      color: #fff201;
+    }
+    .lang-option[data-active="true"][data-lang="en"] .lang-check { color: #faf5e9; }
+
+/* ==========================================================================
        MOVIMENTO REDUZIDO (animações param; cores e sombras ficam)
        ========================================================================== */
     @media (prefers-reduced-motion: reduce) {
@@ -914,7 +1053,7 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Ir para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" data-i18n="header.skip_link">Ir para o conteúdo</a>
 
   <div class="fundo-halftone" aria-hidden="true">
     <canvas id="halftone-canvas"></canvas>
@@ -947,10 +1086,64 @@
         <img class="marca-logo" src="hub/assets/lay/Somente as caveiras/Caveira-01.svg" alt="LAY®" width="48" height="48">
         <div>
           <p class="marca-titulo">Skills Hub<span class="marca-reg">®</span></p>
-          <p class="marca-sub">Repertório central de capacidades &amp; regras para agentes</p>
+          <p class="marca-sub" data-i18n="header.sub">Repertório central de capacidades &amp; regras para agentes</p>
         </div>
       </div>
       <div class="cabecalho-direita">
+        <div class="lang-wrap" id="lang-wrap">
+          <button type="button" class="globe-btn" id="lang-btn" aria-expanded="false" aria-haspopup="dialog" aria-label="Alterar idioma / Change language">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+            </svg>
+          </button>
+          <div class="popover-lang" id="lang-popover" role="dialog" aria-label="Seletor de idioma / Language selector" hidden>
+            <div class="popover-bar">
+              <span class="popover-title">🌐 <span data-i18n="lang.title">IDIOMA / LANGUAGE</span></span>
+              <button type="button" class="close-lang-btn" id="lang-close-btn" aria-label="Fechar / Close">×</button>
+            </div>
+            <div class="lang-list" role="listbox" aria-label="Idiomas disponíveis / Available languages">
+              <button type="button" role="option" aria-selected="true" data-active="true" data-lang="pt-BR" class="lang-option">
+                <span class="flag-wrap">
+                  <svg width="24" height="17" viewBox="0 0 24 17" fill="none" aria-hidden="true" style="display:block;flex-shrink:0;">
+                    <rect width="24" height="17" fill="#009739" />
+                    <polygon points="12,2 21.5,8.5 12,15 2.5,8.5" fill="#FFF201" />
+                    <circle cx="12" cy="8.5" r="3.4" fill="#002776" />
+                    <path d="M9.5 8.2 Q12 9.5 14.5 7.6" stroke="#FAF5E9" stroke-width="0.8" fill="none" />
+                  </svg>
+                </span>
+                <span class="lang-label">
+                  <span class="lang-name">Português (Brasil)</span>
+                  <span class="lang-code">pt-BR</span>
+                </span>
+                <span class="lang-check">[✓]</span>
+              </button>
+              <button type="button" role="option" aria-selected="false" data-active="false" data-lang="en" class="lang-option">
+                <span class="flag-wrap">
+                  <svg width="24" height="17" viewBox="0 0 24 17" fill="none" aria-hidden="true" style="display:block;flex-shrink:0;">
+                    <rect width="24" height="17" fill="#FFFFFF" />
+                    <rect y="0" width="24" height="2.4" fill="#C21818" />
+                    <rect y="4.8" width="24" height="2.4" fill="#C21818" />
+                    <rect y="9.6" width="24" height="2.4" fill="#C21818" />
+                    <rect y="14.4" width="24" height="2.6" fill="#C21818" />
+                    <rect width="10.5" height="9.6" fill="#002868" />
+                    <circle cx="2.8" cy="2.4" r="0.75" fill="#FAF5E9" />
+                    <circle cx="7.7" cy="2.4" r="0.75" fill="#FAF5E9" />
+                    <circle cx="5.25" cy="4.8" r="0.75" fill="#FAF5E9" />
+                    <circle cx="2.8" cy="7.2" r="0.75" fill="#FAF5E9" />
+                    <circle cx="7.7" cy="7.2" r="0.75" fill="#FAF5E9" />
+                  </svg>
+                </span>
+                <span class="lang-label">
+                  <span class="lang-name">English (US)</span>
+                  <span class="lang-code">en</span>
+                </span>
+                <span class="lang-check" style="display:none;">[✓]</span>
+              </button>
+            </div>
+          </div>
+        </div>
         <p class="status"><span class="status-ponto" aria-hidden="true"></span><span><span data-total="skills">—</span> skills</span></p>
         <img class="selo" src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Pernambuco para o Mundo" width="56" height="56">
       </div>
@@ -959,25 +1152,25 @@
     <main id="conteudo" class="principal" tabindex="-1">
       <section class="hero" aria-labelledby="titulo-principal">
         <img class="hero-tubarao" src="hub/assets/lay/tubarao-hero.webp" alt="" width="900" height="428" loading="lazy" decoding="async" aria-hidden="true">
-        <p class="rotulo">Arquitetura modular • evidências determinísticas</p>
-        <h1 class="titulo-principal" id="titulo-principal">Ecossistema total <span class="destaque-amarelo">de skills de agentes</span> <span class="destaque-magenta">Pernambuco → mundo</span></h1>
-        <p class="impacto">Skills construídas com componentes de última geração e alta performance.</p>
-        <p class="intro">Hub visual interativo reunindo capacidades especializadas e fontes de referência de elite mundial: orquestração central de agentes (<strong class="nome">lay-orchestrator</strong>, <strong class="nome">Caveman</strong>, <strong class="nome">Graphify</strong>), referências de ponta (<strong class="nome">Addy Osmani</strong>, <strong class="nome">Vercel Labs</strong>, <strong class="nome">Semgrep</strong>, <strong class="nome">Playwright</strong>) e bibliotecas criativas (<strong class="nome">Vanta 3D</strong>, <strong class="nome">React Bits</strong>, <strong class="nome">Lenis Smooth Scroll</strong> e <strong class="nome">Libraries.dev</strong>). Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.</p>
+        <p class="rotulo" data-i18n="hero.badge">Arquitetura modular • evidências determinísticas</p>
+        <h1 class="titulo-principal" id="titulo-principal" data-i18n="hero.title">Ecossistema total <span class="destaque-amarelo">de skills de agentes</span> <span class="destaque-magenta">Pernambuco → mundo</span></h1>
+        <p class="impacto" data-i18n="hero.impact">Skills construídas com componentes de última geração e alta performance.</p>
+        <p class="intro" data-i18n="hero.intro">Hub visual interativo reunindo capacidades especializadas e fontes de referência de elite mundial: orquestração central de agentes (<strong class="nome">lay-orchestrator</strong>, <strong class="nome">Caveman</strong>, <strong class="nome">Graphify</strong>), referências de ponta (<strong class="nome">Addy Osmani</strong>, <strong class="nome">Vercel Labs</strong>, <strong class="nome">Semgrep</strong>, <strong class="nome">Playwright</strong>) e bibliotecas criativas (<strong class="nome">Vanta 3D</strong>, <strong class="nome">React Bits</strong>, <strong class="nome">Lenis Smooth Scroll</strong> e <strong class="nome">Libraries.dev</strong>). Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.</p>
         <ul class="indicadores" aria-label="Números do hub">
-          <li class="indicador"><span class="ind-valor" data-total="skills">—</span><span class="ind-rotulo">skills</span></li>
-          <li class="indicador"><span class="ind-valor" data-total="fontes">—</span><span class="ind-rotulo">fontes upstream</span></li>
-          <li class="indicador"><span class="ind-valor" data-total="subagentes">—</span><span class="ind-rotulo">especialistas</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="skills">—</span><span class="ind-rotulo" data-i18n="hero.stat_skills">skills</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="fontes">—</span><span class="ind-rotulo" data-i18n="hero.stat_sources">fontes upstream</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="subagentes">—</span><span class="ind-rotulo" data-i18n="hero.stat_specialists">especialistas</span></li>
         </ul>
         <div class="acoes">
-          <button type="button" class="botao botao-primario" id="btn-prompt-mestre">Copiar prompt mestre</button>
-          <a class="botao botao-secundario" href="instalacao.html#subagentes">Instalar subagentes</a>
+          <button type="button" class="botao botao-primario" id="btn-prompt-mestre" data-i18n="hero.btn_master_prompt">Copiar prompt mestre</button>
+          <a class="botao botao-secundario" href="instalacao.html#subagentes" data-i18n="hero.btn_install">Instalar subagentes</a>
           <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
         </div>
       </section>
 
       <section class="especialistas" id="especialistas" aria-labelledby="titulo-especialistas">
         <div class="cabecalho-aba">
-          <p class="kicker">ESPECIALISTAS AUTÔNOMOS • CLAUDE CODE &amp; ECOSSISTEMA</p>
+          <p class="kicker" data-i18n="specialists.kicker">ESPECIALISTAS AUTÔNOMOS • CLAUDE CODE &amp; ECOSSISTEMA</p>
           <h2 class="titulo-secao" id="titulo-especialistas">ESQUADRÃO DE AGENTES</h2>
         </div>
         <p class="especialistas-subtitulo">Selecione um agente especialista para inspecionar capacidades ativas, ferramentas, domínio e instruções diretas de ativação.</p>
@@ -1005,22 +1198,22 @@
           <p class="aviso-sem-js">Sem JavaScript, esta lista mostra só os nomes. Domínio, acesso e fontes ficam em <a href="instalacao.html#subagentes">a página de subagentes</a>.</p>
         </noscript>
         <div class="acoes-secao">
-          <button type="button" class="botao botao-secundario botao-compacto" id="btn-mais-especialistas" aria-controls="grade-especialistas" aria-expanded="false" hidden>Ver os outros</button>
-          <a class="link-secao" href="instalacao.html#subagentes">Página de subagentes</a>
-          <a class="link-secao" href="instalacao.html#prompts">Prompts para copiar</a>
+          <button type="button" class="botao botao-secundario botao-compacto" id="btn-mais-especialistas" aria-controls="grade-especialistas" aria-expanded="false" hidden data-i18n="specialists.see_others">Ver os outros</button>
+          <a class="link-secao" href="instalacao.html#subagentes" data-i18n="specialists.subagents_page">Página de subagentes</a>
+          <a class="link-secao" href="instalacao.html#prompts" data-i18n="specialists.prompts_to_copy">Prompts para copiar</a>
         </div>
       </section>
 
       <section class="secao" id="catalogo" aria-labelledby="titulo-catalogo">
         <div class="cabecalho-aba">
-          <p class="kicker">Catálogo</p>
-          <h2 class="titulo-secao" id="titulo-catalogo">Skills</h2>
+          <p class="kicker" data-i18n="catalog.kicker">Catálogo</p>
+          <h2 class="titulo-secao" id="titulo-catalogo" data-i18n="catalog.title">Skills</h2>
         </div>
 
         <div class="busca-fixa">
           <div class="campo-busca">
             <span class="prompt-prefixo" aria-hidden="true">root@lay:~$</span>
-            <input id="busca" type="search" placeholder="Buscar skill, autor ou fonte" aria-label="Buscar skill, autor ou fonte" autocomplete="off">
+            <input id="busca" type="search" placeholder="Buscar skill, autor ou fonte" data-i18n-ph="catalog.search_ph" aria-label="Buscar skill, autor ou fonte" autocomplete="off">
           </div>
         </div>
 
@@ -1028,22 +1221,22 @@
           <div class="chips-categorias" id="chips-categorias" role="group" aria-label="Categorias"></div>
           <div class="linha-filtros">
             <div class="campo-categoria">
-              <label for="select-categoria">Categoria</label>
+              <label for="select-categoria" data-i18n="catalog.cat_label">Categoria</label>
               <select id="select-categoria" class="select"></select>
             </div>
-            <button type="button" class="botao botao-secundario" id="btn-filtros" aria-expanded="false" aria-controls="painel-filtros">Filtros</button>
+            <button type="button" class="botao botao-secundario" id="btn-filtros" aria-expanded="false" aria-controls="painel-filtros" data-i18n="catalog.filters_btn">Filtros</button>
           </div>
           <div class="painel-filtros" id="painel-filtros">
             <div class="campo">
-              <label for="select-fonte">Fonte</label>
+              <label for="select-fonte" data-i18n="catalog.source_label">Fonte</label>
               <select id="select-fonte" class="select"></select>
             </div>
             <div class="campo">
-              <label for="select-ordem">Ordenação</label>
+              <label for="select-ordem" data-i18n="catalog.order_label">Ordenação</label>
               <select id="select-ordem" class="select">
-                <option value="default">Ordem padrão</option>
-                <option value="name">Nome (A–Z)</option>
-                <option value="category">Categoria</option>
+                <option value="default" data-i18n="catalog.order_default">Ordem padrão</option>
+                <option value="name" data-i18n="catalog.order_name">Nome (A–Z)</option>
+                <option value="category" data-i18n="catalog.order_category">Categoria</option>
               </select>
             </div>
           </div>
@@ -1051,14 +1244,14 @@
 
         <div class="barra-resultado">
           <p class="status-resultado" id="status-resultado" role="status" tabindex="-1">Carregando skills…</p>
-          <button type="button" class="botao botao-magenta" id="btn-plano-abrir">Montar plano</button>
+          <button type="button" class="botao botao-magenta" id="btn-plano-abrir" data-i18n="catalog.btn_build_plan">Montar plano</button>
         </div>
 
         <div class="grade-skills" id="grade-skills"></div>
         <noscript><p class="aviso-sem-js">A lista de skills precisa de JavaScript. Os comandos de instalação estão em <a href="instalacao.html">instalacao.html</a>.</p></noscript>
         <div class="mais-skills">
-          <button type="button" class="botao botao-secundario" id="btn-mais-skills" hidden>Mostrar mais</button>
-          <button type="button" class="botao botao-secundario" id="btn-tudo-skills" hidden>Mostrar tudo</button>
+          <button type="button" class="botao botao-secundario" id="btn-mais-skills" hidden data-i18n="catalog.btn_more">Mostrar mais</button>
+          <button type="button" class="botao botao-secundario" id="btn-tudo-skills" hidden data-i18n="catalog.btn_all">Mostrar tudo</button>
         </div>
       </section>
     </main>
@@ -1068,21 +1261,21 @@
     <div class="container rodape-interno">
       <p class="rodape-marca">LAY® Skills Hub</p>
       <nav class="rodape-links" aria-label="Links do rodapé">
-        <a href="instalacao.html">Instalação dos subagentes</a>
+        <a href="instalacao.html" data-i18n="footer.subagents">Instalação dos subagentes</a>
         <a href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub<span class="sr-only"> (abre em nova aba)</span></a>
       </nav>
       <details class="fontes" id="bloco-fontes">
-        <summary>Fontes upstream (<span data-total="fontes">—</span>)</summary>
+        <summary><span data-i18n="footer.upstream_sources">Fontes upstream</span> (<span data-total="fontes">—</span>)</summary>
         <ul class="lista-fontes" id="lista-fontes"></ul>
       </details>
     </div>
   </footer>
 
   <div class="barra-plano" id="barra-plano" hidden>
-    <p class="plano-resumo"><span class="plano-n" id="plano-n">0</span><span class="ocultar-mobile">skills </span>no plano</p>
+    <p class="plano-resumo"><span class="plano-n" id="plano-n">0</span> <span class="ocultar-mobile" data-i18n="plan.skills_in_plan">skills no plano</span></p>
     <div class="plano-acoes">
-      <button type="button" class="botao botao-magenta botao-compacto" id="btn-gerar-prompt">Gerar prompt</button>
-      <button type="button" class="botao botao-secundario botao-compacto" id="btn-limpar-plano">Limpar</button>
+      <button type="button" class="botao botao-magenta botao-compacto" id="btn-gerar-prompt" data-i18n="plan.btn_generate_prompt">Gerar prompt</button>
+      <button type="button" class="botao botao-secundario botao-compacto" id="btn-limpar-plano" data-i18n="plan.btn_clear">Limpar</button>
     </div>
   </div>
 
@@ -1091,14 +1284,14 @@
       <div class="modal-topo">
         <div class="modal-cabecalho">
           <p class="modal-autor" id="modal-skill-autor"></p>
-          <h2 class="modal-titulo" id="modal-skill-titulo">Inspeção de skill</h2>
+          <h2 class="modal-titulo" id="modal-skill-titulo" data-i18n="modal.skill_title">Inspeção de skill</h2>
         </div>
-        <button type="button" class="botao botao-fechar" data-fechar>Fechar</button>
+        <button type="button" class="botao botao-fechar" data-fechar data-i18n="modal.close">Fechar</button>
       </div>
       <div class="modal-corpo md" id="modal-skill-corpo" tabindex="0"></div>
       <div class="modal-rodape">
         <a class="botao botao-secundario" id="modal-skill-repo" href="#" target="_blank" rel="noopener noreferrer">Repositório fonte<span class="sr-only"> (abre em nova aba)</span></a>
-        <button type="button" class="botao botao-primario" id="modal-skill-prompt">Copiar prompt desta skill</button>
+        <button type="button" class="botao botao-primario" id="modal-skill-prompt" data-i18n="modal.copy_skill_prompt">Copiar prompt desta skill</button>
       </div>
     </div>
   </div>
@@ -1107,12 +1300,12 @@
     <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-mestre-titulo" tabindex="-1">
       <div class="modal-topo">
         <div class="modal-cabecalho">
-          <h2 class="modal-titulo" id="modal-mestre-titulo">Prompt mestre geral: base para novos projetos</h2>
+          <h2 class="modal-titulo" id="modal-mestre-titulo" data-i18n="modal.master_title">Prompt mestre geral: base para novos projetos</h2>
         </div>
-        <button type="button" class="botao botao-fechar" data-fechar>Fechar</button>
+        <button type="button" class="botao botao-fechar" data-fechar data-i18n="modal.close">Fechar</button>
       </div>
       <div class="modal-corpo" tabindex="0">
-        <p class="modal-intro">Copie este prompt e cole no seu agente (Google Antigravity, OpenAI Codex ou Claude Code) ao iniciar qualquer projeto. Ele amarra o hub local, as práticas de engenharia de software, o diagnóstico Graphify e a árvore de <span data-total="skills">—</span> skills.</p>
+        <p class="modal-intro" data-i18n="modal.master_intro">Copie este prompt e cole no seu agente (Google Antigravity, OpenAI Codex ou Claude Code) ao iniciar qualquer projeto. Ele amarra o hub local, as práticas de engenharia de software, o diagnóstico Graphify e a árvore de <span data-total="skills">—</span> skills.</p>
         <pre class="bloco-texto" id="prompt-mestre-texto"># PROMPT MESTRE DE PROJETO — REPERTÓRIO OFICIAL DE SKILLS
 Você é o agente líder técnico e de engenharia operando com este repositório de habilidades.
 
@@ -1162,16 +1355,16 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
     <div class="modal-caixa" role="dialog" aria-modal="true" aria-labelledby="modal-plano-titulo" tabindex="-1">
       <div class="modal-topo">
         <div class="modal-cabecalho">
-          <h2 class="modal-titulo" id="modal-plano-titulo">Planejador sob medida de novo projeto</h2>
+          <h2 class="modal-titulo" id="modal-plano-titulo" data-i18n="modal.plan_title">Planejador sob medida de novo projeto</h2>
         </div>
-        <button type="button" class="botao botao-fechar" data-fechar>Fechar</button>
+        <button type="button" class="botao botao-fechar" data-fechar data-i18n="modal.close">Fechar</button>
       </div>
       <div class="modal-corpo" tabindex="0">
-        <p class="modal-intro">Prompt gerado com base nas skills selecionadas para o seu projeto. Sem seleção, usa as primeiras skills do catálogo.</p>
+        <p class="modal-intro" data-i18n="modal.plan_intro">Prompt gerado com base nas skills selecionadas para o seu projeto. Sem seleção, usa as primeiras skills do catálogo.</p>
         <pre class="bloco-texto" id="planejador-texto"></pre>
       </div>
       <div class="modal-rodape">
-        <button type="button" class="botao botao-magenta" id="btn-copiar-planejador">Copiar prompt sob medida</button>
+        <button type="button" class="botao botao-magenta" id="btn-copiar-planejador" data-i18n="plan.btn_copy">Copiar prompt sob medida</button>
       </div>
     </div>
   </div>
@@ -1180,6 +1373,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
 
   <script src="hub/data.js"></script>
   <script src="hub/totais.js"></script>
+  <script src="hub/i18n.js"></script>
   <script src="hub/agentes.js"></script>
 
   <script>
@@ -1276,6 +1470,10 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
     }
 
     function rotuloPorId(id) {
+      if (window.LAY_I18N) {
+        var r = window.LAY_I18N.rotuloCategoria(id, null);
+        if (r) return r;
+      }
       for (var i = 0; i < CATEGORIAS.length; i++) {
         if (CATEGORIAS[i].id === id) return CATEGORIAS[i].label;
       }
@@ -1591,14 +1789,17 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       var nome = esc(a.nome);
       var ativas = typeof a.skills_ativas === 'number' ? a.skills_ativas : lista(a.skills).length;
       var meta = ICONES_AGENTES[a.nome] || { icone: '⚡', glifo: 'AGENTE', subtitulo: esc(a.dominio) };
+      var sub = (window.LAY_I18N && window.LAY_I18N.subtituloAgente(a.nome, meta.subtitulo)) || meta.subtitulo;
+      var catId = categoriaPorRotulo(a.categoria);
+      var catRotulo = rotuloPorId(catId) || a.categoria;
       return '<button type="button" role="tab" class="card-seletor-agente' + (isAtivo ? ' is-ativo' : '') + '" data-agente-nome="' + nome + '" aria-selected="' + (isAtivo ? 'true' : 'false') + '" aria-controls="painel-agente-destaque">' +
         '<div class="csa-topo">' +
           '<span class="csa-icone">' + meta.icone + '</span>' +
           '<span class="csa-contagem">' + esc(contagem(ativas, 'SKILL', 'SKILLS')) + '</span>' +
         '</div>' +
         '<h3 class="csa-nome">' + nome + '</h3>' +
-        '<span class="badge csa-badge" data-cat="' + esc(categoriaPorRotulo(a.categoria)) + '">' + esc(a.categoria) + '</span>' +
-        '<p class="csa-subtitulo">' + esc(meta.subtitulo) + '</p>' +
+        '<span class="badge csa-badge" data-cat="' + esc(catId) + '">' + esc(catRotulo) + '</span>' +
+        '<p class="csa-subtitulo">' + esc(sub) + '</p>' +
       '</button>';
     }
 
@@ -1613,6 +1814,10 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       var caminhos = a.configurado || {};
       var nota = NOTAS_PERFIL[a.nome];
       var meta = ICONES_AGENTES[a.nome] || { icone: '⚡', glifo: 'AGENTE', subtitulo: esc(a.dominio) };
+      var catId = categoriaPorRotulo(a.categoria);
+      var catRotulo = rotuloPorId(catId) || a.categoria;
+      var acessoTraduzido = (window.LAY_I18N && window.LAY_I18N.traduzirAcesso(a.acesso)) || a.acesso;
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
 
       var chipsHtml = skills.map(function (s) {
         return '<button type="button" class="pad-skill-chip" data-acao="detalhe" data-id="lay-' + esc(s) + '"><span>⚡</span> <code>' + esc(s) + '</code></button>';
@@ -1634,43 +1839,43 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
             '<div class="pad-titulos">' +
               '<h3>' + nome + '</h3>' +
               '<div class="pad-tags">' +
-                '<span class="badge" data-cat="' + esc(categoriaPorRotulo(a.categoria)) + '">' + esc(a.categoria) + '</span>' +
-                '<span class="acesso ' + (ACESSO_CLASSE[a.acesso] || 'acesso-neutro') + '">' + esc(a.acesso) + '</span>' +
-                '<span class="ce-contagem">' + esc(contagem(ativas, 'SKILL ATIVA', 'SKILLS ATIVAS')) + '</span>' +
+                '<span class="badge" data-cat="' + esc(catId) + '">' + esc(catRotulo) + '</span>' +
+                '<span class="acesso ' + (ACESSO_CLASSE[a.acesso] || 'acesso-neutro') + '">' + esc(acessoTraduzido) + '</span>' +
+                '<span class="ce-contagem">' + esc(contagem(ativas, t('pad.active_skill_singular', 'SKILL ATIVA'), t('pad.active_skill_plural', 'SKILLS ATIVAS'))) + '</span>' +
               '</div>' +
             '</div>' +
           '</div>' +
           '<div class="pad-acoes">' +
-            '<button type="button" class="botao botao-primario botao-compacto" data-copiar-agente="' + esc(a.nome) + '">Copiar Instrução de Ativação</button>' +
-            '<a class="botao botao-secundario botao-compacto" href="instalacao.html#subagentes">Como Instalar</a>' +
+            '<button type="button" class="botao botao-primario botao-compacto" data-copiar-agente="' + esc(a.nome) + '">' + esc(t('pad.copy_cmd', 'Copiar Instrução de Ativação')) + '</button>' +
+            '<a class="botao botao-secundario botao-compacto" href="instalacao.html#subagentes">' + esc(t('pad.how_install', 'Como Instalar')) + '</a>' +
           '</div>' +
         '</div>' +
         '<div class="pad-corpo">' +
           '<div class="pad-bloco">' +
-            '<h4 class="pad-bloco-titulo">Missão e Gatilhos de Decisão</h4>' +
+            '<h4 class="pad-bloco-titulo">' + esc(t('pad.mission_title', 'Missão e Gatilhos de Decisão')) + '</h4>' +
             '<div class="pad-gatilhos">' +
-              '<div class="pad-gatilho-item"><span class="pad-tag-quando">USE QUANDO</span> ' + esc(a.use_quando) + '</div>' +
-              (a.nao_use_para_completo ? '<div class="pad-gatilho-item"><span class="pad-tag-nao-use">NÃO USE PARA</span> ' + esc(a.nao_use_para_completo) + '</div>' : '') +
+              '<div class="pad-gatilho-item"><span class="pad-tag-quando">' + esc(t('pad.use_when', 'USE QUANDO')) + '</span> ' + esc(a.use_quando) + '</div>' +
+              (a.nao_use_para_completo ? '<div class="pad-gatilho-item"><span class="pad-tag-nao-use">' + esc(t('pad.dont_use', 'NÃO USE PARA')) + '</span> ' + esc(a.nao_use_para_completo) + '</div>' : '') +
               (nota ? '<p class="nota-perfil">⚠️ ' + esc(nota) + '</p>' : '') +
             '</div>' +
-            '<h4 class="pad-bloco-titulo" style="margin-top:10px;">Ferramentas Habilitadas</h4>' +
+            '<h4 class="pad-bloco-titulo" style="margin-top:10px;">' + esc(t('pad.tools_title', 'Ferramentas Habilitadas')) + '</h4>' +
             '<p class="ferr">' + esc(lista(a.ferramentas).join(' · ')) + '</p>' +
           '</div>' +
           '<div class="pad-bloco">' +
-            '<h4 class="pad-bloco-titulo">Skills Ativas no Domínio (' + ativas + ') <span style="font-weight:400; font-size:10px; color:var(--cinza);">Clique para inspecionar</span></h4>' +
+            '<h4 class="pad-bloco-titulo">' + esc(t('pad.skills_title', 'Skills Ativas no Domínio')) + ' (' + ativas + ') <span style="font-weight:400; font-size:10px; color:var(--cinza);">' + esc(t('pad.skills_hint', 'Clique para inspecionar')) + '</span></h4>' +
             '<div class="pad-skills-grid">' + chipsHtml + '</div>' +
           '</div>' +
         '</div>' +
         '<div class="pad-corpo" style="margin-top:12px;">' +
           '<div class="pad-bloco">' +
-            '<h4 class="pad-bloco-titulo">Fontes e Provedores Upstream</h4>' +
+            '<h4 class="pad-bloco-titulo">' + esc(t('pad.sources_title', 'Fontes e Provedores Upstream')) + '</h4>' +
             '<div class="pad-fontes-grid">' + fontesHtml + '</div>' +
           '</div>' +
           '<div class="pad-bloco pad-caminhos-box">' +
-            '<h4 class="pad-bloco-titulo">Configuração e Arquivos</h4>' +
+            '<h4 class="pad-bloco-titulo">' + esc(t('pad.config_title', 'Configuração e Arquivos')) + '</h4>' +
             '<ul class="caminhos" style="margin:4px 0;">' +
-              '<li>Projeto: <code>' + (caminhos.projeto ? esc(caminhos.projeto_caminho) : '.claude/agents/' + nome + '.md') + '</code></li>' +
-              '<li>Global: <code>' + esc(caminhos.global_caminho) + '</code></li>' +
+              '<li>' + esc(t('pad.project', 'Projeto')) + ': <code>' + (caminhos.projeto ? esc(caminhos.projeto_caminho) : '.claude/agents/' + nome + '.md') + '</code></li>' +
+              '<li>' + esc(t('pad.global', 'Global')) + ': <code>' + esc(caminhos.global_caminho) + '</code></li>' +
             '</ul>' +
             '<p style="margin-top:6px; color:var(--cinza); font-size:11px;">' + esc(cliente) + '.' + notaCliente + '</p>' +
           '</div>' +
@@ -1715,23 +1920,30 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
     // CATÁLOGO DE SKILLS (lotes de 24)
     // =========================================================================
     function montarControles() {
-      var todas = 'TODAS (' + SKILLS.length + ')';
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
+      var todas = (t('catalog.cat_all', 'TODAS')) + ' (' + SKILLS.length + ')';
+      var catAtual = estado.categoria || 'all';
       $('chips-categorias').innerHTML =
-        '<button type="button" class="chip-categoria" data-categoria="all" aria-pressed="true">' + esc(todas) + '</button>' +
+        '<button type="button" class="chip-categoria" data-categoria="all" aria-pressed="' + (catAtual === 'all' ? 'true' : 'false') + '">' + esc(todas) + '</button>' +
         CATEGORIAS.map(function (c) {
-          return '<button type="button" class="chip-categoria" data-categoria="' + c.id + '" aria-pressed="false">' + esc(c.label) + '</button>';
+          var rot = rotuloPorId(c.id) || c.label;
+          var ativo = catAtual === c.id;
+          return '<button type="button" class="chip-categoria" data-categoria="' + c.id + '" aria-pressed="' + (ativo ? 'true' : 'false') + '">' + esc(rot) + '</button>';
         }).join('');
 
       $('select-categoria').innerHTML = '<option value="all">' + esc(todas) + '</option>' +
-        CATEGORIAS.map(function (c) { return '<option value="' + c.id + '">' + esc(c.label) + '</option>'; }).join('');
+        CATEGORIAS.map(function (c) {
+          var rot = rotuloPorId(c.id) || c.label;
+          return '<option value="' + c.id + '"' + (catAtual === c.id ? ' selected' : '') + '>' + esc(rot) + '</option>';
+        }).join('');
 
       var vistas = {};
-      var opcoesFonte = '<option value="all">Todas as fontes</option>';
+      var opcoesFonte = '<option value="all">' + esc(t('catalog.source_all', 'Todas as fontes')) + '</option>';
       SKILLS.forEach(function (s) {
         var chave = s.source || 'local';
         if (vistas[chave]) return;
         vistas[chave] = true;
-        opcoesFonte += '<option value="' + esc(chave) + '">' + esc(s.sourceTitle || chave) + '</option>';
+        opcoesFonte += '<option value="' + esc(chave) + '"' + (estado.fonte === chave ? ' selected' : '') + '>' + esc(s.sourceTitle || chave) + '</option>';
       });
       $('select-fonte').innerHTML = opcoesFonte;
     }
@@ -1788,19 +2000,21 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
         '<h3 class="cs-titulo">' + esc(s.name) + '</h3>' +
         '<p class="cs-resumo">' + esc(resumoSkill(s.description)) + '</p>' +
         '<div class="cs-acoes">' +
-          '<button type="button" class="botao-acao botao-acao-prompt" data-acao="prompt" data-id="' + id + '">Prompt</button>' +
-          '<button type="button" class="botao-acao" data-acao="detalhe" data-id="' + id + '" aria-haspopup="dialog">Detalhe</button>' +
-          '<button type="button" class="botao-acao" data-acao="plano" data-id="' + id + '" aria-pressed="' + (marcado ? 'true' : 'false') + '">' + (marcado ? '✓ Plano' : 'Plano') + '</button>' +
+          '<button type="button" class="botao-acao botao-acao-prompt" data-acao="prompt" data-id="' + id + '">' + esc(window.LAY_I18N ? window.LAY_I18N.t('catalog.btn_prompt', 'Prompt') : 'Prompt') + '</button>' +
+          '<button type="button" class="botao-acao" data-acao="detalhe" data-id="' + id + '" aria-haspopup="dialog">' + esc(window.LAY_I18N ? window.LAY_I18N.t('catalog.btn_detail', 'Detalhe') : 'Detalhe') + '</button>' +
+          '<button type="button" class="botao-acao" data-acao="plano" data-id="' + id + '" aria-pressed="' + (marcado ? 'true' : 'false') + '">' + (marcado ? (window.LAY_I18N ? window.LAY_I18N.t('catalog.btn_plan_active', '✓ Plano') : '✓ Plano') : (window.LAY_I18N ? window.LAY_I18N.t('catalog.btn_plan', 'Plano') : 'Plano')) + '</button>' +
         '</div>' +
       '</article>';
     }
 
     function atualizarStatus() {
       var status = $('status-resultado');
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       if (filtradas.length === 0) {
-        status.textContent = 'Nenhuma skill encontrada para os critérios atuais';
+        status.textContent = t('catalog.no_results', 'Nenhuma skill encontrada para os critérios atuais');
       } else {
-        status.textContent = 'Exibindo ' + exibidas + ' de ' + filtradas.length + ' skills';
+        var tmpl = t('catalog.displaying', 'Exibindo {0} de {1} skills');
+        status.textContent = tmpl.replace('{0}', exibidas).replace('{1}', filtradas.length);
       }
     }
 
@@ -2090,6 +2304,18 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       aplicarFiltros();
       sincronizarPlano();
       ligarEventos();
+
+      window.addEventListener('lay:localechange', function () {
+        montarControles();
+        if (agenteAtivoNome && AGENTES) {
+          var cur = AGENTES.find(function (x) { return x.nome === agenteAtivoNome; });
+          if (cur) renderizarDestaqueAgente(cur);
+        }
+        montarEspecialistas();
+        aplicarFiltros();
+        sincronizarPlano();
+        preencherTotais();
+      });
     }
 
     iniciar();
