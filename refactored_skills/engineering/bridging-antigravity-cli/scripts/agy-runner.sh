@@ -158,7 +158,7 @@ cmd_media() {
   local full; full="$(cat "$pf")
 
 OUTPUT REQUIREMENT: generate exactly ONE image and save it to this exact absolute path: $(native_path "$abs")
-Do not modify any source code or project file. Do not generate additional variants."
+Do not modify any source code or project file. Generate a SINGLE asset in a SINGLE image: no sheets, no grids, no collections, no additional variants or sizes."
   log "chamando agy (single-shot) → $abs"
   run_agy "$marker.log" -p "$full" --mode accept-edits --add-dir "$(native_path "$outdir")" "${MODEL_ARGS[@]}" \
     || log "agy terminou com código != 0 (veja $marker.log); tentando recuperar mídia do brain"

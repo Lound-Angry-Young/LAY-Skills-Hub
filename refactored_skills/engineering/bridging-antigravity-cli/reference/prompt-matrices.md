@@ -37,7 +37,9 @@ As URLs de API acima servem só como documentação de prompt. Nunca configure c
 3. **JSON prompting** quando houver 2 ou mais assets para a mesma tela ou produto (seção 4).
 4. **Tipografia precisa** com a string exata entre aspas duplas (seção 6).
 5. **Edição sem máscara** só com Identity & Geometry Lock (seção 7). Proibido reescrever do zero ou pedir "fix".
-6. **Nunca** escrever "transparent background", "checkerboard" ou "PNG with alpha". Peça fundo sólido liso e use `--transparent` no runner (seção 5).
+6. **Uma imagem, um asset.** O prompt descreve exatamente um sujeito (um ícone, um elemento ou uma cena completa). Proibido pedir sheet, grid, set, coleção, "variations", "icons in different sizes" ou vários ícones no mesmo quadro. Para N assets, N prompts em sequência (seção 4 mantém a consistência). Cena: descreva a cena inteira numa só imagem, com todos os elementos, composição e profundidade que o usuário descreveu.
+7. **Contexto do projeto obrigatório.** O bloco 2 e o bloco 5 carregam o motivo da marca (o que o projeto já mostra: mascote, logo, motivo), a paleta HEX e o estilo reais, lidos de assets abertos com `Read`. Ex.: projeto com caveira halftone → o favicon é a caveira, não um símbolo genérico.
+8. **Nunca** escrever "transparent background", "checkerboard" ou "PNG with alpha". Peça fundo sólido liso e use `--transparent` no runner (seção 5).
 
 ## 3. Template dos 6 blocos
 
@@ -146,8 +148,13 @@ OUTPUT FORMAT: a numbered list. For each item: file:line, severity (high|medium|
 
 ## 10. Contexto de projeto → prompt
 
+O motivo da marca vem primeiro; HEX e estilo vêm depois. Lição de campo: um favicon gerado só com paleta e um raio genérico não comunicava o projeto; refeito com a caveira halftone, a sombra dura amarela e a borda grafite da própria marca, passou.
+
+
 | Dado lido do projeto | Onde aparece no prompt |
 |---|---|
+| Motivo da marca (mascote, logo, ilustração central) | bloco 2, como sujeito |
+| Regras visuais do UI (bordas, sombras duras, cantos, texturas) | blocos 2 e 5 |
 | Paleta (tailwind/CSS vars) em HEX | bloco 2 e `color_palette` |
 | Tema dark/light | bloco 4 (luz) e escolha da cor de fundo de isolamento |
 | `style_anchor` | bloco 5 |
