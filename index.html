@@ -368,6 +368,9 @@
       border: 1px solid #000;
       letter-spacing: .08em;
     }
+    html[lang="en"] .card-seletor-agente.is-ativo::after {
+      content: "ACTIVE";
+    }
     .csa-topo {
       display: flex;
       align-items: center;
@@ -1145,7 +1148,7 @@
             </div>
           </div>
         </div>
-        <p class="status"><span class="status-ponto" aria-hidden="true"></span><span><span data-total="skills">—</span> skills</span></p>
+        <p class="status"><span class="status-ponto" aria-hidden="true"></span><span><span data-total="skills">—</span> <span data-i18n="header.skills_label">skills</span></span></p>
         <img class="selo" src="hub/assets/lay/Selo Pernambuco para o Mundo 3.svg" alt="Selo Pernambuco para o Mundo" width="56" height="56">
       </div>
     </header>
@@ -1165,16 +1168,16 @@
         <div class="acoes">
           <button type="button" class="botao botao-primario" id="btn-prompt-mestre" data-i18n="hero.btn_master_prompt">Copiar prompt mestre</button>
           <a class="botao botao-secundario" href="instalacao.html#subagentes" data-i18n="hero.btn_install">Instalar subagentes</a>
-          <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
+          <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer"><span data-i18n="hero.btn_github">Repositório GitHub</span> <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
         </div>
       </section>
 
       <section class="especialistas" id="especialistas" aria-labelledby="titulo-especialistas">
         <div class="cabecalho-aba">
           <p class="kicker" data-i18n="specialists.kicker">ESPECIALISTAS AUTÔNOMOS • CLAUDE CODE &amp; ECOSSISTEMA</p>
-          <h2 class="titulo-secao" id="titulo-especialistas">ESQUADRÃO DE AGENTES</h2>
+          <h2 class="titulo-secao" id="titulo-especialistas" data-i18n="specialists.title">ESQUADRÃO DE AGENTES</h2>
         </div>
-        <p class="especialistas-subtitulo">Selecione um agente especialista para inspecionar capacidades ativas, ferramentas, domínio e instruções diretas de ativação.</p>
+        <p class="especialistas-subtitulo" data-i18n="specialists.lead">Selecione um agente especialista para inspecionar capacidades ativas, ferramentas, domínio e instruções diretas de ativação.</p>
         
         <!-- Grid de Seletores Icônicos -->
         <div class="grade-especialistas" id="grade-especialistas" role="tablist" aria-label="Especialistas por domínio"></div>
@@ -1263,7 +1266,7 @@
       <p class="rodape-marca">LAY® Skills Hub</p>
       <nav class="rodape-links" aria-label="Links do rodapé">
         <a href="instalacao.html" data-i18n="footer.subagents">Instalação dos subagentes</a>
-        <a href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub<span class="sr-only"> (abre em nova aba)</span></a>
+        <a href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer"><span data-i18n="footer.github">Repositório GitHub</span><span class="sr-only"> (abre em nova aba)</span></a>
       </nav>
       <details class="fontes" id="bloco-fontes">
         <summary><span data-i18n="footer.upstream_sources">Fontes upstream</span> (<span data-total="fontes">—</span>)</summary>
@@ -1291,7 +1294,7 @@
       </div>
       <div class="modal-corpo md" id="modal-skill-corpo" tabindex="0"></div>
       <div class="modal-rodape">
-        <a class="botao botao-secundario" id="modal-skill-repo" href="#" target="_blank" rel="noopener noreferrer">Repositório fonte<span class="sr-only"> (abre em nova aba)</span></a>
+        <a class="botao botao-secundario" id="modal-skill-repo" href="#" target="_blank" rel="noopener noreferrer"><span data-i18n="modal.source_repo">Repositório fonte</span><span class="sr-only"> (abre em nova aba)</span></a>
         <button type="button" class="botao botao-primario" id="modal-skill-prompt" data-i18n="modal.copy_skill_prompt">Copiar prompt desta skill</button>
       </div>
     </div>
@@ -1347,7 +1350,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
 - Comunicação Caveman: Respostas densas, precisas, em português direto e fundamentadas em evidências do código.</pre>
       </div>
       <div class="modal-rodape">
-        <button type="button" class="botao botao-primario" id="btn-copiar-mestre">Copiar prompt mestre</button>
+        <button type="button" class="botao botao-primario" id="btn-copiar-mestre" data-i18n="hero.btn_master_prompt">Copiar prompt mestre</button>
       </div>
     </div>
   </div>
@@ -1813,25 +1816,37 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       var cliente = a.subagente_em || 'Claude Code';
       var outros = lista(a.clientes_com_skills).filter(function (c) { return c !== cliente; });
       var caminhos = a.configurado || {};
-      var nota = NOTAS_PERFIL[a.nome];
       var meta = ICONES_AGENTES[a.nome] || { icone: '⚡', glifo: 'AGENTE', subtitulo: esc(a.dominio) };
       var catId = categoriaPorRotulo(a.categoria);
       var catRotulo = rotuloPorId(catId) || a.categoria;
       var acessoTraduzido = (window.LAY_I18N && window.LAY_I18N.traduzirAcesso(a.acesso)) || a.acesso;
       var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
+      var isEn = window.LAY_I18N && window.LAY_I18N.getLocale() === 'en';
+
+      var gatilhos = (window.LAY_I18N && window.LAY_I18N.gatilhosAgente)
+        ? window.LAY_I18N.gatilhosAgente(a.nome, a.use_quando, a.nao_use_para_completo || a.nao_use_para, a.resumo)
+        : { use_quando: a.use_quando, nao_use_para: a.nao_use_para_completo || a.nao_use_para, resumo: a.resumo };
+      var useQuando = gatilhos.use_quando;
+      var naoUsePara = gatilhos.nao_use_para;
+      var nota = (window.LAY_I18N && window.LAY_I18N.notaPerfil)
+        ? window.LAY_I18N.notaPerfil(a.nome, NOTAS_PERFIL[a.nome])
+        : NOTAS_PERFIL[a.nome];
 
       var chipsHtml = skills.map(function (s) {
         return '<button type="button" class="pad-skill-chip" data-acao="detalhe" data-id="lay-' + esc(s) + '"><span>⚡</span> <code>' + esc(s) + '</code></button>';
       }).join('');
 
       var fontes = lista(a.fontes_upstream);
+      var ecoNativo = t('pad.native_eco', 'Ecossistema Nativo LAY®');
       var fontesHtml = fontes.length
         ? fontes.map(function (f) {
             return '<div class="pad-fonte-card"><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo) + ' <span class="sr-only">(abre em nova aba)</span></a> <span class="fonte-autor">' + esc(f.autor) + '</span></div>';
           }).join('')
-        : '<div class="pad-fonte-card"><span>Ecosssistema Nativo LAY®</span> <span class="fonte-autor">Lound-Angry-Young</span></div>';
+        : '<div class="pad-fonte-card"><span>' + esc(ecoNativo) + '</span> <span class="fonte-autor">Lound-Angry-Young</span></div>';
 
-      var notaCliente = outros.length ? ' Compatível também com ' + esc(outros.join(' e ')) + '.' : '';
+      var notaCliente = outros.length
+        ? (isEn ? ' Also compatible with ' : ' Compatível também com ') + esc(outros.join(isEn ? ' and ' : ' e ')) + '.'
+        : '';
 
       painel.innerHTML =
         '<div class="pad-cabecalho">' +
@@ -1855,8 +1870,8 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
           '<div class="pad-bloco">' +
             '<h4 class="pad-bloco-titulo">' + esc(t('pad.mission_title', 'Missão e Gatilhos de Decisão')) + '</h4>' +
             '<div class="pad-gatilhos">' +
-              '<div class="pad-gatilho-item"><span class="pad-tag-quando">' + esc(t('pad.use_when', 'USE QUANDO')) + '</span> ' + esc(a.use_quando) + '</div>' +
-              (a.nao_use_para_completo ? '<div class="pad-gatilho-item"><span class="pad-tag-nao-use">' + esc(t('pad.dont_use', 'NÃO USE PARA')) + '</span> ' + esc(a.nao_use_para_completo) + '</div>' : '') +
+              '<div class="pad-gatilho-item"><span class="pad-tag-quando">' + esc(t('pad.use_when', 'USE QUANDO')) + '</span> ' + esc(useQuando) + '</div>' +
+              (naoUsePara ? '<div class="pad-gatilho-item"><span class="pad-tag-nao-use">' + esc(t('pad.dont_use', 'NÃO USE PARA')) + '</span> ' + esc(naoUsePara) + '</div>' : '') +
               (nota ? '<p class="nota-perfil">⚠️ ' + esc(nota) + '</p>' : '') +
             '</div>' +
             '<h4 class="pad-bloco-titulo" style="margin-top:10px;">' + esc(t('pad.tools_title', 'Ferramentas Habilitadas')) + '</h4>' +
@@ -2024,7 +2039,9 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       var restante = filtradas.length - exibidas;
       botao.hidden = restante <= 0;
       $('btn-tudo-skills').hidden = restante <= 0;
-      botao.textContent = 'Mostrar mais';
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
+      botao.textContent = t('catalog.btn_more', 'Mostrar mais');
+      $('btn-tudo-skills').textContent = t('catalog.btn_all', 'Mostrar tudo');
     }
 
     function aplicarFiltros() {
@@ -2032,8 +2049,9 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       ordenarFiltradas();
       exibidas = Math.min(LOTE, filtradas.length);
       var grade = $('grade-skills');
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       if (filtradas.length === 0) {
-        grade.innerHTML = '<p class="vazio">Nenhuma skill encontrada. Tente outro termo ou limpe os filtros.</p>';
+        grade.innerHTML = '<p class="vazio">' + esc(t('catalog.empty_msg', 'Nenhuma skill encontrada. Tente outro termo ou limpe os filtros.')) + '</p>';
       } else {
         grade.innerHTML = filtradas.slice(0, exibidas).map(cardSkill).join('');
       }
@@ -2068,10 +2086,11 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
     }
 
     function sincronizarPlano() {
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       document.querySelectorAll('[data-acao="plano"]').forEach(function (b) {
         var marcado = selecionadas.has(b.getAttribute('data-id'));
         b.setAttribute('aria-pressed', marcado ? 'true' : 'false');
-        b.textContent = marcado ? '✓ Plano' : 'Plano';
+        b.textContent = marcado ? t('catalog.btn_plan_active', '✓ Plano') : t('catalog.btn_plan', 'Plano');
       });
       var n = selecionadas.size;
       $('plano-n').textContent = String(n);
@@ -2088,6 +2107,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
     function abrirDetalhe(id, origem) {
       var skill = SKILLS.find(function (s) { return s.id === id; });
       if (!skill) return;
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       var autor = skill.author && chaveDeNome(skill.author) !== chaveDeNome(skill.sourceTitle) ? skill.author + ' // ' : '';
       $('modal-skill-autor').textContent = autor + (skill.sourceTitle || '');
       $('modal-skill-titulo').textContent = skill.name;
@@ -2095,7 +2115,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
       repo.hidden = !skill.sourceUrl;
       repo.setAttribute('href', skill.sourceUrl || '#');
       var corpo = $('modal-skill-corpo');
-      corpo.innerHTML = '<p class="carregando">Carregando…</p>';
+      corpo.innerHTML = '<p class="carregando">' + esc(t('modal.loading', 'Carregando…')) + '</p>';
       $('modal-skill-prompt').onclick = function () { copiarPromptSkill(id); };
       abrirModal($('modal-skill'), origem);
 
@@ -2108,7 +2128,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
         corpo.innerHTML = '';
         var erro = document.createElement('p');
         erro.className = 'erro';
-        erro.textContent = 'Não foi possível carregar o conteúdo completo desta skill.';
+        erro.textContent = t('modal.load_error', 'Não foi possível carregar o conteúdo completo desta skill.');
         var descricao = document.createElement('p');
         descricao.textContent = skill.description || 'Sem especificações.';
         corpo.appendChild(erro);
@@ -2119,6 +2139,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
     function copiarPromptSkill(id) {
       var skill = SKILLS.find(function (s) { return s.id === id; });
       if (!skill) return;
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       var aoCopiar = function (todos) {
         var c = (todos || {})[skill.id] || {};
         return copiarTexto(c.prompt || promptPadrao(skill));
@@ -2128,43 +2149,134 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
         ? Promise.resolve(aoCopiar(window.LAY_CONTEUDO))
         : carregarConteudo('hub/conteudo.js').then(aoCopiar);
       promessa.then(function (ok) {
-        mostrarToast(ok ? 'Prompt de [' + skill.name.toUpperCase() + '] copiado!' : 'Não foi possível copiar');
+        var tmpl = t('toast.prompt_copied', 'Prompt de [{0}] copiado!');
+        mostrarToast(ok ? tmpl.replace('{0}', skill.name.toUpperCase()) : t('toast.copy_error', 'Não foi possível copiar'));
       }).catch(function () {
-        mostrarToast('Não foi possível carregar o prompt desta skill');
+        mostrarToast(t('modal.load_error', 'Não foi possível carregar o prompt desta skill'));
       });
     }
 
     // =========================================================================
     // PLANEJADOR E PROMPT MESTRE
     // =========================================================================
+    function textoPromptMestre() {
+      var isEn = window.LAY_I18N && window.LAY_I18N.getLocale() === 'en';
+      var n = total('skills') || '103';
+      if (isEn) {
+        return '# MASTER PROJECT PROMPT — OFFICIAL SKILLS REPERTOIRE\n' +
+          'You are the lead technical and engineering agent operating with this skills repository.\n\n' +
+          '## GITHUB REPOSITORY & SKILLS SYNCHRONIZATION\n' +
+          '- Central Repository: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n' +
+          '- If skills and runtime are not yet allocated on the machine, sync directly from the repository:\n\n' +
+          '```powershell\n' +
+          '# 1. Clone or update the central repository with submodules\n' +
+          'if (-not (Test-Path "$env:USERPROFILE\\.lay-skills-repo")) {\n' +
+          '    git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n' +
+          '} else {\n' +
+          '    git -C "$env:USERPROFILE\\.lay-skills-repo" pull --recurse-submodules\n' +
+          '}\n\n' +
+          '# 2. Install and distribute the ' + n + ' skills across agents (Antigravity, Codex, Claude Code)\n' +
+          'powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n' +
+          '```\n' +
+          '*(On Linux / macOS: `bash "$HOME/.lay-skills-repo/install.sh"`)*\n\n' +
+          '## CURRENT PROJECT DIAGNOSIS\n' +
+          'After ensuring skills are installed, run the initial diagnosis in this project directory:\n' +
+          '```powershell\n' +
+          'python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n' +
+          '```\n' +
+          '*(Graphify CLI: `$env:USERPROFILE\\.lay-skills\\tools\\graphify\\Scripts\\graphify.exe`)*\n\n' +
+          '## DESIGN & INTERFACE GUIDELINES\n' +
+          '- Visual Quality: Clean design, consistent typographic hierarchy, accessible contrast (WCAG AA).\n' +
+          '- Componentization: Modular, responsive, ergonomic interfaces for mobile, tablet, and desktop.\n' +
+          '- Microinteractions & Motion: Smooth transitions, GPU acceleration, strict adherence to `prefers-reduced-motion`.\n' +
+          '- Experience Focus: Ergonomic touch targets (44x44px), keyboard navigation, zero redundant code.\n\n' +
+          '## ENGINEERING & QUALITY\n' +
+          '- Rigorous TDD: Red-Green-Refactor loop on any behavioral modification.\n' +
+          '- Code Security: Continuous audit of untrusted input, secrets, and OWASP Top 10 (Semgrep).\n' +
+          '- Graph Navigation: Always consult the knowledge graph before structural refactorings.\n' +
+          '- Caveman Communication: Dense, precise, direct communication grounded in code evidence.';
+      }
+      return '# PROMPT MESTRE DE PROJETO — REPERTÓRIO OFICIAL DE SKILLS\n' +
+        'Você é o agente líder técnico e de engenharia operando com este repositório de habilidades.\n\n' +
+        '## REPOSITÓRIO NO GITHUB & SINCRONIZAÇÃO DE SKILLS\n' +
+        '- Repositório Central: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n' +
+        '- Se as skills e o runtime ainda não estiverem alocados na máquina, sincronize diretamente do repositório:\n\n' +
+        '```powershell\n' +
+        '# 1. Clonar ou atualizar o repositório central com submódulos\n' +
+        'if (-not (Test-Path "$env:USERPROFILE\\.lay-skills-repo")) {\n' +
+        '    git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n' +
+        '} else {\n' +
+        '    git -C "$env:USERPROFILE\\.lay-skills-repo" pull --recurse-submodules\n' +
+        '}\n\n' +
+        '# 2. Instalar e distribuir as ' + n + ' skills nos agentes (Antigravity, Codex, Claude Code)\n' +
+        'powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n' +
+        '```\n' +
+        '*(No Linux / macOS: `bash "$HOME/.lay-skills-repo/install.sh"`)*\n\n' +
+        '## DIAGNÓSTICO DO PROJETO ATUAL\n' +
+        'Após garantir a instalação das skills, execute o diagnóstico inicial no diretório deste projeto:\n' +
+        '```powershell\n' +
+        'python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n' +
+        '```\n' +
+        '*(Graphify CLI: `$env:USERPROFILE\\.lay-skills\\tools\\graphify\\Scripts\\graphify.exe`)*\n\n' +
+        '## DIRETRIZES DE DESIGN & INTERFACE\n' +
+        '- Qualidade Visual: Design limpo, hierarquia tipográfica consistente e contraste acessível (WCAG AA).\n' +
+        '- Componentização: Interfaces modulares, responsivas e ergonômicas para mobile, tablet e desktop.\n' +
+        '- Microinterações & Movimento: Transições suaves, aceleração por GPU e respeito estrito a `prefers-reduced-motion`.\n' +
+        '- Foco na Experiência: Zonas de toque ergonômicas (44x44px), navegação por teclado e sem código redundante.\n\n' +
+        '## ENGENHARIA & QUALIDADE\n' +
+        '- TDD Rigoroso: Red-Green-Refactor loop em qualquer alteração comportamental.\n' +
+        '- Segurança de Código: Auditoria contínua de entradas não confiáveis, segredos e OWASP Top 10 (Semgrep).\n' +
+        '- Navegação por Grafo: Consulte sempre o grafo de conhecimento antes de refatorações estruturais.\n' +
+        '- Comunicação Caveman: Respostas densas, precisas, em português direto e fundamentadas em evidências do código.';
+    }
+
     function textoPlanejador() {
+      var isEn = window.LAY_I18N && window.LAY_I18N.getLocale() === 'en';
       var escolhidas = SKILLS.filter(function (s) { return selecionadas.has(s.id); });
       var alvo = escolhidas.length > 0 ? escolhidas : SKILLS.slice(0, SKILLS_PLANO_PADRAO);
-      var texto = '# PLANO DE PROJETO SOB MEDIDA — REPERTÓRIO LAY®\n';
-      texto += 'Você é o agente líder técnico implementando este projeto. Siga rigorosamente as diretrizes da LAY®.\n\n';
-      texto += '## REPOSITÓRIO GITHUB & SINCRONIZAÇÃO DE SKILLS:\n';
-      texto += 'Repositório: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n';
-      texto += 'Se as skills não estiverem alocadas na máquina, execute:\n';
-      texto += 'git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n';
-      texto += 'powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n';
-      texto += '## DIAGNÓSTICO DO PROJETO:\n';
-      texto += 'python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n';
-      texto += '## SKILLS SELECIONADAS PARA ESTE PROJETO (' + alvo.length + ' SKILLS):\n';
+      var texto = isEn
+        ? '# CUSTOM PROJECT PLAN — LAY® REPERTOIRE\n' +
+          'You are the lead technical agent implementing this project. Strictly adhere to LAY® guidelines.\n\n' +
+          '## GITHUB REPOSITORY & SKILL SYNCHRONIZATION:\n' +
+          'Repository: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n' +
+          'If skills are not yet allocated on the machine, run:\n' +
+          'git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n' +
+          'powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n' +
+          '## PROJECT DIAGNOSIS:\n' +
+          'python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n' +
+          '## SELECTED SKILLS FOR THIS PROJECT (' + alvo.length + ' SKILLS):\n'
+        : '# PLANO DE PROJETO SOB MEDIDA — REPERTÓRIO LAY®\n' +
+          'Você é o agente líder técnico implementando este projeto. Siga rigorosamente as diretrizes da LAY®.\n\n' +
+          '## REPOSITÓRIO GITHUB & SINCRONIZAÇÃO DE SKILLS:\n' +
+          'Repositório: https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git\n\n' +
+          'Se as skills não estiverem alocadas na máquina, execute:\n' +
+          'git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git "$env:USERPROFILE\\.lay-skills-repo"\n' +
+          'powershell -ExecutionPolicy Bypass -File "$env:USERPROFILE\\.lay-skills-repo\\install.ps1"\n\n' +
+          '## DIAGNÓSTICO DO PROJETO:\n' +
+          'python "$env:USERPROFILE\\.lay-skills\\runtime\\scripts\\skill_hub.py" start --home "$env:USERPROFILE" --project (Get-Location).Path\n\n' +
+          '## SKILLS SELECIONADAS PARA ESTE PROJETO (' + alvo.length + ' SKILLS):\n';
+
       var grupos = {};
       alvo.forEach(function (s) {
         var cat = primeiraCategoria(s) || 'geral';
         (grupos[cat] = grupos[cat] || []).push(s);
       });
       Object.keys(grupos).forEach(function (cat) {
-        texto += '\n### [' + cat.toUpperCase() + ']\n';
+        var rotulo = rotuloPorId(cat) || cat.toUpperCase();
+        texto += '\n### [' + rotulo + ']\n';
         grupos[cat].forEach(function (s) {
           texto += '- `' + s.id + '`: ' + resumoSkill(s.description) + '\n';
         });
       });
-      texto += '\n## DIRETRIZES DE ENGENHARIA & QUALIDADE:\n';
-      texto += '- Qualidade de Interface: Design limpo, hierarquia tipográfica e contraste acessível (WCAG AA).\n';
-      texto += '- TDD e Segurança: Red-Green-Refactor e validação contínua de segurança (Semgrep/OWASP).\n';
-      texto += '- Navegação por Grafo: Consulta prévia a relacionamentos e arquitetura antes de refatorações.\n';
+      texto += isEn
+        ? '\n## ENGINEERING & QUALITY GUIDELINES:\n' +
+          '- Interface Quality: Clean design, consistent typography, accessible contrast (WCAG AA).\n' +
+          '- TDD & Security: Red-Green-Refactor and continuous security scanning (Semgrep/OWASP).\n' +
+          '- Graph Navigation: Always consult knowledge graph before structural refactorings.\n'
+        : '\n## DIRETRIZES DE ENGENHARIA & QUALIDADE:\n' +
+          '- Qualidade de Interface: Design limpo, hierarquia tipográfica e contraste acessível (WCAG AA).\n' +
+          '- TDD e Segurança: Red-Green-Refactor e validação contínua de segurança (Semgrep/OWASP).\n' +
+          '- Navegação por Grafo: Consulta prévia a relacionamentos e arquitetura antes de refatorações.\n';
       return texto;
     }
 
@@ -2195,19 +2307,22 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
 
     function ligarEventos() {
       $('btn-prompt-mestre').addEventListener('click', function () {
+        $('prompt-mestre-texto').textContent = textoPromptMestre();
         abrirModal($('modal-prompt-mestre'), this);
       });
 
       $('btn-copiar-mestre').addEventListener('click', function () {
+        var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
         copiarTexto($('prompt-mestre-texto').textContent).then(function (ok) {
-          mostrarToast(ok ? 'Prompt mestre copiado com sucesso!' : 'Não foi possível copiar');
+          mostrarToast(ok ? t('toast.master_copied', 'Prompt mestre copiado! Cole no seu chat do Claude Code ou Antigravity.') : t('toast.copy_error', 'Não foi possível copiar'));
           if (ok) fecharModal();
         });
       });
 
       $('btn-copiar-planejador').addEventListener('click', function () {
+        var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
         copiarTexto($('planejador-texto').textContent).then(function (ok) {
-          mostrarToast(ok ? 'Prompt sob medida copiado!' : 'Não foi possível copiar');
+          mostrarToast(ok ? t('toast.plan_copied', 'Plano sob medida copiado!') : t('toast.copy_error', 'Não foi possível copiar'));
           if (ok) fecharModal();
         });
       });
@@ -2316,6 +2431,7 @@ python "$env:USERPROFILE\.lay-skills\runtime\scripts\skill_hub.py" start --home 
         aplicarFiltros();
         sincronizarPlano();
         preencherTotais();
+        if ($('prompt-mestre-texto')) $('prompt-mestre-texto').textContent = textoPromptMestre();
       });
     }
 

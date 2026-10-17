@@ -50,6 +50,40 @@ class I18nIntegrationTests(unittest.TestCase):
         self.assertIn(".destaque-magenta { color: var(--magenta); white-space: nowrap; display: inline-block; }", html)
         self.assertIn('<span class="destaque-magenta">Pernambuco', html)
 
+    def test_i18n_dictionaries_symmetry(self):
+        c = (REPO / "hub/i18n.js").read_text(encoding="utf-8")
+        m = re.search(r"TRANSLATIONS\s*=\s*\{\s*'pt-BR':\s*\{(?P<pt>.*?)\},\s*'en':\s*\{(?P<en>.*?)\}\s*\};", c, re.DOTALL)
+        self.assertIsNotNone(m, "Deve encontrar o objeto TRANSLATIONS em hub/i18n.js")
+        pt_keys = set(re.findall(r"'([a-zA-Z0-9_.]+)':", m.group('pt')))
+        en_keys = set(re.findall(r"'([a-zA-Z0-9_.]+)':", m.group('en')))
+        self.assertTrue(len(pt_keys) > 100, "Deve haver mais de 100 chaves de tradução")
+        diff = pt_keys ^ en_keys
+        self.assertEqual(diff, set(), f"Chaves assimétricas entre pt-BR e en: {diff}")
+
+    def test_data_i18n_attributes_exist_in_dictionaries(self):
+        c = (REPO / "hub/i18n.js").read_text(encoding="utf-8")
+        m = re.search(r"TRANSLATIONS\s*=\s*\{\s*'pt-BR':\s*\{(?P<pt>.*?)\},\s*'en':\s*\{(?P<en>.*?)\}\s*\};", c, re.DOTALL)
+        keys = set(re.findall(r"'([a-zA-Z0-9_.]+)':", m.group('pt')))
+        for pagina in ("index.html", "instalacao.html"):
+            html = (REPO / pagina).read_text(encoding="utf-8")
+            used = set(re.findall(r'data-i18n=["\']([^"\']+)["\']', html))
+            missing = used - keys
+            self.assertEqual(missing, set(), f"{pagina} usa data-i18n sem tradução no i18n.js: {missing}")
+
+    def test_specialists_triggers_i18n(self):
+        c = (REPO / "hub/i18n.js").read_text(encoding="utf-8")
+        self.assertIn("var AGENTE_GATILHOS =", c, "Deve definir AGENTE_GATILHOS")
+        for especialista in (
+            "lay-3d", "lay-banco-de-dados", "lay-contexto", "lay-design", "lay-devops",
+            "lay-documentacao", "lay-engenharia", "lay-frontend", "lay-omniroute", "lay-qa", "lay-seguranca"
+        ):
+            self.assertIn(f"'{especialista}':", c, f"{especialista} deve estar registrado em AGENTE_GATILHOS")
+
+    def test_active_badge_css_i18n(self):
+        html = (REPO / "index.html").read_text(encoding="utf-8")
+        self.assertIn('html[lang="en"] .card-seletor-agente.is-ativo::after', html, "Deve ter regra de badge ACTIVE para inglês")
+        self.assertIn('content: "ACTIVE";', html, "Deve exibir texto ACTIVE quando idioma inglês")
+
 
 if __name__ == "__main__":
     unittest.main()

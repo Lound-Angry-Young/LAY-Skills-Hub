@@ -1072,7 +1072,7 @@
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+  <a class="skip-link" href="#conteudo" data-i18n="header.skip_link">Pular para o conteúdo</a>
 
   <div class="halftone" aria-hidden="true">
     <canvas id="halftone-canvas"></canvas>
@@ -1080,7 +1080,7 @@
 
   <div class="faixa-topo">
     <div class="container">
-      <p class="faixa-texto"><span class="faixa-item">LAY® HUB • <span data-total="subagentes">—</span> SUBAGENTES • <span data-total="dominios">—</span> DOMÍNIOS</span><span class="faixa-item faixa-extra">INSTALAR python scripts/skill_hub.py install --agents claude</span></p>
+      <p class="faixa-texto"><span class="faixa-item">LAY® HUB • <span data-total="subagentes">—</span> <span data-i18n="ticker.specialists">SUBAGENTES</span> • <span data-total="dominios">—</span> <span data-i18n="ticker.domains">DOMÍNIOS</span></span><span class="faixa-item faixa-extra" data-i18n="install.ticker">INSTALAR python scripts/skill_hub.py install --agents claude</span></p>
     </div>
   </div>
 
@@ -1090,7 +1090,7 @@
         <img class="marca-logo" src="hub/assets/lay/Somente as caveiras/Caveira-01.svg" alt="LAY®" width="44" height="44">
         <div>
           <p class="marca-titulo">SKILLS HUB<span class="marca-reg">®</span></p>
-          <p class="marca-sub">Instalação dos subagentes</p>
+          <p class="marca-sub" data-i18n="footer.subagents">Instalação dos subagentes</p>
         </div>
       </div>
       <div class="cabecalho-direita">
@@ -1161,12 +1161,12 @@
         <div class="acoes">
           <a class="botao botao-primario" href="#instalar" data-i18n="install.btn_install_cmd">COMANDOS DE INSTALAÇÃO</a>
           <a class="botao botao-secundario" href="#prompts" data-i18n="install.btn_prompts">PROMPTS PARA COPIAR</a>
-          <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">REPOSITÓRIO GITHUB <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
+          <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer"><span data-i18n="install.btn_github">REPOSITÓRIO GITHUB</span> <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
         </div>
         <ul class="indicadores" aria-label="Números da instalação">
-          <li class="indicador"><span class="ind-valor" data-total="subagentes">—</span><span class="ind-rotulo">subagentes</span></li>
-          <li class="indicador"><span class="ind-valor" data-total="skills">—</span><span class="ind-rotulo">skills</span></li>
-          <li class="indicador"><span class="ind-valor">2</span><span class="ind-rotulo">escopos</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="subagentes">—</span><span class="ind-rotulo" data-i18n="install.stat_subagents">subagentes</span></li>
+          <li class="indicador"><span class="ind-valor" data-total="skills">—</span><span class="ind-rotulo" data-i18n="install.stat_skills">skills</span></li>
+          <li class="indicador"><span class="ind-valor">2</span><span class="ind-rotulo" data-i18n="install.stat_scopes">escopos</span></li>
         </ul>
       </section>
 
@@ -1176,44 +1176,44 @@
         <p class="texto-secao" data-i18n="install.step1_desc">Execute no terminal, dentro da pasta do repositório clonado.</p>
 
         <div class="pre-req">
-          <p><strong>Pré-requisitos:</strong> Git · Python 3.10+ · Claude Code</p>
-          <p class="pre-req-nota">Use <code>python</code>. No Windows, se não funcionar, use <code>py -3</code>. Claude Code: CLI no terminal ou app desktop; os subagentes aparecem nas sessões novas.</p>
+          <p><strong data-i18n="install.prereq_title">Pré-requisitos:</strong> <span data-i18n="install.prereq_items">Git · Python 3.10+ · Claude Code</span></p>
+          <p class="pre-req-nota" data-i18n="install.prereq_note">Use <code>python</code>. No Windows, se não funcionar, use <code>py -3</code>. Claude Code: CLI no terminal ou app desktop; os subagentes aparecem nas sessões novas.</p>
         </div>
 
         <div class="passos">
           <article class="card">
-            <p class="card-num">Passo 01</p>
-            <h3 class="card-titulo">Clonar com submódulos</h3>
-            <p class="texto-card">Faça uma vez. Se já clonou sem submódulos, rode <code>git submodule update --init --recursive</code>.</p>
+            <p class="card-num" data-i18n="install.step1_badge">Passo 01</p>
+            <h3 class="card-titulo" data-i18n="install.step1_card_title">Clonar com submódulos</h3>
+            <p class="texto-card" data-i18n="install.step1_card_desc">Faça uma vez. Se já clonou sem submódulos, rode <code>git submodule update --init --recursive</code>.</p>
             <div class="bloco-codigo">
-              <div class="bloco-topo"><span>bash · pasta de sua escolha</span><button type="button" class="botao-copiar" data-copy="cmd-clone">Copiar</button></div>
+              <div class="bloco-topo"><span data-i18n="install.bash_custom_dir">bash · pasta de sua escolha</span><button type="button" class="botao-copiar" data-copy="cmd-clone" data-i18n="install.btn_copy">Copiar</button></div>
               <pre id="cmd-clone">git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
 cd LAY-Skills-Hub</pre>
             </div>
           </article>
 
           <article class="card">
-            <p class="card-num">Passo 02</p>
-            <h3 class="card-titulo">Instalar os subagentes</h3>
-            <p class="texto-card">Instala os arquivos <code>lay-*.md</code> em <code>~/.claude/agents/</code> e grava o índice de roteamento no <code>~/.claude/CLAUDE.md</code>, entre os marcadores <code>LAY-SKILLS</code>. Quer também Codex e Antigravity? Troque <code>claude</code> por <code>all</code>.</p>
+            <p class="card-num" data-i18n="install.step2_badge">Passo 02</p>
+            <h3 class="card-titulo" data-i18n="install.step2_card_title">Instalar os subagentes</h3>
+            <p class="texto-card" data-i18n="install.step2_card_desc">Instala os arquivos <code>lay-*.md</code> em <code>~/.claude/agents/</code> e grava o índice de roteamento no <code>~/.claude/CLAUDE.md</code>, entre os marcadores <code>LAY-SKILLS</code>. Quer também Codex e Antigravity? Troque <code>claude</code> por <code>all</code>.</p>
             <div class="bloco-codigo">
-              <div class="bloco-topo"><span>bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-install">Copiar</button></div>
+              <div class="bloco-topo"><span data-i18n="install.bash_in_repo">bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-install" data-i18n="install.btn_copy">Copiar</button></div>
               <pre id="cmd-install">python scripts/skill_hub.py install --agents claude</pre>
             </div>
           </article>
 
           <article class="card">
-            <p class="card-num">Passo 03</p>
-            <h3 class="card-titulo">Conferir</h3>
-            <p class="texto-card">O <code>doctor</code> confere a instalação e termina com a contagem de entradas verificadas e de problemas. Depois, em uma sessão do Claude Code, rode <code>/agents</code>: os <code>lay-*</code> aparecem na lista.</p>
+            <p class="card-num" data-i18n="install.step3_badge">Passo 03</p>
+            <h3 class="card-titulo" data-i18n="install.step3_card_title">Conferir</h3>
+            <p class="texto-card" data-i18n="install.step3_card_desc">O <code>doctor</code> confere a instalação e termina com a contagem de entradas verificadas e de problemas. Depois, em uma sessão do Claude Code, rode <code>/agents</code>: os <code>lay-*</code> aparecem na lista.</p>
             <div class="bloco-codigo">
-              <div class="bloco-topo"><span>bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-doctor">Copiar</button></div>
+              <div class="bloco-topo"><span data-i18n="install.bash_in_repo">bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-doctor" data-i18n="install.btn_copy">Copiar</button></div>
               <pre id="cmd-doctor">python scripts/skill_hub.py doctor</pre>
             </div>
           </article>
         </div>
 
-        <div class="nota">
+        <div class="nota" data-i18n="install.scopes_note">
           <strong>Escopos.</strong> O global (passo 02) vale em todos os seus projetos.
           Os mesmos arquivos ficam versionados em <code>.claude/agents/</code> deste repositório e valem quando o Claude Code abre este repositório.
           Quando os dois existem, o do projeto prevalece.
@@ -1222,8 +1222,8 @@ cd LAY-Skills-Hub</pre>
 
       <section class="secao" id="subagentes" aria-labelledby="titulo-subagentes">
         <p class="kicker" data-i18n="install.step2_kicker">02 · SUBAGENTES</p>
-        <h2 class="titulo-secao" id="titulo-subagentes">Um por domínio</h2>
-        <p class="texto-secao">Cada um recebe só as ferramentas do seu trabalho. Você pode chamar pelo nome.</p>
+        <h2 class="titulo-secao" id="titulo-subagentes" data-i18n="install.step2_title">Um por domínio</h2>
+        <p class="texto-secao" data-i18n="install.step2_desc">Cada um recebe só as ferramentas do seu trabalho. Você pode chamar pelo nome.</p>
 
         <ul class="legenda" aria-label="Contagem por tipo de acesso">
           <li class="legenda-item"><span class="swatch swatch-amarelo" aria-hidden="true"></span><span><span data-i18n-access="Edita e roda comandos">Edita e roda comandos</span>: <strong data-acesso="Edita e roda comandos">—</strong></span></li>
@@ -1267,20 +1267,20 @@ cd LAY-Skills-Hub</pre>
 
         <div class="grade-2">
           <article class="card">
-            <span class="modo-tag modo-auto">Automático</span>
-            <h3 class="card-titulo">O Claude escolhe</h3>
-            <p class="texto-card">Ele compara seu pedido com a <code>description</code> de cada subagente, que traz os gatilhos <strong>Use quando</strong> e <strong>Não use para</strong>.</p>
-            <p class="texto-card">Exemplo: <em>"revise a segurança do login"</em> aciona <code>lay-seguranca</code>.</p>
+            <span class="modo-tag modo-auto" data-i18n="install.call_auto_tag">Automático</span>
+            <h3 class="card-titulo" data-i18n="install.call_auto_title">O Claude escolhe</h3>
+            <p class="texto-card" data-i18n="install.call_auto_desc1">Ele compara seu pedido com a <code>description</code> de cada subagente, que traz os gatilhos <strong>Use quando</strong> e <strong>Não use para</strong>.</p>
+            <p class="texto-card" data-i18n="install.call_auto_desc2">Exemplo: <em>"revise a segurança do login"</em> aciona <code>lay-seguranca</code>.</p>
           </article>
           <article class="card">
-            <span class="modo-tag modo-explicito">Explícito</span>
-            <h3 class="card-titulo">Você nomeia</h3>
-            <p class="texto-card">Quando quiser certeza do especialista, peça pelo nome:</p>
+            <span class="modo-tag modo-explicito" data-i18n="install.call_explicit_tag">Explícito</span>
+            <h3 class="card-titulo" data-i18n="install.call_explicit_title">Você nomeia</h3>
+            <p class="texto-card" data-i18n="install.call_explicit_desc1">Quando quiser certeza do especialista, peça pelo nome:</p>
             <p class="texto-card"><code>use o subagente lay-qa para cobrir o fluxo de checkout com testes</code></p>
           </article>
         </div>
 
-        <div class="nota">
+        <div class="nota" data-i18n="install.call_note">
           <strong>Subagente novo não aparece?</strong> Reinicie a sessão. Os perfis são carregados no início da sessão.
         </div>
       </section>
@@ -1291,18 +1291,18 @@ cd LAY-Skills-Hub</pre>
         <p class="texto-secao" data-i18n="install.step4_desc">A conversa principal escolhe o domínio, delega e junta as respostas. Subagentes não chamam outros subagentes.</p>
 
         <ol class="fluxo">
-          <li class="fluxo-passo"><p class="fluxo-nome">1 · Pedido</p><p>Você descreve o que quer.</p></li>
-          <li class="fluxo-passo"><p class="fluxo-nome">2 · Domínio</p><p>A conversa escolhe <strong>um</strong> domínio primário.</p></li>
-          <li class="fluxo-passo"><p class="fluxo-nome">3 · HANDOFF</p><p>Delega com <code>task</code>, <code>domain</code>, <code>context</code>, <code>constraints</code> e <code>acceptance_criteria</code>.</p></li>
-          <li class="fluxo-passo"><p class="fluxo-nome">4 · RESULT</p><p>O subagente devolve <code>status</code>, <code>artifacts</code>, <code>summary</code> e <code>open_items</code>.</p></li>
-          <li class="fluxo-passo"><p class="fluxo-nome">5 · Resposta</p><p>A conversa responde em português direto.</p></li>
+          <li class="fluxo-passo"><p class="fluxo-nome" data-i18n="install.flow_step1_name">1 · Pedido</p><p data-i18n="install.flow_step1_desc">Você descreve o que quer.</p></li>
+          <li class="fluxo-passo"><p class="fluxo-nome" data-i18n="install.flow_step2_name">2 · Domínio</p><p data-i18n="install.flow_step2_desc">A conversa escolhe <strong>um</strong> domínio primário.</p></li>
+          <li class="fluxo-passo"><p class="fluxo-nome" data-i18n="install.flow_step3_name">3 · HANDOFF</p><p data-i18n="install.flow_step3_desc">Delega com <code>task</code>, <code>domain</code>, <code>context</code>, <code>constraints</code> e <code>acceptance_criteria</code>.</p></li>
+          <li class="fluxo-passo"><p class="fluxo-nome" data-i18n="install.flow_step4_name">4 · RESULT</p><p data-i18n="install.flow_step4_desc">O subagente devolve <code>status</code>, <code>artifacts</code>, <code>summary</code> e <code>open_items</code>.</p></li>
+          <li class="fluxo-passo"><p class="fluxo-nome" data-i18n="install.flow_step5_name">5 · Resposta</p><p data-i18n="install.flow_step5_desc">A conversa responde em português direto.</p></li>
         </ol>
 
         <ul class="regras">
-          <li>Um domínio primário por pedido. Domínios independentes rodam em paralelo, em lotes de até 5.</li>
-          <li>Pedido ambíguo: no máximo uma pergunta de clarificação.</li>
-          <li>Nenhum domínio cobre o pedido: a resposta diz isso e sugere criar uma skill.</li>
-          <li>Ações externas ou irreversíveis (enviar, publicar, apagar) só com confirmação explícita.</li>
+          <li data-i18n="install.rules_1">Um domínio primário por pedido. Domínios independentes rodam em paralelo, em lotes de até 5.</li>
+          <li data-i18n="install.rules_2">Pedido ambíguo: no máximo uma pergunta de clarificação.</li>
+          <li data-i18n="install.rules_3">Nenhum domínio cobre o pedido: a resposta diz isso e sugere criar uma skill.</li>
+          <li data-i18n="install.rules_4">Ações externas ou irreversíveis (enviar, publicar, apagar) só com confirmação explícita.</li>
         </ul>
       </section>
 
@@ -1313,13 +1313,13 @@ cd LAY-Skills-Hub</pre>
 
         <div class="coluna">
           <article class="card">
-            <p class="card-num">Prompt A</p>
-            <h3 class="card-titulo">Instalar os subagentes</h3>
-            <p class="texto-card">Use em um computador novo, com o Claude Code aberto na pasta onde quer o clone.</p>
-            <div class="acoes-prompt"><button type="button" class="botao-copiar" data-copy="prompt-instalar">Copiar</button></div>
+            <p class="card-num" data-i18n="install.prompt_a_badge">Prompt A</p>
+            <h3 class="card-titulo" data-i18n="install.prompt_a_title">Instalar os subagentes</h3>
+            <p class="texto-card" data-i18n="install.prompt_a_desc">Use em um computador novo, com o Claude Code aberto na pasta onde quer o clone.</p>
+            <div class="acoes-prompt"><button type="button" class="botao-copiar" data-copy="prompt-instalar" data-i18n="install.btn_copy">Copiar</button></div>
             <details class="ver-prompt">
-              <summary>Ver prompt</summary>
-              <pre class="bloco-texto" id="prompt-instalar">Instale os subagentes LAY deste computador. Siga estes passos e pare se algum falhar:
+              <summary data-i18n="install.view_prompt">Ver prompt</summary>
+              <pre class="bloco-texto" id="prompt-instalar" data-i18n="install.prompt_a_text">Instale os subagentes LAY deste computador. Siga estes passos e pare se algum falhar:
 
 1. Se o repositório ainda não existir aqui, clone com submódulos:
    git clone --recurse-submodules https://github.com/Lound-Angry-Young/LAY-Skills-Hub.git
@@ -1333,13 +1333,13 @@ cd LAY-Skills-Hub</pre>
           </article>
 
           <article class="card">
-            <p class="card-num">Prompt B</p>
-            <h3 class="card-titulo">Atualizar com confirmação</h3>
-            <p class="texto-card">Consulta primeiro. Só aplica depois que você disser sim.</p>
-            <div class="acoes-prompt"><button type="button" class="botao-copiar" data-copy="prompt-atualizar">Copiar</button></div>
+            <p class="card-num" data-i18n="install.prompt_b_badge">Prompt B</p>
+            <h3 class="card-titulo" data-i18n="install.prompt_b_title">Atualizar com confirmação</h3>
+            <p class="texto-card" data-i18n="install.prompt_b_desc">Consulta primeiro. Só aplica depois que você disser sim.</p>
+            <div class="acoes-prompt"><button type="button" class="botao-copiar" data-copy="prompt-atualizar" data-i18n="install.btn_copy">Copiar</button></div>
             <details class="ver-prompt">
-              <summary>Ver prompt</summary>
-              <pre class="bloco-texto" id="prompt-atualizar">Atualize os subagentes LAY deste computador, sem alterar nada sem minha confirmação:
+              <summary data-i18n="install.view_prompt">Ver prompt</summary>
+              <pre class="bloco-texto" id="prompt-atualizar" data-i18n="install.prompt_b_text">Atualize os subagentes LAY deste computador, sem alterar nada sem minha confirmação:
 
 1. Entre na pasta do clone do LAY-Skills-Hub.
 2. Rode: python scripts/skill_hub.py sync --check e me mostre o que mudou.
@@ -1350,13 +1350,13 @@ cd LAY-Skills-Hub</pre>
           </article>
 
           <article class="card">
-            <p class="card-num">Prompt C</p>
-            <h3 class="card-titulo">Pedir com orquestração</h3>
-            <p class="texto-card">Substitua o último campo pelo seu pedido. Serve para qualquer projeto com os subagentes instalados.</p>
-            <div class="acoes-prompt"><button type="button" class="botao-copiar" data-copy="prompt-orquestrar">Copiar</button></div>
+            <p class="card-num" data-i18n="install.prompt_c_badge">Prompt C</p>
+            <h3 class="card-titulo" data-i18n="install.prompt_c_title">Pedir com orquestração</h3>
+            <p class="texto-card" data-i18n="install.prompt_c_desc">Substitua o último campo pelo seu pedido. Serve para qualquer projeto com os subagentes instalados.</p>
+            <div class="acoes-prompt"><button type="button" class="botao-copiar" data-copy="prompt-orquestrar" data-i18n="install.btn_copy">Copiar</button></div>
             <details class="ver-prompt">
-              <summary>Ver prompt</summary>
-              <pre class="bloco-texto" id="prompt-orquestrar">Use os subagentes LAY para este pedido e siga a orquestração:
+              <summary data-i18n="install.view_prompt">Ver prompt</summary>
+              <pre class="bloco-texto" id="prompt-orquestrar" data-i18n="install.prompt_c_text">Use os subagentes LAY para este pedido e siga a orquestração:
 - Escolha um domínio primário e delegue ao subagente correspondente (lay-frontend, lay-qa, lay-seguranca etc.).
 - Subagentes não chamam outros subagentes: você coordena e junta as respostas.
 - Se o pedido for ambíguo, faça no máximo uma pergunta.
@@ -1375,22 +1375,22 @@ Pedido: [descreva aqui]</pre>
 
         <div class="grade-2">
           <article class="card">
-            <p class="card-num">Atualizar</p>
-            <h3 class="card-titulo">Consultar, aplicar, reinstalar</h3>
-            <p class="texto-card">Consulta: <code>sync --check</code>. Aplica: <code>sync --apply</code>, que só faz fast-forward limpo e preserva suas alterações. Depois, <code>install --agents all</code>.</p>
+            <p class="card-num" data-i18n="install.upd_card1_badge">Atualizar</p>
+            <h3 class="card-titulo" data-i18n="install.upd_card1_title">Consultar, aplicar, reinstalar</h3>
+            <p class="texto-card" data-i18n="install.upd_card1_desc">Consulta: <code>sync --check</code>. Aplica: <code>sync --apply</code>, que só faz fast-forward limpo e preserva suas alterações. Depois, <code>install --agents all</code>.</p>
             <div class="bloco-codigo">
-              <div class="bloco-topo"><span>bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-atualizar">Copiar</button></div>
+              <div class="bloco-topo"><span data-i18n="install.bash_in_repo">bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-atualizar" data-i18n="install.btn_copy">Copiar</button></div>
               <pre id="cmd-atualizar">python scripts/skill_hub.py sync --check
 python scripts/skill_hub.py sync --apply
 python scripts/skill_hub.py install --agents all</pre>
             </div>
           </article>
           <article class="card">
-            <p class="card-num">Remover</p>
-            <h3 class="card-titulo">Desinstalar</h3>
-            <p class="texto-card">Remove os subagentes <code>lay-*</code> que você não editou à mão. Arquivos seus, com outro nome, ficam.</p>
+            <p class="card-num" data-i18n="install.upd_card2_badge">Remover</p>
+            <h3 class="card-titulo" data-i18n="install.upd_card2_title">Desinstalar</h3>
+            <p class="texto-card" data-i18n="install.upd_card2_desc">Remove os subagentes <code>lay-*</code> que você não editou à mão. Arquivos seus, com outro nome, ficam.</p>
             <div class="bloco-codigo">
-              <div class="bloco-topo"><span>bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-remover">Copiar</button></div>
+              <div class="bloco-topo"><span data-i18n="install.bash_in_repo">bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-remover" data-i18n="install.btn_copy">Copiar</button></div>
               <pre id="cmd-remover">python scripts/skill_hub.py uninstall</pre>
             </div>
           </article>
@@ -1404,38 +1404,38 @@ python scripts/skill_hub.py install --agents all</pre>
 
         <ol class="grade-problemas">
           <li class="card card-problema">
-            <h3 class="problema-sintoma">Subagente não aparece</h3>
+            <h3 class="problema-sintoma" data-i18n="install.prob1_title">Subagente não aparece</h3>
             <dl class="problema-campos">
-              <dt>Causa</dt><dd>A sessão foi aberta antes da instalação.</dd>
-              <dt>O que fazer</dt><dd>Reinicie a sessão do Claude Code e rode <code>doctor</code>.</dd>
+              <dt data-i18n="install.prob_cause">Causa</dt><dd data-i18n="install.prob1_cause">A sessão foi aberta antes da instalação.</dd>
+              <dt data-i18n="install.prob_action">O que fazer</dt><dd data-i18n="install.prob1_action">Reinicie a sessão do Claude Code e rode <code>doctor</code>.</dd>
             </dl>
           </li>
           <li class="card card-problema">
-            <h3 class="problema-sintoma">Mensagem com "Colisão"</h3>
+            <h3 class="problema-sintoma" data-i18n="install.prob2_title">Mensagem com "Colisão"</h3>
             <dl class="problema-campos">
-              <dt>Causa</dt><dd>Já existe um <code>lay-*.md</code> que não é do instalador.</dd>
-              <dt>O que fazer</dt><dd>Renomeie ou remova o seu arquivo e rode a instalação de novo. O arquivo existente é preservado até lá.</dd>
+              <dt data-i18n="install.prob_cause">Causa</dt><dd data-i18n="install.prob2_cause">Já existe um <code>lay-*.md</code> que não é do instalador.</dd>
+              <dt data-i18n="install.prob_action">O que fazer</dt><dd data-i18n="install.prob2_action">Renomeie ou remova o seu arquivo e rode a instalação de novo. O arquivo existente é preservado até lá.</dd>
             </dl>
           </li>
           <li class="card card-problema">
-            <h3 class="problema-sintoma">Mensagem com "modificado"</h3>
+            <h3 class="problema-sintoma" data-i18n="install.prob3_title">Mensagem com "modificado"</h3>
             <dl class="problema-campos">
-              <dt>Causa</dt><dd>Você editou um <code>lay-*.md</code> à mão.</dd>
-              <dt>O que fazer</dt><dd>Guarde sua edição com outro nome, remova o arquivo e reinstale.</dd>
+              <dt data-i18n="install.prob_cause">Causa</dt><dd data-i18n="install.prob3_cause">Você editou um <code>lay-*.md</code> à mão.</dd>
+              <dt data-i18n="install.prob_action">O que fazer</dt><dd data-i18n="install.prob3_action">Guarde sua edição com outro nome, remova o arquivo e reinstale.</dd>
             </dl>
           </li>
           <li class="card card-problema">
-            <h3 class="problema-sintoma">Mensagem com "Fonte modificada"</h3>
+            <h3 class="problema-sintoma" data-i18n="install.prob4_title">Mensagem com "Fonte modificada"</h3>
             <dl class="problema-campos">
-              <dt>Causa</dt><dd>Há alteração rastreada no clone de uma fonte.</dd>
-              <dt>O que fazer</dt><dd>Rode <code>git status</code> no clone e resolva antes de instalar.</dd>
+              <dt data-i18n="install.prob_cause">Causa</dt><dd data-i18n="install.prob4_cause">Há alteração rastreada no clone de uma fonte.</dd>
+              <dt data-i18n="install.prob_action">O que fazer</dt><dd data-i18n="install.prob4_action">Rode <code>git status</code> no clone e resolva antes de instalar.</dd>
             </dl>
           </li>
           <li class="card card-problema">
-            <h3 class="problema-sintoma"><code>python</code> não encontrado</h3>
+            <h3 class="problema-sintoma" data-i18n="install.prob5_title"><code>python</code> não encontrado</h3>
             <dl class="problema-campos">
-              <dt>Causa</dt><dd>Python ausente ou fora do PATH.</dd>
-              <dt>O que fazer</dt><dd>Instale o Python 3.10+. No Windows, use <code>py -3</code>.</dd>
+              <dt data-i18n="install.prob_cause">Causa</dt><dd data-i18n="install.prob5_cause">Python ausente ou fora do PATH.</dd>
+              <dt data-i18n="install.prob_action">O que fazer</dt><dd data-i18n="install.prob5_action">Instale o Python 3.10+. No Windows, use <code>py -3</code>.</dd>
             </dl>
           </li>
         </ol>
@@ -1447,11 +1447,11 @@ python scripts/skill_hub.py install --agents all</pre>
     <div class="container rodape-interno">
       <p class="rodape-marca">LAY® SKILLS HUB</p>
       <nav class="rodape-links" aria-label="Links do rodapé">
-        <a href="index.html">Catálogo</a>
-        <a href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer">Repositório GitHub<span class="sr-only"> (abre em nova aba)</span></a>
+        <a href="index.html" data-i18n="install.back_to_catalog">Catálogo</a>
+        <a href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer"><span data-i18n="footer.github">Repositório GitHub</span><span class="sr-only"> (abre em nova aba)</span></a>
       </nav>
       <details class="fontes">
-        <summary>Fontes upstream dos subagentes (<span id="contagem-atribuicoes">—</span>)</summary>
+        <summary><span data-i18n="install.upstream_sources">Fontes upstream dos subagentes</span> (<span id="contagem-atribuicoes">—</span>)</summary>
         <ul class="lista-fontes" id="lista-atribuicoes"></ul>
       </details>
     </div>
@@ -1579,47 +1579,53 @@ python scripts/skill_hub.py install --agents all</pre>
       var ativas = typeof a.skills_ativas === 'number' ? a.skills_ativas : skills.length;
       var caminhos = a.configurado || {};
       var fontes = lista(a.fontes_upstream);
-      var nota = NOTAS_PERFIL[a.nome];
       var catId = categoriaPorRotulo(a.categoria);
       var catRotulo = (window.LAY_I18N && window.LAY_I18N.rotuloCategoria(catId, a.categoria)) || a.categoria;
       var acessoTraduzido = (window.LAY_I18N && window.LAY_I18N.traduzirAcesso(a.acesso)) || a.acesso;
       var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
+      var gatilhos = (window.LAY_I18N && window.LAY_I18N.gatilhosAgente)
+        ? window.LAY_I18N.gatilhosAgente(a.nome, a.use_quando, a.nao_use_para_completo || a.nao_use_para, a.resumo)
+        : { use_quando: a.use_quando, nao_use_para: a.nao_use_para_completo || a.nao_use_para, resumo: a.resumo };
+      var nota = (window.LAY_I18N && window.LAY_I18N.notaPerfil)
+        ? window.LAY_I18N.notaPerfil(a.nome, NOTAS_PERFIL[a.nome])
+        : NOTAS_PERFIL[a.nome];
 
       var chips = skills.map(function (s, i) {
         var extra = i >= VISIVEIS_CHIPS;
         return '<li class="chip' + (extra ? ' chip-extra' : '') + '"' + (extra ? ' hidden' : '') + '>' + esc(s) + '</li>';
       }).join('');
       var botaoChips = skills.length > VISIVEIS_CHIPS
-        ? '<button type="button" class="botao-texto" data-chips="ch-' + nome + '" data-n="' + ativas + '" aria-expanded="false" aria-controls="ch-' + nome + '">Mostrar todas (' + ativas + ')</button>'
+        ? '<button type="button" class="botao-texto" data-chips="ch-' + nome + '" data-n="' + ativas + '" aria-expanded="false" aria-controls="ch-' + nome + '">' + esc(t('install.show_all_chips', 'Mostrar todas ({0})').replace('{0}', ativas)) + '</button>'
         : '';
 
       var fontesHtml = fontes.length
         ? fontes.map(function (f) {
-            return '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo) + '<span class="sr-only"> (abre em nova aba)</span></a> <span class="fonte-autor">' + esc(f.autor) + '</span></li>';
+            return '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo) + '<span class="sr-only"> (' + esc(t('install.open_new_tab', 'abre em nova aba')) + ')</span></a> <span class="fonte-autor">' + esc(f.autor) + '</span></li>';
           }).join('')
-        : '<li>Só skills LAY, sem fonte upstream direta</li>';
+        : '<li>' + esc(t('install.only_lay_skills', 'Só skills LAY, sem fonte upstream direta')) + '</li>';
 
       var projetoTexto = caminhos.projeto
-        ? 'Projeto: <code>' + esc(caminhos.projeto_caminho) + '</code>'
-        : 'Projeto: sem arquivo em .claude/agents/ no último build';
-      var globalTexto = 'Global: <code>' + esc(caminhos.global_caminho) + '</code>';
+        ? (esc(t('install.project_label', 'Projeto: ')) + '<code>' + esc(caminhos.projeto_caminho) + '</code>')
+        : (esc(t('install.project_label', 'Projeto: ')) + esc(t('install.project_no_file', 'sem arquivo em .claude/agents/ no último build')));
+      var globalTexto = esc(t('install.global_label', 'Global: ')) + '<code>' + esc(caminhos.global_caminho) + '</code>';
+      var contagemRotulo = ativas + ' ' + (ativas === 1 ? t('install.skill_singular', 'skill') : t('install.skill_plural', 'skills'));
 
       return '<article class="card card-subagente" data-nome="' + nome + '">' +
         '<div class="cs-linha"><h3 class="cs-nome">' + nome + '</h3><span class="acesso ' + (ACESSO_CLASSE[a.acesso] || 'acesso-neutro') + '">' + esc(acessoTraduzido) + '</span></div>' +
         '<p class="cs-dominio"><code>' + esc(a.dominio) + '</code><span class="badge" data-cat="' + esc(catId) + '">' + esc(catRotulo) + '</span></p>' +
-        '<p class="cs-resumo">' + esc(a.resumo) + '</p>' +
+        '<p class="cs-resumo">' + esc(gatilhos.resumo || a.resumo) + '</p>' +
         '<div class="cs-rodape">' +
-          '<span class="cs-contagem">' + esc(contagem(ativas, 'skill', 'skills')) + '</span>' +
+          '<span class="cs-contagem">' + esc(contagemRotulo) + '</span>' +
           '<button type="button" class="botao botao-secundario botao-compacto" aria-expanded="false" aria-controls="det-' + nome + '" data-detalhe="det-' + nome + '">' + esc(t('catalog.btn_detail', 'Detalhes')) + '<span class="sr-only"> de ' + nome + '</span></button>' +
         '</div>' +
         '<div class="cs-detalhe" id="det-' + nome + '" hidden>' +
           '<dl class="lista-campos">' +
-            '<div class="campo-linha"><dt>' + esc(t('pad.use_when', 'Use quando')) + '</dt><dd>' + esc(a.use_quando) + '</dd></div>' +
-            '<div class="campo-linha"><dt>' + esc(t('pad.dont_use', 'Não use para')) + '</dt><dd>' + esc(a.nao_use_para_completo || a.nao_use_para) + '</dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.use_when', 'Use quando')) + '</dt><dd>' + esc(gatilhos.use_quando || a.use_quando) + '</dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.dont_use', 'Não use para')) + '</dt><dd>' + esc(gatilhos.nao_use_para || a.nao_use_para_completo || a.nao_use_para) + '</dd></div>' +
             '<div class="campo-linha"><dt>' + esc(t('install.th_tools', 'Ferramentas')) + '</dt><dd><p class="ferr">' + esc(lista(a.ferramentas).join(', ')) + '</p></dd></div>' +
             '<div class="campo-linha"><dt>' + esc(t('pad.skills_title', 'Skills ativas')) + ' (' + ativas + ')</dt><dd><ul class="chips" id="ch-' + nome + '">' + chips + '</ul>' + botaoChips + '</dd></div>' +
             '<div class="campo-linha"><dt>' + esc(t('pad.sources_title', 'Fontes de upstream')) + '</dt><dd><ul class="fontes-lista">' + fontesHtml + '</ul></dd></div>' +
-            '<div class="campo-linha"><dt>' + esc(t('pad.config_title', 'Configurado')) + '</dt><dd><ul class="caminhos"><li>' + projetoTexto + '</li><li>' + globalTexto + '</li></ul><p>Se os dois existirem, vale o do projeto.</p></dd></div>' +
+            '<div class="campo-linha"><dt>' + esc(t('pad.config_title', 'Configurado')) + '</dt><dd><ul class="caminhos"><li>' + projetoTexto + '</li><li>' + globalTexto + '</li></ul><p>' + esc(t('install.precedence_note', 'Se os dois existirem, vale o do projeto.')) + '</p></dd></div>' +
           '</dl>' +
           (nota ? '<p class="nota-perfil">' + esc(nota) + '</p>' : '') +
         '</div>' +
@@ -1627,15 +1633,17 @@ python scripts/skill_hub.py install --agents all</pre>
     }
 
     function montarSubagentes() {
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       var grade = $('grade-subagentes');
       if (!AGENTES || AGENTES.length === 0) {
-        grade.innerHTML = '<p class="aviso">Lista de subagentes indisponível. Os comandos e os prompts desta página continuam válidos.</p>';
+        grade.innerHTML = '<p class="aviso">' + esc(t('install.subagents_unavailable', 'Lista de subagentes indisponível. Os comandos e os prompts desta página continuam válidos.')) + '</p>';
         return;
       }
       grade.innerHTML = AGENTES.map(function (a) { return cardSubagente(a); }).join('');
     }
 
     function montarAtribuicoes() {
+      var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
       var mapa = {};
       lista(AGENTES).forEach(function (a) {
         lista(a.fontes_upstream).forEach(function (f) {
@@ -1647,9 +1655,9 @@ python scripts/skill_hub.py install --agents all</pre>
       $('contagem-atribuicoes').textContent = String(itens.length);
       $('lista-atribuicoes').innerHTML = itens.length
         ? itens.map(function (f) {
-            return '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo) + '<span class="sr-only"> (abre em nova aba)</span></a> · ' + esc(f.autor) + '</li>';
+            return '<li><a href="' + esc(f.url) + '" target="_blank" rel="noopener noreferrer">' + esc(f.titulo) + '<span class="sr-only"> (' + esc(t('install.open_new_tab', 'abre em nova aba')) + ')</span></a> · ' + esc(f.autor) + '</li>';
           }).join('')
-        : '<li>Nenhuma fonte upstream direta nos subagentes.</li>';
+        : '<li>' + esc(t('install.no_upstream_sources', 'Nenhuma fonte upstream direta nos subagentes.')) + '</li>';
     }
 
     function ligarEventos() {
@@ -1659,7 +1667,8 @@ python scripts/skill_hub.py install --agents all</pre>
           if (!alvo) return;
           // textContent copia o texto inteiro, mesmo com o bloco recolhido.
           copiarTexto(alvo.textContent).then(function (ok) {
-            mostrarToast(ok ? 'Copiado' : 'Não foi possível copiar');
+            var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
+            mostrarToast(ok ? t('toast.copied', 'Copiado') : t('toast.copy_error', 'Não foi possível copiar'));
           });
         });
       });
@@ -1675,11 +1684,14 @@ python scripts/skill_hub.py install --agents all</pre>
           return;
         }
         if (botao.hasAttribute('data-chips')) {
-          var lista = $(botao.getAttribute('data-chips'));
+          var listaChips = $(botao.getAttribute('data-chips'));
           var mostrando = botao.getAttribute('aria-expanded') === 'true';
-          lista.querySelectorAll('.chip-extra').forEach(function (li) { li.hidden = mostrando; });
+          listaChips.querySelectorAll('.chip-extra').forEach(function (li) { li.hidden = mostrando; });
           botao.setAttribute('aria-expanded', mostrando ? 'false' : 'true');
-          botao.textContent = mostrando ? 'Mostrar todas (' + botao.getAttribute('data-n') + ')' : 'Mostrar menos';
+          var t = window.LAY_I18N ? window.LAY_I18N.t : function (k, fb) { return fb || k; };
+          botao.textContent = mostrando
+            ? t('install.show_all_chips', 'Mostrar todas ({0})').replace('{0}', botao.getAttribute('data-n'))
+            : t('install.show_less_chips', 'Mostrar menos');
         }
       });
     }
