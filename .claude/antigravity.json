@@ -1,0 +1,19 @@
+{
+  "project_context": {
+    "domain": "Hub de skills e subagentes para agentes de IA (dashboard estático, pt-BR/en)",
+    "color_palette_hex": ["#060709", "#FFF201", "#00FFFF", "#9AA3B5", "#FFFFFF"],
+    "theme_mode": "dark",
+    "style_anchor": "Dark technical dashboard, near-black background with electric yellow and cyan accents, monospace details, sharp edges",
+    "default_transparent_assets": true
+  },
+  "review_config": {
+    "model": "gemini-3.8-flash",
+    "effort": "medium",
+    "max_adversarial_rounds": 2
+  },
+  "media_config": {
+    "image_profile": "nano-banana-pro",
+    "video_profile": "gemini-omni-flash",
+    "default_output_dir": "hub/assets"
+  }
+}
