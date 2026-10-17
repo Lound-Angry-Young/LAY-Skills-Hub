@@ -45,8 +45,9 @@
       ]
     },
     "design": {
-      "count": 4,
+      "count": 5,
       "skills": [
+        "bridging-antigravity-cli",
         "consulting-design-references",
         "generating-brandkit-identities",
         "generating-mobile-ui-mockups",
@@ -80,11 +81,10 @@
       ]
     },
     "engineering": {
-      "count": 21,
+      "count": 20,
       "skills": [
         "auditing-codebase-bloat",
         "authoring-specifications-first",
-        "bridging-antigravity-cli",
         "debugging-root-causes",
         "deprecating-obsolete-apis",
         "designing-apis-and-interfaces",

@@ -398,7 +398,7 @@ class PerfisTests(unittest.TestCase):
         'lay-engenharia': 'Edita e roda comandos', 'lay-contexto': 'Edita e roda comandos',
         'lay-devops': 'Edita e roda comandos', 'lay-qa': 'Edita e roda comandos',
         'lay-seguranca': 'Não edita · tem Bash', 'lay-3d': 'Edita e roda comandos',
-        'lay-documentacao': 'Edita, sem comandos', 'lay-design': 'Edita, sem comandos',
+        'lay-documentacao': 'Edita, sem comandos', 'lay-design': 'Edita e roda comandos',
         'lay-banco-de-dados': 'Edita e roda comandos',
     }
 

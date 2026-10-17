@@ -59,8 +59,8 @@
     {
       "dominio": "design",
       "nome": "lay-design",
-      "descricao": "Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design. Use quando: o pedido envolver identidade visual, moodboard, mockups ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend).",
-      "ferramentas": ["Read", "Grep", "Glob", "Edit", "Write"]
+      "descricao": "Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design, e geração de imagens, ícones, favicons e vídeos pelo Antigravity CLI (OAuth) com revisão adversária somente leitura de diffs. Use quando: o pedido envolver identidade visual, moodboard, mockups, geração de assets visuais (imagem/vídeo) ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend).",
+      "ferramentas": ["Read", "Grep", "Glob", "Bash", "Edit", "Write"]
     },
     {
       "dominio": "database",

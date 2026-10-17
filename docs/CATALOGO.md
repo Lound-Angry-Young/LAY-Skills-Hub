@@ -29,6 +29,7 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-integrating-creative-web-toolkits` | [integrating-creative-web-toolkits](../refactored_skills/creative-3d/integrating-creative-web-toolkits/SKILL.md) | creative-3d | refactored |
 | `lay-rendering-vanta-backgrounds` | [rendering-vanta-backgrounds](../refactored_skills/creative-3d/rendering-vanta-backgrounds/SKILL.md) | creative-3d | refactored |
 | `lay-selecting-creative-libraries` | [selecting-creative-libraries](../refactored_skills/creative-3d/selecting-creative-libraries/SKILL.md) | creative-3d | refactored |
+| `lay-bridging-antigravity-cli` | [bridging-antigravity-cli](../refactored_skills/design/bridging-antigravity-cli/SKILL.md) | design | refactored |
 | `lay-consulting-design-references` | [consulting-design-references](../refactored_skills/design/consulting-design-references/SKILL.md) | design | refactored |
 | `lay-generating-brandkit-identities` | [generating-brandkit-identities](../refactored_skills/design/generating-brandkit-identities/SKILL.md) | design | refactored |
 | `lay-generating-mobile-ui-mockups` | [generating-mobile-ui-mockups](../refactored_skills/design/generating-mobile-ui-mockups/SKILL.md) | design | refactored |
@@ -111,7 +112,6 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 |---|---|---|---|
 | `lay-auditing-codebase-bloat` | [auditing-codebase-bloat](../refactored_skills/engineering/auditing-codebase-bloat/SKILL.md) | engineering | refactored |
 | `lay-authoring-specifications-first` | [authoring-specifications-first](../refactored_skills/engineering/authoring-specifications-first/SKILL.md) | engineering | refactored |
-| `lay-bridging-antigravity-cli` | [bridging-antigravity-cli](../refactored_skills/engineering/bridging-antigravity-cli/SKILL.md) | engineering | refactored |
 | `lay-debugging-root-causes` | [debugging-root-causes](../refactored_skills/engineering/debugging-root-causes/SKILL.md) | engineering | refactored |
 | `lay-deprecating-obsolete-apis` | [deprecating-obsolete-apis](../refactored_skills/engineering/deprecating-obsolete-apis/SKILL.md) | engineering | refactored |
 | `lay-designing-apis-and-interfaces` | [designing-apis-and-interfaces](../refactored_skills/engineering/designing-apis-and-interfaces/SKILL.md) | engineering | refactored |

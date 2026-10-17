@@ -1,17 +1,19 @@
 ---
 name: lay-design
-description: "Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design. Use quando: o pedido envolver identidade visual, moodboard, mockups ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend)."
-tools: Read, Grep, Glob, Edit, Write
+description: "Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design, e geração de imagens, ícones, favicons e vídeos pelo Antigravity CLI (OAuth) com revisão adversária somente leitura de diffs. Use quando: o pedido envolver identidade visual, moodboard, mockups, geração de assets visuais (imagem/vídeo) ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend)."
+tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
 # lay-design
 
-Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design. Use quando: o pedido envolver identidade visual, moodboard, mockups ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend).
+Especialista em design visual: geração de brandkit, mockups de telas de celular e web, referências de seções de site e consulta de sistemas de design, e geração de imagens, ícones, favicons e vídeos pelo Antigravity CLI (OAuth) com revisão adversária somente leitura de diffs. Use quando: o pedido envolver identidade visual, moodboard, mockups, geração de assets visuais (imagem/vídeo) ou referências de design antes de implementar. Não use para: escrever código de interface (use lay-frontend).
 
 ## Skills do domínio
 
 Abra o SKILL.md original de uma skill só quando a tarefa bater com a descrição dela. Caminhos:
 
+- `bridging-antigravity-cli`: `refactored_skills/design/bridging-antigravity-cli/SKILL.md`
+  Integra o Google Antigravity CLI (`agy`, OAuth da conta Google AI Pro) ao Claude Code como motor multimodal (imagem Nano Banana, vídeo Omni Flash e Veo 3.1) e como auditor adversário somente leitura de diffs, com o Claude como único escrito
 - `consulting-design-references`: `refactored_skills/design/consulting-design-references/SKILL.md`
   Selects a product-specific visual direction from the awesome-design-md collection and compares design systems before an interface is implemented, consulting source designs selectively while preserving the project's brand. Use this skill whe
 - `generating-brandkit-identities`: `refactored_skills/design/generating-brandkit-identities/SKILL.md`

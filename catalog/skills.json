@@ -366,6 +366,21 @@
       "url": ""
     },
     {
+      "id": "lay-bridging-antigravity-cli",
+      "name": "bridging-antigravity-cli",
+      "description": "Integra o Google Antigravity CLI (`agy`, OAuth da conta Google AI Pro) ao Claude Code como motor multimodal (imagem Nano Banana, vídeo Omni Flash e Veo 3.1) e como auditor adversário somente leitura de diffs, com o Claude como único escritor de código. Use this skill when: o usuário pedir imagem, ícone, vídeo ou asset visual gerado pelo Antigravity, uma revisão adversária de código por outro modelo (/agy-review), ou configurar o Antigravity no projeto (/antigravity-setup). Do NOT use this skill when: for revisão de código sem o Antigravity (use reviewing-multi-axis-code-quality), compor vídeo em código (use as skills de vídeo do hub) ou quando o pedido exigir chave de API paga, Vertex AI ou servidor MCP cobrado por token.",
+      "source": "local",
+      "path": "refactored_skills/design/bridging-antigravity-cli/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "design"
+      ],
+      "version": "refactored",
+      "commit": "content-f9eed12d5353",
+      "sha256": "f9eed12d5353aecd39dbd90a9f6712370c16c46d6d1c1e9672c66656ed7cb0c5",
+      "url": ""
+    },
+    {
       "id": "lay-consulting-design-references",
       "name": "consulting-design-references",
       "description": "Selects a product-specific visual direction from the awesome-design-md collection and compares design systems before an interface is implemented, consulting source designs selectively while preserving the project's brand. Use this skill when: choosing a visual direction for a product or comparing design systems before implementing an interface. Do NOT use this skill when: the project already has a defined design system to follow or the task is a pixel-level fix to existing UI.",
@@ -696,21 +711,6 @@
       "version": "refactored",
       "commit": "content-76528545e077",
       "sha256": "76528545e077a8ee82dc0f4f0ee1488bb45a96c91aaab6ec7b018c0a43355509",
-      "url": ""
-    },
-    {
-      "id": "lay-bridging-antigravity-cli",
-      "name": "bridging-antigravity-cli",
-      "description": "Integra o Google Antigravity CLI (`agy`, OAuth da conta Google AI Pro) ao Claude Code como motor multimodal (imagem Nano Banana, vídeo Omni Flash e Veo 3.1) e como auditor adversário somente leitura de diffs, com o Claude como único escritor de código. Use this skill when: o usuário pedir imagem, ícone, vídeo ou asset visual gerado pelo Antigravity, uma revisão adversária de código por outro modelo (/agy-review), ou configurar o Antigravity no projeto (/antigravity-setup). Do NOT use this skill when: for revisão de código sem o Antigravity (use reviewing-multi-axis-code-quality), compor vídeo em código (use as skills de vídeo do hub) ou quando o pedido exigir chave de API paga, Vertex AI ou servidor MCP cobrado por token.",
-      "source": "local",
-      "path": "refactored_skills/engineering/bridging-antigravity-cli/SKILL.md",
-      "kind": "skill",
-      "categories": [
-        "engenharia"
-      ],
-      "version": "refactored",
-      "commit": "content-f9eed12d5353",
-      "sha256": "f9eed12d5353aecd39dbd90a9f6712370c16c46d6d1c1e9672c66656ed7cb0c5",
       "url": ""
     },
     {
