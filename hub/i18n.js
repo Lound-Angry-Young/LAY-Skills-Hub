@@ -25,7 +25,7 @@
 
       // Hero
       'hero.badge': 'Arquitetura modular • evidências determinísticas',
-      'hero.title': 'Ecossistema total <span class="destaque-amarelo">de skills de agentes</span> <span class="destaque-magenta">Pernambuco → mundo</span>',
+      'hero.title': 'Ecossistema total <span class="destaque-amarelo">de skills de agentes</span><br><span class="destaque-magenta">Pernambuco → mundo</span>',
       'hero.impact': 'Skills construídas com componentes de última geração e alta performance.',
       'hero.intro': 'Hub visual interativo reunindo capacidades especializadas e fontes de referência de elite mundial: orquestração central de agentes (<strong class="nome">lay-orchestrator</strong>, <strong class="nome">Caveman</strong>, <strong class="nome">Graphify</strong>), referências de ponta (<strong class="nome">Addy Osmani</strong>, <strong class="nome">Vercel Labs</strong>, <strong class="nome">Semgrep</strong>, <strong class="nome">Playwright</strong>) e bibliotecas criativas (<strong class="nome">Vanta 3D</strong>, <strong class="nome">React Bits</strong>, <strong class="nome">Lenis Smooth Scroll</strong> e <strong class="nome">Libraries.dev</strong>). Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.',
       'hero.stat_skills': 'skills',
@@ -172,7 +172,7 @@
 
       // Hero
       'hero.badge': 'Modular architecture • deterministic evidence',
-      'hero.title': 'Complete ecosystem <span class="destaque-amarelo">of agent skills</span> <span class="destaque-magenta">Pernambuco → world</span>',
+      'hero.title': 'Complete ecosystem <span class="destaque-amarelo">of agent skills</span><br><span class="destaque-magenta">Pernambuco → world</span>',
       'hero.impact': 'Skills built with next-generation, high-performance components.',
       'hero.intro': 'Interactive visual hub gathering specialized capabilities and world-class reference sources: core agent orchestration (<strong class="nome">lay-orchestrator</strong>, <strong class="nome">Caveman</strong>, <strong class="nome">Graphify</strong>), elite references (<strong class="nome">Addy Osmani</strong>, <strong class="nome">Vercel Labs</strong>, <strong class="nome">Semgrep</strong>, <strong class="nome">Playwright</strong>), and creative libraries (<strong class="nome">Vanta 3D</strong>, <strong class="nome">React Bits</strong>, <strong class="nome">Lenis Smooth Scroll</strong>, and <strong class="nome">Libraries.dev</strong>). Inspect code, copy individual prompts, and generate tailored end-to-end architectures.',
       'hero.stat_skills': 'skills',
@@ -515,11 +515,14 @@
 
     wrap.querySelectorAll('.lang-option').forEach(function (opt) {
       opt.addEventListener('click', function (e) {
+        e.preventDefault();
         e.stopPropagation();
         var lang = opt.getAttribute('data-lang');
-        setLocale(lang);
-        closePopover();
-        btn.focus();
+        if (lang) {
+          setLocale(lang);
+          closePopover();
+          btn.focus();
+        }
       });
     });
 

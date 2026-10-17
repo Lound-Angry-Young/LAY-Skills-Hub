@@ -39,14 +39,18 @@ class I18nIntegrationTests(unittest.TestCase):
         self.assertIn('fill="#002868"', html, "Bandeira dos EUA com azul marinho característico")
         self.assertIn('fill="#C21818"', html, "Bandeira dos EUA com faixas vermelhas características")
 
-    def test_active_color_styles(self):
+    def test_popover_z_index_above_content(self):
         for pagina in ("index.html", "instalacao.html"):
             html = (REPO / pagina).read_text(encoding="utf-8")
-            self.assertIn('data-lang="pt-BR"]', html)
-            self.assertIn('#00843d', html, "Estilo ativo para pt-BR deve ser #00843d")
-            self.assertIn('data-lang="en"]', html)
-            self.assertIn('#002868', html, "Estilo ativo para en deve ser #002868")
+            self.assertIn("z-index: 200;", html, f"{pagina} deve ter cabecalho com z-index 200 para ficar acima do principal")
+            self.assertIn("z-index: 1000;", html, f"{pagina} deve ter popover-lang com z-index 1000 para sobrepor o conteudo")
+
+    def test_pernambuco_single_line_style(self):
+        html = (REPO / "index.html").read_text(encoding="utf-8")
+        self.assertIn(".destaque-magenta { color: var(--magenta); white-space: nowrap; display: inline-block; }", html)
+        self.assertIn('<span class="destaque-magenta">Pernambuco', html)
 
 
 if __name__ == "__main__":
     unittest.main()
+

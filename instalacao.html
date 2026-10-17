@@ -192,6 +192,8 @@
        CABEÇALHO
        ========================================================================== */
     .cabecalho {
+      position: relative;
+      z-index: 200;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -920,6 +922,7 @@
       position: relative;
       display: inline-flex;
       align-items: center;
+      z-index: 250;
     }
     .globe-btn {
       height: 38px;
@@ -953,7 +956,7 @@
       background: #ffffff;
       border: 2px solid #000000;
       box-shadow: 4px 4px 0 var(--magenta, #ff007f);
-      z-index: 120;
+      z-index: 1000;
       display: flex;
       flex-direction: column;
       overflow: hidden;

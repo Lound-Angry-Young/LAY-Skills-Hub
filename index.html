@@ -94,7 +94,7 @@
        ========================================================================== */
     .cabecalho {
       position: relative;
-      z-index: 1;
+      z-index: 200;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -238,7 +238,7 @@
       text-transform: uppercase;
     }
     .titulo-principal {
-      max-width: 22ch;
+      max-width: min(32ch, 100%);
       font-family: var(--fonte-titulo);
       font-size: clamp(2.2rem, 6.4vw, 4.8rem);
       font-weight: 900;
@@ -253,7 +253,7 @@
       box-decoration-break: clone;
       -webkit-box-decoration-break: clone;
     }
-    .destaque-magenta { color: var(--magenta); }
+    .destaque-magenta { color: var(--magenta); white-space: nowrap; display: inline-block; }
     .impacto {
       max-width: 34ch;
       margin-top: 26px;
@@ -889,6 +889,7 @@
       position: relative;
       display: inline-flex;
       align-items: center;
+      z-index: 250;
     }
     .globe-btn {
       height: 38px;
@@ -922,7 +923,7 @@
       background: #ffffff;
       border: 2px solid #000000;
       box-shadow: 4px 4px 0 var(--magenta, #ff007f);
-      z-index: 120;
+      z-index: 1000;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -1153,7 +1154,7 @@
       <section class="hero" aria-labelledby="titulo-principal">
         <img class="hero-tubarao" src="hub/assets/lay/tubarao-hero.webp" alt="" width="900" height="428" loading="lazy" decoding="async" aria-hidden="true">
         <p class="rotulo" data-i18n="hero.badge">Arquitetura modular • evidências determinísticas</p>
-        <h1 class="titulo-principal" id="titulo-principal" data-i18n="hero.title">Ecossistema total <span class="destaque-amarelo">de skills de agentes</span> <span class="destaque-magenta">Pernambuco → mundo</span></h1>
+        <h1 class="titulo-principal" id="titulo-principal" data-i18n="hero.title">Ecossistema total <span class="destaque-amarelo">de skills de agentes</span><br><span class="destaque-magenta">Pernambuco → mundo</span></h1>
         <p class="impacto" data-i18n="hero.impact">Skills construídas com componentes de última geração e alta performance.</p>
         <p class="intro" data-i18n="hero.intro">Hub visual interativo reunindo capacidades especializadas e fontes de referência de elite mundial: orquestração central de agentes (<strong class="nome">lay-orchestrator</strong>, <strong class="nome">Caveman</strong>, <strong class="nome">Graphify</strong>), referências de ponta (<strong class="nome">Addy Osmani</strong>, <strong class="nome">Vercel Labs</strong>, <strong class="nome">Semgrep</strong>, <strong class="nome">Playwright</strong>) e bibliotecas criativas (<strong class="nome">Vanta 3D</strong>, <strong class="nome">React Bits</strong>, <strong class="nome">Lenis Smooth Scroll</strong> e <strong class="nome">Libraries.dev</strong>). Inspecione códigos, copie prompts individuais e gere arquiteturas completas sob medida.</p>
         <ul class="indicadores" aria-label="Números do hub">
