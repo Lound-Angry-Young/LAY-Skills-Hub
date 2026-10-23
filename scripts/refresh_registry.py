@@ -9,13 +9,6 @@ UPSTREAM = ROOT / 'upstream'
 OUT = ROOT / 'registry/sources.json'
 SPECIAL = {
     'safishamsi--graphify': ['graphify/SKILL.md'],
-    'anil-matcha--open-generative-ai': [],
-    'voltagent--awesome-design-md': [],
-    'latent-spaces--brag': [],
-    'tengbao--vanta': [],
-    'DavidHDev--react-bits': [],
-    'darkroomengineering--lenis': [],
-    'Jakubantalik--Libraries.dev': [],
 }
 
 
@@ -40,14 +33,12 @@ def main():
         url = git(folder, 'config', '--get', 'remote.origin.url')
         repo = url.removesuffix('.git').split('github.com/')[-1]
         notes = []
-        if not skills and source_id != 'latent-spaces--brag':
+        if not skills:
             notes.append('Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva.')
         if source_id == 'safishamsi--graphify':
             notes.append('Fonte adicional da skill Graphify; inclui runtime e referências.')
         if source_id == 'leonxlnx--taste-skill':
             notes.append('URLs Leonxlnx/leonxlnx deduplicadas: GitHub trata o nome sem distinção de maiúsculas.')
-        if source_id == 'latent-spaces--brag':
-            notes.append('Skills brag/brag-slim preservadas na fonte, mas não expostas globalmente: dependem de Hyperframes, removido por pedido do usuário.')
         entries.append({'id': source_id, 'repo': repo, 'url': url,
                         'path': folder.relative_to(ROOT).as_posix(), 'commit': commit,
                         'version': version, 'kind': 'skills' if skills else 'repertorio',

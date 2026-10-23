@@ -118,15 +118,6 @@ SOURCE_METADATA = {
         "badge": "LLM Router & Gateway",
         "desc": "Gateway resiliente de roteamento de modelos de IA, caching semântico, compressão RTK de contexto, limites de orçamento e comunicação Agent-to-Agent (A2A)."
     },
-    "anil-matcha--open-generative-ai": {
-        "author": "Anil Matcha",
-        "title": "Open Generative AI",
-        "url": "https://github.com/Anil-matcha/open-generative-ai",
-        "avatar": "https://avatars.githubusercontent.com/u/20261623?v=4",
-        "icon": "🤖",
-        "badge": "GenAI Patterns",
-        "desc": "Coleção de arquiteturas abertas para produtos baseados em IA generativa, fluxos de design visual e agentes de automação."
-    },
     "voltagent--awesome-design-md": {
         "author": "VoltAgent",
         "title": "Awesome Design MD",
@@ -135,15 +126,6 @@ SOURCE_METADATA = {
         "icon": "📐",
         "badge": "Design System Specs",
         "desc": "Repositório curado de especificações de design systems modernos (DESIGN.md) de produtos globais de referência."
-    },
-    "latent-spaces--brag": {
-        "author": "Latent Spaces",
-        "title": "Brag Showcase",
-        "url": "https://github.com/latent-spaces/brag",
-        "avatar": "https://avatars.githubusercontent.com/u/118317765?v=4",
-        "icon": "🚀",
-        "badge": "Project Portfolio",
-        "desc": "Padrões de apresentação de engenharia e destaque de portfólio de alta densidade técnica."
     },
     "tengbao--vanta": {
         "author": "Tengbao",
@@ -189,8 +171,7 @@ CAMPOS_PESADOS = ("content", "prompt")
 # Chaves de versões antigas das skills. Nenhuma confere com o catálogo atual,
 # então nenhuma skill sai atribuída a fonte upstream (ver fontes_upstream).
 # Skills LAY inspiradas e citadas em fontes upstream: a fonte exibida é a upstream.
-# Só entram pares confirmados pela própria SKILL.md. architecting-generative-ai-apps
-# (anil-matcha--open-generative-ai) fica de fora até confirmação.
+# Só entram pares confirmados pela própria SKILL.md.
 LOCAL_ATTRIBUTIONS = {
     "rendering-vanta-backgrounds": "tengbao--vanta",
     "animating-react-bits-components": "DavidHDev--react-bits",

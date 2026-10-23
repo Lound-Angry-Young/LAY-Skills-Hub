@@ -138,7 +138,7 @@ class IntegracaoSiteTests(unittest.TestCase):
 
     def test_build_hub_publica_contagem_de_fontes(self):
         dados = (Path(ns.REPO) / 'hub/data.js').read_text(encoding='utf-8')
-        self.assertIn('window.LAY_SOURCES_COUNT = 17;', dados)
+        self.assertIn('window.LAY_SOURCES_COUNT = 15;', dados)
 
 
 if __name__ == '__main__':

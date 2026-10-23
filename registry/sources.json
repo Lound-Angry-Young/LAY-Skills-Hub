@@ -2,6 +2,32 @@
   "schema_version": 1,
   "sources": [
     {
+      "id": "DavidHDev--react-bits",
+      "repo": "DavidHDev/react-bits",
+      "url": "https://github.com/DavidHDev/react-bits.git",
+      "path": "upstream/DavidHDev--react-bits",
+      "commit": "2139cb3098d4fedc6264f13e50dcb4694224ba7c",
+      "version": "2139cb3",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de referência para animating-react-bits-components."
+      ]
+    },
+    {
+      "id": "Jakubantalik--Libraries.dev",
+      "repo": "Jakubantalik/Libraries.dev",
+      "url": "https://github.com/Jakubantalik/Libraries.dev.git",
+      "path": "upstream/Jakubantalik--Libraries.dev",
+      "commit": "bcaf88f8a16a75fd95bf21e0747193ee3380a927",
+      "version": "bcaf88f",
+      "kind": "repertorio",
+      "skill_paths": [],
+      "notes": [
+        "Repositório de referência para selecting-creative-libraries."
+      ]
+    },
+    {
       "id": "addyosmani--agent-skills",
       "repo": "addyosmani/agent-skills",
       "url": "https://github.com/addyosmani/agent-skills.git",
@@ -39,19 +65,6 @@
       "notes": []
     },
     {
-      "id": "anil-matcha--open-generative-ai",
-      "repo": "anil-matcha/open-generative-ai",
-      "url": "https://github.com/anil-matcha/open-generative-ai.git",
-      "path": "upstream/anil-matcha--open-generative-ai",
-      "commit": "6b704b0806bf07b435586ff182fb54fffe64253f",
-      "version": "v2.0.0-268-g6b704b0",
-      "kind": "repertorio",
-      "skill_paths": [],
-      "notes": [
-        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
-      ]
-    },
-    {
       "id": "darkroomengineering--lenis",
       "repo": "darkroomengineering/lenis",
       "url": "https://github.com/darkroomengineering/lenis.git",
@@ -61,20 +74,7 @@
       "kind": "repertorio",
       "skill_paths": [],
       "notes": [
-        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
-      ]
-    },
-    {
-      "id": "DavidHDev--react-bits",
-      "repo": "DavidHDev/react-bits",
-      "url": "https://github.com/DavidHDev/react-bits.git",
-      "path": "upstream/DavidHDev--react-bits",
-      "commit": "2139cb3098d4fedc6264f13e50dcb4694224ba7c",
-      "version": "2139cb3",
-      "kind": "repertorio",
-      "skill_paths": [],
-      "notes": [
-        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+        "Repositório de referência para orchestrating-smooth-scroll."
       ]
     },
     {
@@ -166,32 +166,6 @@
         "skills/remove-ai-marks/SKILL.md"
       ],
       "notes": []
-    },
-    {
-      "id": "Jakubantalik--Libraries.dev",
-      "repo": "Jakubantalik/Libraries.dev",
-      "url": "https://github.com/Jakubantalik/Libraries.dev.git",
-      "path": "upstream/Jakubantalik--Libraries.dev",
-      "commit": "bcaf88f8a16a75fd95bf21e0747193ee3380a927",
-      "version": "voice-glow@0.2.0-175-gbcaf88f",
-      "kind": "repertorio",
-      "skill_paths": [],
-      "notes": [
-        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
-      ]
-    },
-    {
-      "id": "latent-spaces--brag",
-      "repo": "latent-spaces/brag",
-      "url": "https://github.com/latent-spaces/brag.git",
-      "path": "upstream/latent-spaces--brag",
-      "commit": "8531ccb9f471ef5099abf930079e47b55c55bb21",
-      "version": "v0.3.0-10-g8531ccb",
-      "kind": "repertorio",
-      "skill_paths": [],
-      "notes": [
-        "Skills brag/brag-slim preservadas na fonte, mas não expostas globalmente: dependem de Hyperframes, removido por pedido do usuário."
-      ]
     },
     {
       "id": "leonxlnx--taste-skill",
@@ -286,7 +260,7 @@
       "kind": "repertorio",
       "skill_paths": [],
       "notes": [
-        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+        "Repositório de referência para rendering-vanta-backgrounds."
       ]
     },
     {
@@ -320,7 +294,7 @@
       "kind": "repertorio",
       "skill_paths": [],
       "notes": [
-        "Repositório de repertório/aplicação sem SKILL.md público; README como entrada consultiva."
+        "Repositório de referência para consulting-design-references."
       ]
     }
   ]

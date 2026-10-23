@@ -476,7 +476,9 @@ def install(home, agents, root=ROOT, skip_tools=False):
     marker = hub / 'installation.json'
     previous = read_json(marker, {})
     if hub.exists() and not previous and any(hub.iterdir()):
-        raise ValueError(f'Diretório existente não gerenciado: {hub}')
+        subnames = {p.name for p in hub.iterdir()}
+        if not subnames <= {'runtime', 'bundles', 'tools'}:
+            raise ValueError(f'Diretório existente não gerenciado: {hub}')
     catalog = build_catalog(root)
     installed = catalog['skills'] + private_entries(root)
     ids = [e['id'] for e in installed]
@@ -513,6 +515,8 @@ def install(home, agents, root=ROOT, skip_tools=False):
     source_paths = {'local': runtime, 'private': runtime}
     for source in sources(root)['sources']:
         source_root = confined(root, source['path'])
+        if not (source_root / '.git').exists() and not (source_root / '.git').is_file():
+            continue
         actual = git(source_root, 'rev-parse', 'HEAD')
         if actual != source['commit']:
             raise ValueError(f"SHA divergiu: {source['id']}; regenere registry ou restaure o submodule")

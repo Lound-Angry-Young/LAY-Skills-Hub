@@ -43,8 +43,8 @@
         "contexto"
       ],
       "version": "refactored",
-      "commit": "content-d810a69a4ef2",
-      "sha256": "d810a69a4ef2632822ba269ae7f492d149fbfc52b45e95a5cb58b1d0b515481a",
+      "commit": "content-516e52cbbac2",
+      "sha256": "516e52cbbac29dd979d42fadef41d40a709196255942e352dac672242dfce7ff",
       "url": ""
     },
     {
@@ -149,8 +149,8 @@
         "contexto"
       ],
       "version": "refactored",
-      "commit": "content-eeeda5142eed",
-      "sha256": "eeeda5142eedd8e0f24bcd3b0c28996b537f25d2fc15ef79a60c658b496ba7b3",
+      "commit": "content-17c57faf9ad6",
+      "sha256": "17c57faf9ad6cd8949c3b768268f49b0c3f0d4a4d947d67351eea9076c197e34",
       "url": ""
     },
     {
@@ -164,8 +164,8 @@
         "contexto"
       ],
       "version": "refactored",
-      "commit": "content-db9fa060a787",
-      "sha256": "db9fa060a7879dc706324ae8f3f007bb452214d47c0034f43ec29d6916fe204e",
+      "commit": "content-3bb57ef59f78",
+      "sha256": "3bb57ef59f78b41d4a4a423f0f0a50201d4f7f664c6f36463d252292715ea36f",
       "url": ""
     },
     {
@@ -271,8 +271,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-0c57e0bca8cd",
-      "sha256": "0c57e0bca8cdce369438ff7df5b25c889c4baea8a83b134a015ea66775fbf93f",
+      "commit": "content-2e121e08c7e6",
+      "sha256": "2e121e08c7e69d2d188703c186b64a93e2eb18a7bd930c65876878f26cfb97da",
       "url": ""
     },
     {
@@ -286,8 +286,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-e8010dbc4c10",
-      "sha256": "e8010dbc4c1055828f70d6d6596bbba24280c41f0af66ef5778f1dfc61dd33e8",
+      "commit": "content-7f91590fee35",
+      "sha256": "7f91590fee3587fe9e2f57b02e3aec73af89d786592d1996fcc2f7046b20f5ef",
       "url": ""
     },
     {
@@ -316,8 +316,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-138645153b26",
-      "sha256": "138645153b269d9ee0b8e46e119a3dd0dd354a7bc30ae97be6f37e2dca7ad1e2",
+      "commit": "content-43d3e2f75c94",
+      "sha256": "43d3e2f75c94b1d103291377b05324aa3080f0c33fc65594391db42d48743c73",
       "url": ""
     },
     {
@@ -331,8 +331,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-a34504ef0c75",
-      "sha256": "a34504ef0c75f170af360fc1a85f58a7b01b7becf21ce84d2fe8d80624914217",
+      "commit": "content-dc76d5527ade",
+      "sha256": "dc76d5527ade992190badcf0f95cc85ebb4b21ae2ff3ad51a993120752523b81",
       "url": ""
     },
     {
@@ -361,8 +361,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-2721159d5543",
-      "sha256": "2721159d5543f956a4b6f804b034ff656f443aba1a45e997de54af38e9128524",
+      "commit": "content-fa248f58927e",
+      "sha256": "fa248f58927eefa49e0edbb2563156593f870f40662971d10687746dabfa1aec",
       "url": ""
     },
     {
@@ -376,8 +376,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-f9eed12d5353",
-      "sha256": "f9eed12d5353aecd39dbd90a9f6712370c16c46d6d1c1e9672c66656ed7cb0c5",
+      "commit": "content-e2bd2214e5ec",
+      "sha256": "e2bd2214e5ecbcb359b89f28853491b30a067502c789817cec659b4ded5d50bc",
       "url": ""
     },
     {
@@ -451,8 +451,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-decaff104fd7",
-      "sha256": "decaff104fd736a48c39b7a6777295e3cc2ee51f3e347c579e8437e2e7713428",
+      "commit": "content-b4995881e377",
+      "sha256": "b4995881e3772c89e5aa1b265e9958e430641ba84de2645fde312b1034309a8e",
       "url": ""
     },
     {
@@ -541,8 +541,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-3fa69d649b1f",
-      "sha256": "3fa69d649b1f08de0ba3563235228261447e32b140cea0d64b6d7ff76803351a",
+      "commit": "content-0198ed4724c2",
+      "sha256": "0198ed4724c2cb7446519f78d5f1ba2e48639bffc03c27e446082d344993813d",
       "url": ""
     },
     {
@@ -602,8 +602,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-4a8be1b0a4fb",
-      "sha256": "4a8be1b0a4fbca2f387a20135744bf5a8236c17ca559503b6c771d784e83472d",
+      "commit": "content-d672f67a6a28",
+      "sha256": "d672f67a6a284d665097f432551e0a2aa0ece779aeb6e75b9fe4675ba23af7de",
       "url": ""
     },
     {
@@ -633,8 +633,8 @@
         "seguranca"
       ],
       "version": "refactored",
-      "commit": "content-1f3d87977768",
-      "sha256": "1f3d879777689fd3312dcd8456bb40fdf7165c89ef44a9fb29c7f531bcf613dd",
+      "commit": "content-2a9761911683",
+      "sha256": "2a97619116839a5a0bf76e9f9781c780fd8e3eab17f5d46f051a675ae971960c",
       "url": ""
     },
     {
@@ -910,8 +910,8 @@
         "engenharia"
       ],
       "version": "refactored",
-      "commit": "content-46b3392af866",
-      "sha256": "46b3392af866ad1973d5179447189a6ee1f596bd3756cf682a5c9781b7028196",
+      "commit": "content-6a35187878d1",
+      "sha256": "6a35187878d10204038a1692bcb73e96b5ed0eacc3604544724bdb597e24ad53",
       "url": ""
     },
     {
@@ -1003,8 +1003,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-486297f28370",
-      "sha256": "486297f2837066c6026705a43d182d75c31e3ee82b5be6611ffb4c1a91192ec5",
+      "commit": "content-d9621235e7c2",
+      "sha256": "d9621235e7c26aee43740612d8ce3b15718bf8cf0da99b52ff935a32852be691",
       "url": ""
     },
     {
@@ -1048,8 +1048,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-ce6763d9ad0e",
-      "sha256": "ce6763d9ad0e22381d50f2466708f1717233cf58690c09d82fce917f448f701d",
+      "commit": "content-3e2c499e524f",
+      "sha256": "3e2c499e524f1c2753e028277bb937fd17b6c3f6eb4578b09de9bdc162723bb9",
       "url": ""
     },
     {
@@ -1064,8 +1064,8 @@
         "seguranca"
       ],
       "version": "refactored",
-      "commit": "content-ddc45202778c",
-      "sha256": "ddc45202778ca0b6cec27b1912a0cc4d5dca8e1c9be5100813da2eaf4964e279",
+      "commit": "content-e4f03ce953a7",
+      "sha256": "e4f03ce953a761719695cb4e4196e6f718e99da08016b228107cb11166ecaa17",
       "url": ""
     },
     {
@@ -1245,8 +1245,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-d9d83547908a",
-      "sha256": "d9d83547908a1fecaaa47cb7a9f5dd2775bacec61c7ce56656dccf6134ea019f",
+      "commit": "content-ae9e7bd25059",
+      "sha256": "ae9e7bd25059ab3b4597d4fe8b904005e597e17183c954e63f2000f8bb0ec37f",
       "url": ""
     },
     {
@@ -1292,8 +1292,8 @@
         "design"
       ],
       "version": "refactored",
-      "commit": "content-5322440492e0",
-      "sha256": "5322440492e0f3de474a5077976fdb6375c0fc8a167bf989f070f8aa8e715ac2",
+      "commit": "content-aa04c6278621",
+      "sha256": "aa04c6278621f8d5df596b421655df94ee763ae739854cb200b45c65f854b93d",
       "url": ""
     },
     {
@@ -1367,8 +1367,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-b6d45c2e1cf0",
-      "sha256": "b6d45c2e1cf04611d1a7f9b8d1de161b02a3d0ec0ece4675a428f81d58e397a6",
+      "commit": "content-86d36fc99581",
+      "sha256": "86d36fc995810a6a922f042d5ea65c0b1c72692c87cc561ad35776c57c0cef0a",
       "url": ""
     },
     {
@@ -1397,8 +1397,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-4190f70251b2",
-      "sha256": "4190f70251b22db55512130214a2fe9690a1f428684f3c21db6cd7750cbb6591",
+      "commit": "content-a94de46576f8",
+      "sha256": "a94de46576f83bcdc5809b5349fa74f28b8754a0dddacbb9fa96f9fd42e3dbc0",
       "url": ""
     },
     {
@@ -1412,8 +1412,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-f0df82b1e1f1",
-      "sha256": "f0df82b1e1f162a68ec3246899211213b94728b80617ea4efb7ef34eaf22a446",
+      "commit": "content-d6b6700ddfad",
+      "sha256": "d6b6700ddfad3ab3ede68f0f7131eed921b8989c95d959190b34ff36eb0b9687",
       "url": ""
     },
     {
@@ -1442,8 +1442,8 @@
         "testes"
       ],
       "version": "refactored",
-      "commit": "content-5b478eeac33b",
-      "sha256": "5b478eeac33b7fdec54fa2c5538f738e85e0e0a93c7d148b4fe6c881e3e061d6",
+      "commit": "content-1fe7d6a7dde1",
+      "sha256": "1fe7d6a7dde1e0d40155b1f7d1ec20075ac36dd4349af87793b8f801cd8c2a5b",
       "url": ""
     },
     {
@@ -1487,8 +1487,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-be2c6dc46f39",
-      "sha256": "be2c6dc46f39263ee791220c50b8b5b4288db626a8528134e206284112d064cf",
+      "commit": "content-681b0ab155c1",
+      "sha256": "681b0ab155c14cdbaf3b4ca999e2dea36a93052a8ad5a01f271a4ca952c4e74b",
       "url": ""
     },
     {
@@ -1502,8 +1502,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-218fa89a5849",
-      "sha256": "218fa89a5849891c9acde10c81fcc65810100a594cf1fb949be34759b3aa1bf0",
+      "commit": "content-e1bf1be2ad0a",
+      "sha256": "e1bf1be2ad0a903660d64590eebc490ea833e28a45925fb3a20d382236458341",
       "url": ""
     },
     {
@@ -1532,8 +1532,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-3d132b6aa430",
-      "sha256": "3d132b6aa430ea26116a77053e81b77b4ba4b32360ffdd58e9658e2de5dfba1f",
+      "commit": "content-633d1b5d44d3",
+      "sha256": "633d1b5d44d3f6f63669a70918b6e03805b812e7f502392b149499f03056368c",
       "url": ""
     },
     {
@@ -1592,8 +1592,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-68b3cbe70697",
-      "sha256": "68b3cbe70697637876c6ba4c034f393cf251b35b9f2ba6452918d1d1259d0852",
+      "commit": "content-c3c4c93decb3",
+      "sha256": "c3c4c93decb3f1beeb0cc99780a2fabae6a45ac0268db5cf1d9f81d53a5392a5",
       "url": ""
     },
     {
@@ -1607,8 +1607,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-b2c18175b02a",
-      "sha256": "b2c18175b02aa5160568b403179ae48bd302c04637caaa45a971652d001880a5",
+      "commit": "content-976b2f525e3e",
+      "sha256": "976b2f525e3e175540ca682eb7fb34685f80f63e4ba13227105f0127ae93d387",
       "url": ""
     },
     {
@@ -1637,8 +1637,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-944620f15dcc",
-      "sha256": "944620f15dcc00e8da546f65199663e51eeecc31cf7856961c305e4c62547182",
+      "commit": "content-c37e5e53bd09",
+      "sha256": "c37e5e53bd0901ba54b1cce19e70adb62d5a488de25e7ba55090e0769ed515ec",
       "url": ""
     },
     {
@@ -1667,8 +1667,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-39bd93d82fb8",
-      "sha256": "39bd93d82fb8eb5d215593ec3d8bc708bd9a35dfe29d40c35fe335a87c4d9441",
+      "commit": "content-2c9e7c5166cb",
+      "sha256": "2c9e7c5166cba3b3e31637faeffcbba2998de37a9a198fb7b17e4ec15209756e",
       "url": ""
     },
     {
@@ -1742,8 +1742,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-3e9cac8ae058",
-      "sha256": "3e9cac8ae058966c753737eef7b3e3ee6fc507e31826fadc41bb94b3414868f8",
+      "commit": "content-78b27732029f",
+      "sha256": "78b27732029fccbb25b3b27501653df26a4a022b57df9daf2c1816bbcd8260ab",
       "url": ""
     },
     {
@@ -1757,8 +1757,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-2c971c93a451",
-      "sha256": "2c971c93a45104e0ba0542e3a16b38b47e9162863c639880628bca63f72022e3",
+      "commit": "content-2f701a267338",
+      "sha256": "2f701a267338108435306dc93e9e2ab70f8d5c1c3f7c87d0c0f35248881bb6ea",
       "url": ""
     },
     {
@@ -1832,8 +1832,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-88af67608cc4",
-      "sha256": "88af67608cc4273459ee783731c98892275b61547d31fac41c1c118bea404b6a",
+      "commit": "content-7820a66f3952",
+      "sha256": "7820a66f3952ce728af6a727f4cea7676067863d3179e6334645e78c6227a466",
       "url": ""
     },
     {
@@ -1847,8 +1847,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-9fd878047320",
-      "sha256": "9fd878047320c326e719343877ba43a3aae7a4c367f41177d4f31d71d264b352",
+      "commit": "content-191d54373671",
+      "sha256": "191d54373671e4eaa518a345db1279e51337a10d929a908f519bcaf9e8db9d44",
       "url": ""
     },
     {
@@ -1892,8 +1892,8 @@
         "operacoes"
       ],
       "version": "refactored",
-      "commit": "content-55cec65deb35",
-      "sha256": "55cec65deb35d3f9f3c774f95c32765bea3b912cd0434b9d367c1110cd93f135",
+      "commit": "content-5d1abbbfe9d5",
+      "sha256": "5d1abbbfe9d518981075f598b64a2851deb91496ade4d77aa4c5170fc0a77fa3",
       "url": ""
     },
     {
@@ -1967,8 +1967,8 @@
         "seguranca"
       ],
       "version": "refactored",
-      "commit": "content-d9df2ffe1de3",
-      "sha256": "d9df2ffe1de3553e001a30b4a17af0c81d5560efc7a4298439e36b6937346f9f",
+      "commit": "content-e6b496145106",
+      "sha256": "e6b4961451062804b7b74540ac6f193c70bc95821abb515067dac8e95c3ae38f",
       "url": ""
     },
     {
@@ -2074,8 +2074,8 @@
         "seguranca"
       ],
       "version": "refactored",
-      "commit": "content-d710563e7878",
-      "sha256": "d710563e7878c568e43b595a49c419061b62d535872896cd17183c6bcc8a4f99",
+      "commit": "content-30da9e062b3c",
+      "sha256": "30da9e062b3ca593b0346b0ff149c9c9050ff57fcd44dff4403cdc577ac8af6a",
       "url": ""
     }
   ]

@@ -2726,15 +2726,6 @@ window.LAY_SOURCES = {
     "badge": "LLM Router & Gateway",
     "desc": "Gateway resiliente de roteamento de modelos de IA, caching semântico, compressão RTK de contexto, limites de orçamento e comunicação Agent-to-Agent (A2A)."
   },
-  "anil-matcha--open-generative-ai": {
-    "author": "Anil Matcha",
-    "title": "Open Generative AI",
-    "url": "https://github.com/Anil-matcha/open-generative-ai",
-    "avatar": "https://avatars.githubusercontent.com/u/20261623?v=4",
-    "icon": "🤖",
-    "badge": "GenAI Patterns",
-    "desc": "Coleção de arquiteturas abertas para produtos baseados em IA generativa, fluxos de design visual e agentes de automação."
-  },
   "voltagent--awesome-design-md": {
     "author": "VoltAgent",
     "title": "Awesome Design MD",
@@ -2743,15 +2734,6 @@ window.LAY_SOURCES = {
     "icon": "📐",
     "badge": "Design System Specs",
     "desc": "Repositório curado de especificações de design systems modernos (DESIGN.md) de produtos globais de referência."
-  },
-  "latent-spaces--brag": {
-    "author": "Latent Spaces",
-    "title": "Brag Showcase",
-    "url": "https://github.com/latent-spaces/brag",
-    "avatar": "https://avatars.githubusercontent.com/u/118317765?v=4",
-    "icon": "🚀",
-    "badge": "Project Portfolio",
-    "desc": "Padrões de apresentação de engenharia e destaque de portfólio de alta densidade técnica."
   },
   "tengbao--vanta": {
     "author": "Tengbao",
@@ -2790,4 +2772,4 @@ window.LAY_SOURCES = {
     "desc": "Diretório supremo de 1.000+ bibliotecas modernas para desenvolvimento web criativo, shaders GLSL, física de canvas, 3D, áudio e UI."
   }
 };
-window.LAY_SOURCES_COUNT = 17;
+window.LAY_SOURCES_COUNT = 15;
