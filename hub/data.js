@@ -1,4 +1,4 @@
-// LAY SKILLS HUB - GENERATED DATASET (137 SKILLS)
+// LAY SKILLS HUB - GENERATED DATASET (138 SKILLS)
 window.LAY_SKILLS = [
   {
     "id": "lay-architecting-generative-ai-apps",
@@ -113,6 +113,25 @@ window.LAY_SKILLS = [
     "version": "refactored",
     "commit": "content-",
     "description": "Optimizes agent context setup: starting new sessions, recovering from degraded output, switching between tasks and configuring rules files and context for a project. Use this skill when: starting a new session, output quality degrades, switching tasks or configuring a project's rules files. Do NOT use this skill when: the goal is only to compress messages or prompts (use compressing-agent-messages or configuring-prompt-compression).",
+    "kind": "skill"
+  },
+  {
+    "id": "lay-finding-agent-skills",
+    "name": "finding-agent-skills",
+    "source": "vercel-labs--skills",
+    "author": "Vercel Labs",
+    "sourceTitle": "Skills CLI & Ecosystem",
+    "sourceUrl": "https://github.com/vercel-labs/skills",
+    "sourceAvatar": "https://avatars.githubusercontent.com/u/14985020?v=4",
+    "sourceIcon": "▲",
+    "sourceBadge": "Skills Package Manager",
+    "sourceDesc": "Gerenciador de pacotes e CLI para o ecossistema aberto de habilidades de agentes de IA em skills.sh.",
+    "categories": [
+      "contexto"
+    ],
+    "version": "refactored",
+    "commit": "content-",
+    "description": "Discovers, searches, evaluates and installs agent skills from the open ecosystem and skills.sh registry using the Skills CLI. Use this skill when: searching for community skills to solve a task, finding installable skills from skills.sh, or installing skills with npx skills. Do NOT use this skill when: selecting among already-installed LAY skills (use discovering-and-invoking-skills) or importing raw GitHub repos into OmniRoute (use importing-github-agent-skills).",
     "kind": "skill"
   },
   {
@@ -2654,6 +2673,15 @@ window.LAY_SOURCES = {
     "badge": "Vercel Official",
     "desc": "Melhores práticas oficiais de React 19, Next.js, padrões de composição modular, diretrizes de web design e otimização de performance."
   },
+  "vercel-labs--skills": {
+    "author": "Vercel Labs",
+    "title": "Skills CLI & Ecosystem",
+    "url": "https://github.com/vercel-labs/skills",
+    "avatar": "https://avatars.githubusercontent.com/u/14985020?v=4",
+    "icon": "▲",
+    "badge": "Skills Package Manager",
+    "desc": "Gerenciador de pacotes e CLI para o ecossistema aberto de habilidades de agentes de IA em skills.sh."
+  },
   "leonxlnx--taste-skill": {
     "author": "Leonxlnx",
     "title": "Taste Skill & Brandkit",
@@ -2772,4 +2800,4 @@ window.LAY_SOURCES = {
     "desc": "Diretório supremo de 1.000+ bibliotecas modernas para desenvolvimento web criativo, shaders GLSL, física de canvas, 3D, áudio e UI."
   }
 };
-window.LAY_SOURCES_COUNT = 15;
+window.LAY_SOURCES_COUNT = 16;

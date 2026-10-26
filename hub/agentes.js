@@ -110,7 +110,7 @@ window.LAY_AGENTES = [
     "nao_use_para_completo": "escrever código de funcionalidade.",
     "resumo": "o pedido envolver entender um projeto por grafo, planejar tarefas, levantar requisitos, economizar",
     "acesso": "Edita e roda comandos",
-    "skills_ativas": 13,
+    "skills_ativas": 14,
     "skills": [
       "architecting-generative-ai-apps",
       "breaking-down-task-plans",
@@ -118,6 +118,7 @@ window.LAY_AGENTES = [
       "configuring-prompt-compression",
       "discovering-and-invoking-skills",
       "engineering-agent-context",
+      "finding-agent-skills",
       "generating-knowledge-graphs",
       "interviewing-user-requirements",
       "managing-cli-context-pipelines",
@@ -126,7 +127,14 @@ window.LAY_AGENTES = [
       "refining-raw-product-ideas",
       "testing-cli-prompt-compression"
     ],
-    "fontes_upstream": [],
+    "fontes_upstream": [
+      {
+        "id": "vercel-labs--skills",
+        "titulo": "Skills CLI & Ecosystem",
+        "autor": "Vercel Labs",
+        "url": "https://github.com/vercel-labs/skills"
+      }
+    ],
     "subagente_em": "Claude Code",
     "clientes_com_skills": [
       "Claude Code",

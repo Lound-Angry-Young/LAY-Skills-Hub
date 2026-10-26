@@ -87,6 +87,7 @@ Gerado por `python scripts/skill_hub.py catalog`. Skills refatoradas e validadas
 | `lay-configuring-prompt-compression` | [configuring-prompt-compression](../refactored_skills/context/configuring-prompt-compression/SKILL.md) | context | refactored |
 | `lay-discovering-and-invoking-skills` | [discovering-and-invoking-skills](../refactored_skills/context/discovering-and-invoking-skills/SKILL.md) | context | refactored |
 | `lay-engineering-agent-context` | [engineering-agent-context](../refactored_skills/context/engineering-agent-context/SKILL.md) | context | refactored |
+| `lay-finding-agent-skills` | [finding-agent-skills](../refactored_skills/context/finding-agent-skills/SKILL.md) | context | refactored |
 | `lay-generating-knowledge-graphs` | [generating-knowledge-graphs](../refactored_skills/context/generating-knowledge-graphs/SKILL.md) | context | refactored |
 | `lay-interviewing-user-requirements` | [interviewing-user-requirements](../refactored_skills/context/interviewing-user-requirements/SKILL.md) | context | refactored |
 | `lay-managing-cli-context-pipelines` | [managing-cli-context-pipelines](../refactored_skills/context/managing-cli-context-pipelines/SKILL.md) | context | refactored |

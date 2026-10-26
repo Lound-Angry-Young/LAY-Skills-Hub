@@ -1,12 +1,12 @@
 {
-  "total_refactored_skills": 137,
+  "total_refactored_skills": 138,
   "total_domains": 11,
-  "skills_with_reference": 82,
-  "skills_with_reference_pointer": 82,
-  "excluded_from_public_count": 10,
+  "skills_with_reference": 83,
+  "skills_with_reference_pointer": 83,
+  "excluded_from_public_count": 0,
   "domain_details": {
     "context": {
-      "count": 13,
+      "count": 14,
       "skills": [
         "architecting-generative-ai-apps",
         "breaking-down-task-plans",
@@ -14,6 +14,7 @@
         "configuring-prompt-compression",
         "discovering-and-invoking-skills",
         "engineering-agent-context",
+        "finding-agent-skills",
         "generating-knowledge-graphs",
         "interviewing-user-requirements",
         "managing-cli-context-pipelines",

@@ -93,6 +93,21 @@
       "url": ""
     },
     {
+      "id": "lay-finding-agent-skills",
+      "name": "finding-agent-skills",
+      "description": "Discovers, searches, evaluates and installs agent skills from the open ecosystem and skills.sh registry using the Skills CLI. Use this skill when: searching for community skills to solve a task, finding installable skills from skills.sh, or installing skills with npx skills. Do NOT use this skill when: selecting among already-installed LAY skills (use discovering-and-invoking-skills) or importing raw GitHub repos into OmniRoute (use importing-github-agent-skills).",
+      "source": "local",
+      "path": "refactored_skills/context/finding-agent-skills/SKILL.md",
+      "kind": "skill",
+      "categories": [
+        "contexto"
+      ],
+      "version": "refactored",
+      "commit": "content-d47dd1560deb",
+      "sha256": "d47dd1560deb1df2152ccea60f3c67bfb3d324196968bf8413bf29bb54ac2012",
+      "url": ""
+    },
+    {
       "id": "lay-generating-knowledge-graphs",
       "name": "generating-knowledge-graphs",
       "description": "Transforms codebases into persistent knowledge graphs using Graphify: extracts AST nodes, analyzes dependencies, clusters modules, and surfaces high-coupling god nodes for safe refactoring. Use this skill when: exploring an unfamiliar codebase, mapping module dependencies, planning architectural refactors, or tracing cross-file relationships. Do NOT use this skill when: running unit tests (use driving-test-driven-development) or doing single-file edits.",

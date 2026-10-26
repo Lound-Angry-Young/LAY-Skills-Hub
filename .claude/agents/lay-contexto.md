@@ -24,6 +24,8 @@ Abra o SKILL.md original de uma skill só quando a tarefa bater com a descriçã
   Discovers and invokes agent skills: the meta-skill that decides which skill or workflow applies when a session starts or a new piece of work begins. Use this skill when: starting a session or deciding which skill or workflow fits the work a
 - `engineering-agent-context`: `refactored_skills/context/engineering-agent-context/SKILL.md`
   Optimizes agent context setup: starting new sessions, recovering from degraded output, switching between tasks and configuring rules files and context for a project. Use this skill when: starting a new session, output quality degrades, swit
+- `finding-agent-skills`: `refactored_skills/context/finding-agent-skills/SKILL.md`
+  Discovers, searches, evaluates and installs agent skills from the open ecosystem and skills.sh registry using the Skills CLI. Use this skill when: searching for community skills to solve a task, finding installable skills from skills.sh, or
 - `generating-knowledge-graphs`: `refactored_skills/context/generating-knowledge-graphs/SKILL.md`
   Transforms codebases into persistent knowledge graphs using Graphify: extracts AST nodes, analyzes dependencies, clusters modules, and surfaces high-coupling god nodes for safe refactoring. Use this skill when: exploring an unfamiliar codeb
 - `interviewing-user-requirements`: `refactored_skills/context/interviewing-user-requirements/SKILL.md`

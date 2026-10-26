@@ -24,6 +24,7 @@ Finalidade: Engenharia de Contexto e Comunicação de Agentes.
 | [optimizing-rtk-prompt-contexts](./optimizing-rtk-prompt-contexts/SKILL.md) | Configures RTK filters, context engineering rules and context relay settings, testing compression with real prompt samples and managing context transformation pipelines | `[./optimizing-rtk-prompt-contexts/SKILL.md](./optimizing-rtk-prompt-contexts/SKILL.md)` |
 | [breaking-down-task-plans](./breaking-down-task-plans/SKILL.md) | Breaks a spec or clear requirements into ordered, implementable tasks, estimating scope and identifying work that can run in parallel when a task is too large to start | `[./breaking-down-task-plans/SKILL.md](./breaking-down-task-plans/SKILL.md)` |
 | [discovering-and-invoking-skills](./discovering-and-invoking-skills/SKILL.md) | Discovers and invokes agent skills: the meta-skill that decides which skill or workflow applies when a session starts or a new piece of work begins | `[./discovering-and-invoking-skills/SKILL.md](./discovering-and-invoking-skills/SKILL.md)` |
+| [finding-agent-skills](./finding-agent-skills/SKILL.md) | Discovers, searches, evaluates and installs agent skills from the open ecosystem and skills.sh registry using the Skills CLI | `[./finding-agent-skills/SKILL.md](./finding-agent-skills/SKILL.md)` |
 
 ## Padrões de Integração e Roteamento
 - Cada habilidade opera com assinatura estrita de Input/Output.
