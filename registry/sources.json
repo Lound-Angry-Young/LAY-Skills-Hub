@@ -285,6 +285,19 @@
       "notes": []
     },
     {
+      "id": "vercel-labs--skills",
+      "repo": "vercel-labs/skills",
+      "url": "https://github.com/vercel-labs/skills.git",
+      "path": "upstream/vercel-labs--skills",
+      "commit": "65d20cb6e3d951434bf408215309bb8aa094135a",
+      "version": "v1.7.4-2-g65d20cb",
+      "kind": "skills",
+      "skill_paths": [
+        "skills/find-skills/SKILL.md"
+      ],
+      "notes": []
+    },
+    {
       "id": "voltagent--awesome-design-md",
       "repo": "voltagent/awesome-design-md",
       "url": "https://github.com/voltagent/awesome-design-md.git",

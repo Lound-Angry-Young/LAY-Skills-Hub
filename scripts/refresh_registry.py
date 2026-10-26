@@ -17,7 +17,16 @@ def git(path, *args):
 
 
 def main():
-    entries = []
+    existing_map = {}
+    if OUT.exists():
+        try:
+            old_data = json.loads(OUT.read_text(encoding='utf-8'))
+            for item in old_data.get('sources', []):
+                existing_map[item['id']] = item
+        except Exception:
+            pass
+
+    entries = dict(existing_map)
     for folder in sorted(UPSTREAM.iterdir()):
         if not folder.is_dir() or not (folder / '.git').exists():
             continue
@@ -39,13 +48,17 @@ def main():
             notes.append('Fonte adicional da skill Graphify; inclui runtime e referências.')
         if source_id == 'leonxlnx--taste-skill':
             notes.append('URLs Leonxlnx/leonxlnx deduplicadas: GitHub trata o nome sem distinção de maiúsculas.')
-        entries.append({'id': source_id, 'repo': repo, 'url': url,
-                        'path': folder.relative_to(ROOT).as_posix(), 'commit': commit,
-                        'version': version, 'kind': 'skills' if skills else 'repertorio',
-                        'skill_paths': sorted(set(skills)), 'notes': notes})
+        entries[source_id] = {
+            'id': source_id, 'repo': repo, 'url': url,
+            'path': folder.relative_to(ROOT).as_posix(), 'commit': commit,
+            'version': version, 'kind': 'skills' if skills else 'repertorio',
+            'skill_paths': sorted(set(skills)), 'notes': notes
+        }
+
+    sorted_entries = [entries[k] for k in sorted(entries.keys())]
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps({'schema_version': 1, 'sources': entries}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(f'{len(entries)} fontes registradas em {OUT}')
+    OUT.write_text(json.dumps({'schema_version': 1, 'sources': sorted_entries}, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    print(f'{len(sorted_entries)} fontes registradas em {OUT}')
 
 
 if __name__ == '__main__':

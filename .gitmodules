@@ -29,3 +29,6 @@
 [submodule "upstream/diegosouzapw--omniroute"]
 	path = upstream/diegosouzapw--omniroute
 	url = https://github.com/diegosouzapw/OmniRoute.git
+[submodule "upstream/vercel-labs--skills"]
+	path = upstream/vercel-labs--skills
+	url = https://github.com/vercel-labs/skills.git

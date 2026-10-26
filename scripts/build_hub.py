@@ -46,6 +46,15 @@ SOURCE_METADATA = {
         "badge": "Vercel Official",
         "desc": "Melhores práticas oficiais de React 19, Next.js, padrões de composição modular, diretrizes de web design e otimização de performance."
     },
+    "vercel-labs--skills": {
+        "author": "Vercel Labs",
+        "title": "Skills CLI & Ecosystem",
+        "url": "https://github.com/vercel-labs/skills",
+        "avatar": "https://avatars.githubusercontent.com/u/14985020?v=4",
+        "icon": "▲",
+        "badge": "Skills Package Manager",
+        "desc": "Gerenciador de pacotes e CLI para o ecossistema aberto de habilidades de agentes de IA em skills.sh."
+    },
     "leonxlnx--taste-skill": {
         "author": "Leonxlnx",
         "title": "Taste Skill & Brandkit",
@@ -178,6 +187,7 @@ LOCAL_ATTRIBUTIONS = {
     "orchestrating-smooth-scroll": "darkroomengineering--lenis",
     "selecting-creative-libraries": "Jakubantalik--Libraries.dev",
     "consulting-design-references": "voltagent--awesome-design-md",
+    "finding-agent-skills": "vercel-labs--skills",
     # ponytail (DietrichGebert, MIT)
     "auditing-codebase-bloat": "dietrichgebert--ponytail",
     "measuring-code-savings": "dietrichgebert--ponytail",

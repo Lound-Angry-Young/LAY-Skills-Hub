@@ -1,4 +1,5 @@
 """Adição de skills: padrão, tudo ou nada, roteadores e preservação de quebra de linha."""
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -138,7 +139,8 @@ class IntegracaoSiteTests(unittest.TestCase):
 
     def test_build_hub_publica_contagem_de_fontes(self):
         dados = (Path(ns.REPO) / 'hub/data.js').read_text(encoding='utf-8')
-        self.assertIn('window.LAY_SOURCES_COUNT = 15;', dados)
+        registro = json.loads((Path(ns.REPO) / 'registry/sources.json').read_text(encoding='utf-8'))['sources']
+        self.assertIn(f'window.LAY_SOURCES_COUNT = {len(registro)};', dados)
 
 
 if __name__ == '__main__':
