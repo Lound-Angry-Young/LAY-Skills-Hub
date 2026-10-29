@@ -32,8 +32,8 @@
       "repo": "addyosmani/agent-skills",
       "url": "https://github.com/addyosmani/agent-skills.git",
       "path": "upstream/addyosmani--agent-skills",
-      "commit": "1be8e34187e34647bb83adc3a1323b26ae6f6abe",
-      "version": "0.6.12-43-g1be8e34",
+      "commit": "eb07f19f52c2669f2364897aaa293e2aaddd7b1c",
+      "version": "0.6.14",
       "kind": "skills",
       "skill_paths": [
         "skills/api-and-interface-design/SKILL.md",
@@ -82,8 +82,8 @@
       "repo": "diegosouzapw/OmniRoute",
       "url": "https://github.com/diegosouzapw/OmniRoute.git",
       "path": "upstream/diegosouzapw--omniroute",
-      "commit": "7f3cbb046b3706bf0bbc047b7eaa0cbada8d9e50",
-      "version": "7f3cbb04",
+      "commit": "689b1eb573e21ea1bac4467c2ccfd9b8aaa7c518",
+      "version": "radar-export-latest-4838-g689b1eb573",
       "kind": "skills",
       "skill_paths": [
         "skills/cli-a2a/SKILL.md",
@@ -140,8 +140,8 @@
       "repo": "DietrichGebert/ponytail",
       "url": "https://github.com/DietrichGebert/ponytail.git",
       "path": "upstream/dietrichgebert--ponytail",
-      "commit": "9b58c1ffb790c075ca32e70a89cf1d80588f4abf",
-      "version": "v5.1.0-4-g9b58c1f",
+      "commit": "96608e078b2d5ea607c5c3b8b5a54d1c1fba6846",
+      "version": "v5.3.3-1-g96608e0",
       "kind": "skills",
       "skill_paths": [
         "skills/ponytail-audit/SKILL.md",
@@ -158,8 +158,8 @@
       "repo": "guillaumemeyer/watermarks-remover",
       "url": "https://github.com/guillaumemeyer/watermarks-remover.git",
       "path": "upstream/guillaumemeyer--watermarks-remover",
-      "commit": "c5297e9e69fec0779c29127c7892427e673fafd9",
-      "version": "v0.7.0-34-gc5297e9",
+      "commit": "5c180932a00c793261177f79aee21db8929f3fe2",
+      "version": "v0.7.0-42-g5c18093",
       "kind": "skills",
       "skill_paths": [
         "skills/clean-user-facing-text/SKILL.md",
@@ -172,22 +172,10 @@
       "repo": "leonxlnx/taste-skill",
       "url": "https://github.com/leonxlnx/taste-skill.git",
       "path": "upstream/leonxlnx--taste-skill",
-      "commit": "d237dd399d57524945c0c81327da5da19f7a468d",
-      "version": "d237dd3",
+      "commit": "12af471f627f866411b4bd785b19646d3672784c",
+      "version": "v2.1.5",
       "kind": "skills",
       "skill_paths": [
-        "skills/brandkit/SKILL.md",
-        "skills/brutalist-skill/SKILL.md",
-        "skills/gpt-tasteskill/SKILL.md",
-        "skills/image-to-code-skill/SKILL.md",
-        "skills/imagegen-frontend-mobile/SKILL.md",
-        "skills/imagegen-frontend-web/SKILL.md",
-        "skills/minimalist-skill/SKILL.md",
-        "skills/output-skill/SKILL.md",
-        "skills/redesign-skill/SKILL.md",
-        "skills/soft-skill/SKILL.md",
-        "skills/stitch-skill/SKILL.md",
-        "skills/taste-skill-v1/SKILL.md",
         "skills/taste-skill/SKILL.md"
       ],
       "notes": [
@@ -199,8 +187,8 @@
       "repo": "microsoft/playwright-cli",
       "url": "https://github.com/microsoft/playwright-cli.git",
       "path": "upstream/microsoft--playwright-cli",
-      "commit": "b85c7a736bb473bf55b584e54a09ffa698d6d871",
-      "version": "v0.1.22",
+      "commit": "b1a5903c5b633b8c9f843ad7b629c2a78437040c",
+      "version": "v0.1.22-2-gb1a5903",
       "kind": "skills",
       "skill_paths": [
         "skills/playwright-cli/SKILL.md"
@@ -212,8 +200,8 @@
       "repo": "Ray0907/security-scan",
       "url": "https://github.com/Ray0907/security-scan.git",
       "path": "upstream/ray0907--security-scan",
-      "commit": "8af92d4d5892855bba4bdb695edabc707d541276",
-      "version": "v1.6.0",
+      "commit": "1ad9f43a41b22a76a3ed26ab139a6bf5bd852769",
+      "version": "v1.8.0",
       "kind": "skills",
       "skill_paths": [
         "SKILL.md"
@@ -225,8 +213,8 @@
       "repo": "safishamsi/graphify",
       "url": "https://github.com/safishamsi/graphify.git",
       "path": "upstream/safishamsi--graphify",
-      "commit": "a5ba60ddf6293d9f380321965ecf1084391dcc2b",
-      "version": "v0.9.86",
+      "commit": "0a8cd4e1e342235fe53e881fb5d591bf0460071f",
+      "version": "v0.9.97",
       "kind": "skills",
       "skill_paths": [
         "graphify/SKILL.md"
@@ -268,8 +256,8 @@
       "repo": "vercel-labs/agent-skills",
       "url": "https://github.com/vercel-labs/agent-skills.git",
       "path": "upstream/vercel-labs--agent-skills",
-      "commit": "063bee94c3f4df8453406c830b0a7df0f2860278",
-      "version": "agent-skills-063bee94c3f4df8453406c830b0a7df0f2860278",
+      "commit": "1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
+      "version": "agent-skills-1a2c79d4e6c4a2283dc2c614b6538cbe1ed5ca62",
       "kind": "skills",
       "skill_paths": [
         "skills/composition-patterns/SKILL.md",
@@ -289,8 +277,8 @@
       "repo": "vercel-labs/skills",
       "url": "https://github.com/vercel-labs/skills.git",
       "path": "upstream/vercel-labs--skills",
-      "commit": "65d20cb6e3d951434bf408215309bb8aa094135a",
-      "version": "v1.7.4-2-g65d20cb",
+      "commit": "92a9a34ac3bf88e695e468b90c7bf32f163d32c8",
+      "version": "v1.7.4-18-g92a9a34",
       "kind": "skills",
       "skill_paths": [
         "skills/find-skills/SKILL.md"
