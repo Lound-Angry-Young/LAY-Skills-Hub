@@ -53,6 +53,31 @@ class SyncRuleTests(unittest.TestCase):
             for call in fontes.call_args_list:
                 self.assertFalse(call.args[1])
 
+    def test_source_without_checkout_never_reports_current(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            repo = Path(tmp)
+            (repo / '.state').mkdir()
+            data = {'sources': [
+                {'id': 'ref', 'kind': 'repertorio', 'path': 'upstream/ref', 'url': 'https://example.invalid/ref.git',
+                 'commit': 'a' * 40, 'version': 'aaaaaaa'},
+                {'id': 'skill', 'kind': 'skills', 'path': 'upstream/skill', 'url': 'https://example.invalid/skill.git'}]}
+            chamadas = []
+
+            def fake_git(path, *args, **kwargs):
+                chamadas.append((path, args))
+                return 'b' * 40 + '\tHEAD'
+
+            with patch.object(hub, 'sources', return_value=data), \
+                    patch.object(hub, 'git', side_effect=fake_git), \
+                    contextlib.redirect_stdout(io.StringIO()) as output:
+                ok = hub.sync_sources(repo, apply=False)
+            texto = output.getvalue()
+            self.assertFalse(ok)
+            self.assertIn('ref: repertório sem checkout local', texto)
+            self.assertIn('skill: consulta falhou (submódulo não inicializado', texto)
+            self.assertNotIn('já atual', texto)
+            self.assertEqual([a for _, a in chamadas], [('ls-remote', 'https://example.invalid/ref.git', 'HEAD')])
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -648,6 +648,12 @@ def sync_sources(root, apply, events=None):
     events = events or []
     def fetch(source):
         path = confined(root, source['path'])
+        if not (path / '.git').exists():
+            # Without its own checkout git would resolve the parent repo and report a false "current".
+            if source.get('kind') == 'repertorio':
+                listing = git(root, 'ls-remote', source['url'], 'HEAD', timeout=45)
+                return source, None, listing.split()[0]
+            raise ValueError(f"submódulo não inicializado; rode git submodule update --init {source['path']}")
         git(path, 'fetch', '--quiet', 'origin', timeout=45)
         # remote HEAD is resolved afresh; do not guess main/master.
         listing = git(path, 'ls-remote', '--symref', 'origin', 'HEAD', timeout=45)
@@ -662,6 +668,11 @@ def sync_sources(root, apply, events=None):
         for source, job in jobs:
             try:
                 source, path, target = job.result()
+                if path is None:
+                    note = 'igual ao registrado' if target == source.get('commit') else f'registrado {source.get("version")}'
+                    print(f"ℹ️ {source['id']}: repertório sem checkout local; remoto {target[:12]} ({note}).")
+                    events.append({'source': source['id'], 'status': 'reference', 'target': target})
+                    continue
                 current = git(path, 'rev-parse', 'HEAD')
                 if target == current:
                     print(f"ℹ️ {source['id']} já atual, versão {source.get('version', current[:12])}.")
