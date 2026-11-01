@@ -282,7 +282,9 @@ def update_block(path, body, hub):
 
 
 def hook_command(home, agent, runtime):
-    return f'"{sys.executable}" "{runtime / "scripts/skill_hub.py"}" hook --agent {agent} --home "{home}"'
+    # No Windows o Codex executa o hook pelo PowerShell, que só aceita caminho entre aspas com o operador &.
+    prefix = '& ' if agent == 'codex' and os.name == 'nt' else ''
+    return f'{prefix}"{sys.executable}" "{runtime / "scripts/skill_hub.py"}" hook --agent {agent} --home "{home}"'
 
 
 def install_hook(home, agent, runtime, hub):
