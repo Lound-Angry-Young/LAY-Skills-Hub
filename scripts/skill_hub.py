@@ -322,7 +322,10 @@ def install_hook(home, agent, runtime, hub):
 
 def hook(home, agent):
     try:
-        event = json.loads(sys.stdin.read() or '{}')
+        # Os agentes enviam JSON em UTF-8; no Windows sys.stdin decodifica em cp1252 e corrompe
+        # caminhos com acento (ex.: 'Sessão'), o que fazia o diagnóstico falhar com ValueError.
+        raw = sys.stdin.buffer.read() if hasattr(sys.stdin, 'buffer') else sys.stdin.read().encode('utf-8')
+        event = json.loads(raw.decode('utf-8-sig') or '{}')
         if agent == 'antigravity' and event.get('invocationNum', 0) != 0:
             print('{}')
             return
