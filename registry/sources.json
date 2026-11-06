@@ -213,8 +213,8 @@
       "repo": "safishamsi/graphify",
       "url": "https://github.com/safishamsi/graphify.git",
       "path": "upstream/safishamsi--graphify",
-      "commit": "0a8cd4e1e342235fe53e881fb5d591bf0460071f",
-      "version": "v0.9.97",
+      "commit": "16218bfc80d4ca2799734d045039f7ed1a5fa9fb",
+      "version": "v0.9.103",
       "kind": "skills",
       "skill_paths": [
         "graphify/SKILL.md"
