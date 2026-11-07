@@ -23,6 +23,7 @@ import tasks
 from tasks import (
     ALL_CANONICAL_DOMAINS,
     ALL_CANONICAL_SPECIALISTS,
+    CLIENT_COMPATIBLE_SPECIALISTS,
     READONLY_SPECIALISTS,
     MAX_ARBITRATION_TOKENS,
     ConcurrencyError,
@@ -33,6 +34,7 @@ from tasks import (
     complete_task,
     create_task,
     get_task,
+    handoff_task,
     list_tasks,
     normalize_text,
     prepare_arbitration_package,
@@ -1236,6 +1238,465 @@ class OrchestratorTasksTests(unittest.TestCase):
         self.assertIn("Pacote de arbitragem preparado com sucesso", proc_arb.stdout)
         self.assertIn("Rodada Alvo:              1 de 3", proc_arb.stdout)
         self.assertIn("Autorização Obrigatória:  Sim", proc_arb.stdout)
+
+
+    def test_42_execution_hierarchy_tier1_session_default(self):
+        """Hierarquia Tier 1: Resolução padrão na sessão atual com skills relevantes."""
+        for client in ("claude", "antigravity"):
+            rec = recommend_task_routing(
+                title="Ajustar interface react de componentes animados react-bits",
+                description="Refatorar layout de interface web com composicao react",
+                client=client,
+            )
+            self.assertEqual(rec["recommended_mode"], "session")
+            self.assertFalse(rec["requires_authorization"])
+            self.assertEqual(rec["current_client"], client)
+            self.assertTrue(len(rec["relevant_skills"]) > 0)
+
+    def test_43_execution_hierarchy_tier2_subagent_native_justified(self):
+        """Hierarquia Tier 2: Delegação para subagente nativo apenas quando justificado tecnicamente."""
+        # 1. Auditoria read-only estrita no Antigravity -> lay-seguranca
+        rec_ag = recommend_task_routing(
+            title="Auditoria de vulnerabilidades estática e revisão de código",
+            domain="security",
+            client="antigravity",
+        )
+        self.assertEqual(rec_ag["recommended_mode"], "subagent")
+        self.assertEqual(rec_ag["recommended_specialist"], "lay-seguranca")
+
+        # 2. Análise de esquema de banco no Claude -> lay-banco-de-dados
+        rec_cl = recommend_task_routing(
+            title="Análise de consistência e integridade do esquema de banco de dados",
+            domain="database",
+            client="claude",
+        )
+        self.assertEqual(rec_cl["recommended_mode"], "subagent")
+        self.assertEqual(rec_cl["recommended_specialist"], "lay-banco-de-dados")
+
+        # 3. Demanda gráfica 3D no Antigravity -> lay-3d
+        rec_3d = recommend_task_routing(
+            title="Renderizar cena com shader procedural no Blender e WebGL",
+            domain="creative-3d",
+            client="antigravity",
+        )
+        self.assertEqual(rec_3d["recommended_mode"], "subagent")
+        self.assertEqual(rec_3d["recommended_specialist"], "lay-3d")
+
+    def test_44_execution_hierarchy_tier3_cross_client_handoff(self):
+        """Hierarquia Tier 3: Outro cliente quando necessário e autorizado."""
+        # Claude solicitando capacidades específicas no Antigravity
+        rec = recommend_task_routing(
+            title="Ajuste de design tokens e mockups visuais",
+            domain="design",
+            client="claude",
+            target_client="antigravity",
+        )
+        self.assertEqual(rec["recommended_mode"], "cross_client")
+        self.assertEqual(rec["current_client"], "claude")
+        self.assertEqual(rec["target_client"], "antigravity")
+        self.assertTrue(rec["requires_authorization"])
+        self.assertIn("Handoff entre clientes recomendado", rec["rationale"])
+
+        # Rejeição de handoff funcional para o Codex
+        rec_codex = recommend_task_routing(
+            title="Tarefa geral de backend",
+            client="claude",
+            target_client="codex",
+        )
+        self.assertEqual(rec_codex["recommended_mode"], "session")
+        self.assertIn("indisponivel funcionalmente", normalize_text(rec_codex["rationale"]))
+
+    def test_45_execution_hierarchy_tier4_arbitrator_impasse_only(self):
+        """Hierarquia Tier 4: Árbitro exclusivamente em impasse crítico real e autorização explícita."""
+        # 1. Antigravity com impasse -> lay-arbitro
+        rec_ag = recommend_task_routing(
+            title="Impasse e trade-off crítico na arquitetura de mensageria",
+            complexity="critical",
+            client="antigravity",
+        )
+        self.assertEqual(rec_ag["recommended_mode"], "arbitrator")
+        self.assertEqual(rec_ag["recommended_specialist"], "lay-arbitro")
+        self.assertTrue(rec_ag["requires_authorization"])
+
+        # 2. Claude com impasse -> lay-arbitro-opus
+        rec_cl = recommend_task_routing(
+            title="Dilema arquitetural e trade-off entre duas abordagens de migração",
+            complexity="critical",
+            client="claude",
+        )
+        self.assertEqual(rec_cl["recommended_mode"], "arbitrator")
+        self.assertEqual(rec_cl["recommended_specialist"], "lay-arbitro-opus")
+        self.assertTrue(rec_cl["requires_authorization"])
+
+        # 3. Crítico sem impasse -> Mantém sessão sob supervisão humana direta
+        rec_no_impasse = recommend_task_routing(
+            title="Migração de esquema de banco de dados crítico em produção",
+            complexity="critical",
+            domain="database",
+            client="antigravity",
+        )
+        self.assertEqual(rec_no_impasse["recommended_mode"], "session")
+        self.assertTrue(rec_no_impasse["requires_authorization"])
+
+    def test_46_reject_incompatible_specialist_per_client(self):
+        """Rejeita atribuição de especialista incompatível com o cliente de destino."""
+        # lay-arbitro-opus é exclusivo do Claude; rejeitado no Antigravity
+        t_ag = create_task(self.workspace, title="Dilema no Antigravity", client="antigravity")
+        with self.assertRaises(TaskValidationError) as ctx:
+            assign_task(
+                self.workspace,
+                t_ag["id"],
+                specialist="lay-arbitro-opus",
+                mode="arbitrator",
+                reason="Tentando usar especialista do Claude no Antigravity",
+            )
+        self.assertIn("específico do Claude Code", str(ctx.exception))
+
+        # lay-arbitro é exclusivo do Antigravity; rejeitado no Claude
+        t_cl = create_task(self.workspace, title="Dilema no Claude", client="claude")
+        with self.assertRaises(TaskValidationError) as ctx:
+            assign_task(
+                self.workspace,
+                t_cl["id"],
+                specialist="lay-arbitro",
+                mode="arbitrator",
+                reason="Tentando usar especialista do Antigravity no Claude",
+            )
+        self.assertIn("específico do Antigravity", str(ctx.exception))
+
+    def test_47_reject_incompatible_tools_for_readonly_specialist(self):
+        """Rejeita subagente com ferramentas incompatíveis (ex: terminal para somente-leitura)."""
+        # lay-seguranca não tem terminal: tarefa exige comando terminal
+        t = create_task(
+            self.workspace,
+            title="Executar varredura semgrep no terminal",
+            domain="security",
+            client="antigravity",
+        )
+        with self.assertRaises(TaskValidationError) as ctx:
+            assign_task(
+                self.workspace,
+                t["id"],
+                specialist="lay-seguranca",
+                mode="subagent",
+                reason="Tentativa inválida de delegar execução CLI a agente read-only",
+            )
+        self.assertIn("perfil estritamente somente-leitura", str(ctx.exception))
+
+        # lay-banco-de-dados não executa comandos destrutivos/migrações
+        t_db = create_task(
+            self.workspace,
+            title="Executar migracao drop table no banco",
+            domain="database",
+            client="claude",
+        )
+        with self.assertRaises(TaskValidationError) as ctx:
+            assign_task(
+                self.workspace,
+                t_db["id"],
+                specialist="lay-banco-de-dados",
+                mode="subagent",
+                reason="Tentativa inválida de executar migração destrutiva via subagente",
+            )
+        self.assertIn("não executa migrações destrutivas", str(ctx.exception))
+
+    def test_48_cross_client_handoff_lifecycle_and_traceability(self):
+        """Handoff entre clientes exige autorização, preserva task_id e rastreia histórico."""
+        t = create_task(self.workspace, title="Tarefa iniciada no Claude", client="claude")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # 1. Sem autorização explícita -> Rejeitado
+        with self.assertRaises(TaskValidationError) as ctx:
+            handoff_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                target_client="antigravity",
+                reason="Handoff para execução em outro cliente",
+                authorized=False,
+            )
+        self.assertIn("requer autorização explícita", str(ctx.exception))
+
+        # 2. Para cliente codex -> Rejeitado (indisponível funcionalmente)
+        with self.assertRaises(TaskValidationError) as ctx:
+            handoff_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                target_client="codex",
+                reason="Tentando delegar para Codex",
+                authorized=True,
+            )
+        self.assertIn("indisponível funcionalmente", str(ctx.exception))
+
+        # 3. Para o mesmo cliente -> Rejeitado por redundância
+        with self.assertRaises(TaskValidationError) as ctx:
+            handoff_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                target_client="claude",
+                reason="Handoff redundante",
+                authorized=True,
+            )
+        self.assertIn("Handoff redundante", str(ctx.exception))
+
+        # 4. Handoff autorizado com sucesso: claude -> antigravity
+        h = handoff_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            target_client="antigravity",
+            reason="Transferência autorizada para Antigravity IDE",
+            authorized=True,
+            context=["src/components/Modal.tsx"],
+        )
+        self.assertEqual(h["id"], t["id"])
+        self.assertEqual(h["routing"]["source_client"], "claude")
+        self.assertEqual(h["routing"]["client"], "antigravity")
+        self.assertEqual(h["handoff"]["context"], ["src/components/Modal.tsx"])
+        self.assertEqual(len(h["history"]), 1)
+        self.assertEqual(h["history"][0]["action"], "cross_client_handoff")
+        self.assertEqual(h["history"][0]["source_client"], "claude")
+        self.assertEqual(h["history"][0]["target_client"], "antigravity")
+
+    def test_49_handoff_specialist_translation_and_compatibility(self):
+        """Handoff adapta ou traduz especialista para a nomenclatura do cliente de destino."""
+        t = create_task(self.workspace, title="Dilema de mensageria", client="claude")
+        update_task_status(self.workspace, t["id"], "in_progress")
+        assign_task(
+            self.workspace,
+            t["id"],
+            specialist="lay-arbitro-opus",
+            mode="arbitrator",
+            reason="Arbitragem inicial no Claude",
+        )
+        self.assertEqual(get_task(self.workspace, t["id"])["routing"]["target_specialist"], "lay-arbitro-opus")
+
+        # Handoff claude -> antigravity deve traduzir lay-arbitro-opus para lay-arbitro
+        h = handoff_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            target_client="antigravity",
+            reason="Migrando arbitragem para Antigravity Pro",
+            authorized=True,
+            execution_mode="arbitrator",
+        )
+        self.assertEqual(h["routing"]["target_specialist"], "lay-arbitro")
+        self.assertEqual(h["routing"]["client"], "antigravity")
+
+    def test_50_failure_recovery_without_duplicate_execution(self):
+        """Falha e recuperação controlada preservam integridade sem execuções duplicadas."""
+        t = create_task(self.workspace, title="Tarefa com recuperação limpa", client="antigravity")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # 1. Falha na entrega
+        t_failed = complete_task(
+            self.workspace,
+            t["id"],
+            summary="Falha na validação de tipo TypeScript.",
+            result_status="failure",
+        )
+        self.assertEqual(t_failed["status"], "failed")
+
+        # 2. Não permite reconcluir enquanto em failed
+        with self.assertRaises(TaskValidationError):
+            complete_task(self.workspace, t["id"], summary="Reconclusão bloqueada")
+
+        # 3. Retomada explícita limpa o resultado anterior e avança para in_progress
+        t_resumed = resume_task(self.workspace, t["id"], reason="Correção dos tipos no arquivo de tipos")
+        self.assertEqual(t_resumed["status"], "in_progress")
+        self.assertIsNone(t_resumed["result"])
+        self.assertEqual(len(t_resumed["history"]), 1)
+
+        # 4. Conclusão válida após recuperação
+        out_file = self.workspace / "types.ts"
+        out_file.write_text("export type ID = string;", encoding="utf-8")
+        t_done = complete_task(
+            self.workspace,
+            t["id"],
+            summary="Tipos corrigidos e verificados.",
+            result_status="success",
+            artifacts=["types.ts"],
+        )
+        self.assertEqual(t_done["status"], "completed")
+
+    def test_51_zero_model_calls_verified(self):
+        """Garante que todo o fluxo do Orchestrator opera local e deterministicamente sem invocar LLMs."""
+        t = create_task(self.workspace, title="Fluxo determinístico puro", client="claude")
+        update_task_status(self.workspace, t["id"], "in_progress")
+        assign_task(self.workspace, t["id"], specialist="lay-engenharia", mode="session")
+        h = handoff_task(
+            self.workspace,
+            t["id"],
+            target_client="antigravity",
+            reason="Handoff local",
+            authorized=True,
+        )
+        pkg = prepare_arbitration_package(
+            self.workspace,
+            t["id"],
+            problem="Dilema",
+            alternatives=["Opção A", "Opção B"],
+        )
+        self.assertTrue(pkg["arbitration"]["packages"][0]["requires_authorization"])
+        # Estado preservado e zero chamadas de API externas
+        self.assertEqual(pkg["status"], "escalated")
+
+    def test_52_cli_task_handoff_command(self):
+        """Interface CLI suporta o comando 'task handoff' com verificação de autorização."""
+        t = create_task(self.workspace, title="Tarefa teste CLI handoff", client="claude")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # 1. Sem --authorized deve falhar
+        proc_fail = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "handoff",
+                t["id"],
+                "--workspace",
+                str(self.workspace),
+                "--target-client",
+                "antigravity",
+                "--reason",
+                "Tentativa sem autorização",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        self.assertNotEqual(proc_fail.returncode, 0)
+        self.assertIn("requer autorização explícita", proc_fail.stderr)
+
+        # 2. Com --authorized deve suceder
+        proc_ok = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "handoff",
+                t["id"],
+                "--workspace",
+                str(self.workspace),
+                "--target-client",
+                "antigravity",
+                "--reason",
+                "Transferência autorizada via CLI",
+                "--authorized",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        self.assertEqual(proc_ok.returncode, 0, proc_ok.stderr)
+        self.assertIn("Handoff da tarefa", proc_ok.stdout)
+        self.assertIn("Origem:                   claude", proc_ok.stdout)
+        self.assertIn("Destino:                  antigravity", proc_ok.stdout)
+
+    def test_53_multiple_consecutive_handoffs_traceability_and_result(self):
+        """Múltiplas transferências consecutivas preservam histórico, source_client e permitem RESULT final."""
+        t = create_task(self.workspace, title="Tarefa com múltiplos hops", client="claude")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # Hop 1: claude -> antigravity
+        h1 = handoff_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            target_client="antigravity",
+            reason="Primeira transferência para Antigravity",
+            authorized=True,
+            context=["src/spec.md"],
+        )
+        self.assertEqual(h1["routing"]["source_client"], "claude")
+        self.assertEqual(h1["routing"]["client"], "antigravity")
+        self.assertEqual(len(h1["history"]), 1)
+        self.assertEqual(h1["history"][0]["source_client"], "claude")
+        self.assertEqual(h1["history"][0]["target_client"], "antigravity")
+
+        # Hop 2: antigravity -> claude
+        h2 = handoff_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            target_client="claude",
+            reason="Retorno ao Claude Code para revisão final",
+            authorized=True,
+            context=["src/spec.md", "src/impl.ts"],
+        )
+        self.assertEqual(h2["routing"]["source_client"], "antigravity")
+        self.assertEqual(h2["routing"]["client"], "claude")
+        self.assertEqual(len(h2["history"]), 2)
+        self.assertEqual(h2["history"][1]["source_client"], "antigravity")
+        self.assertEqual(h2["history"][1]["target_client"], "claude")
+
+        # Conclusão e geração de RESULT no cliente final
+        artifact_file = self.workspace / "spec.md"
+        artifact_file.write_text("# Spec Finalizada", encoding="utf-8")
+        done = complete_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            summary="Tarefa completada com sucesso após múltiplos handoffs.",
+            result_status="success",
+            artifacts=["spec.md"],
+        )
+        self.assertEqual(done["status"], "completed")
+        self.assertEqual(done["result"]["status"], "success")
+        self.assertEqual(done["routing"]["source_client"], "antigravity")
+        self.assertEqual(done["routing"]["client"], "claude")
+        self.assertEqual(len(done["history"]), 2)
+
+    def test_54_cli_task_route_and_recommend_aliases(self):
+        """CLI suporta indistintamente 'task recommend' e seu alias 'task route'."""
+        cmd_rec = [
+            sys.executable,
+            str(ROOT / "scripts/skill_hub.py"),
+            "task",
+            "recommend",
+            "--workspace",
+            str(self.workspace),
+            "--title",
+            "Ajustar layout responsivo de página Next.js",
+            "--client",
+            "claude",
+        ]
+        cmd_route = [
+            sys.executable,
+            str(ROOT / "scripts/skill_hub.py"),
+            "task",
+            "route",
+            "--workspace",
+            str(self.workspace),
+            "--title",
+            "Ajustar layout responsivo de página Next.js",
+            "--client",
+            "claude",
+        ]
+
+        res_rec = subprocess.run(
+            cmd_rec,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        res_route = subprocess.run(
+            cmd_route,
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+
+        self.assertEqual(res_rec.returncode, 0, res_rec.stderr)
+        self.assertEqual(res_route.returncode, 0, res_route.stderr)
+        self.assertIn("Modo Recomendado:         session", res_rec.stdout)
+        self.assertIn("Modo Recomendado:         session", res_route.stdout)
+        self.assertIn("Cliente Atual:            claude", res_rec.stdout)
+        self.assertIn("Cliente Atual:            claude", res_route.stdout)
+
 
 if __name__ == "__main__":
     unittest.main()

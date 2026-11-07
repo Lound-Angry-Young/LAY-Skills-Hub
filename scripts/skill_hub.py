@@ -1358,16 +1358,17 @@ def main():
     p_ta.add_argument('task_id', help='Identificador da tarefa')
     p_ta.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
     p_ta.add_argument('--specialist', required=True, help='Nome do especialista (ex: lay-frontend, lay-seguranca)')
-    p_ta.add_argument('--mode', choices=['session', 'subagent', 'arbitrator'], default='session', help='Modalidade de execução')
+    p_ta.add_argument('--mode', choices=['session', 'subagent', 'cross_client', 'arbitrator'], default='session', help='Modalidade de execução')
     p_ta.add_argument('--reason', default=None, help='Justificativa objetiva da delegação (obrigatória para subagent/arbitrator)')
 
     # task recommend
-    p_tr = task_sub.add_parser('recommend', help='Consultar recomendação de roteamento para uma tarefa')
+    p_tr = task_sub.add_parser('recommend', aliases=['route'], help='Consultar recomendação de roteamento para uma tarefa')
     p_tr.add_argument('--task-id', default=None, help='Identificador da tarefa existente')
     p_tr.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
     p_tr.add_argument('--title', default=None, help='Título descritivo da tarefa (se sem task-id)')
     p_tr.add_argument('--domain', default=None, help='Domínio pretendido')
     p_tr.add_argument('--client', default='local', help='Cliente executor (claude, antigravity, codex, local)')
+    p_tr.add_argument('--target-client', choices=['claude', 'antigravity', 'codex', 'local'], default=None, help='Cliente alvo pretendido para handoff')
     p_tr.add_argument('--complexity', choices=['low', 'medium', 'high', 'critical'], default=None, help='Complexidade explícita')
     p_tr.add_argument('--specialist', default=None, help='Especialista pretendido')
 
@@ -1396,6 +1397,14 @@ def main():
     p_tarb.add_argument('--evidences', nargs='*', default=[], help='Evidências técnicas observadas')
     p_tarb.add_argument('--constraints', nargs='*', default=[], help='Restrições técnicas ou de negócio')
     p_tarb.add_argument('--criteria', nargs='*', default=[], help='Critérios de decisão')
+
+    # task handoff
+    p_thd = task_sub.add_parser('handoff', help='Realizar handoff de tarefa entre clientes (Cross-Client)')
+    p_thd.add_argument('task_id', help='Identificador da tarefa')
+    p_thd.add_argument('--target-client', choices=['claude', 'antigravity', 'codex', 'local'], required=True, help='Cliente de destino')
+    p_thd.add_argument('--reason', required=True, help='Justificativa técnica do handoff entre clientes')
+    p_thd.add_argument('--authorized', action='store_true', default=False, help='Autorização explícita para cruzar fronteira de cliente')
+    p_thd.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
     args = parser.parse_args()
     try:
         if args.command == 'install':
@@ -1476,7 +1485,7 @@ def main():
                 print(f"   Status:       {t['status']}")
                 if t['routing'].get('delegation_reason'):
                     print(f"   Justificativa:{t['routing']['delegation_reason']}")
-            elif args.task_action == 'recommend':
+            elif args.task_action in ('recommend', 'route'):
                 if args.task_id:
                     task = tasks.get_task(workspace=ws, task_id=args.task_id)
                     rec = tasks.recommend_task_routing(
@@ -1490,6 +1499,7 @@ def main():
                         title=args.title,
                         domain=args.domain,
                         client=args.client,
+                        target_client=args.target_client,
                         explicit_complexity=args.complexity,
                         explicit_specialist=args.specialist
                     )
@@ -1559,6 +1569,22 @@ def main():
                 print(f"   Tokens Estimados:         ~{pkg['estimated_tokens']} (heurística)")
                 print(f"   Autorização Obrigatória:  {'Sim' if pkg['requires_authorization'] else 'Não'}")
                 print("   Nota: Subagente árbitro NÃO disparado automaticamente nesta etapa.")
+            elif args.task_action == 'handoff':
+                t = tasks.handoff_task(
+                    workspace=ws,
+                    task_id=args.task_id,
+                    target_client=args.target_client,
+                    reason=args.reason,
+                    authorized=args.authorized,
+                )
+                print(f"✅ Handoff da tarefa {t['id']} realizado com sucesso:")
+                print(f"   Origem:                   {t['routing'].get('source_client')}")
+                print(f"   Destino:                  {t['routing']['client']}")
+                print(f"   Status Atual:             {t['status']}")
+                print(f"   Modo de Execução:         {t['routing']['execution_mode']}")
+                print(f"   Especialista:             {t['routing'].get('target_specialist') or 'nenhum'}")
+                print(f"   Justificativa:            {t['routing'].get('delegation_reason')}")
+                print(f"   Histórico:                {len(t.get('history') or [])} evento(s) registrado(s)")
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired) as exc:
         print(f'⚠️ {exc}', file=sys.stderr)

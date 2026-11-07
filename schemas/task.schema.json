@@ -44,12 +44,16 @@
           "type": "string",
           "enum": ["claude", "antigravity", "codex", "local"]
         },
+        "source_client": {
+          "type": ["string", "null"],
+          "enum": ["claude", "antigravity", "codex", "local", null]
+        },
         "target_specialist": {
           "type": ["string", "null"]
         },
         "execution_mode": {
           "type": "string",
-          "enum": ["session", "subagent", "arbitrator"]
+          "enum": ["session", "subagent", "cross_client", "arbitrator"]
         },
         "delegation_reason": {
           "type": ["string", "null"]

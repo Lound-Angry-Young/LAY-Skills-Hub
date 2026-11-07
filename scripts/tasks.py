@@ -22,7 +22,7 @@ TASK_ID_REGEX = re.compile(r"^task-[a-z0-9]{8,16}$")
 VALID_COMPLEXITIES = {"low", "medium", "high", "critical"}
 VALID_TASK_STATUSES = {"pending", "in_progress", "completed", "failed", "blocked", "escalated"}
 VALID_RESULT_STATUSES = {"success", "failure", "needs_clarification", "escalated"}
-VALID_EXECUTION_MODES = {"session", "subagent", "arbitrator"}
+VALID_EXECUTION_MODES = {"session", "subagent", "cross_client", "arbitrator"}
 MAX_PAYLOAD_BYTES = 1024 * 1024  # 1 MB
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -77,6 +77,23 @@ CLIENT_DELEGATION_SUPPORT = {
     "antigravity": True,
     "codex": False,    # Manter Codex indisponível funcionalmente
     "local": False,    # Ambiente local/CLI sem runtime de subagente
+}
+
+CLIENT_COMPATIBLE_SPECIALISTS = {
+    "claude": {
+        "lay-omniroute", "lay-frontend", "lay-engenharia", "lay-contexto",
+        "lay-devops", "lay-qa", "lay-seguranca", "lay-3d",
+        "lay-documentacao", "lay-design", "lay-banco-de-dados",
+        "lay-arbitro-opus"
+    },
+    "antigravity": {
+        "lay-omniroute", "lay-frontend", "lay-engenharia", "lay-contexto",
+        "lay-devops", "lay-qa", "lay-seguranca", "lay-3d",
+        "lay-documentacao", "lay-design", "lay-banco-de-dados",
+        "lay-arbitro"
+    },
+    "codex": set(),
+    "local": set(),
 }
 
 DOMAIN_KEYWORDS = {
@@ -499,6 +516,8 @@ def validate_task_schema(data: dict) -> None:
         raise TaskValidationError("Objeto 'routing' inválido ou incompleto.")
     if routing["execution_mode"] not in VALID_EXECUTION_MODES:
         raise TaskValidationError(f"Modo de execução inválido: '{routing['execution_mode']}'")
+    if routing.get("source_client") is not None and routing["source_client"] not in VALID_CLIENTS:
+        raise TaskValidationError(f"Cliente de origem inválido: '{routing['source_client']}'")
 
     handoff = data.get("handoff", {})
     if not isinstance(handoff, dict):
@@ -622,19 +641,32 @@ def recommend_task_routing(
     context_files: Optional[List[str]] = None,
     explicit_complexity: Optional[str] = None,
     explicit_specialist: Optional[str] = None,
+    target_client: Optional[str] = None,
+    complexity: Optional[str] = None,
     root: Optional[Path] = None,
 ) -> Dict[str, Any]:
-    """Produz uma recomendação verificável de roteamento, domínio, skills e modo de execução."""
+    """Produz uma recomendação verificável de roteamento seguindo a hierarquia de decisão:
+    1. Sessão atual com skills relevantes (padrão).
+    2. Subagente nativo, somente quando justificado (isolamento estrito read-only ou 3D).
+    3. Outro cliente (cross-client handoff), quando necessário e autorizado.
+    4. Árbitro, exclusivamente diante de impasse real e autorização explícita.
+    """
     if not title or not title.strip():
         raise TaskValidationError("O título da tarefa não pode ser vazio.")
 
-    # 1. Validação do cliente
+    # 1. Validação dos clientes
     client_norm = (client or "local").lower().strip()
     if client_norm not in VALID_CLIENTS:
         raise TaskValidationError(
             f"Cliente inválido: '{client}'. Clientes suportados: {sorted(VALID_CLIENTS)}"
         )
     delegation_allowed = CLIENT_DELEGATION_SUPPORT.get(client_norm, False)
+
+    target_client_norm = (target_client or "").lower().strip() if target_client else None
+    if target_client_norm and target_client_norm not in VALID_CLIENTS:
+        raise TaskValidationError(
+            f"Cliente alvo inválido: '{target_client}'. Clientes suportados: {sorted(VALID_CLIENTS)}"
+        )
 
     # 2. Validação ou inferência de domínio
     combined_text = f"{title} {description}"
@@ -649,7 +681,7 @@ def recommend_task_routing(
         target_domain = infer_domain(combined_text)
 
     # 3. Classificação de complexidade
-    clf = classify_task(title=title, description=description, explicit_complexity=explicit_complexity)
+    clf = classify_task(title=title, description=description, explicit_complexity=explicit_complexity or complexity)
     complexity = clf["complexity"]
 
     # 4. Resolução e validação de especialista
@@ -659,11 +691,19 @@ def recommend_task_routing(
             raise TaskValidationError(
                 f"Especialista inválido: '{explicit_specialist}'. Especialistas canônicos permitidos: {sorted(ALL_CANONICAL_SPECIALISTS)}"
             )
+        if client_norm in CLIENT_COMPATIBLE_SPECIALISTS and s not in CLIENT_COMPATIBLE_SPECIALISTS[client_norm]:
+            if client_norm == "antigravity" and s == "lay-arbitro-opus":
+                raise TaskValidationError("Especialista 'lay-arbitro-opus' é específico do Claude Code. No Google Antigravity, utilize 'lay-arbitro'.")
+            if client_norm == "claude" and s == "lay-arbitro":
+                raise TaskValidationError("Especialista 'lay-arbitro' é específico do Antigravity. No Claude Code, utilize 'lay-arbitro-opus'.")
+            if client_norm in ("codex", "local"):
+                raise TaskValidationError(f"Delegação de especialista indisponível para o cliente '{client_norm}'.")
+            raise TaskValidationError(f"Especialista '{s}' incompatível com o cliente '{client_norm}'.")
         target_specialist = s
     else:
         target_specialist = DOMAIN_TO_SPECIALIST.get(target_domain, "lay-engenharia")
 
-    # 5. Política de execução e delegação mínima
+    # 5. Política de execução seguindo a ordem de precedência estrita
     norm_text = normalize_text(combined_text)
     requires_authorization = False
 
@@ -683,10 +723,9 @@ def recommend_task_routing(
     is_3d_specialized = target_domain == "creative-3d" and any(k in norm_text for k in ["blender", "shader", "webgl"])
 
     if complexity == "critical":
-        # Tarefa crítica: exige autorização explícita
+        # 4. Árbitro / Tarefa Crítica
         requires_authorization = True
         if has_impasse:
-            # Impasse arquitetural real: arbitragem indicada como possibilidade justificada
             if delegation_allowed:
                 recommended_mode = "arbitrator"
                 target_specialist = "lay-arbitro" if client_norm == "antigravity" else "lay-arbitro-opus"
@@ -702,13 +741,29 @@ def recommend_task_routing(
                     "resolução deve ser conduzida na sessão sob supervisão humana."
                 )
         else:
-            # Tarefa crítica sem impasse: EXECUÇÃO PADRÃO MANTIDA NA SESSÃO
             recommended_mode = "session"
             target_specialist = DOMAIN_TO_SPECIALIST.get(target_domain, "lay-engenharia")
             rationale = (
                 f"Demanda crítica de alto impacto no domínio '{target_domain}'. "
                 "Execução padrão mantida na sessão atual sob supervisão humana direta. "
                 "Se houver impasse entre alternativas concorrentes, a arbitragem pode ser convocada sob autorização."
+            )
+    elif target_client_norm and target_client_norm != client_norm:
+        # 3. Outro cliente (Cross-Client Handoff), quando necessário e autorizado
+        if target_client_norm == "codex":
+            recommended_mode = "session"
+            rationale = (
+                "Cliente 'codex' indisponível funcionalmente para delegação/handoff nesta versão; "
+                f"resolução mantida na sessão atual para o domínio '{target_domain}'."
+            )
+        else:
+            recommended_mode = "cross_client"
+            requires_authorization = True
+            if target_specialist in ("lay-arbitro", "lay-arbitro-opus"):
+                target_specialist = "lay-arbitro" if target_client_norm == "antigravity" else "lay-arbitro-opus"
+            rationale = (
+                f"Handoff entre clientes recomendado ('{client_norm}' -> '{target_client_norm}'). "
+                "Operação requer autorização humana explícita antes do despacho."
             )
     elif not delegation_allowed:
         recommended_mode = "session"
@@ -723,7 +778,6 @@ def recommend_task_routing(
                 f"resolução recomendada na sessão atual para o domínio '{target_domain}'."
             )
     elif target_domain == "security" and requires_terminal:
-        # lay-seguranca é estritamente somente-leitura e não possui Bash
         recommended_mode = "session"
         rationale = (
             "A tarefa requer execução de ferramentas externas via terminal (ex: Semgrep). "
@@ -732,7 +786,6 @@ def recommend_task_routing(
             "(ou relatórios previamente gerados devem ser submetidos para revisão estática)."
         )
     elif target_domain == "database" and requires_terminal:
-        # lay-banco-de-dados é estritamente somente-leitura e não possui Bash
         recommended_mode = "session"
         requires_authorization = True
         rationale = (
@@ -741,6 +794,7 @@ def recommend_task_routing(
             "a execução deve ocorrer na sessão atual com supervisão humana direta."
         )
     elif is_security_reading:
+        # 2. Subagente nativo, somente quando justificado (isolamento estrito read-only)
         recommended_mode = "subagent"
         rationale = (
             "Demanda de análise estática e auditoria de código por leitura beneficia-se de "
@@ -758,7 +812,7 @@ def recommend_task_routing(
             f"Demanda gráfica/3D requer ambiente especializado de renderização via '{target_specialist}'."
         )
     elif complexity == "high":
-        # Complexidade alta NÃO implica delegação obrigatória
+        # 1. Sessão atual com skills relevantes (padrão)
         recommended_mode = "session"
         rationale = (
             f"Demanda de complexidade alta. Recomenda-se resolução estruturada na sessão atual "
@@ -785,6 +839,7 @@ def recommend_task_routing(
         "recommended_domain": target_domain,
         "relevant_skills": skills,
         "current_client": client_norm,
+        "target_client": target_client_norm or client_norm,
         "recommended_mode": recommended_mode,
         "recommended_specialist": target_specialist,
         "rationale": rationale,
@@ -824,6 +879,7 @@ def create_task(
         "status": "pending",
         "routing": {
             "client": rec["current_client"],
+            "source_client": None,
             "target_specialist": None,
             "execution_mode": rec["recommended_mode"],
             "delegation_reason": None,
@@ -899,7 +955,7 @@ def assign_task(
     mode: str = "session",
     reason: Optional[str] = None
 ) -> Dict[str, Any]:
-    """Atribui responsável e modalidade de execução à tarefa com controle de concorrência."""
+    """Atribui responsável e modalidade de execução à tarefa com controle de concorrência e compatibilidade estrita."""
     validate_task_id(task_id)
     if specialist not in ALL_CANONICAL_SPECIALISTS:
         raise TaskValidationError(
@@ -909,7 +965,7 @@ def assign_task(
     if mode not in VALID_EXECUTION_MODES:
         raise TaskValidationError(f"Modo de execução inválido: '{mode}'. Opções: {sorted(VALID_EXECUTION_MODES)}")
 
-    if mode in ("subagent", "arbitrator") and (not reason or not reason.strip()):
+    if mode in ("subagent", "arbitrator", "cross_client") and (not reason or not reason.strip()):
         raise TaskValidationError(
             f"Atribuição para modalidade '{mode}' exige justificativa objetiva (--reason) conforme política de delegação mínima."
         )
@@ -926,6 +982,39 @@ def assign_task(
             if client == "local":
                 raise TaskValidationError(
                     "Delegação de subagentes indisponível para o cliente 'local'. O modo deve ser 'session'."
+                )
+
+            compat = CLIENT_COMPATIBLE_SPECIALISTS.get(client, set())
+            if specialist not in compat:
+                if client == "antigravity" and specialist == "lay-arbitro-opus":
+                    raise TaskValidationError("Especialista 'lay-arbitro-opus' é específico do Claude Code. No Google Antigravity, utilize 'lay-arbitro'.")
+                if client == "claude" and specialist == "lay-arbitro":
+                    raise TaskValidationError("Especialista 'lay-arbitro' é específico do Antigravity. No Claude Code, utilize 'lay-arbitro-opus'.")
+                raise TaskValidationError(f"Especialista '{specialist}' incompatível com o cliente '{client}'.")
+
+        # Validação de coerência do modo árbitro
+        if mode == "arbitrator" and specialist not in ("lay-arbitro", "lay-arbitro-opus"):
+            raise TaskValidationError(
+                f"Modo 'arbitrator' requer especialista árbitro ('lay-arbitro' ou 'lay-arbitro-opus'), recebido '{specialist}'."
+            )
+        if specialist in ("lay-arbitro", "lay-arbitro-opus") and mode != "arbitrator":
+            raise TaskValidationError(
+                f"Especialista árbitro '{specialist}' só pode ser atribuído na modalidade 'arbitrator'."
+            )
+
+        # Validação de incompatibilidade operacional com ferramentas (somente em subagent)
+        if mode in ("subagent", "cross_client"):
+            task_text = f"{task['title']} {' '.join(task.get('handoff', {}).get('constraints', []))}"
+            norm_title = normalize_text(task_text)
+            if specialist == "lay-banco-de-dados" and any(k in norm_title for k in DESTRUCTIVE_DATABASE_KEYWORDS):
+                raise TaskValidationError(
+                    "Incompatibilidade operacional: especialista 'lay-banco-de-dados' opera estritamente como somente-leitura "
+                    "e não executa migrações destrutivas. Conduza na sessão sob supervisão humana."
+                )
+            if specialist in READONLY_SPECIALISTS and any(k in norm_title for k in TERMINAL_EXECUTION_KEYWORDS):
+                raise TaskValidationError(
+                    f"Incompatibilidade de ferramentas: especialista '{specialist}' possui perfil estritamente somente-leitura "
+                    "e não tem acesso a ferramentas de terminal (Bash/CLI). A execução deve ocorrer na sessão atual."
                 )
 
         current_status = task["status"]
@@ -1263,6 +1352,120 @@ def prepare_arbitration_package(
 
         task["status"] = "escalated"
         task["timestamps"]["updated_at"] = now_ts
+
+        validate_task_schema(task)
+        atomic_write_task(workspace, task)
+
+    return task
+
+
+def handoff_task(
+    workspace: Path,
+    task_id: str,
+    target_client: str,
+    reason: str,
+    authorized: bool = False,
+    context: Optional[List[str]] = None,
+    execution_mode: Optional[str] = None,
+    specialist: Optional[str] = None,
+) -> Dict[str, Any]:
+    """Transfere uma tarefa entre clientes (Cross-Client Handoff) com rastreabilidade e validação de autorização.
+
+    - Exige autorização explícita (--authorized) para cruzar fronteiras de cliente.
+    - Rejeita cliente 'codex' como destino funcional nesta versão.
+    - Transfere estritamente o contexto necessário (sem vazamento de memória ou sessão de outro cliente).
+    - Preserva task_id, status e histórico completo.
+    - Não executa comandos nem invoca modelos nesta etapa.
+    """
+    validate_task_id(task_id)
+
+    target_norm = (target_client or "").lower().strip()
+    if target_norm not in VALID_CLIENTS:
+        raise TaskValidationError(
+            f"Cliente de destino inválido: '{target_client}'. Clientes suportados: {sorted(VALID_CLIENTS)}"
+        )
+
+    if target_norm == "codex":
+        raise TaskValidationError(
+            "Handoff para o cliente 'codex' indisponível funcionalmente nesta versão."
+        )
+
+    if not reason or not isinstance(reason, str) or len(reason.strip()) < 5:
+        raise TaskValidationError(
+            "Handoff entre clientes exige justificativa técnica objetiva (--reason) com pelo menos 5 caracteres."
+        )
+
+    with task_lock(workspace, task_id):
+        task = get_task(workspace, task_id)
+        current_status = task["status"]
+
+        if current_status == "completed":
+            raise TaskValidationError(
+                f"Não é permitido realizar handoff da tarefa concluída '{task_id}': estado terminal e imutável."
+            )
+
+        source_client = task.get("routing", {}).get("client", "local").lower()
+        if target_norm == source_client:
+            raise TaskValidationError(
+                f"Handoff redundante: a tarefa já está alocada para o cliente '{target_norm}'."
+            )
+
+        # Regra de autorização explícita para cruzar fronteiras de cliente
+        if not authorized:
+            raise TaskValidationError(
+                f"Handoff entre clientes ('{source_client}' -> '{target_norm}') requer autorização explícita (--authorized)."
+            )
+
+        now_ts = now_iso()
+
+        # Contexto mínimo transferido (somente o necessário, sem dumping de sessão de outro cliente)
+        if context is not None:
+            clean_context = [str(c).strip() for c in context if str(c).strip()]
+        else:
+            clean_context = list(task.get("handoff", {}).get("context", []))
+
+        # Ajuste de especialista caso o especialista anterior seja incompatível com o novo cliente
+        current_specialist = specialist or task.get("routing", {}).get("target_specialist")
+        if current_specialist:
+            if target_norm == "antigravity" and current_specialist == "lay-arbitro-opus":
+                current_specialist = "lay-arbitro"
+            elif target_norm == "claude" and current_specialist == "lay-arbitro":
+                current_specialist = "lay-arbitro-opus"
+            elif current_specialist not in CLIENT_COMPATIBLE_SPECIALISTS.get(target_norm, set()):
+                current_specialist = None
+
+        new_mode = execution_mode or task.get("routing", {}).get("execution_mode", "session")
+        if new_mode not in VALID_EXECUTION_MODES:
+            new_mode = "session"
+
+        # Rastreabilidade completa da origem e do destino
+        task["routing"]["source_client"] = source_client
+        task["routing"]["client"] = target_norm
+        task["routing"]["target_specialist"] = current_specialist
+        task["routing"]["execution_mode"] = new_mode
+        task["routing"]["delegation_reason"] = reason.strip()
+
+        task["handoff"]["context"] = clean_context
+
+        # Histórico de rastreabilidade
+        history = list(task.get("history") or [])
+        history.append({
+            "timestamp": now_ts,
+            "previous_status": current_status,
+            "action": "cross_client_handoff",
+            "reason": reason.strip(),
+            "source_client": source_client,
+            "target_client": target_norm,
+            "previous_result": task.get("result"),
+        })
+        task["history"] = history
+
+        # Atualiza timestamp
+        task["timestamps"]["updated_at"] = now_ts
+
+        # Se estava pending, transita para in_progress
+        if current_status == "pending":
+            task["status"] = "in_progress"
 
         validate_task_schema(task)
         atomic_write_task(workspace, task)
