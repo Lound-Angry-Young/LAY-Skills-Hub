@@ -1,0 +1,5 @@
+# Perfil Terra - Especialista em Engenharia e Implementação (Codex, Padrão)
+# Uso: codex exec -p terra "..." ou codex --profile terra
+model = "gpt-6.1-terra"
+model_reasoning_effort = "medium"
+service_tier = "default"

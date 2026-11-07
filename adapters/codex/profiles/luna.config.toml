@@ -1,0 +1,5 @@
+# Perfil Luna - Especialista Mecânico e Rápido (Codex)
+# Uso: codex exec -p luna "..." ou codex --profile luna
+model = "gpt-6-luna"
+model_reasoning_effort = "low"
+service_tier = "default"

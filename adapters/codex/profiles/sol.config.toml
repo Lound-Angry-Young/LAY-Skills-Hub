@@ -1,0 +1,5 @@
+# Perfil Sol - Especialista Arquitetural (Codex)
+# Uso: codex exec -p sol "..." ou codex --profile sol
+model = "gpt-6.1-sol"
+model_reasoning_effort = "high"
+service_tier = "default"

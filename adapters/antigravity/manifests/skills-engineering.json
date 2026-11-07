@@ -1,0 +1,29 @@
+{
+  "entries": [
+    {
+      "path": "{{LAY_RUNTIME_DIR}}/refactored_skills/engineering",
+      "include_only": [
+        "auditing-codebase-bloat",
+        "authoring-specifications-first",
+        "debugging-root-causes",
+        "deprecating-obsolete-apis",
+        "designing-apis-and-interfaces",
+        "enforcing-project-constraints",
+        "grounding-source-documentation",
+        "guiding-ponytail-minimalism",
+        "implementing-incremental-slices",
+        "instrumenting-code-observability",
+        "measuring-code-savings",
+        "migrating-legacy-architectures",
+        "minimizing-code-overengineering",
+        "optimizing-fullstack-performance",
+        "recovering-system-errors",
+        "reviewing-code-minimalism",
+        "reviewing-multi-axis-code-quality",
+        "simplifying-code-complexity",
+        "stress-testing-architecture-decisions",
+        "tracking-technical-debt-ledgers"
+      ]
+    }
+  ]
+}
