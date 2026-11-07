@@ -790,12 +790,13 @@ def install_codex_adapter_v2(home, hub, dry_run=False, backup_mgr=None, root=ROO
                     backup_mgr.record_created(dest, sha(dest))
 
 
-def install_antigravity_adapter_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None, root=ROOT):
+def install_antigravity_adapter_v2(home, hub, mode='complete', domain=None, dry_run=False, backup_mgr=None, root=ROOT):
     ag_dir = home / '.gemini'
     source_dir = (root / 'adapters/antigravity') if (root / 'adapters/antigravity').exists() else (ROOT / 'adapters/antigravity')
     runtime_str = (hub / 'runtime').as_posix()
     home_str = home.as_posix()
 
+    # 1. Regras GEMINI.md
     tmpl_gemini = source_dir / 'GEMINI.md'
     if tmpl_gemini.exists():
         content = tmpl_gemini.read_text(encoding='utf-8')
@@ -805,17 +806,35 @@ def install_antigravity_adapter_v2(home, hub, mode='complete', dry_run=False, ba
         dest = ag_dir / 'GEMINI.md'
         update_rules_file(dest, content, backup_mgr=backup_mgr, dry_run=dry_run)
 
-    manifest_src = source_dir / 'manifests' / 'skills-frontend.json'
+    # 2. Manifesto de skills ~/.gemini/config/skills.json
+    manifest_name = f'skills-{domain}.json' if domain else 'skills-full.json'
+    manifest_src = source_dir / 'manifests' / manifest_name
+    if not manifest_src.exists() and domain:
+        manifest_src = source_dir / 'manifests' / 'skills-full.json'
+
     if manifest_src.exists():
         content = manifest_src.read_text(encoding='utf-8')
         content = content.replace('{{LAY_RUNTIME_DIR}}', runtime_str)
-        if mode == 'public':
-            try:
-                m_data = json.loads(content)
-                m_data['entries'] = [e for e in m_data.get('entries', []) if 'skills-privadas-lay' not in e.get('path', '')]
-                content = json.dumps(m_data, indent=2, ensure_ascii=False) + '\n'
-            except Exception:
-                pass
+        try:
+            m_data = json.loads(content)
+            entries = m_data.get('entries', [])
+            if mode == 'public':
+                entries = [e for e in entries if 'skills-privadas-lay' not in e.get('path', '')]
+            if domain:
+                entries = [e for e in entries if e.get('path', '').endswith(f'/{domain}')]
+            # Deduplicação de entries preservando ordem
+            seen_paths = set()
+            dedup_entries = []
+            for e in entries:
+                p = e.get('path')
+                if p not in seen_paths:
+                    seen_paths.add(p)
+                    dedup_entries.append(e)
+            m_data['entries'] = dedup_entries
+            content = json.dumps(m_data, indent=2, ensure_ascii=False) + '\n'
+        except Exception:
+            pass
+
         config_dir = ag_dir / 'config'
         dest = config_dir / 'skills.json'
         if dry_run:
@@ -829,6 +848,7 @@ def install_antigravity_adapter_v2(home, hub, mode='complete', dry_run=False, ba
             if not existed and backup_mgr:
                 backup_mgr.record_created(dest, sha(dest))
 
+    # 3. Template de subagentes Antigravity (compatibilidade/transitório)
     subagents_src = source_dir / 'agents' / 'subagents-definition-template.json'
     if subagents_src.exists():
         dest = ag_dir / 'antigravity' / 'agents' / 'subagents-definition-template.json'
@@ -843,8 +863,34 @@ def install_antigravity_adapter_v2(home, hub, mode='complete', dry_run=False, ba
             if not existed and backup_mgr:
                 backup_mgr.record_created(dest, sha(dest))
 
+    # 4. Subagentes persistentes ~/.gemini/config/agents/*.md
+    installed_agents = []
+    agents_src_dir = source_dir / 'agents'
+    target_agents_dir = ag_dir / 'config' / 'agents'
+    if agents_src_dir.exists():
+        agent_files = sorted(agents_src_dir.glob('*.md'))
+        for a_file in agent_files:
+            dest = target_agents_dir / a_file.name
+            if dry_run:
+                print(f"  [DRY-RUN] Instalaria subagente Antigravity: {dest}")
+                continue
+            target_agents_dir.mkdir(parents=True, exist_ok=True)
+            content = a_file.read_text(encoding='utf-8')
+            content = content.replace('{{LAY_RUNTIME_DIR}}', runtime_str)
+            if mode == 'public':
+                content = re.sub(r'<!-- LAY-PRIVATE-SKILLS:BEGIN -->.*?<!-- LAY-PRIVATE-SKILLS:END -->\s*([^\n]+\n)?', '', content, flags=re.DOTALL)
+            existed = dest.exists()
+            if existed and backup_mgr:
+                backup_mgr.backup_file(dest)
+            dest.write_text(content, encoding='utf-8', newline='\n')
+            if not existed and backup_mgr:
+                backup_mgr.record_created(dest, sha(dest))
+            installed_agents.append({'name': a_file.name, 'path': str(dest), 'sha256': sha(dest)})
 
-def install(home, agents, root=ROOT, skip_tools=False, mode='complete', dry_run=False):
+    return installed_agents
+
+
+def install(home, agents, root=ROOT, skip_tools=False, mode='complete', domain=None, dry_run=False):
     home = home.resolve()
     hub = home / '.lay-skills'
 
@@ -925,8 +971,9 @@ def install(home, agents, root=ROOT, skip_tools=False, mode='complete', dry_run=
         claude_agents = install_claude_adapter_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
     if 'codex' in agents:
         install_codex_adapter_v2(home, hub, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
+    antigravity_agents = []
     if 'antigravity' in agents:
-        install_antigravity_adapter_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
+        antigravity_agents = install_antigravity_adapter_v2(home, hub, mode=mode, domain=domain, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
 
     backup_dir = backup_mgr.finalize()
     if backup_dir:
@@ -943,7 +990,8 @@ def install(home, agents, root=ROOT, skip_tools=False, mode='complete', dry_run=
             'mode': mode,
             'catalog_count': len(installed),
             'python': sys.executable,
-            'claude_agents': claude_agents
+            'claude_agents': claude_agents,
+            'antigravity_agents': antigravity_agents
         }
         marker = hub / 'installation.json'
         write(marker, state)
@@ -1133,6 +1181,13 @@ def doctor(home):
         elif sha(p) != entry['sha256']:
             errors.append(f'Subagente modificado: {p}')
 
+    for entry in state.get('antigravity_agents', []):
+        p = Path(entry['path'])
+        if not p.exists():
+            errors.append(f'Subagente Antigravity ausente: {p}')
+        elif sha(p) != entry['sha256']:
+            errors.append(f'Subagente Antigravity modificado: {p}')
+
     for agent in state.get('agents', []):
         rule_f = home / RULES.get(agent, '')
         if rule_f.exists():
@@ -1220,6 +1275,7 @@ def main():
             p.add_argument('--agents', default='all', help='all ou codex,claude,antigravity')
             p.add_argument('--mode', choices=['complete', 'public'], default='complete', help='modo de instalação: complete (todas as skills, incluindo cofre privado) ou public (apenas skills públicas)')
             p.add_argument('--dry-run', action='store_true', help='simular instalação sem modificar o disco')
+            p.add_argument('--domain', default=None, help='domínio específico de skills para Antigravity (ex: frontend)')
             p.add_argument('--skip-tools', action='store_true', help='pular instalação isolada do Graphify')
         if command == 'rollback':
             p.add_argument('--backup-dir', type=Path, default=None, help='caminho do diretório de backup a restaurar')
@@ -1248,7 +1304,7 @@ def main():
             agents = list(DESTINATIONS) if args.agents == 'all' else args.agents.split(',')
             if not agents or any(a not in DESTINATIONS for a in agents):
                 raise ValueError('Agente inválido')
-            install(args.home, agents, skip_tools=args.skip_tools, mode=args.mode, dry_run=args.dry_run)
+            install(args.home, agents, skip_tools=args.skip_tools, mode=args.mode, domain=args.domain, dry_run=args.dry_run)
         elif args.command == 'rollback':
             rollback(args.home, args.backup_dir)
         elif args.command == 'link-junctions':

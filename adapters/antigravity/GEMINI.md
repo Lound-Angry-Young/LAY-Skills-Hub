@@ -33,4 +33,10 @@ Graphify CLI isolada: `{{USER_HOME}}\.lay-skills\tools\graphify\Scripts\graphify
 - **Procedimentos nas Skills:** Regras globais guardam apenas princípios inegociáveis. Guias passo a passo, matrizes e referências detalhadas permanecem dentro dos arquivos de skill.
 - **Extensibilidade e Novas Skills:** Consulte `{{LAY_RUNTIME_DIR}}\docs\EXTENSIBILIDADE.md` para adicionar, integrar ou regenerar skills e subagentes nativos do Antigravity.
 
+### 4. Orquestração e Especialistas Nativos (Subagents)
+O ecossistema disponibiliza 12 perfis de especialistas persistentes registrados em `~/.gemini/config/agents/` (ou `.agents/agents/` no projeto):
+- **Somente-Leitura (Read-Only):** `lay-contexto` (grafos AST, requisitos, prompts), `lay-seguranca` (vulnerabilidades, segredos, CVEs), `lay-banco-de-dados` (esquemas, planos de execução SQL) e `lay-arbitro` (decisões arquiteturais críticas em 1 turno, máx 3 voltas). Estes especialistas operam exclusivamente com ferramentas de leitura (`view_file`, `grep_search`, `find_by_name`, `list_dir`) sem comandos de terminal nem escrita.
+- **Engenharia e Entrega:** `lay-engenharia` (APIs, refatoração, bugs), `lay-frontend` (React, Next.js, UI anti-slop), `lay-devops` (Git, CI/CD, deploy Vercel), `lay-qa` (TDD, Playwright, DevTools), `lay-3d` (WebGL, Blender), `lay-design` (brandkit, mockups, design tokens), `lay-documentacao` (ADRs, polimento) e `lay-omniroute` (gateway e proxies locais).
+- **Invocação:** O orquestrador delega diretamente via ferramenta nativa `invoke_subagent(TypeName='lay-<dominio>', Role='...', Prompt='...')`. Os 12 perfis são persistentes e descobertos nativamente pelo runtime. O uso de `define_subagent` é reservado para subagentes transitórios ou ad-hoc criados durante a sessão.
+
 <!-- LAY-MANAGED:END -->

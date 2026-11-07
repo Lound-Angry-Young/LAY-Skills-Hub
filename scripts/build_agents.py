@@ -23,6 +23,128 @@ from scripts.skill_hub import (AGENTS_DOMINIOS, PRIVATE_REFACTORED, REFACTORED, 
                                skill_entries)
 
 
+ANTIGRAVITY_TOOLS_MAP = {
+    'Read': ['view_file'],
+    'Grep': ['grep_search'],
+    'Glob': ['find_by_name', 'list_dir'],
+    'Bash': ['run_command'],
+    'Edit': ['replace_file_content'],
+    'Write': ['write_to_file'],
+}
+
+
+def map_tools_to_antigravity(ferramentas):
+    tools = set()
+    for f in ferramentas:
+        for t in ANTIGRAVITY_TOOLS_MAP.get(f, []):
+            tools.add(t)
+    return sorted(tools)
+
+
+def antigravity_agent_text(perfil, skills, runtime_var="{{LAY_RUNTIME_DIR}}"):
+    tools = map_tools_to_antigravity(perfil['ferramentas'])
+    lines = [
+        "---",
+        f"name: {perfil['nome']}",
+        f'description: "{perfil["descricao"]}"',
+        "model: inherit",
+        "tools:",
+    ]
+    for t in tools:
+        lines.append(f"  - {t}")
+    lines.extend([
+        "subagent: true",
+        "mainAgent: false",
+        "---",
+        "",
+        f"# {perfil['nome']}",
+        "",
+        perfil['descricao'],
+        "",
+        "## Skills do domínio",
+        "",
+        "Abra o SKILL.md original de uma skill só quando a tarefa corresponder à sua descrição. Caminhos:",
+        "",
+    ])
+    for name, desc, is_priv in skills:
+        clean_desc = desc[:240].rstrip()
+        if is_priv:
+            lines.append("<!-- LAY-PRIVATE-SKILLS:BEGIN -->")
+            lines.append(f"- `{name}`: `{runtime_var}/skills-privadas-lay/refactored/{perfil['dominio']}/{name}/SKILL.md`")
+            lines.append("<!-- LAY-PRIVATE-SKILLS:END -->")
+            lines.append(f"  {clean_desc}")
+        else:
+            lines.append(f"- `{name}`: `{runtime_var}/refactored_skills/{perfil['dominio']}/{name}/SKILL.md`")
+            lines.append(f"  {clean_desc}")
+    lines.extend([
+        "",
+        "## Regras de atuação",
+        "",
+        "1. Use apenas as skills deste domínio. Se a solicitação for de outro domínio, responda com status `escalated`, o motivo e o domínio sugerido.",
+        "2. Escolha a skill pela descrição, abra o SKILL.md original e siga os passos instruídos.",
+        "3. Não invente capacidades: afirme estritamente o que verificou (arquivo lido, comando executado, saída observada).",
+        "4. Pergunte somente se a decisão depender de informação indisponível. Faça no máximo uma pergunta por vez.",
+        "5. Ações externas ou irreversíveis (enviar mensagens, publicar, apagar arquivos, sobrescrever sem backup) exigem autorização humana explícita.",
+        "6. Em projeto existente, apresente prioridades e evidências antes de editar.",
+        "7. Escreva em português direto e objetivo (estilo Caveman pragmático).",
+    ])
+    if set(perfil['ferramentas']) <= {'Read', 'Grep', 'Glob'}:
+        lines.append("8. Perfil Estritamente Somente-Leitura: você possui apenas ferramentas de leitura (view_file, grep_search, find_by_name, list_dir). Analise código e grafos AST diretamente nos arquivos. Não execute comandos de terminal nem altere arquivos.")
+    elif 'Bash' not in perfil['ferramentas']:
+        lines.append("8. Perfil Sem Terminal: você possui ferramentas de leitura e edição, mas não executa comandos de terminal (sem run_command).")
+    lines.extend([
+        "",
+        "## Contrato de Resposta (RESULT)",
+        "",
+        "- status: success | failure | needs_clarification | escalated",
+        "- artifacts: caminhos dos arquivos ou saídas geradas",
+        "- summary: síntese executiva em 2 a 4 frases",
+        "- open_items: pendências ou decisões que exigem ação humana (opcional)",
+        ""
+    ])
+    return "\n".join(lines)
+
+
+def antigravity_arbitro_text(arbitro_data):
+    tools = map_tools_to_antigravity(arbitro_data['ferramentas'])
+    model = arbitro_data.get('model_antigravity', 'pro')
+    lines = [
+        "---",
+        "name: lay-arbitro",
+        f'description: "{arbitro_data["descricao"]}"',
+        f"model: {model}",
+        "tools:",
+    ]
+    for t in tools:
+        lines.append(f"  - {t}")
+    lines.extend([
+        "subagent: true",
+        "mainAgent: false",
+        "---",
+        "",
+        "# lay-arbitro",
+        "",
+        "Você é o árbitro arquitetural. Contexto novo a cada chamada, decisão em um único turno, sem execução prática.",
+        "",
+        "## Entrada esperada (Pacote de Tarefa)",
+        "- `task_id`: Identificador da tarefa",
+        "- `decisao`: Escolha estrutural ou técnica a ser tomada",
+        "- `opcoes`: Alternativas viáveis",
+        "- `evidencias`: Caminhos de arquivos relevantes com evidências objetivas",
+        "- `invariantes`: Regras inegociáveis do projeto",
+        "- `criterio_aceite`: O que torna a decisão satisfatória",
+        "",
+        "## Regras",
+    ])
+    for i, r in enumerate(arbitro_data.get('regras', []), start=1):
+        if 'Teto Técnico' in r or 'maxTurns' in r:
+            lines.append(f"{i}. Teto Operacional (máximo 3 turnos): limite estritamente sua atuação e interação a no máximo 3 turnos (leitura de arquivos citados e emissão do parecer), evitando loops ou chamadas adicionais.")
+        else:
+            lines.append(f"{i}. {r}")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def skills_publicas(root=REPO):
     """Skills públicas por domínio, com caminho relativo ao repositório."""
     por_dominio = {}
@@ -165,6 +287,27 @@ def update_adapters(root=REPO):
                 new_subs.append(sub)
         content = json.dumps({'subagents': new_subs}, indent=2, ensure_ascii=False) + '\n'
         ag_tmpl_path.write_bytes(content.replace('\n', eol_t).encode('utf-8'))
+
+    # 4. Subagentes persistentes Antigravity (~/.gemini/config/agents/*.md)
+    ag_agents_dir = root / 'adapters/antigravity/agents'
+    if ag_agents_dir.exists():
+        for p in perfis:
+            domain = p['dominio']
+            pub = [(name, desc, False) for name, desc in public_by_domain.get(domain, [])]
+            priv = [(name, desc, True) for name, desc in private_by_domain.get(domain, [])]
+            all_skills = sorted(pub + priv, key=lambda x: x[0])
+            agent_md = antigravity_agent_text(p, all_skills)
+            ag_file = ag_agents_dir / f"{p['nome']}.md"
+            ag_file.write_text(agent_md, encoding='utf-8', newline='\n')
+
+        # lay-arbitro
+        arbitro_json_path = root / 'core/arbitro.json'
+        if arbitro_json_path.exists():
+            arbitro_data = json.loads(arbitro_json_path.read_text(encoding='utf-8'))
+            arbitro_md = antigravity_arbitro_text(arbitro_data)
+            arbitro_file = ag_agents_dir / f"{arbitro_data.get('nome_antigravity', 'lay-arbitro')}.md"
+            arbitro_file.write_text(arbitro_md, encoding='utf-8', newline='\n')
+
 
 
 def main():

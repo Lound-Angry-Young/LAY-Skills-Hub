@@ -273,5 +273,81 @@ class PortableInstallerSecurityTests(unittest.TestCase):
         self.assertTrue(ok)
 
 
+    def test_12_antigravity_manifest_and_persistent_agents(self):
+        """Valida manifesto skills.json (138 skills) e os 12 agentes persistentes Antigravity."""
+        hub.install(
+            home=self.mock_home,
+            agents=['antigravity'],
+            root=ROOT,
+            skip_tools=True,
+            mode='public',
+            dry_run=False
+        )
+
+        # 1. Manifesto skills.json
+        manifest_path = self.mock_home / '.gemini/config/skills.json'
+        self.assertTrue(manifest_path.exists())
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        self.assertIn('entries', manifest)
+
+        total_skills = 0
+        for entry in manifest['entries']:
+            p_str = entry['path']
+            self.assertNotIn('{{LAY_RUNTIME_DIR}}', p_str)
+            self.assertNotIn('skills-privadas-lay', p_str)
+            self.assertTrue(Path(p_str).exists(), f"Caminho do manifesto não existe no host: {p_str}")
+            total_skills += len(entry.get('include_only', []))
+
+        self.assertEqual(total_skills, 138, "Manifesto público Antigravity deve conter exatamente 138 skills")
+
+        # 2. 12 Subagentes persistentes ~/.gemini/config/agents/*.md
+        agents_dir = self.mock_home / '.gemini/config/agents'
+        self.assertTrue(agents_dir.exists())
+        agent_files = list(agents_dir.glob('*.md'))
+        self.assertEqual(len(agent_files), 12, "Devem existir exatamente 12 subagentes persistentes")
+
+        # 3. Salvaguardas de somente-leitura
+        read_only_agents = ['lay-contexto.md', 'lay-seguranca.md', 'lay-banco-de-dados.md', 'lay-arbitro.md']
+        for ro_name in read_only_agents:
+            ro_file = agents_dir / ro_name
+            self.assertTrue(ro_file.exists())
+            txt = ro_file.read_text(encoding='utf-8')
+            self.assertNotIn('{{LAY_RUNTIME_DIR}}', txt)
+            self.assertNotIn('run_command', txt)
+            self.assertNotIn('write_to_file', txt)
+            self.assertNotIn('replace_file_content', txt)
+            self.assertIn('view_file', txt)
+            self.assertIn('grep_search', txt)
+
+        # 4. lay-arbitro com model pro
+        arbitro_txt = (agents_dir / 'lay-arbitro.md').read_text(encoding='utf-8')
+        self.assertIn('model: pro', arbitro_txt)
+
+        # 5. Agente de escrita possui ferramentas corretas
+        frontend_txt = (agents_dir / 'lay-frontend.md').read_text(encoding='utf-8')
+        self.assertIn('run_command', frontend_txt)
+        self.assertIn('write_to_file', frontend_txt)
+        self.assertIn('replace_file_content', frontend_txt)
+
+    def test_13_antigravity_modular_domain_install(self):
+        """Valida instalação modular do Antigravity por domínio (--domain frontend)."""
+        hub.install(
+            home=self.mock_home,
+            agents=['antigravity'],
+            root=ROOT,
+            skip_tools=True,
+            mode='public',
+            domain='frontend',
+            dry_run=False
+        )
+
+        manifest_path = self.mock_home / '.gemini/config/skills.json'
+        self.assertTrue(manifest_path.exists())
+        manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
+        self.assertEqual(len(manifest['entries']), 1)
+        self.assertTrue(manifest['entries'][0]['path'].endswith('/frontend'))
+        self.assertEqual(len(manifest['entries'][0]['include_only']), 22)
+
+
 if __name__ == '__main__':
     unittest.main()
