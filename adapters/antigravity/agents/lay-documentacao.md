@@ -10,7 +10,7 @@ tools:
   - view_file
   - write_to_file
 subagent: true
-mainAgent: false
+mainAgent: true
 ---
 
 # lay-documentacao

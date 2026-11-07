@@ -13,6 +13,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import yaml
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -328,6 +329,18 @@ class PortableInstallerSecurityTests(unittest.TestCase):
         self.assertIn('run_command', frontend_txt)
         self.assertIn('write_to_file', frontend_txt)
         self.assertIn('replace_file_content', frontend_txt)
+
+        # 6. Descoberta e Delegação: 11 especialistas (mainAgent: true), lay-arbitro (mainAgent: false), todos subagent: true
+        for a_file in agent_files:
+            txt = a_file.read_text(encoding='utf-8')
+            meta = yaml.safe_load(txt.split('---\n', 2)[1])
+            self.assertTrue(meta.get('subagent'), f"{a_file.name} deve ter subagent: true para delegação")
+            if a_file.name == 'lay-arbitro.md':
+                self.assertFalse(meta.get('mainAgent'), "lay-arbitro deve ter mainAgent: false")
+                self.assertEqual(meta.get('model'), 'pro')
+            else:
+                self.assertTrue(meta.get('mainAgent'), f"{a_file.name} deve ter mainAgent: true para seleção direta")
+                self.assertEqual(meta.get('model'), 'inherit')
 
     def test_13_antigravity_modular_domain_install(self):
         """Valida instalação modular do Antigravity por domínio (--domain frontend)."""

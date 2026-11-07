@@ -190,5 +190,36 @@ class ProjectAgentTests(unittest.TestCase):
         self.assertIn('install --agents claude', readme)
 
 
+    def test_antigravity_persistent_agents_discovery_policy(self):
+        ag_dir = REPO / 'adapters/antigravity/agents'
+        self.assertTrue(ag_dir.exists())
+        perfis = {p['nome']: p for p in hub.load_profiles(REPO)}
+        self.assertEqual(len(perfis), 11)
+
+        # 11 especialistas: selecionáveis diretamente (mainAgent: true) e delegáveis (subagent: true)
+        for nome, p in perfis.items():
+            ag_file = ag_dir / f"{nome}.md"
+            self.assertTrue(ag_file.exists(), f"Agente Antigravity {nome} não encontrado em adapters")
+            meta = yaml.safe_load(ag_file.read_text(encoding='utf-8').split('---\n', 2)[1])
+            self.assertTrue(meta.get('mainAgent'), f"{nome} deve ter mainAgent: true")
+            self.assertTrue(meta.get('subagent'), f"{nome} deve ter subagent: true")
+            self.assertEqual(meta.get('model'), 'inherit')
+
+        # lay-arbitro: somente delegação (mainAgent: false, subagent: true, model: pro)
+        arbitro_file = ag_dir / 'lay-arbitro.md'
+        self.assertTrue(arbitro_file.exists())
+        arb_meta = yaml.safe_load(arbitro_file.read_text(encoding='utf-8').split('---\n', 2)[1])
+        self.assertFalse(arb_meta.get('mainAgent'), "lay-arbitro deve ter mainAgent: false")
+        self.assertTrue(arb_meta.get('subagent'), "lay-arbitro deve ter subagent: true")
+        self.assertEqual(arb_meta.get('model'), 'pro')
+
+        # 4 perfis analíticos exclusivamente somente-leitura
+        read_only = {'lay-contexto', 'lay-seguranca', 'lay-banco-de-dados', 'lay-arbitro'}
+        for name in read_only:
+            f = ag_dir / f"{name}.md"
+            meta = yaml.safe_load(f.read_text(encoding='utf-8').split('---\n', 2)[1])
+            tools = meta.get('tools', [])
+            self.assertEqual(tools, ['find_by_name', 'grep_search', 'list_dir', 'view_file'])
+
 if __name__ == '__main__':
     unittest.main()

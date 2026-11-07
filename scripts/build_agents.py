@@ -11,6 +11,7 @@ A instalação global (~/.claude/agents, ~/.gemini, ~/.codex) é feita por
 scripts/skill_hub.py install. Os perfis vêm de core/perfis.json (SSOT).
 """
 import json
+import os
 import re
 import sys
 from pathlib import Path
@@ -54,7 +55,7 @@ def antigravity_agent_text(perfil, skills, runtime_var="{{LAY_RUNTIME_DIR}}"):
         lines.append(f"  - {t}")
     lines.extend([
         "subagent: true",
-        "mainAgent: false",
+        "mainAgent: true",
         "---",
         "",
         f"# {perfil['nome']}",
@@ -298,7 +299,9 @@ def update_adapters(root=REPO):
             all_skills = sorted(pub + priv, key=lambda x: x[0])
             agent_md = antigravity_agent_text(p, all_skills)
             ag_file = ag_agents_dir / f"{p['nome']}.md"
-            ag_file.write_text(agent_md, encoding='utf-8', newline='\n')
+            raw_a = ag_file.read_bytes() if ag_file.exists() else b''
+            eol_a = '\r\n' if b'\r\n' in raw_a else ('\r\n' if os.name == 'nt' else '\n')
+            ag_file.write_text(agent_md, encoding='utf-8', newline=eol_a)
 
         # lay-arbitro
         arbitro_json_path = root / 'core/arbitro.json'
@@ -306,7 +309,9 @@ def update_adapters(root=REPO):
             arbitro_data = json.loads(arbitro_json_path.read_text(encoding='utf-8'))
             arbitro_md = antigravity_arbitro_text(arbitro_data)
             arbitro_file = ag_agents_dir / f"{arbitro_data.get('nome_antigravity', 'lay-arbitro')}.md"
-            arbitro_file.write_text(arbitro_md, encoding='utf-8', newline='\n')
+            raw_arb = arbitro_file.read_bytes() if arbitro_file.exists() else b''
+            eol_arb = '\r\n' if b'\r\n' in raw_arb else ('\r\n' if os.name == 'nt' else '\n')
+            arbitro_file.write_text(arbitro_md, encoding='utf-8', newline=eol_arb)
 
 
 

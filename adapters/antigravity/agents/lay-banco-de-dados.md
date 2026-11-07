@@ -8,7 +8,7 @@ tools:
   - list_dir
   - view_file
 subagent: true
-mainAgent: false
+mainAgent: true
 ---
 
 # lay-banco-de-dados
