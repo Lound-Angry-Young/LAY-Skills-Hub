@@ -1327,6 +1327,48 @@ def main():
     mode.add_argument('--apply', action='store_true')
     mode.add_argument('--check', action='store_true')
     p.add_argument('--parent-checked', action='store_true', help=argparse.SUPPRESS)
+
+    # Subcomando task (LAY Orchestrator)
+    p_task = sub.add_parser('task', help='Gerenciamento local de tarefas do LAY Orchestrator')
+    task_sub = p_task.add_subparsers(dest='task_action', required=True)
+
+    # task create
+    p_tc = task_sub.add_parser('create', help='Criar nova tarefa com classificação heurística')
+    p_tc.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_tc.add_argument('--title', required=True, help='Título descritivo da tarefa')
+    p_tc.add_argument('--domain', default='engineering', help='Domínio da tarefa (ex: frontend, engineering, security)')
+    p_tc.add_argument('--complexity', choices=['low', 'medium', 'high', 'critical'], default=None, help='Classificação explícita de complexidade')
+    p_tc.add_argument('--context', nargs='*', default=[], help='Caminhos de contexto ou arquivos relevantes')
+    p_tc.add_argument('--constraints', nargs='*', default=[], help='Restrições técnicas')
+    p_tc.add_argument('--acceptance-criteria', nargs='*', default=[], help='Critérios de aceite')
+    p_tc.add_argument('--client', default='local', help='Cliente executor (claude, antigravity, codex, local)')
+
+    # task list
+    p_tl = task_sub.add_parser('list', help='Listar tarefas do workspace')
+    p_tl.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_tl.add_argument('--status', choices=['pending', 'in_progress', 'completed', 'failed', 'blocked', 'escalated'], default=None, help='Filtrar por status')
+
+    # task show
+    p_ts = task_sub.add_parser('show', help='Exibir detalhes de uma tarefa')
+    p_ts.add_argument('task_id', help='Identificador da tarefa (ex: task-12345678)')
+    p_ts.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+
+    # task assign
+    p_ta = task_sub.add_parser('assign', help='Atribuir responsável e modalidade de execução')
+    p_ta.add_argument('task_id', help='Identificador da tarefa')
+    p_ta.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_ta.add_argument('--specialist', required=True, help='Nome do especialista (ex: lay-frontend, lay-seguranca)')
+    p_ta.add_argument('--mode', choices=['session', 'subagent', 'arbitrator'], default='session', help='Modalidade de execução')
+    p_ta.add_argument('--reason', default=None, help='Justificativa objetiva da delegação (obrigatória para subagent/arbitrator)')
+
+    # task complete
+    p_tcp = task_sub.add_parser('complete', help='Concluir tarefa com contrato RESULT')
+    p_tcp.add_argument('task_id', help='Identificador da tarefa')
+    p_tcp.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_tcp.add_argument('--summary', required=True, help='Resumo conclusivo da entrega')
+    p_tcp.add_argument('--result-status', choices=['success', 'failure', 'needs_clarification', 'escalated'], default='success', help='Status da entrega RESULT')
+    p_tcp.add_argument('--artifacts', nargs='*', default=[], help='Arquivos ou artefatos gerados')
+    p_tcp.add_argument('--open-items', nargs='*', default=[], help='Pendências ou itens em aberto')
     args = parser.parse_args()
     try:
         if args.command == 'install':
@@ -1360,6 +1402,68 @@ def main():
             for e in data['skills']:
                 if query in ' '.join([e['id'], e['name'], e['description'], *e['categories']]).lower():
                     print(f"{e['id']} | {', '.join(e['categories'])} | {e['description'][:220]}")
+        elif args.command == 'task':
+            try:
+                import tasks
+            except ImportError:
+                from scripts import tasks
+            ws = args.workspace.resolve()
+            if args.task_action == 'create':
+                t = tasks.create_task(
+                    workspace=ws,
+                    title=args.title,
+                    domain=args.domain,
+                    complexity=args.complexity,
+                    context=args.context,
+                    constraints=args.constraints,
+                    acceptance_criteria=args.acceptance_criteria,
+                    client=args.client
+                )
+                print(f"✅ Tarefa criada com sucesso: {t['id']}")
+                print(f"   Título: {t['title']}")
+                print(f"   Complexidade: {t['complexity']} (Modo sugerido: {t['routing']['execution_mode']})")
+                print(f"   Status: {t['status']}")
+            elif args.task_action == 'list':
+                ts = tasks.list_tasks(workspace=ws, status_filter=args.status)
+                if not ts:
+                    print("Nenhuma tarefa encontrada.")
+                else:
+                    print(f"=== Tarefas ({len(ts)}) em {ws} ===")
+                    for t in ts:
+                        spec = t['routing'].get('target_specialist') or 'não atribuído'
+                        print(f"- {t['id']} | [{t['status'].upper()}] | {t['complexity']:8} | {spec:15} | {t['title']}")
+            elif args.task_action == 'show':
+                t = tasks.get_task(workspace=ws, task_id=args.task_id)
+                print(json.dumps(t, indent=2, ensure_ascii=False))
+            elif args.task_action == 'assign':
+                t = tasks.assign_task(
+                    workspace=ws,
+                    task_id=args.task_id,
+                    specialist=args.specialist,
+                    mode=args.mode,
+                    reason=args.reason
+                )
+                print(f"✅ Tarefa {t['id']} atribuída:")
+                print(f"   Especialista: {t['routing']['target_specialist']}")
+                print(f"   Modalidade:   {t['routing']['execution_mode']}")
+                print(f"   Status:       {t['status']}")
+                if t['routing'].get('delegation_reason'):
+                    print(f"   Justificativa:{t['routing']['delegation_reason']}")
+            elif args.task_action == 'complete':
+                t = tasks.complete_task(
+                    workspace=ws,
+                    task_id=args.task_id,
+                    summary=args.summary,
+                    result_status=args.result_status,
+                    artifacts=args.artifacts,
+                    open_items=args.open_items
+                )
+                print(f"✅ Tarefa {t['id']} concluída com sucesso:")
+                print(f"   Status Tarefa: {t['status']}")
+                print(f"   Status RESULT: {t['result']['status']}")
+                print(f"   Resumo:        {t['result']['summary']}")
+                if t['result'].get('artifacts'):
+                    print(f"   Artefatos:     {', '.join(t['result']['artifacts'])}")
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired) as exc:
         print(f'⚠️ {exc}', file=sys.stderr)

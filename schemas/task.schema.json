@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lay-skills.io/schemas/task.schema.json",
+  "title": "LAYOrchestratorTask",
+  "description": "Schema versionado para persistência atômica de tarefas do LAY Orchestrator.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "id",
+    "title",
+    "complexity",
+    "status",
+    "routing",
+    "handoff",
+    "timestamps"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^task-[a-z0-9]{8,16}$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "complexity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "in_progress", "completed", "failed", "blocked", "escalated"]
+    },
+    "routing": {
+      "type": "object",
+      "required": ["client", "execution_mode"],
+      "properties": {
+        "client": {
+          "type": "string",
+          "enum": ["claude", "antigravity", "codex", "local"]
+        },
+        "target_specialist": {
+          "type": ["string", "null"]
+        },
+        "execution_mode": {
+          "type": "string",
+          "enum": ["session", "subagent", "arbitrator"]
+        },
+        "delegation_reason": {
+          "type": ["string", "null"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "handoff": {
+      "type": "object",
+      "required": ["task", "domain", "context", "constraints", "acceptance_criteria"],
+      "properties": {
+        "task": {
+          "type": "string"
+        },
+        "domain": {
+          "type": "string"
+        },
+        "context": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "acceptance_criteria": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "result": {
+      "type": ["object", "null"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["success", "failure", "needs_clarification", "escalated"]
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "artifacts": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "open_items": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["status", "summary"],
+      "additionalProperties": false
+    },
+    "timestamps": {
+      "type": "object",
+      "required": ["created_at", "updated_at"],
+      "properties": {
+        "created_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updated_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "completed_at": {
+          "type": ["string", "null"],
+          "format": "date-time"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
