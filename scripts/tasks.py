@@ -109,11 +109,20 @@ ARCHITECTURAL_IMPASSE_KEYWORDS = {
 VALID_TRANSITIONS: Dict[str, set[str]] = {
     "pending": {"in_progress"},
     "in_progress": {"completed", "failed", "blocked", "escalated"},
-    "blocked": {"in_progress", "failed"},
+    "blocked": {"in_progress", "failed", "escalated"},
     "escalated": {"in_progress", "failed"},
     "failed": {"in_progress"},  # Permite tentativa de recuperação / retry
     "completed": set(),         # Estado terminal imutável
 }
+
+RESULT_STATUS_TO_TASK_STATUS: Dict[str, str] = {
+    "success": "completed",
+    "failure": "failed",
+    "needs_clarification": "blocked",
+    "escalated": "escalated",
+}
+
+MAX_ARBITRATION_TOKENS: int = 15000
 
 CRITICAL_KEYWORDS = {
     "arquitetura", "migracao", "migra", "breaking change", "drop table", "esquema banco",
@@ -504,8 +513,37 @@ def validate_task_schema(data: dict) -> None:
             raise TaskValidationError("Objeto 'result' deve ser um dicionário ou null.")
         if "status" not in result or result["status"] not in VALID_RESULT_STATUSES:
             raise TaskValidationError(f"Status do resultado inválido: '{result.get('status')}'")
-        if not result.get("summary") or not isinstance(result["summary"], str):
-            raise TaskValidationError("Campo 'summary' em 'result' deve ser uma string não vazia.")
+        if not result.get("summary") or not isinstance(result["summary"], str) or len(result["summary"].strip()) < 3:
+            raise TaskValidationError("Campo 'summary' em 'result' deve ser uma string substantiva (mínimo 3 caracteres).")
+
+    history = data.get("history")
+    if history is not None:
+        if not isinstance(history, list):
+            raise TaskValidationError("Campo 'history' deve ser uma lista ou null.")
+        for idx, entry in enumerate(history):
+            if not isinstance(entry, dict):
+                raise TaskValidationError(f"Entrada de histórico #{idx} deve ser um objeto.")
+            for req in ["timestamp", "previous_status", "action"]:
+                if req not in entry:
+                    raise TaskValidationError(f"Campo obrigatório '{req}' ausente na entrada de histórico #{idx}.")
+
+    arbitration = data.get("arbitration")
+    if arbitration is not None:
+        if not isinstance(arbitration, dict):
+            raise TaskValidationError("Campo 'arbitration' deve ser um objeto ou null.")
+        if "rounds_count" in arbitration and not isinstance(arbitration["rounds_count"], int):
+            raise TaskValidationError("Campo 'rounds_count' em 'arbitration' deve ser um inteiro.")
+        if "packages" in arbitration:
+            if not isinstance(arbitration["packages"], list):
+                raise TaskValidationError("Campo 'packages' em 'arbitration' deve ser uma lista.")
+            for p_idx, pkg in enumerate(arbitration["packages"]):
+                if not isinstance(pkg, dict):
+                    raise TaskValidationError(f"Pacote de arbitragem #{p_idx} deve ser um objeto.")
+                for req in ["round", "problem", "alternatives", "requires_authorization", "created_at"]:
+                    if req not in pkg:
+                        raise TaskValidationError(f"Campo obrigatório '{req}' ausente no pacote de arbitragem #{p_idx}.")
+                if len(pkg.get("alternatives", [])) < 2:
+                    raise TaskValidationError(f"Pacote #{p_idx} deve conter ao menos 2 alternativas concorrentes.")
 
 
 def infer_domain(text: str) -> str:
@@ -938,6 +976,59 @@ def update_task_status(workspace: Path, task_id: str, new_status: str) -> Dict[s
     return task
 
 
+
+def validate_artifact_paths(
+    workspace: Path,
+    artifacts: List[str],
+    check_existence: bool = False
+) -> None:
+    """Valida integridade estrutural, limites do workspace e existência física de artefatos.
+
+    - Rejeita strings vazias ou nulas.
+    - Impede path traversal e escapes do workspace via '..' ou symlinks/junctions.
+    - Se check_existence=True: verifica se o artefato realmente existe e é um arquivo físico regular.
+    - Não executa nem interpreta nenhum arquivo como código ou comando.
+    """
+    if not artifacts:
+        return
+
+    ws_resolved = workspace.resolve()
+
+    for art in artifacts:
+        if not art or not isinstance(art, str) or not art.strip():
+            raise TaskValidationError("Caminho de artefato inválido: não pode ser vazio ou conter apenas espaços.")
+
+        art_clean = art.strip()
+        p_raw = Path(art_clean)
+
+        if p_raw.is_absolute():
+            p_target = p_raw.resolve()
+        else:
+            p_target = (ws_resolved / p_raw).resolve()
+
+        # Verifica se o caminho escapa do workspace
+        try:
+            p_target.relative_to(ws_resolved)
+        except ValueError:
+            raise TaskValidationError(
+                f"Violação de isolamento de workspace: artefato '{art_clean}' escapa do diretório autorizado do projeto."
+            )
+
+        if p_target == ws_resolved:
+            raise TaskValidationError(
+                f"Artefato inválido: o caminho aponta para a raiz do workspace: '{art_clean}'"
+            )
+
+        if check_existence:
+            if not p_target.exists():
+                raise TaskValidationError(
+                    f"Artefato declarado não existe no disco: '{art_clean}'"
+                )
+            if not p_target.is_file():
+                raise TaskValidationError(
+                    f"Artefato declarado deve ser um arquivo regular: '{art_clean}'"
+                )
+
 def complete_task(
     workspace: Path,
     task_id: str,
@@ -946,38 +1037,232 @@ def complete_task(
     artifacts: Optional[List[str]] = None,
     open_items: Optional[List[str]] = None
 ) -> Dict[str, Any]:
-    """Conclui a tarefa gravando o contrato RESULT e atualizando timestamps."""
+    """Registra o contrato RESULT e atualiza o ciclo de vida da tarefa.
+
+    Mapeamento consistente de status:
+    - success -> completed (terminal e imutável)
+    - failure -> failed (permite recuperação controlada)
+    - needs_clarification -> blocked (permite retomada após esclarecimento)
+    - escalated -> escalated (permite preparação de arbitragem ou retomada)
+    """
     validate_task_id(task_id)
-    if not summary or not summary.strip():
-        raise TaskValidationError("A conclusão de uma tarefa exige um resumo conclusivo não vazio (--summary).")
+    if not summary or not isinstance(summary, str) or len(summary.strip()) < 3:
+        raise TaskValidationError("A entrega de resultado exige um resumo substantivo (--summary) com pelo menos 3 caracteres.")
 
     if result_status not in VALID_RESULT_STATUSES:
-        raise TaskValidationError(f"Status do resultado inválido: '{result_status}'. Opções: {sorted(VALID_RESULT_STATUSES)}")
+        raise TaskValidationError(
+            f"Status do resultado inválido: '{result_status}'. Opções permitidas: {sorted(VALID_RESULT_STATUSES)}"
+        )
+
+    raw_artifacts = list(artifacts or [])
+    clean_open_items = [str(item).strip() for item in (open_items or []) if str(item).strip()]
+
+    # Validação estrutural e de isolamento de todos os artefatos declarados
+    # Se o status for success e houver artefatos declarados, verifica obrigatoriamente a existência física
+    check_exist = (result_status == "success" and len(raw_artifacts) > 0)
+    validate_artifact_paths(workspace, raw_artifacts, check_existence=check_exist)
+    clean_artifacts = [str(a).strip() for a in raw_artifacts]
 
     with task_lock(workspace, task_id):
         task = get_task(workspace, task_id)
         current_status = task["status"]
 
         if current_status == "completed":
-            raise TaskValidationError(f"A tarefa '{task_id}' já está concluída.")
+            raise TaskValidationError(f"A tarefa '{task_id}' já está em estado terminal 'completed' e não pode ser alterada.")
 
-        # Transição permitida: de in_progress, blocked ou escalated para completed
-        allowed_completion = {"in_progress", "blocked", "escalated"}
-        if current_status not in allowed_completion:
+        allowed_origins = {"in_progress", "blocked", "escalated"}
+        if current_status not in allowed_origins:
             raise TaskValidationError(
-                f"Não é permitido concluir tarefa no estado '{current_status}'. A tarefa deve estar em progresso."
+                f"Não é permitido registrar resultado para tarefa no estado '{current_status}'. "
+                f"A tarefa deve estar em 'in_progress', 'blocked' ou 'escalated'."
             )
 
-        task["status"] = "completed"
+        new_status = RESULT_STATUS_TO_TASK_STATUS[result_status]
+        now_ts = now_iso()
+
+        task["status"] = new_status
         task["result"] = {
             "status": result_status,
             "summary": summary.strip(),
-            "artifacts": [str(a) for a in (artifacts or [])],
-            "open_items": [str(item) for item in (open_items or [])],
+            "artifacts": clean_artifacts,
+            "open_items": clean_open_items,
         }
-        completion_time = now_iso()
-        task["timestamps"]["updated_at"] = completion_time
-        task["timestamps"]["completed_at"] = completion_time
+        task["timestamps"]["updated_at"] = now_ts
+        if new_status == "completed":
+            task["timestamps"]["completed_at"] = now_ts
+
+        validate_task_schema(task)
+        atomic_write_task(workspace, task)
+
+    return task
+
+
+def resume_task(
+    workspace: Path,
+    task_id: str,
+    clarification: Optional[str] = None,
+    reason: Optional[str] = None
+) -> Dict[str, Any]:
+    """Retoma controladamente uma tarefa em estado 'blocked', 'failed' ou 'escalated' para 'in_progress'.
+
+    Preserva histórico completo das execuções e resultados anteriores.
+    Não executa retentativas automáticas.
+    """
+    validate_task_id(task_id)
+
+    with task_lock(workspace, task_id):
+        task = get_task(workspace, task_id)
+        current_status = task["status"]
+
+        if current_status == "completed":
+            raise TaskValidationError(
+                f"Não é permitido retomar a tarefa '{task_id}': estado 'completed' é terminal e imutável."
+            )
+
+        resumable_statuses = {"blocked", "failed", "escalated"}
+        if current_status not in resumable_statuses:
+            raise TaskValidationError(
+                f"Tarefa '{task_id}' no estado '{current_status}' não pode ser retomada. "
+                f"Recuperação permitida exclusivamente a partir de: {sorted(resumable_statuses)}."
+            )
+
+        now_ts = now_iso()
+        resume_reason = (reason or "").strip()
+        clarif_text = (clarification or "").strip()
+        history_reason = resume_reason or clarif_text or "Retomada controlada de execução"
+
+        history_entry = {
+            "timestamp": now_ts,
+            "previous_status": current_status,
+            "action": "resume",
+            "reason": history_reason,
+            "previous_result": task.get("result"),
+        }
+
+        history = list(task.get("history") or [])
+        history.append(history_entry)
+        task["history"] = history
+
+        # Se houver esclarecimento fornecido, anexa ao contexto do handoff
+        if clarif_text:
+            task["handoff"]["context"].append(f"[Esclarecimento]: {clarif_text}")
+
+        # Limpa o resultado anterior da tarefa para a nova execução
+        task["result"] = None
+        task["status"] = "in_progress"
+        task["timestamps"]["updated_at"] = now_ts
+
+        validate_task_schema(task)
+        atomic_write_task(workspace, task)
+
+    return task
+
+
+def prepare_arbitration_package(
+    workspace: Path,
+    task_id: str,
+    problem: str,
+    alternatives: List[str],
+    evidences: Optional[List[str]] = None,
+    constraints: Optional[List[str]] = None,
+    criteria: Optional[List[str]] = None,
+) -> Dict[str, Any]:
+    """Prepara pacote estruturado para arbitragem controlada quando a tarefa for escalada.
+
+    - Requer formulação clara do problema e ao menos 2 alternativas concorrentes viáveis.
+    - Limite de até 3 rodadas de arbitragem por tarefa (anti-loop).
+    - Respeita o teto heurístico estimado de 15.000 tokens (~60.000 caracteres).
+    - Marca explicitamente 'requires_authorization = True'.
+    - Não invoca subagentes, árbitros ou modelos externos nesta etapa.
+    """
+    validate_task_id(task_id)
+
+    if not problem or not isinstance(problem, str) or len(problem.strip()) < 3:
+        raise TaskValidationError("Arbitragem exige descrição clara do problema (--problem) com ao menos 3 caracteres.")
+
+    clean_alts = [str(a).strip() for a in (alternatives or []) if str(a).strip()]
+    if len(clean_alts) < 2:
+        raise TaskValidationError(
+            f"Arbitragem exige ao menos 2 alternativas concorrentes viáveis. Fornecidas: {len(clean_alts)}."
+        )
+
+    clean_evidences = [str(e).strip() for e in (evidences or []) if str(e).strip()]
+    clean_constraints = [str(c).strip() for c in (constraints or []) if str(c).strip()]
+    clean_criteria = [str(cr).strip() for cr in (criteria or []) if str(cr).strip()]
+
+    # Estimativa heurística de tokens (~4 caracteres por token)
+    all_texts = [problem] + clean_alts + clean_evidences + clean_constraints + clean_criteria
+    total_chars = sum(len(t) for t in all_texts)
+    estimated_tokens = total_chars // 4
+
+    if estimated_tokens > MAX_ARBITRATION_TOKENS:
+        raise TaskValidationError(
+            f"Pacote de arbitragem excede o teto heurístico estimado de {MAX_ARBITRATION_TOKENS} tokens "
+            f"(estimado: ~{estimated_tokens} tokens / {total_chars} caracteres). "
+            "Sintetize as evidências e o problema antes de submeter ao árbitro."
+        )
+
+    with task_lock(workspace, task_id):
+        task = get_task(workspace, task_id)
+        current_status = task["status"]
+
+        if current_status == "completed":
+            raise TaskValidationError(
+                f"Não é permitido arbitrar a tarefa '{task_id}': estado 'completed' é terminal e imutável."
+            )
+
+        allowed_origins = {"in_progress", "blocked", "escalated"}
+        if current_status not in allowed_origins:
+            raise TaskValidationError(
+                f"Não é permitido preparar arbitragem para tarefa no estado '{current_status}'. "
+                f"A tarefa deve estar em: {sorted(allowed_origins)}."
+            )
+
+        arbitration_data = task.get("arbitration") or {"rounds_count": 0, "packages": []}
+        rounds_count = arbitration_data.get("rounds_count", 0)
+
+        if rounds_count >= 3:
+            raise TaskValidationError(
+                f"Limite máximo de 3 rodadas de arbitragem atingido para a tarefa '{task_id}'. "
+                "Nova arbitragem bloqueada para evitar loops infinitos."
+            )
+
+        target_round = rounds_count + 1
+        now_ts = now_iso()
+
+        package = {
+            "round": target_round,
+            "problem": problem.strip(),
+            "alternatives": clean_alts,
+            "evidences": clean_evidences,
+            "constraints": clean_constraints,
+            "criteria": clean_criteria,
+            "estimated_tokens": estimated_tokens,
+            "requires_authorization": True,
+            "created_at": now_ts,
+        }
+
+        packages = list(arbitration_data.get("packages") or [])
+        packages.append(package)
+
+        # Preparação de pacote não consome rodada real (modelos não foram convocados)
+        task["arbitration"] = {
+            "rounds_count": rounds_count,
+            "packages": packages,
+        }
+
+        history = list(task.get("history") or [])
+        history.append({
+            "timestamp": now_ts,
+            "previous_status": current_status,
+            "action": "arbitrate",
+            "reason": f"Pacote de arbitragem preparado (alvo: rodada {target_round}): {problem.strip()}",
+            "previous_result": task.get("result"),
+        })
+        task["history"] = history
+
+        task["status"] = "escalated"
+        task["timestamps"]["updated_at"] = now_ts
 
         validate_task_schema(task)
         atomic_write_task(workspace, task)

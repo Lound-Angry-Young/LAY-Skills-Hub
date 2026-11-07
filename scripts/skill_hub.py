@@ -1379,6 +1379,23 @@ def main():
     p_tcp.add_argument('--result-status', choices=['success', 'failure', 'needs_clarification', 'escalated'], default='success', help='Status da entrega RESULT')
     p_tcp.add_argument('--artifacts', nargs='*', default=[], help='Arquivos ou artefatos gerados')
     p_tcp.add_argument('--open-items', nargs='*', default=[], help='Pendências ou itens em aberto')
+
+    # task resume
+    p_trsm = task_sub.add_parser('resume', help='Retomar execução de tarefa em blocked/failed/escalated')
+    p_trsm.add_argument('task_id', help='Identificador da tarefa')
+    p_trsm.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_trsm.add_argument('--clarification', default=None, help='Esclarecimento fornecido para desbloqueio')
+    p_trsm.add_argument('--reason', default=None, help='Motivo da retomada')
+
+    # task arbitrate
+    p_tarb = task_sub.add_parser('arbitrate', help='Preparar pacote estruturado para arbitragem')
+    p_tarb.add_argument('task_id', help='Identificador da tarefa')
+    p_tarb.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_tarb.add_argument('--problem', required=True, help='Descrição do problema / impasse arquitetural')
+    p_tarb.add_argument('--alternatives', nargs='+', required=True, help='Ao menos 2 alternativas concorrentes')
+    p_tarb.add_argument('--evidences', nargs='*', default=[], help='Evidências técnicas observadas')
+    p_tarb.add_argument('--constraints', nargs='*', default=[], help='Restrições técnicas ou de negócio')
+    p_tarb.add_argument('--criteria', nargs='*', default=[], help='Critérios de decisão')
     args = parser.parse_args()
     try:
         if args.command == 'install':
@@ -1500,12 +1517,48 @@ def main():
                     artifacts=args.artifacts,
                     open_items=args.open_items
                 )
-                print(f"✅ Tarefa {t['id']} concluída com sucesso:")
+                if t['status'] == 'completed':
+                    print(f"✅ Tarefa {t['id']} concluída com sucesso:")
+                else:
+                    print(f"✅ Resultado registrado para {t['id']}:")
                 print(f"   Status Tarefa: {t['status']}")
                 print(f"   Status RESULT: {t['result']['status']}")
                 print(f"   Resumo:        {t['result']['summary']}")
                 if t['result'].get('artifacts'):
                     print(f"   Artefatos:     {', '.join(t['result']['artifacts'])}")
+                if t['result'].get('open_items'):
+                    print(f"   Pendências:    {', '.join(t['result']['open_items'])}")
+            elif args.task_action == 'resume':
+                t = tasks.resume_task(
+                    workspace=ws,
+                    task_id=args.task_id,
+                    clarification=args.clarification,
+                    reason=args.reason
+                )
+                print(f"✅ Tarefa {t['id']} retomada com sucesso para 'in_progress':")
+                print(f"   Status Atual:    {t['status']}")
+                print(f"   Histórico:       {len(t.get('history') or [])} evento(s) registrado(s)")
+                if args.clarification:
+                    print(f"   Esclarecimento:  {args.clarification}")
+            elif args.task_action == 'arbitrate':
+                t = tasks.prepare_arbitration_package(
+                    workspace=ws,
+                    task_id=args.task_id,
+                    problem=args.problem,
+                    alternatives=args.alternatives,
+                    evidences=args.evidences,
+                    constraints=args.constraints,
+                    criteria=args.criteria
+                )
+                pkg = t['arbitration']['packages'][-1]
+                rounds_done = t['arbitration'].get('rounds_count', 0)
+                print(f"✅ Pacote de arbitragem preparado com sucesso para {t['id']}:")
+                print(f"   Rodada Alvo:              {pkg['round']} de 3 (executadas: {rounds_done})")
+                print(f"   Status da Tarefa:         {t['status']}")
+                print(f"   Alternativas ({len(pkg['alternatives'])}):        {', '.join(pkg['alternatives'])}")
+                print(f"   Tokens Estimados:         ~{pkg['estimated_tokens']} (heurística)")
+                print(f"   Autorização Obrigatória:  {'Sim' if pkg['requires_authorization'] else 'Não'}")
+                print("   Nota: Subagente árbitro NÃO disparado automaticamente nesta etapa.")
         return 0
     except (OSError, ValueError, RuntimeError, subprocess.TimeoutExpired) as exc:
         print(f'⚠️ {exc}', file=sys.stderr)

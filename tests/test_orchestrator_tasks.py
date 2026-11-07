@@ -24,6 +24,7 @@ from tasks import (
     ALL_CANONICAL_DOMAINS,
     ALL_CANONICAL_SPECIALISTS,
     READONLY_SPECIALISTS,
+    MAX_ARBITRATION_TOKENS,
     ConcurrencyError,
     TaskNotFoundError,
     TaskValidationError,
@@ -34,9 +35,13 @@ from tasks import (
     get_task,
     list_tasks,
     normalize_text,
+    prepare_arbitration_package,
     recommend_task_routing,
+    resume_task,
     task_lock,
+    atomic_write_task,
     update_task_status,
+    validate_artifact_paths,
 )
 
 
@@ -120,6 +125,8 @@ class OrchestratorTasksTests(unittest.TestCase):
         self.assertEqual(t["status"], "in_progress")
 
         # in_progress -> completed
+        (self.workspace / "src").mkdir(parents=True, exist_ok=True)
+        (self.workspace / "src" / "output.ts").write_text("// test", encoding="utf-8")
         t = complete_task(
             workspace=self.workspace,
             task_id=task_id,
@@ -402,6 +409,8 @@ class OrchestratorTasksTests(unittest.TestCase):
         self.assertEqual(show_data["routing"]["target_specialist"], "lay-frontend")
 
         # 5. task complete
+        (self.workspace / "src").mkdir(parents=True, exist_ok=True)
+        (self.workspace / "src" / "Button.tsx").write_text("// button", encoding="utf-8")
         res = subprocess.run(
             [
                 sys.executable,
@@ -559,8 +568,8 @@ class OrchestratorTasksTests(unittest.TestCase):
             artifacts=[],
             open_items=["Definir política de rate limiting"],
         )
-        # Status da tarefa é completed (ciclo de orquestração fechado)
-        self.assertEqual(t_completed["status"], "completed")
+        # Status da tarefa é blocked (aguardando esclarecimento)
+        self.assertEqual(t_completed["status"], "blocked")
         # Status do resultado é needs_clarification (contrato RESULT preservado)
         self.assertEqual(t_completed["result"]["status"], "needs_clarification")
         self.assertEqual(t_completed["result"]["open_items"], ["Definir política de rate limiting"])
@@ -841,6 +850,392 @@ class OrchestratorTasksTests(unittest.TestCase):
         )
         self.assertEqual(rec_audit["recommended_mode"], "subagent")
         self.assertEqual(rec_audit["recommended_specialist"], "lay-seguranca")
+
+
+    def test_31_result_validation_success_with_existing_artifacts(self):
+        """Validação de RESULT com sucesso exige arquivos existentes fisicamente no workspace."""
+        t = create_task(self.workspace, title="Gerar artefatos válidos")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # Cria artefato físico válido
+        art_path = self.workspace / "dist" / "bundle.js"
+        art_path.parent.mkdir(parents=True, exist_ok=True)
+        art_path.write_text("console.log('ok');", encoding="utf-8")
+
+        res = complete_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            summary="Build gerado com sucesso.",
+            result_status="success",
+            artifacts=["dist/bundle.js"],
+        )
+        self.assertEqual(res["status"], "completed")
+        self.assertEqual(res["result"]["status"], "success")
+        self.assertEqual(res["result"]["artifacts"], ["dist/bundle.js"])
+        self.assertIsNotNone(res["timestamps"]["completed_at"])
+
+    def test_32_result_validation_success_without_artifacts(self):
+        """Permite conclusão sem artefatos quando nenhum arquivo for produzido."""
+        t = create_task(self.workspace, title="Tarefa puramente analítica")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        res = complete_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            summary="Análise conceitual concluída sem produção de arquivos.",
+            result_status="success",
+            artifacts=[],
+        )
+        self.assertEqual(res["status"], "completed")
+        self.assertEqual(res["result"]["artifacts"], [])
+
+    def test_33_result_validation_fails_when_artifact_does_not_exist(self):
+        """Falha ao declarar status success se artefato declarado não existir no disco."""
+        t = create_task(self.workspace, title="Tarefa com artefato fantasma")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        with self.assertRaises(TaskValidationError) as ctx:
+            complete_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                summary="Tentativa de concluir com arquivo inexistente.",
+                result_status="success",
+                artifacts=["dist/fantasma.js"],
+            )
+        self.assertIn("Artefato declarado não existe no disco", str(ctx.exception))
+
+    def test_34_result_validation_fails_on_path_traversal_or_workspace_escape(self):
+        """Rejeita artefatos com path traversal, escapes de workspace ou caminhos inválidos."""
+        t = create_task(self.workspace, title="Tarefa com artefato malicioso")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # 1. Path traversal relativo
+        with self.assertRaises(TaskValidationError) as ctx:
+            complete_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                summary="Tentativa de escape com path traversal.",
+                artifacts=["../../etc/passwd"],
+            )
+        self.assertIn("escapa do diretório autorizado", str(ctx.exception))
+
+        # 2. String vazia
+        with self.assertRaises(TaskValidationError):
+            complete_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                summary="Tentativa com artefato vazio.",
+                artifacts=["   "],
+            )
+
+        # 3. Diretório ao invés de arquivo regular
+        dir_path = self.workspace / "subfolder"
+        dir_path.mkdir(exist_ok=True)
+        with self.assertRaises(TaskValidationError) as ctx:
+            complete_task(
+                workspace=self.workspace,
+                task_id=t["id"],
+                summary="Tentativa com diretório como artefato.",
+                result_status="success",
+                artifacts=["subfolder"],
+            )
+        self.assertIn("deve ser um arquivo regular", str(ctx.exception))
+
+    def test_35_consistent_state_transitions_for_result_statuses(self):
+        """RESULT mapeia consistentemente para a máquina de estados: success->completed, failure->failed, needs_clarification->blocked, escalated->escalated."""
+        # 1. failure -> failed
+        t1 = create_task(self.workspace, title="Tarefa que falhou")
+        update_task_status(self.workspace, t1["id"], "in_progress")
+        r1 = complete_task(
+            workspace=self.workspace,
+            task_id=t1["id"],
+            summary="Falha na compilação por erro de sintaxe.",
+            result_status="failure",
+        )
+        self.assertEqual(r1["status"], "failed")
+        self.assertEqual(r1["result"]["status"], "failure")
+        self.assertIsNone(r1["timestamps"]["completed_at"])
+
+        # 2. needs_clarification -> blocked
+        t2 = create_task(self.workspace, title="Tarefa bloqueada por dúvida")
+        update_task_status(self.workspace, t2["id"], "in_progress")
+        r2 = complete_task(
+            workspace=self.workspace,
+            task_id=t2["id"],
+            summary="Necessário definir limites de taxa.",
+            result_status="needs_clarification",
+            open_items=["Definir RPS"],
+        )
+        self.assertEqual(r2["status"], "blocked")
+        self.assertEqual(r2["result"]["status"], "needs_clarification")
+
+        # 3. escalated -> escalated
+        t3 = create_task(self.workspace, title="Tarefa escalonada")
+        update_task_status(self.workspace, t3["id"], "in_progress")
+        r3 = complete_task(
+            workspace=self.workspace,
+            task_id=t3["id"],
+            summary="Impasse técnico identificado.",
+            result_status="escalated",
+        )
+        self.assertEqual(r3["status"], "escalated")
+        self.assertEqual(r3["result"]["status"], "escalated")
+
+    def test_36_terminal_completed_state_is_immutable(self):
+        """Estado 'completed' é terminal e estritamente imutável para todas as operações."""
+        t = create_task(self.workspace, title="Tarefa para terminalidade")
+        update_task_status(self.workspace, t["id"], "in_progress")
+        complete_task(
+            workspace=self.workspace,
+            task_id=t["id"],
+            summary="Conclusão regular sem artefatos.",
+            result_status="success",
+        )
+
+        with self.assertRaises(TaskValidationError):
+            complete_task(self.workspace, t["id"], summary="Reconclusão bloqueada")
+
+        with self.assertRaises(TaskValidationError):
+            resume_task(self.workspace, t["id"])
+
+        with self.assertRaises(TaskValidationError):
+            assign_task(self.workspace, t["id"], specialist="lay-engenharia")
+
+        with self.assertRaises(TaskValidationError):
+            update_task_status(self.workspace, t["id"], "in_progress")
+
+        with self.assertRaises(TaskValidationError):
+            prepare_arbitration_package(
+                self.workspace,
+                t["id"],
+                problem="Problema pós-fechamento",
+                alternatives=["Alt 1", "Alt 2"]
+            )
+
+    def test_37_controlled_recovery_from_blocked_failed_escalated(self):
+        """Recuperação controlada permite retomar tarefas em blocked, failed ou escalated preservando histórico."""
+        # 1. Retomada a partir de blocked com esclarecimento
+        t = create_task(self.workspace, title="Tarefa para recuperação")
+        update_task_status(self.workspace, t["id"], "in_progress")
+        complete_task(
+            self.workspace,
+            t["id"],
+            summary="Aguardando especificação do schema.",
+            result_status="needs_clarification",
+        )
+        self.assertEqual(get_task(self.workspace, t["id"])["status"], "blocked")
+
+        resumed = resume_task(
+            self.workspace,
+            t["id"],
+            clarification="Utilizar JSON Schema Draft 7 com IDs canônicos.",
+            reason="Esclarecimento de requisitos fornecido",
+        )
+        self.assertEqual(resumed["status"], "in_progress")
+        self.assertIsNone(resumed["result"])
+        self.assertIn("[Esclarecimento]: Utilizar JSON Schema Draft 7 com IDs canônicos.", resumed["handoff"]["context"])
+        self.assertEqual(len(resumed["history"]), 1)
+        self.assertEqual(resumed["history"][0]["previous_status"], "blocked")
+        self.assertEqual(resumed["history"][0]["action"], "resume")
+        self.assertEqual(resumed["history"][0]["previous_result"]["status"], "needs_clarification")
+
+        # 2. Retomada a partir de failed
+        complete_task(self.workspace, t["id"], summary="Falha técnica", result_status="failure")
+        resumed_failed = resume_task(self.workspace, t["id"], reason="Tentativa com correção de bug")
+        self.assertEqual(resumed_failed["status"], "in_progress")
+        self.assertEqual(len(resumed_failed["history"]), 2)
+
+        # 3. Retomada a partir de escalated
+        complete_task(self.workspace, t["id"], summary="Escalado", result_status="escalated")
+        resumed_esc = resume_task(self.workspace, t["id"], reason="Acordo consensual atingido")
+        self.assertEqual(resumed_esc["status"], "in_progress")
+        self.assertEqual(len(resumed_esc["history"]), 3)
+
+        # 4. Não permite retomar se já estiver em in_progress ou pending
+        with self.assertRaises(TaskValidationError):
+            resume_task(self.workspace, t["id"])
+
+        t_pending = create_task(self.workspace, title="Tarefa pendente")
+        with self.assertRaises(TaskValidationError):
+            resume_task(self.workspace, t_pending["id"])
+
+    def test_38_prepare_arbitration_package_structure_and_limits(self):
+        """Preparação de arbitragem estrutura pacote, exige autorização e transita para escalated sem invocar LLM."""
+        t = create_task(self.workspace, title="Decisão sobre arquitetura de cache")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        res = prepare_arbitration_package(
+            workspace=self.workspace,
+            task_id=t["id"],
+            problem="Qual estratégia de cache utilizar para endpoints com alta concorrência?",
+            alternatives=[
+                "Opção 1: Redis compartilhado com TTL curto",
+                "Opção 2: Cache em memória local com invalidação pub/sub"
+            ],
+            evidences=["Carga observada: 5.000 req/s", "Latência alvo: < 10ms"],
+            constraints=["Infraestrutura não possui Redis gerenciado atualmente"],
+            criteria=["Custo de operação", "Consistência de dados", "Simplicidade"]
+        )
+
+        self.assertEqual(res["status"], "escalated")
+        self.assertIsNotNone(res.get("arbitration"))
+        arb = res["arbitration"]
+        self.assertEqual(arb["rounds_count"], 0)  # Preparação não consome rodada real
+        self.assertEqual(len(arb["packages"]), 1)
+
+        pkg = arb["packages"][0]
+        self.assertEqual(pkg["round"], 1)
+        self.assertEqual(len(pkg["alternatives"]), 2)
+        self.assertTrue(pkg["requires_authorization"])
+        self.assertGreater(pkg["estimated_tokens"], 0)
+        self.assertLess(pkg["estimated_tokens"], 15000)
+
+        # Rejeita menos de 2 alternativas
+        with self.assertRaises(TaskValidationError) as ctx:
+            prepare_arbitration_package(
+                self.workspace,
+                t["id"],
+                problem="Problema",
+                alternatives=["Apenas uma opção"]
+            )
+        self.assertIn("ao menos 2 alternativas", str(ctx.exception))
+
+    def test_39_arbitration_anti_loop_max_three_rounds(self):
+        """Proteção anti-loop preserva limite de 3 rodadas executadas sem consumir limite na preparação."""
+        t = create_task(self.workspace, title="Tarefa com dilema persistente")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # Preparação do primeiro pacote: não consome rounds_count
+        p1 = prepare_arbitration_package(
+            self.workspace, t["id"],
+            problem="Impasse 1", alternatives=["Alt A", "Alt B"]
+        )
+        self.assertEqual(p1["arbitration"]["rounds_count"], 0)
+        self.assertEqual(p1["arbitration"]["packages"][0]["round"], 1)
+
+        # Atualização/refinamento de pacote: continua sem consumir rounds_count
+        p2 = prepare_arbitration_package(
+            self.workspace, t["id"],
+            problem="Impasse 1 refinado", alternatives=["Alt A", "Alt B refinada"]
+        )
+        self.assertEqual(p2["arbitration"]["rounds_count"], 0)
+        self.assertEqual(len(p2["arbitration"]["packages"]), 2)
+
+        # Simulação de tarefa que atingiu o limite de 3 rodadas reais executadas
+        with task_lock(self.workspace, t["id"]):
+            task_obj = get_task(self.workspace, t["id"])
+            task_obj["arbitration"]["rounds_count"] = 3
+            atomic_write_task(self.workspace, task_obj)
+
+        # Tentativa de nova arbitragem com 3 rodadas já executadas: bloqueada
+        with self.assertRaises(TaskValidationError) as ctx:
+            prepare_arbitration_package(
+                self.workspace, t["id"],
+                problem="Impasse pós-limite", alternatives=["Alt G", "Alt H"]
+            )
+        self.assertIn("Limite máximo de 3 rodadas de arbitragem", str(ctx.exception))
+
+    def test_40_arbitration_token_ceiling_heuristic(self):
+        """Pacote de arbitragem com volume que exceda o teto heurístico de 15.000 tokens é rejeitado."""
+        t = create_task(self.workspace, title="Tarefa com volume excessivo")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        huge_evidence = "x" * 65000  # ~16.250 tokens estimados
+        with self.assertRaises(TaskValidationError) as ctx:
+            prepare_arbitration_package(
+                self.workspace,
+                t["id"],
+                problem="Decisão complexa",
+                alternatives=["Alt 1", "Alt 2"],
+                evidences=[huge_evidence]
+            )
+        self.assertIn("teto heurístico estimado de 15000 tokens", str(ctx.exception))
+
+    def test_41_cli_task_complete_resume_arbitrate(self):
+        """Interface CLI suporta os novos comandos 'complete', 'resume' e 'arbitrate'."""
+        t = create_task(self.workspace, title="Tarefa teste CLI completa")
+        update_task_status(self.workspace, t["id"], "in_progress")
+
+        # 1. complete -> blocked via needs_clarification
+        proc_comp = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "complete",
+                t["id"],
+                "--workspace",
+                str(self.workspace),
+                "--summary",
+                "Aguardando decisão do time sobre autenticação.",
+                "--result-status",
+                "needs_clarification",
+                "--open-items",
+                "Decidir entre OAuth e SAML",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        self.assertEqual(proc_comp.returncode, 0, proc_comp.stderr)
+        self.assertIn("Status Tarefa: blocked", proc_comp.stdout)
+        self.assertIn("Status RESULT: needs_clarification", proc_comp.stdout)
+
+        # 2. resume com esclarecimento
+        proc_res = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "resume",
+                t["id"],
+                "--workspace",
+                str(self.workspace),
+                "--clarification",
+                "Adotado OAuth 2.0 com PKCE.",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        self.assertEqual(proc_res.returncode, 0, proc_res.stderr)
+        self.assertIn("retomada com sucesso para 'in_progress'", proc_res.stdout)
+        self.assertIn("Adotado OAuth 2.0 com PKCE", proc_res.stdout)
+
+        # 3. arbitrate preparando pacote de escalonamento
+        proc_arb = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "arbitrate",
+                t["id"],
+                "--workspace",
+                str(self.workspace),
+                "--problem",
+                "Dilema entre JWT local e sessão remota",
+                "--alternatives",
+                "JWT auto-contido",
+                "Sessão no Redis",
+                "--evidences",
+                "Volume esperado: 10k req/min",
+                "--criteria",
+                "Segurança e revocabilidade",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=False,
+        )
+        self.assertEqual(proc_arb.returncode, 0, proc_arb.stderr)
+        self.assertIn("Pacote de arbitragem preparado com sucesso", proc_arb.stdout)
+        self.assertIn("Rodada Alvo:              1 de 3", proc_arb.stdout)
+        self.assertIn("Autorização Obrigatória:  Sim", proc_arb.stdout)
 
 if __name__ == "__main__":
     unittest.main()

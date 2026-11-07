@@ -123,6 +123,98 @@
         }
       },
       "additionalProperties": false
+    },
+    "history": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "previous_status", "action"],
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "previous_status": {
+            "type": "string"
+          },
+          "action": {
+            "type": "string"
+          },
+          "reason": {
+            "type": ["string", "null"]
+          },
+          "previous_result": {
+            "type": ["object", "null"]
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "arbitration": {
+      "type": ["object", "null"],
+      "properties": {
+        "rounds_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "packages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "round",
+              "problem",
+              "alternatives",
+              "evidences",
+              "constraints",
+              "criteria",
+              "requires_authorization",
+              "created_at"
+            ],
+            "properties": {
+              "round": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "problem": {
+                "type": "string",
+                "minLength": 1
+              },
+              "alternatives": {
+                "type": "array",
+                "items": { "type": "string" },
+                "minItems": 2
+              },
+              "evidences": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "constraints": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "criteria": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "estimated_tokens": {
+                "type": "integer"
+              },
+              "requires_authorization": {
+                "type": "boolean"
+              },
+              "created_at": {
+                "type": "string",
+                "format": "date-time"
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
     }
   },
   "additionalProperties": false
