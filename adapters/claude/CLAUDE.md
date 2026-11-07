@@ -13,7 +13,7 @@ Leia `{{LAY_RUNTIME_DIR}}\skills\lay-orchestrator\SKILL.md` para orquestração 
 
 ## Subagentes LAY (Claude Code)
 
-Subagentes globais em ~/.claude/agents. Escolha pelo domínio do pedido e delegue. Subagentes não chamam outros subagentes: o roteamento é desta conversa.
+Subagentes globais em ~/.claude/agents. Escolha pelo domínio do pedido e delegue. Subagentes não chamam outros subagentes: o roteamento é desta conversa. Extensibilidade de skills: siga `{{LAY_RUNTIME_DIR}}\docs\EXTENSIBILIDADE.md`.
 
 - routing-and-proxy: `lay-omniroute`
 - frontend: `lay-frontend`

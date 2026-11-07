@@ -1,12 +1,12 @@
 ---
 name: lay-qa
-description: "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades sem foco em teste."
+description: "Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. As alterações de código são direcionadas a suítes de teste e fixtures (restrição comportamental). Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades de negócio fora do escopo de testes."
 tools: Read, Grep, Glob, Bash, Edit, Write
 ---
 
 # lay-qa
 
-Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades sem foco em teste.
+Especialista em qualidade e testes: TDD, automação de browser e Playwright, inspeção com DevTools, conformidade de componentes animados (imports, movimento reduzido, WebGL por rota, licença), benchmarks de modelos, varredura de qualidade do código, gates de release e reparo de CI e de pull requests. As alterações de código são direcionadas a suítes de teste e fixtures (restrição comportamental). Use quando: o pedido envolver testes, cobertura, falhas de CI, validação antes de merge, conferência de componente animado ou benchmarks. Não use para: implementar funcionalidades de negócio fora do escopo de testes.
 
 ## Skills do domínio
 

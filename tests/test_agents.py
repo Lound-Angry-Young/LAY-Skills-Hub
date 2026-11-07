@@ -79,6 +79,9 @@ class AgentInstallTests(unittest.TestCase):
                                                                          'skill_paths': [], 'notes': []}]}), encoding='utf-8')
         (self.root / 'agents').mkdir()
         shutil.copy2(REPO / 'agents/perfis.json', self.root / 'agents/perfis.json')
+        (self.root / 'core').mkdir()
+        shutil.copy2(REPO / 'core/perfis.json', self.root / 'core/perfis.json')
+        shutil.copytree(REPO / 'adapters', self.root / 'adapters')
         (self.root / 'scripts').mkdir()
         shutil.copy2(Path(hub.__file__), self.root / 'scripts/skill_hub.py')
 
@@ -87,25 +90,48 @@ class AgentInstallTests(unittest.TestCase):
 
     def test_install_writes_global_agents_and_claude_md_index(self):
         with contextlib.redirect_stdout(io.StringIO()):
-            state = hub.install(self.home, ['claude'], self.root)
-        self.assertEqual(len(list(self.agents_dir().glob('lay-*.md'))), 11)
-        texto = (self.agents_dir() / 'lay-frontend.md').read_text(encoding='utf-8')
-        self.assertIn('`demo-skill`', texto)
-        self.assertIn('demo-skill', texto)
-        self.assertEqual(len(state['claude_agents']), 11)
+            state = hub.install(self.home, ['claude'], self.root, mode='public')
+        agents = sorted(self.agents_dir().glob('lay-*.md'))
+        self.assertEqual(len(agents), 12)
+        self.assertEqual(len(state['claude_agents']), 12)
+
+        # Valida árbitro Opus
+        arbitro_text = (self.agents_dir() / 'lay-arbitro-opus.md').read_text(encoding='utf-8')
+        arbitro_meta = yaml.safe_load(arbitro_text.split('---\n', 2)[1])
+        self.assertEqual(arbitro_meta['name'], 'lay-arbitro-opus')
+        self.assertEqual(arbitro_meta['model'], 'opus')
+        self.assertEqual([t.strip() for t in arbitro_meta['tools'].split(',')], ['Read', 'Grep', 'Glob'])
+
+        # Valida os 11 especialistas contra perfis canônicos e contratos RESULT
+        perfis = {p['nome']: p for p in hub.load_profiles(self.root)}
+        self.assertEqual(len(perfis), 11)
+        for p in perfis.values():
+            agent_file = self.agents_dir() / f"{p['nome']}.md"
+            self.assertTrue(agent_file.exists(), f"Subagente {p['nome']} não encontrado")
+            text = agent_file.read_text(encoding='utf-8')
+            meta = yaml.safe_load(text.split('---\n', 2)[1])
+            expected_model = 'haiku' if p['nome'] == 'lay-documentacao' else 'sonnet'
+            self.assertEqual(meta['name'], p['nome'])
+            self.assertEqual(meta['model'], expected_model)
+            self.assertEqual([t.strip() for t in meta['tools'].split(',')], p['ferramentas'])
+            self.assertIn('status: success | failure | needs_clarification | escalated', text)
+            if p['nome'] in {'lay-contexto', 'lay-seguranca', 'lay-banco-de-dados'}:
+                self.assertEqual([t.strip() for t in meta['tools'].split(',')], ['Read', 'Grep', 'Glob'])
+
         claude_md = (self.home / '.claude/CLAUDE.md').read_text(encoding='utf-8')
         self.assertIn('`lay-frontend`', claude_md)
+        self.assertIn('`lay-arbitro-opus`', claude_md)
         self.assertEqual(claude_md.count(hub.BEGIN), 1)
 
     def test_reinstall_is_idempotent_and_detects_manual_edit(self):
         with contextlib.redirect_stdout(io.StringIO()):
-            hub.install(self.home, ['claude'], self.root)
-            hub.install(self.home, ['claude'], self.root)
-        self.assertEqual(len(list(self.agents_dir().glob('lay-*.md'))), 11)
+            hub.install(self.home, ['claude'], self.root, mode='public')
+            hub.install(self.home, ['claude'], self.root, mode='public')
+        self.assertEqual(len(list(self.agents_dir().glob('lay-*.md'))), 12)
         (self.agents_dir() / 'lay-frontend.md').write_text('editado à mão', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'modificado'):
             with contextlib.redirect_stdout(io.StringIO()):
-                hub.install(self.home, ['claude'], self.root)
+                hub.install(self.home, ['claude'], self.root, mode='public')
         self.assertEqual((self.agents_dir() / 'lay-frontend.md').read_text(encoding='utf-8'), 'editado à mão')
 
     def test_collision_with_user_agent_is_preserved(self):
@@ -113,12 +139,12 @@ class AgentInstallTests(unittest.TestCase):
         (self.agents_dir() / 'lay-qa.md').write_text('meu agente', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'Colisão'):
             with contextlib.redirect_stdout(io.StringIO()):
-                hub.install(self.home, ['claude'], self.root)
+                hub.install(self.home, ['claude'], self.root, mode='public')
         self.assertEqual((self.agents_dir() / 'lay-qa.md').read_text(encoding='utf-8'), 'meu agente')
 
     def test_uninstall_removes_only_managed_agents(self):
         with contextlib.redirect_stdout(io.StringIO()):
-            hub.install(self.home, ['claude'], self.root)
+            hub.install(self.home, ['claude'], self.root, mode='public')
             (self.agents_dir() / 'meu-agente.md').write_text('meu', encoding='utf-8')
             hub.uninstall(self.home)
         self.assertEqual(list(self.agents_dir().glob('lay-*.md')), [])

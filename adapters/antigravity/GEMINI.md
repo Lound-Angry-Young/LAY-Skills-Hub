@@ -31,5 +31,6 @@ Graphify CLI isolada: `{{USER_HOME}}\.lay-skills\tools\graphify\Scripts\graphify
 - **Telas Novas e Redesigns:** Ao planejar ou criar telas e componentes visuais substanciais, consulte a skill pertinente (`elevating-frontend-taste` para direção visual/tipografia, `governing-anti-slop-aesthetics` para revisão anti-clichê, ou `engineering-frontend-interfaces` para arquitetura de componentes).
 - **Ajustes Pontuais:** Em correções de bugs, pequenas alterações de estilo ou ajustes em componentes existentes, não carregue skills completas desnecessariamente; aplique diretamente os princípios de consistência, contraste e acessibilidade.
 - **Procedimentos nas Skills:** Regras globais guardam apenas princípios inegociáveis. Guias passo a passo, matrizes e referências detalhadas permanecem dentro dos arquivos de skill.
+- **Extensibilidade e Novas Skills:** Consulte `{{LAY_RUNTIME_DIR}}\docs\EXTENSIBILIDADE.md` para adicionar, integrar ou regenerar skills e subagentes nativos do Antigravity.
 
 <!-- LAY-MANAGED:END -->

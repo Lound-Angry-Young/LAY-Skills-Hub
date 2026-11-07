@@ -395,11 +395,11 @@ class PerfisTests(unittest.TestCase):
     """Confere os perfis reais do repositório com os gatilhos e o acesso que o hub publica."""
     ACESSO_ESPERADO = {
         'lay-omniroute': 'Edita e roda comandos', 'lay-frontend': 'Edita e roda comandos',
-        'lay-engenharia': 'Edita e roda comandos', 'lay-contexto': 'Edita e roda comandos',
+        'lay-engenharia': 'Edita e roda comandos', 'lay-contexto': 'Só leitura',
         'lay-devops': 'Edita e roda comandos', 'lay-qa': 'Edita e roda comandos',
-        'lay-seguranca': 'Não edita · tem Bash', 'lay-3d': 'Edita e roda comandos',
+        'lay-seguranca': 'Só leitura', 'lay-3d': 'Edita e roda comandos',
         'lay-documentacao': 'Edita, sem comandos', 'lay-design': 'Edita e roda comandos',
-        'lay-banco-de-dados': 'Edita e roda comandos',
+        'lay-banco-de-dados': 'Só leitura',
     }
 
     def test_todos_os_perfis_tem_use_quando_e_nao_use_para(self):

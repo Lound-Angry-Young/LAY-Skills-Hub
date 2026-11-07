@@ -11,6 +11,8 @@ from unittest.mock import patch
 
 from scripts import skill_hub as hub
 
+REPO = Path(hub.__file__).resolve().parents[1]
+
 
 class HubIntegrationTests(unittest.TestCase):
     def setUp(self):
@@ -41,7 +43,10 @@ class HubIntegrationTests(unittest.TestCase):
         (refactored / 'SKILL.md').write_text('---\nname: design-page\ndescription: Design a page. Use this skill when: a page needs layout. Do NOT use this skill when: backend only.\n---\nUse design.\n', encoding='utf-8')
         (self.root / 'refactored_skills/design/SKILL.md').write_text('---\nname: routing-design-skills\ndescription: Routes design requests.\n---\n', encoding='utf-8')
         (self.root / 'agents').mkdir()
-        shutil.copy2(Path(hub.__file__).resolve().parents[1] / 'agents/perfis.json', self.root / 'agents/perfis.json')
+        shutil.copy2(REPO / 'agents/perfis.json', self.root / 'agents/perfis.json')
+        (self.root / 'core').mkdir()
+        shutil.copy2(REPO / 'core/perfis.json', self.root / 'core/perfis.json')
+        shutil.copytree(REPO / 'adapters', self.root / 'adapters')
         (self.root / 'scripts').mkdir()
         shutil.copy2(Path(hub.__file__), self.root / 'scripts/skill_hub.py')
         project = self.base / 'project'
@@ -51,17 +56,37 @@ class HubIntegrationTests(unittest.TestCase):
         self.project = project
 
     def test_install_reinstall_hooks_and_uninstall(self):
-        old = self.home / '.claude/settings.json'
-        old.parent.mkdir()
-        old.write_text(json.dumps({'theme': 'dark', 'hooks': {'SessionStart': [{'matcher': 'startup', 'hooks': [{'type': 'command', 'command': 'existing'}]}]}}), encoding='utf-8')
+        old = self.home / '.claude/CLAUDE.md'
+        old.parent.mkdir(parents=True)
+        old.write_text('# Pre-existing Claude instructions\n- Do not delete my files.\n', encoding='utf-8')
         with contextlib.redirect_stdout(io.StringIO()):
-            state = hub.install(self.home, list(hub.DESTINATIONS), self.root)
-            hub.install(self.home, list(hub.DESTINATIONS), self.root)
-        self.assertEqual(len(state['wrappers']), 4)
-        self.assertEqual(json.loads(old.read_text())['theme'], 'dark')
-        self.assertEqual(len(json.loads(old.read_text())['hooks']['SessionStart']), 2)
-        original = next(w['original'] for w in state['wrappers'] if w['id'] == 'lay-design-page')
-        self.assertEqual(Path(original).read_text(), (self.root / 'refactored_skills/design/design-page/SKILL.md').read_text())
+            state = hub.install(self.home, list(hub.DESTINATIONS), self.root, mode='public')
+            hub.install(self.home, list(hub.DESTINATIONS), self.root, mode='public')
+        self.assertEqual(state['mode'], 'public')
+        self.assertGreater(state['catalog_count'], 0)
+        self.assertEqual(len(state['claude_agents']), 12)
+
+        # Preservação de arquivo preexistente + injeção do bloco LAY
+        claude_md = old.read_text(encoding='utf-8')
+        self.assertIn('# Pre-existing Claude instructions', claude_md)
+        self.assertIn('- Do not delete my files.', claude_md)
+        self.assertEqual(claude_md.count(hub.BEGIN), 1)
+        self.assertEqual(claude_md.count(hub.END), 1)
+
+        # Artefatos gerados pelo runtime v2
+        runtime_installed = self.home / '.lay-skills/runtime/catalog/installed.json'
+        self.assertTrue(runtime_installed.is_file())
+        installed_data = json.loads(runtime_installed.read_text(encoding='utf-8'))
+        self.assertEqual(installed_data['mode'], 'public')
+        self.assertTrue((self.home / '.lay-skills/runtime/refactored_skills/design/design-page/SKILL.md').is_file())
+        self.assertTrue((self.home / '.codex/AGENTS.md').is_file())
+        self.assertTrue((self.home / '.gemini/GEMINI.md').is_file())
+
+        # Backups criados
+        backups = list((self.home / '.lay-skills/backups').glob('pre-install-*'))
+        self.assertGreaterEqual(len(backups), 1)
+
+        # Autonomia do runtime após mover repositório de origem
         moved = self.base / 'repo-moved'
         self.root.rename(moved)
         runtime = self.home / '.lay-skills/runtime/scripts/skill_hub.py'
@@ -71,11 +96,28 @@ class HubIntegrationTests(unittest.TestCase):
         result = subprocess.run(command + ['start', '--home', str(self.home), '--project', str(self.project), '--offline'], capture_output=True, text=True, encoding='utf-8')
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertIn('P1', result.stdout)
+
+        # Desinstalação limpa
         with contextlib.redirect_stdout(io.StringIO()):
             hub.uninstall(self.home)
-        self.assertFalse((self.home / '.agents/skills/lay-design-page').exists())
-        self.assertEqual(json.loads(old.read_text())['hooks']['SessionStart'][0]['hooks'][0]['command'], 'existing')
-        self.assertEqual(json.loads(old.read_text())['theme'], 'dark')
+        self.assertEqual(list((self.home / '.claude/agents').glob('lay-*.md')), [])
+        claude_md_after = old.read_text(encoding='utf-8')
+        self.assertNotIn(hub.BEGIN, claude_md_after)
+        self.assertIn('# Pre-existing Claude instructions', claude_md_after)
+
+    def test_rollback_restores_preexisting_files_and_removes_unmodified_new(self):
+        old = self.home / '.claude/CLAUDE.md'
+        old.parent.mkdir(parents=True)
+        old.write_text('# Before Install\n', encoding='utf-8')
+        with contextlib.redirect_stdout(io.StringIO()):
+            hub.install(self.home, ['claude'], self.root, mode='public')
+        self.assertTrue((self.home / '.claude/agents/lay-frontend.md').is_file())
+        self.assertIn(hub.BEGIN, old.read_text(encoding='utf-8'))
+
+        with contextlib.redirect_stdout(io.StringIO()):
+            hub.rollback(self.home)
+        self.assertEqual(old.read_text(encoding='utf-8'), '# Before Install\n')
+        self.assertFalse((self.home / '.claude/agents/lay-frontend.md').exists())
 
     def test_catalog_lists_only_refactored_skills(self):
         catalog = hub.build_catalog(self.root)
@@ -88,10 +130,10 @@ class HubIntegrationTests(unittest.TestCase):
         (src / 'generated').mkdir()
         (src / 'generated/obj.json').write_text('{}', encoding='utf-8')
         with contextlib.redirect_stdout(io.StringIO()):
-            hub.install(self.home, ['codex'], self.root)
+            hub.install(self.home, ['codex'], self.root, mode='public')
         (src / 'skills/design/SKILL.md').write_text('changed', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'Fonte modificada'):
-            hub.install(self.home, ['codex'], self.root)
+            hub.install(self.home, ['codex'], self.root, mode='public')
 
     def test_private_skills_install_locally_but_stay_out_of_public_catalog(self):
         private = self.root / 'skills-privadas-lay/refactored/frontend/private-skill'
@@ -100,12 +142,11 @@ class HubIntegrationTests(unittest.TestCase):
         catalog = hub.build_catalog(self.root)
         self.assertNotIn('lay-private-skill', [e['id'] for e in catalog['skills']])
         with contextlib.redirect_stdout(io.StringIO()):
-            state = hub.install(self.home, ['codex'], self.root)
-        wrapper = next(w for w in state['wrappers'] if w['id'] == 'lay-private-skill')
-        self.assertTrue(Path(wrapper['original']).is_file())
-        self.assertIn('runtime', wrapper['original'])
+            state = hub.install(self.home, ['codex'], self.root, mode='complete')
+        self.assertEqual(state['mode'], 'complete')
         installed = json.loads((self.home / '.lay-skills/runtime/catalog/installed.json').read_text(encoding='utf-8'))
         self.assertIn('lay-private-skill', [e['id'] for e in installed['skills']])
+        self.assertTrue((self.home / '.lay-skills/runtime/skills-privadas-lay/refactored/frontend/private-skill/SKILL.md').is_file())
 
     def test_installed_wrapper_keeps_full_trigger_boundaries(self):
         # Descrições acima de 400 caracteres perdiam a cláusula "Do NOT use this skill when:" no wrapper instalado.
@@ -116,18 +157,22 @@ class HubIntegrationTests(unittest.TestCase):
         skill.mkdir(parents=True)
         (skill / 'SKILL.md').write_text(f'---\nname: long-page\ndescription: {descricao}\n---\nUse design.\n', encoding='utf-8')
         with contextlib.redirect_stdout(io.StringIO()):
-            state = hub.install(self.home, ['codex'], self.root)
-        wrapper = next(w for w in state['wrappers'] if w['id'] == 'lay-long-page')
-        texto = (Path(wrapper['path']) / 'SKILL.md').read_text(encoding='utf-8')
+            state = hub.install(self.home, ['codex'], self.root, mode='public')
+        installed = self.home / '.lay-skills/runtime/refactored_skills/design/long-page/SKILL.md'
+        self.assertTrue(installed.is_file())
+        texto = installed.read_text(encoding='utf-8')
         self.assertIn('Do NOT use this skill when: backend only.', texto)
+        catalog = hub.build_catalog(self.root)
+        entry = next(e for e in catalog['skills'] if e['id'] == 'lay-long-page')
+        self.assertIn('Do NOT use this skill when: backend only.', entry['description'])
 
     def test_collision_preserves_existing_skill(self):
-        dest = self.home / '.agents/skills/lay-design-page'
-        dest.mkdir(parents=True)
-        (dest / 'SKILL.md').write_text('personal', encoding='utf-8')
+        dest = self.home / '.claude/agents/lay-design.md'
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text('personal agent', encoding='utf-8')
         with self.assertRaisesRegex(ValueError, 'Colisão'):
-            hub.install(self.home, ['codex'], self.root)
-        self.assertEqual((dest / 'SKILL.md').read_text(), 'personal')
+            hub.install(self.home, ['claude'], self.root, mode='public')
+        self.assertEqual(dest.read_text(encoding='utf-8'), 'personal agent')
 
     def test_parent_local_commit_is_not_replaced_by_remote(self):
         bare = self.base / 'remote.git'

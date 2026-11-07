@@ -235,7 +235,7 @@ def fechar(privada, pacotes, regerar):
         return
     if regerar:
         total = regenerar()
-        print(f'✅ regenerado: catálogo com {total} skills, hub, subagentes e docs/CATALOGO.md')
+        print(f'✅ regenerado: catálogo com {total} skills, hub, subagentes, adaptadores e docs/CATALOGO.md')
     print('Instale nos agentes: python scripts/skill_hub.py install --agents all')
 
 
@@ -305,7 +305,7 @@ def cmd_regenerar(_args):
             print(f'   - {erro}')
         return 1
     total = regenerar()
-    print(f'✅ regenerado: catálogo com {total} skills, hub, subagentes e docs/CATALOGO.md')
+    print(f'✅ regenerado: catálogo com {total} skills, hub, subagentes, adaptadores e docs/CATALOGO.md')
     return 0
 
 

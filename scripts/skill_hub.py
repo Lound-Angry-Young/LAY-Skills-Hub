@@ -385,13 +385,17 @@ AGENTE_NOME = re.compile(r'[a-z0-9-]{1,64}')
 
 
 def load_profiles(root=ROOT):
-    """Perfis de subagente (agents/perfis.json): exatamente um por domínio."""
-    perfis = json.loads((root / 'agents/perfis.json').read_text(encoding='utf-8'))['perfis']
+    """Perfis de subagente: core/perfis.json é a autoridade única (SSOT)."""
+    core_f = root / 'core/perfis.json'
+    target = core_f if core_f.exists() else (root / 'agents/perfis.json')
+    perfis = json.loads(target.read_text(encoding='utf-8'))['perfis']
     if sorted(p['dominio'] for p in perfis) != sorted(AGENTS_DOMINIOS):
         raise ValueError('perfis não cobrem exatamente os domínios esperados')
     nomes = [p['nome'] for p in perfis]
     if len(set(nomes)) != len(nomes):
         raise ValueError('nomes de subagente duplicados')
+    readonly_profiles = {'lay-contexto', 'lay-seguranca', 'lay-banco-de-dados'}
+    allowed_readonly_tools = {'Read', 'Grep', 'Glob'}
     for p in perfis:
         if not AGENTE_NOME.fullmatch(p['nome']):
             raise ValueError(f"nome de subagente inválido: {p['nome']}")
@@ -399,6 +403,13 @@ def load_profiles(root=ROOT):
             raise ValueError(f"description sem gatilhos ou longa demais: {p['nome']}")
         if not set(p['ferramentas']) <= AGENTS_FERRAMENTAS:
             raise ValueError(f"ferramentas fora do conjunto permitido: {p['nome']}")
+        if p['nome'] in readonly_profiles:
+            violacoes = set(p['ferramentas']) - allowed_readonly_tools
+            if violacoes:
+                raise ValueError(
+                    f"Violação de salvaguarda: {p['nome']} é estritamente somente-leitura, "
+                    f"mas possui ferramentas não autorizadas: {sorted(violacoes)}"
+                )
     return perfis
 
 
@@ -669,9 +680,9 @@ def link_junctions(workspace, hub, domain=None, skill=None):
     return linked
 
 
-def install_claude_agents_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None):
+def install_claude_agents_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None, root=ROOT):
     pasta = home / '.claude/agents'
-    source_dir = ROOT / 'adapters/claude/agents'
+    source_dir = (root / 'adapters/claude/agents') if (root / 'adapters/claude/agents').exists() else (ROOT / 'adapters/claude/agents')
     if not source_dir.exists():
         raise ValueError(f'Diretório canônico de subagentes não encontrado: {source_dir}')
 
@@ -679,6 +690,25 @@ def install_claude_agents_v2(home, hub, mode='complete', dry_run=False, backup_m
     templates = sorted(source_dir.glob('*.md'))
     if not templates:
         raise ValueError(f'Nenhum template de subagente encontrado em: {source_dir}')
+
+    marker = hub / 'installation.json'
+    previous = read_json(marker, {}) if marker.exists() else {}
+    registrados = {}
+    for entry in previous.get('claude_agents', []):
+        p_str = entry.get('path', '')
+        if p_str:
+            registrados[str(Path(p_str).resolve())] = entry.get('sha256', '')
+            registrados[p_str] = entry.get('sha256', '')
+
+    for tmpl_file in templates:
+        dest = pasta / tmpl_file.name
+        dest_res = str(dest.resolve())
+        if dest.exists() and not dry_run:
+            if dest_res not in registrados and str(dest) not in registrados:
+                raise ValueError(f'Colisão preservada: {dest}')
+            reg_sha = registrados.get(dest_res) or registrados.get(str(dest))
+            if reg_sha != sha(dest):
+                raise ValueError(f'Subagente local modificado; preservado: {dest}')
 
     novos = []
     for tmpl_file in templates:
@@ -711,9 +741,9 @@ def install_claude_agents_v2(home, hub, mode='complete', dry_run=False, backup_m
     return novos
 
 
-def install_claude_adapter_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None):
+def install_claude_adapter_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None, root=ROOT):
     claude_dir = home / '.claude'
-    source_dir = ROOT / 'adapters/claude'
+    source_dir = (root / 'adapters/claude') if (root / 'adapters/claude').exists() else (ROOT / 'adapters/claude')
     runtime_str = (hub / 'runtime').as_posix()
     home_str = home.as_posix()
 
@@ -726,12 +756,12 @@ def install_claude_adapter_v2(home, hub, mode='complete', dry_run=False, backup_
         dest = claude_dir / 'CLAUDE.md'
         update_rules_file(dest, content, backup_mgr=backup_mgr, dry_run=dry_run)
 
-    return install_claude_agents_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr)
+    return install_claude_agents_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
 
 
-def install_codex_adapter_v2(home, hub, dry_run=False, backup_mgr=None):
+def install_codex_adapter_v2(home, hub, dry_run=False, backup_mgr=None, root=ROOT):
     codex_dir = home / '.codex'
-    source_dir = ROOT / 'adapters/codex'
+    source_dir = (root / 'adapters/codex') if (root / 'adapters/codex').exists() else (ROOT / 'adapters/codex')
     runtime_str = (hub / 'runtime').as_posix()
     home_str = home.as_posix()
 
@@ -760,9 +790,9 @@ def install_codex_adapter_v2(home, hub, dry_run=False, backup_mgr=None):
                     backup_mgr.record_created(dest, sha(dest))
 
 
-def install_antigravity_adapter_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None):
+def install_antigravity_adapter_v2(home, hub, mode='complete', dry_run=False, backup_mgr=None, root=ROOT):
     ag_dir = home / '.gemini'
-    source_dir = ROOT / 'adapters/antigravity'
+    source_dir = (root / 'adapters/antigravity') if (root / 'adapters/antigravity').exists() else (ROOT / 'adapters/antigravity')
     runtime_str = (hub / 'runtime').as_posix()
     home_str = home.as_posix()
 
@@ -825,7 +855,7 @@ def install(home, agents, root=ROOT, skip_tools=False, mode='complete', dry_run=
             raise ValueError(
                 "Modo 'complete' solicitado, mas o diretório autorizado de skills privadas "
                 "('skills-privadas-lay/refactored') não está presente no repositório. "
-                "Use '--mode public' para instalar as 138 skills públicas."
+                "Use '--mode public' para instalar apenas as skills públicas do catálogo."
             )
 
     if dry_run:
@@ -846,6 +876,15 @@ def install(home, agents, root=ROOT, skip_tools=False, mode='complete', dry_run=
     ids = [e['id'] for e in installed]
     if len(ids) != len(set(ids)):
         raise ValueError('Identidade duplicada entre catálogo público e skills privadas')
+
+    reg_sources = root / 'registry/sources.json'
+    if reg_sources.exists():
+        for source in sources(root).get('sources', []):
+            source_root = root / source.get('path', '')
+            if not (source_root / '.git').exists():
+                continue
+            if git(source_root, 'status', '--porcelain', '--untracked-files=no'):
+                raise ValueError(f"Fonte modificada: {source['id']}; preserve/revise alterações antes de instalar")
 
     runtime = hub / 'runtime'
     if not dry_run:
@@ -883,11 +922,11 @@ def install(home, agents, root=ROOT, skip_tools=False, mode='complete', dry_run=
 
     claude_agents = []
     if 'claude' in agents:
-        claude_agents = install_claude_adapter_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr)
+        claude_agents = install_claude_adapter_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
     if 'codex' in agents:
-        install_codex_adapter_v2(home, hub, dry_run=dry_run, backup_mgr=backup_mgr)
+        install_codex_adapter_v2(home, hub, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
     if 'antigravity' in agents:
-        install_antigravity_adapter_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr)
+        install_antigravity_adapter_v2(home, hub, mode=mode, dry_run=dry_run, backup_mgr=backup_mgr, root=root)
 
     backup_dir = backup_mgr.finalize()
     if backup_dir:
@@ -1179,7 +1218,7 @@ def main():
         p.add_argument('--home', type=Path, default=Path.home())
         if command == 'install':
             p.add_argument('--agents', default='all', help='all ou codex,claude,antigravity')
-            p.add_argument('--mode', choices=['complete', 'public'], default='complete', help='modo de instalação: complete (150 skills) ou public (138 skills)')
+            p.add_argument('--mode', choices=['complete', 'public'], default='complete', help='modo de instalação: complete (todas as skills, incluindo cofre privado) ou public (apenas skills públicas)')
             p.add_argument('--dry-run', action='store_true', help='simular instalação sem modificar o disco')
             p.add_argument('--skip-tools', action='store_true', help='pular instalação isolada do Graphify')
         if command == 'rollback':
