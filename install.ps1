@@ -2,7 +2,7 @@ param(
     [ValidateSet('all','codex','claude','antigravity')]
     [string]$Agents = 'all',
     [ValidateSet('complete','public')]
-    [string]$Mode = 'complete',
+    [string]$Mode,
     [string]$UserHome = $env:USERPROFILE,
     [switch]$DryRun,
     [switch]$SkipTools
@@ -11,6 +11,11 @@ param(
 $ErrorActionPreference = 'Stop'
 $repoRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 if (-not (Get-Command python -ErrorAction SilentlyContinue)) { throw 'Python 3.10+ não encontrado no PATH.' }
+
+$privateVault = Join-Path $repoRoot 'skills-privadas-lay\refactored'
+if (-not $PSBoundParameters.ContainsKey('Mode')) {
+    $Mode = if (Test-Path $privateVault) { 'complete' } else { 'public' }
+}
 
 $cmdArgs = @(
     (Join-Path $repoRoot 'scripts\skill_hub.py'),

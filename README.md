@@ -8,14 +8,14 @@
 
 ![Stars](https://img.shields.io/github/stars/Lound-Angry-Young/LAY-Skills-Hub?style=for-the-badge&logo=github&color=fff201&labelColor=060709)
 ![Release](https://img.shields.io/badge/release-v1.1.0-blue?style=for-the-badge&logo=git)
-![Skills](https://img.shields.io/badge/skills-137%20homologadas-00f0ff?style=for-the-badge&logo=probot)
-![Agents](https://img.shields.io/badge/subagentes-11%20especialistas-fff201?style=for-the-badge)
+![Skills](https://img.shields.io/badge/skills-138%20homologadas-00f0ff?style=for-the-badge&logo=probot)
+![Agents](https://img.shields.io/badge/subagentes-12%20(11%20especialistas%20%2B%201%20%C3%A1rbitro)-fff201?style=for-the-badge)
 ![Author](https://img.shields.io/badge/creator-Georges%20Ballister-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
 <br>
 
-<img src="docs/assets/screenshots/01-hero.png" alt="Hub de skills LAY: 137 skills homologadas, 15 fontes e 11 subagentes especialistas" width="100%">
+<img src="docs/assets/screenshots/01-hero.png" alt="Hub de skills LAY: 138 skills homologadas, 15 fontes e 12 subagentes (11 especialistas + 1 árbitro)" width="100%">
 
 <br><br>
 
@@ -46,7 +46,7 @@
 
 ## 🎯 Visão Geral
 
-O **LAY Skills Hub** é um ecossistema de alto nível projetado para abastecer assistentes de código e agentes autônomos (**Google Antigravity**, **OpenAI Codex** e **Claude Code**) com **137 habilidades rigorosamente homologadas**, diretrizes contratuais de arquitetura e **11 subagentes especializados**.
+O **LAY Skills Hub** é um ecossistema de alto nível projetado para abastecer assistentes de código e agentes autônomos (**Google Antigravity**, **OpenAI Codex** e **Claude Code**) com **138 habilidades públicas rigorosamente homologadas**, diretrizes contratuais de arquitetura e **12 subagentes Claude (11 especialistas + 1 árbitro)**.
 
 Em vez de respostas genéricas e alucinações de código, o hub estabelece um protocolo disciplinado de engenharia:
 - **Contratos Arquiteturais Estritos:** Cada tarefa segue assinaturas de entrada/saída (Input/Output Signatures), etapas imperativas com tolerâncias explícitas (`[FRÁGIL]` vs `[FLEXÍVEL]`) e contingências obrigatórias (`On Failure`).
@@ -57,10 +57,10 @@ Em vez de respostas genéricas e alucinações de código, o hub estabelece um p
 
 | Recurso | Detalhes Técnicos |
 | :--- | :--- |
-| 🧠 **137 Skills Homologadas** | Padrão unificado em gerúndio (`action-verb-ing`), responsabilidade única e progressive disclosure. |
-| 🤖 **11 Subagentes Especialistas** | Um subagente dedicado por domínio técnico para o Claude Code e Antigravity, operando com permissões de ferramentas mínimas e isoladas. |
+| 🧠 **138 Skills Homologadas** | Padrão unificado em gerúndio (`action-verb-ing`), responsabilidade única e progressive disclosure. |
+| 🤖 **12 Subagentes (11 Especialistas + 1 Árbitro)** | Subagentes dedicados para Claude Code, OpenAI Codex e Antigravity, operando com permissões mínimas e isoladas. |
 | 🎛️ **Dashboard Interativo** | Interface cliente estática local (`index.html`) para consulta, busca inteligente e geração de prompts cirúrgicos. |
-| 🛡️ **Segurança em Primeiro Lugar** | Subagentes analíticos (como `lay-seguranca`) operam sem permissão de escrita/modificação destrutiva. |
+| 🛡️ **Segurança em Primeiro Lugar** | Subagentes analíticos (`lay-contexto`, `lay-seguranca` e `lay-banco-de-dados`) operam estritamente como somente-leitura (`Read, Grep, Glob`). |
 | 🧭 **Diagnóstico e Grafos** | Inicialização pelo orquestrador `lay-orchestrator`, mapeamento de dependências god-node via AST e comunicação concisa. |
 
 ---
@@ -118,7 +118,7 @@ Capturas em alta definição extraídas do ecossistema visual do hub:
 
 ## 🤖 Subagentes Especialistas
 
-O ecossistema traz **11 subagentes autônomos**, cada um dedicado exclusivamente ao seu domínio de conhecimento. Cada perfil recebe somente o subconjunto de ferramentas que sua especialidade demanda.
+O ecossistema traz **12 subagentes Claude autônomos** (11 especialistas de domínio e 1 árbitro Opus). Cada perfil recebe somente o subconjunto de ferramentas que sua especialidade demanda.
 
 > [!IMPORTANT]
 > **Hierarquia de Camada Única (Single-Tier):** Subagentes **nunca invocam outros subagentes**. A sessão orquestradora principal recebe o briefing do usuário, delega a tarefa ao especialista adequado e consolida a entrega.
@@ -128,14 +128,15 @@ O ecossistema traz **11 subagentes autônomos**, cada um dedicado exclusivamente
 | `lay-omniroute` | `routing-and-proxy` | Gateway de roteamento de LLMs, compatibilidade OpenAI, combos de resiliência, cálculo de custos por chamada, limites de orçamento, proxies e túneis. | Read, Grep, Glob, Bash, Edit, Write |
 | `lay-frontend` | `frontend` | Telas e interfaces em React 19/Next.js, acessibilidade WCAG AA, View Transitions, motion design (GSAP, Lenis), design tokens e anti-slop visual. | Read, Grep, Glob, Bash, Edit, Write |
 | `lay-engenharia` | `engineering` | Arquitetura de software, interfaces estáveis, TDD metódico, refatoração segura, code review detalhado, migrações e depuração de causa raiz. | Read, Grep, Glob, Bash, Edit, Write |
-| `lay-contexto` | `context` | Mapeamento estrutural por AST e grafos de dependência (**Graphify**), compressão concisa de prompts (**Caveman**), planejamento RTK e economia de tokens. | Read, Grep, Glob, Bash, Edit, Write |
+| `lay-contexto` | `context` | Mapeamento estrutural por AST e grafos de dependência (**Graphify**), compressão concisa de prompts (**Caveman**), planejamento RTK e economia de tokens. | Read, Grep, Glob *(Somente Leitura Estrita)* |
 | `lay-devops` | `devops` | Conventional Commits, estratégias de branch/rebase, pipelines de CI/CD, releases semânticas, deploy na Vercel/nuvem e automações de entrega. | Read, Grep, Glob, Bash, Edit, Write |
 | `lay-qa` | `qa` | Automação e inspeção de browsers com Playwright CLI, cobertura de testes, validação de pull requests, detecção de código inflado (YAGNI) e benchmarks. | Read, Grep, Glob, Bash, Edit, Write |
-| `lay-seguranca` | `security` | Análise estática SAST (**Semgrep**), vulnerabilidades OWASP Top 10, proteção de aplicações com LLM, auditoria de credenciais e compliance. | Read, Grep, Glob, Bash *(Somente Leitura Analítica — Sem Edição)* |
+| `lay-seguranca` | `security` | Análise estática SAST (**Semgrep**), vulnerabilidades OWASP Top 10, proteção de aplicações com LLM, auditoria de credenciais e compliance. | Read, Grep, Glob *(Somente Leitura Estrita)* |
 | `lay-3d` | `creative-3d` | Calibração de renderização de hardware (CPU/GPU), automação do Blender headless via MCP, shaders GLSL e backgrounds dinâmicos Three.js. | Read, Grep, Glob, Bash, Edit, Write |
 | `lay-documentacao` | `documentation` | Redação de Architecture Decision Records (ADRs), documentação técnica clara, polimento de prosa e higienização de marcas artificiais de IA. | Read, Grep, Glob, Edit, Write *(Sem Execução Bash)* |
 | `lay-design` | `design` | Criação de brandkits, identidade visual dark-tech/industrial brutalist, mockups e ponte de geração com o Antigravity CLI com revisão adversária. | Read, Grep, Glob, Bash, Edit, Write |
-| `lay-banco-de-dados` | `database` | Integridade e backups de bancos SQLite do OmniRoute, snapshots de segurança, recuperação de tabelas corrompidas e cache de inferência. | Read, Grep, Glob, Bash, Edit, Write |
+| `lay-banco-de-dados` | `database` | Integridade e backups de bancos SQLite do OmniRoute, snapshots de segurança, recuperação de tabelas corrompidas e cache de inferência. | Read, Grep, Glob *(Somente Leitura Estrita)* |
+| `lay-arbitro-opus` | `governance` | Mediação estática e desempate em impasses técnicos ou decisões de arquitetura conflitantes entre especialistas (máximo 3 turnos). | Read, Grep, Glob *(Somente Leitura — Modelo Opus)* |
 
 ### Como Invocar os Subagentes
 
@@ -157,11 +158,11 @@ Todo subagente responde rigorosamente com o contrato padronizado:
 
 ## 🏛️ Taxonomia e Domínios Técnicos
 
-As **137 habilidades** do ecossistema são categorizadas em domínios técnicos interdependentes:
+As **138 habilidades** do ecossistema são categorizadas em domínios técnicos interdependentes:
 
 ```mermaid
 flowchart TD
-    HUB["⚡ LAY Skills Hub (137 Skills)"]
+    HUB["⚡ LAY Skills Hub (138 Skills)"]
     
     HUB --> ENG["🏗️ Engenharia & Arquitetura<br>(25 skills)"]
     HUB --> SEC["🛡️ Segurança & Auditoria<br>(10 skills)"]
@@ -291,7 +292,7 @@ python scripts/validate_skills.py
 python scripts/nova_skill.py regenerar
 ```
 
-📘 Consulte o guia passo a passo completo em [`docs/ADICIONAR_SKILLS.md`](docs/ADICIONAR_SKILLS.md).
+📘 Consulte a especificação arquitetural de extensibilidade contínua em [`docs/EXTENSIBILIDADE.md`](docs/EXTENSIBILIDADE.md) e o guia operacional passo a passo em [`docs/ADICIONAR_SKILLS.md`](docs/ADICIONAR_SKILLS.md).
 
 ---
 
@@ -306,7 +307,7 @@ python scripts/nova_skill.py regenerar
 *Loud Angry Young (LAY) Ecosystem*  
 GitHub: [@GeorgesBallister](https://github.com/GeorgesBallister)
 
-Idealizador da arquitetura do hub, do contrato unificado de skills de elite, da matriz de 11 subagentes especializados por domínio, da taxonomia de 137 habilidades e da interface visual de orquestração.
+Idealizador da arquitetura do hub, do contrato unificado de skills de elite, da matriz de 11 subagentes especializados por domínio, da taxonomia de 138 habilidades e da interface visual de orquestração.
 
 </div>
 
