@@ -362,5 +362,49 @@ class PortableInstallerSecurityTests(unittest.TestCase):
         self.assertEqual(len(manifest['entries'][0]['include_only']), 22)
 
 
+    def test_14_antigravity_collision_and_modification_protection(self):
+        """Valida protecao de agentes Antigravity contra colisoes e modificacoes manuais."""
+        agents_dir = self.mock_home / '.gemini/config/agents'
+        agents_dir.mkdir(parents=True, exist_ok=True)
+
+        # 1. Agente nao gerenciado pelo LAY (colisao preservada antes de qualquer alteracao)
+        (agents_dir / 'lay-frontend.md').write_text('# Meu agente frontend pessoal\n', encoding='utf-8')
+
+        with self.assertRaisesRegex(ValueError, 'Colisão preservada'):
+            hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=True)
+
+        with self.assertRaisesRegex(ValueError, 'Colisão preservada'):
+            hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=False)
+
+        # Remove arquivo colidente para permitir instalacao limpa
+        (agents_dir / 'lay-frontend.md').unlink()
+
+        # 2. Instalacao inicial normal
+        hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=False)
+        self.assertTrue((agents_dir / 'lay-frontend.md').exists())
+
+        # 3. Agente gerenciado sem modificacoes (reinstalacao idempotente e atualizacao normal)
+        hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=True)
+        hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=False)
+
+        # 4. Agente gerenciado modificado manualmente (bloqueio de sobrescrita e preservacao de alteracoes)
+        (agents_dir / 'lay-arbitro.md').write_text('# Modificado manualmente pelo usuario\n', encoding='utf-8')
+
+        with self.assertRaisesRegex(ValueError, 'Subagente local modificado; preservado'):
+            hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=True)
+
+        with self.assertRaisesRegex(ValueError, 'Subagente local modificado; preservado'):
+            hub.install(self.mock_home, agents=['antigravity'], root=ROOT, skip_tools=True, mode='public', dry_run=False)
+
+        # Conteudo modificado deve permanecer intacto
+        self.assertEqual((agents_dir / 'lay-arbitro.md').read_text(encoding='utf-8'), '# Modificado manualmente pelo usuario\n')
+
+        # 5. Uninstall limpa apenas agentes gerenciados nao modificados
+        (agents_dir / 'meu-agente-pessoal.md').write_text('# Pessoal', encoding='utf-8')
+        hub.uninstall(self.mock_home)
+        self.assertTrue((agents_dir / 'lay-arbitro.md').exists(), "Agente modificado deve ser preservado no uninstall")
+        self.assertTrue((agents_dir / 'meu-agente-pessoal.md').exists(), "Agente pessoal deve ser preservado no uninstall")
+        self.assertFalse((agents_dir / 'lay-frontend.md').exists(), "Agente gerenciado nao modificado deve ser removido no uninstall")
+
 if __name__ == '__main__':
     unittest.main()

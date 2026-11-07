@@ -703,7 +703,7 @@ def install_claude_agents_v2(home, hub, mode='complete', dry_run=False, backup_m
     for tmpl_file in templates:
         dest = pasta / tmpl_file.name
         dest_res = str(dest.resolve())
-        if dest.exists() and not dry_run:
+        if dest.exists():
             if dest_res not in registrados and str(dest) not in registrados:
                 raise ValueError(f'Colisão preservada: {dest}')
             reg_sha = registrados.get(dest_res) or registrados.get(str(dest))
@@ -795,6 +795,30 @@ def install_antigravity_adapter_v2(home, hub, mode='complete', domain=None, dry_
     source_dir = (root / 'adapters/antigravity') if (root / 'adapters/antigravity').exists() else (ROOT / 'adapters/antigravity')
     runtime_str = (hub / 'runtime').as_posix()
     home_str = home.as_posix()
+    agents_src_dir = source_dir / 'agents'
+    target_agents_dir = ag_dir / 'config' / 'agents'
+
+    # 0. Verificação antecipada de colisão e modificações manuais (aplica antes de qualquer alteração)
+    marker = hub / 'installation.json'
+    previous = read_json(marker, {}) if marker.exists() else {}
+    registrados = {}
+    for entry in previous.get('antigravity_agents', []):
+        p_str = entry.get('path', '')
+        if p_str:
+            registrados[str(Path(p_str).resolve())] = entry.get('sha256', '')
+            registrados[p_str] = entry.get('sha256', '')
+
+    if agents_src_dir.exists():
+        agent_files = sorted(agents_src_dir.glob('*.md'))
+        for a_file in agent_files:
+            dest = target_agents_dir / a_file.name
+            dest_res = str(dest.resolve())
+            if dest.exists():
+                if dest_res not in registrados and str(dest) not in registrados:
+                    raise ValueError(f'Colisão preservada: {dest}')
+                reg_sha = registrados.get(dest_res) or registrados.get(str(dest))
+                if reg_sha != sha(dest):
+                    raise ValueError(f'Subagente local modificado; preservado: {dest}')
 
     # 1. Regras GEMINI.md
     tmpl_gemini = source_dir / 'GEMINI.md'
@@ -1245,6 +1269,11 @@ def uninstall(home):
         if p.parent == home / '.claude/agents' and p.exists() and sha(p) == entry['sha256']:
             p.unlink()
     state['claude_agents'] = []
+    for entry in state.get('antigravity_agents', []):
+        p = Path(entry['path'])
+        if p.parent == home / '.gemini/config/agents' and p.exists() and sha(p) == entry['sha256']:
+            p.unlink()
+    state['antigravity_agents'] = []
     state['wrappers'] = kept
     state['agents'] = []
     for agent, path in [('claude', home / '.claude/settings.json'), ('codex', home / '.codex/hooks.json'), ('antigravity', home / '.gemini/config/hooks.json')]:
