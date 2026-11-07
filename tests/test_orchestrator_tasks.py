@@ -21,6 +21,9 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 import tasks
 from tasks import (
+    ALL_CANONICAL_DOMAINS,
+    ALL_CANONICAL_SPECIALISTS,
+    READONLY_SPECIALISTS,
     ConcurrencyError,
     TaskNotFoundError,
     TaskValidationError,
@@ -30,6 +33,8 @@ from tasks import (
     create_task,
     get_task,
     list_tasks,
+    normalize_text,
+    recommend_task_routing,
     task_lock,
     update_task_status,
 )
@@ -181,7 +186,7 @@ class OrchestratorTasksTests(unittest.TestCase):
         self.assertEqual(t_assigned["status"], "in_progress")
 
         # Modo subagent sem reason deve falhar
-        t2 = create_task(self.workspace, title="Varredura de segurança")
+        t2 = create_task(self.workspace, title="Varredura de segurança", client="antigravity")
         with self.assertRaises(TaskValidationError):
             assign_task(
                 workspace=self.workspace,
@@ -292,7 +297,7 @@ class OrchestratorTasksTests(unittest.TestCase):
 
     def test_12_absence_of_automatic_execution(self):
         """Criação e atribuição apenas persistem dados e nunca despacham modelos ou processos."""
-        t = create_task(self.workspace, title="Verificar ausência de execução automática")
+        t = create_task(self.workspace, title="Verificar ausência de execução automática", client="antigravity")
         # Sem arquivos executáveis gerados
         self.assertEqual(t["status"], "pending")
 
@@ -471,28 +476,37 @@ class OrchestratorTasksTests(unittest.TestCase):
         current_data = json.loads(lock_file.read_text(encoding="utf-8"))
         self.assertEqual(current_data.get("token"), "foreign-process-token-12345")
 
-    def test_15_pid_reuse_and_stale_lock_recovery(self):
-        """Valida que stale locks (> 60s) são recuperados com segurança mesmo se o PID estiver ativo."""
-        t = create_task(self.workspace, title="Teste de Stale Lock com PID Ativo")
+    def test_15_active_process_never_loses_lock_by_time(self):
+        """Teste de regressão: processo proprietário ativo NUNCA perde o lock apenas por tempo decorrido."""
+        from unittest.mock import patch
+
+        t = create_task(self.workspace, title="Teste de Lock com PID Ativo")
         task_id = t["id"]
         tasks_dir = self.workspace / ".lay" / "tasks"
         lock_file = tasks_dir / f"{task_id}.lock"
 
-        # Simula lock criado há 10 minutos com o PID do processo atual (que está comprovadamente vivo)
-        stale_time = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(minutes=10)).isoformat()
+        # Simula processo ativo que iniciou há 200s e criou o lock há 100s (> 60s)
+        lock_time = (datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(seconds=100)).isoformat()
         lock_payload = {
             "pid": os.getpid(),
-            "token": "stale-token-abc",
-            "created_at": stale_time,
+            "token": "active-owner-token",
+            "created_at": lock_time,
             "task_id": task_id,
         }
         lock_file.write_text(json.dumps(lock_payload), encoding="utf-8")
 
-        # Ao atualizar status, deve identificar que a retenção excede o limite atômico (> 60s),
-        # recuperando o lock órfão e completando a operação
-        t_updated = update_task_status(self.workspace, task_id, "in_progress")
-        self.assertEqual(t_updated["status"], "in_progress")
-        self.assertFalse(lock_file.exists())
+        # Mocka get_process_start_time para confirmar que o processo iniciou antes do lock (sem PID reuse)
+        with patch("tasks.get_process_start_time", return_value=time.time() - 200.0):
+            # Tentativa de obter o lock com timeout curto deve respeitar o processo ativo
+            # e levantar ConcurrencyError sem roubar nem desvincular o lock por tempo
+            with self.assertRaises(ConcurrencyError):
+                with task_lock(self.workspace, task_id, timeout_seconds=0.1):
+                    pass
+
+        # O lock deve permanecer intacto pertencente ao processo ativo
+        self.assertTrue(lock_file.exists())
+        data = json.loads(lock_file.read_text(encoding="utf-8"))
+        self.assertEqual(data.get("token"), "active-owner-token")
 
     def test_16_external_workspace_isolation_and_gitignore(self):
         """Valida proteção do workspace externo: .lay/.gitignore criado sem tocar raiz."""
@@ -552,6 +566,281 @@ class OrchestratorTasksTests(unittest.TestCase):
         self.assertEqual(t_completed["result"]["open_items"], ["Definir política de rate limiting"])
         self.assertEqual(t_completed["result"]["artifacts"], [])
 
+
+
+    def test_18_simple_task_resolved_in_session(self):
+        """Tarefa simples pontual deve recomendar resolução na sessão atual sem subagentes."""
+        rec = recommend_task_routing(
+            title="Ajustar padding do card",
+            description="Alterar espaçamento de p-4 para p-6",
+            client="antigravity"
+        )
+        self.assertEqual(rec["complexity"], "low")
+        self.assertEqual(rec["recommended_domain"], "frontend")
+        self.assertEqual(rec["recommended_mode"], "session")
+        self.assertEqual(rec["recommended_specialist"], "lay-frontend")
+        self.assertFalse(rec["requires_authorization"])
+        self.assertTrue(rec["delegation_allowed"])
+        self.assertIn("sem subagentes", rec["rationale"].lower())
+        # Não preenche artificialmente com skills de animação para ajuste simples de padding
+        self.assertEqual(rec["relevant_skills"], [])
+
+    def test_19_moderate_task_with_skills_no_subagent(self):
+        """Tarefa moderada deve mapear skills do domínio sem delegar a subagente."""
+        rec = recommend_task_routing(
+            title="Implementar componente de formulário com animacao react-bits",
+            description="Criar input com feedback visual",
+            client="claude"
+        )
+        self.assertEqual(rec["complexity"], "medium")
+        self.assertEqual(rec["recommended_domain"], "frontend")
+        self.assertEqual(rec["recommended_mode"], "session")
+        self.assertTrue(len(rec["relevant_skills"]) > 0)
+        self.assertFalse(rec["requires_authorization"])
+
+    def test_20_complex_task_continues_in_session(self):
+        """Tarefa complexa decompõe etapas na sessão e NÃO impõe delegação a subagente."""
+        rec = recommend_task_routing(
+            title="Refatoração transversal da camada de serviços",
+            description="Melhorar concorrência e tipagem de 10 rotas de API",
+            client="antigravity"
+        )
+        self.assertEqual(rec["complexity"], "high")
+        self.assertEqual(rec["recommended_domain"], "engineering")
+        # Complexidade alta não implica delegação obrigatória: padrão continua session
+        self.assertEqual(rec["recommended_mode"], "session")
+        self.assertEqual(rec["recommended_specialist"], "lay-engenharia")
+        self.assertFalse(rec["requires_authorization"])
+
+    def test_21_specialized_task_with_justified_delegation(self):
+        """Tarefa com justificativa concreta de isolamento de segurança recomenda subagente."""
+        # 1. Isolamento estrito read-only para segurança
+        rec_sec = recommend_task_routing(
+            title="Auditoria de segurança estrita e varredura semgrep",
+            description="Analisar vulnerabilidades no código",
+            client="antigravity"
+        )
+        self.assertEqual(rec_sec["recommended_domain"], "security")
+        self.assertEqual(rec_sec["recommended_mode"], "subagent")
+        self.assertEqual(rec_sec["recommended_specialist"], "lay-seguranca")
+        self.assertIn("isolamento operacional estrito", rec_sec["rationale"].lower())
+
+        # 2. Especialização de runtime 3D
+        rec_3d = recommend_task_routing(
+            title="Modelagem 3D e renderização de shaders no blender",
+            description="Efeitos visuais WebGL",
+            client="claude"
+        )
+        self.assertEqual(rec_3d["recommended_domain"], "creative-3d")
+        self.assertEqual(rec_3d["recommended_mode"], "subagent")
+        self.assertEqual(rec_3d["recommended_specialist"], "lay-3d")
+
+    def test_22_critical_task_without_automatic_arbitration(self):
+        """Tarefa crítica não equivale a convocar árbitro; sessão é padrão exceto em impasse real."""
+        # 1. Impasse arquitetural real -> orienta arbitragem (requer autorização prévia)
+        rec_impasse = recommend_task_routing(
+            title="Impasse e trade-off de arquitetura sobre persistência relacional vs documento",
+            description="Dilema de design estrutural",
+            client="antigravity"
+        )
+        self.assertEqual(rec_impasse["complexity"], "critical")
+        self.assertEqual(rec_impasse["recommended_mode"], "arbitrator")
+        self.assertEqual(rec_impasse["recommended_specialist"], "lay-arbitro")
+        self.assertTrue(rec_impasse["requires_authorization"])
+        self.assertIn("autorizacao humana explicita", normalize_text(rec_impasse["rationale"]))
+
+        # Em Claude, recomenda lay-arbitro-opus para impasse
+        rec_claude = recommend_task_routing(
+            title="Impasse e trade-off de arquitetura sobre persistência relacional vs documento",
+            client="claude"
+        )
+        self.assertEqual(rec_claude["recommended_specialist"], "lay-arbitro-opus")
+
+        # 2. Tarefa crítica SEM impasse arquitetural -> EXECUÇÃO PADRÃO NA SESSÃO
+        rec_sem_impasse = recommend_task_routing(
+            title="Executar migração crítica de esquema de banco com risco de quebra de contrato",
+            domain="database",
+            client="antigravity"
+        )
+        self.assertEqual(rec_sem_impasse["complexity"], "critical")
+        self.assertEqual(rec_sem_impasse["recommended_mode"], "session")
+        self.assertTrue(rec_sem_impasse["requires_authorization"])
+        self.assertIn("execucao padrao mantida na sessao atual", normalize_text(rec_sem_impasse["rationale"]))
+
+    def test_23_invalid_domain_or_specialist_rejected(self):
+        """Domínio ou especialista fora dos perfis canônicos deve ser rejeitado."""
+        with self.assertRaises(TaskValidationError):
+            recommend_task_routing(title="Teste", domain="dominio-inexistente")
+
+        with self.assertRaises(TaskValidationError):
+            recommend_task_routing(title="Teste", explicit_specialist="lay-robo-fantasma")
+
+        # Em assign_task também deve rejeitar especialista inválido
+        t = create_task(self.workspace, title="Teste assign especialista invalido")
+        with self.assertRaises(TaskValidationError):
+            assign_task(self.workspace, t["id"], specialist="lay-robo-fantasma")
+
+    def test_24_client_without_delegation_capability(self):
+        """Cliente local sem capacidade de delegação reverte para sessão e bloqueia subagent."""
+        rec = recommend_task_routing(
+            title="Auditoria de segurança estrita e varredura semgrep",
+            client="local"
+        )
+        self.assertFalse(rec["delegation_allowed"])
+        self.assertEqual(rec["recommended_mode"], "session")
+
+        t = create_task(self.workspace, title="Tarefa em cliente local", client="local")
+        with self.assertRaises(TaskValidationError):
+            assign_task(
+                self.workspace,
+                t["id"],
+                specialist="lay-seguranca",
+                mode="subagent",
+                reason="Tentando delegar em cliente local",
+            )
+
+    def test_25_codex_functionally_unavailable(self):
+        """Codex deve ser mantido funcionalmente indisponível para delegação."""
+        rec = recommend_task_routing(
+            title="Auditoria de segurança estrita e varredura semgrep",
+            client="codex"
+        )
+        self.assertFalse(rec["delegation_allowed"])
+        self.assertEqual(rec["recommended_mode"], "session")
+        self.assertIn("indisponivel funcionalmente", normalize_text(rec["rationale"]))
+
+        t = create_task(self.workspace, title="Tarefa em cliente codex", client="codex")
+        with self.assertRaises(TaskValidationError):
+            assign_task(
+                self.workspace,
+                t["id"],
+                specialist="lay-seguranca",
+                mode="subagent",
+                reason="Tentando delegar em codex",
+            )
+
+    def test_26_readonly_permissions_and_risk_authorization(self):
+        """Preserva salvaguardas de especialistas somente-leitura e sinaliza risco em devops/db."""
+        self.assertIn("lay-seguranca", READONLY_SPECIALISTS)
+        self.assertIn("lay-contexto", READONLY_SPECIALISTS)
+        self.assertIn("lay-banco-de-dados", READONLY_SPECIALISTS)
+        self.assertIn("lay-arbitro", READONLY_SPECIALISTS)
+
+        # Operações destrutivas em devops exigem autorização
+        rec_devops = recommend_task_routing(
+            title="Executar deploy e reset da branch principal",
+            domain="devops",
+            client="antigravity"
+        )
+        self.assertTrue(rec_devops["requires_authorization"])
+
+        # Operações destrutivas em database exigem autorização
+        rec_db = recommend_task_routing(
+            title="Executar drop table e migracao de esquema",
+            domain="database",
+            client="antigravity"
+        )
+        self.assertTrue(rec_db["requires_authorization"])
+
+    def test_27_absence_of_model_invocations_and_state_integrity(self):
+        """Garante ausência total de chamadas a modelos e integridade dos dados da tarefa."""
+        t = create_task(
+            self.workspace,
+            title="Implementar rota de produtos",
+            client="antigravity"
+        )
+        self.assertEqual(t["status"], "pending")
+        self.assertIsNone(t["result"])
+        self.assertEqual(t["handoff"]["domain"], "engineering")
+        self.assertEqual(t["routing"]["execution_mode"], "session")
+        self.assertIsNone(t["routing"]["target_specialist"])
+
+    def test_28_cli_recommend_command(self):
+        """Valida comando CLI task recommend via subprocess tanto com --title quanto com --task-id."""
+        # 1. recommend com --title
+        res = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "recommend",
+                "--title",
+                "Criar componente Badge acessivel com animacao",
+                "--client",
+                "antigravity",
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=True,
+        )
+        self.assertIn("Decisão de Roteamento (Recomendação)", res.stdout)
+        self.assertIn("Domínio Recomendado:      frontend", res.stdout)
+        self.assertIn("Modo Recomendado:         session", res.stdout)
+
+        # 2. recommend com --task-id
+        t = create_task(self.workspace, title="Auditar dependencias CVE", client="antigravity")
+        res_id = subprocess.run(
+            [
+                sys.executable,
+                str(ROOT / "scripts/skill_hub.py"),
+                "task",
+                "recommend",
+                "--workspace",
+                str(self.workspace),
+                "--task-id",
+                t["id"],
+            ],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            check=True,
+        )
+        self.assertIn("Decisão de Roteamento (Recomendação)", res_id.stdout)
+        self.assertIn("Domínio Recomendado:      security", res_id.stdout)
+        self.assertIn("Especialista Recomendado: lay-seguranca", res_id.stdout)
+
+
+    def test_29_skill_relevance_and_zero_artificial_fill(self):
+        """A seleção de skills não deve preencher artificialmente com skills irrelevantes."""
+        # Decisão de persistência em database não deve sugerir backup OmniRoute
+        rec_db = recommend_task_routing(
+            title="Decisão de arquitetura sobre persistência e quebra de contratos de banco",
+            domain="database",
+            client="antigravity"
+        )
+        self.assertEqual(rec_db["relevant_skills"], [])
+
+        # Tarefa com finalidade concreta de animação deve encontrar skills pertinentes
+        rec_anim = recommend_task_routing(
+            title="Criar componente modal com animacao react-bits e acessibilidade wcag",
+            domain="frontend",
+            client="antigravity"
+        )
+        self.assertTrue(len(rec_anim["relevant_skills"]) > 0)
+        self.assertTrue(any("animat" in s for s in rec_anim["relevant_skills"]))
+
+    def test_30_specialist_tool_limitations_and_terminal_differentiation(self):
+        """Roteador diferencia análise estática por leitura de execução de ferramentas no terminal."""
+        # 1. Execução no terminal: lay-seguranca não possui Bash, execução fica na sessão
+        rec_cli = recommend_task_routing(
+            title="Executar varredura semgrep no terminal",
+            domain="security",
+            client="antigravity"
+        )
+        self.assertEqual(rec_cli["recommended_mode"], "session")
+        self.assertIn("sem acesso a terminal", rec_cli["rationale"].lower())
+
+        # 2. Análise estática por leitura: pode delegar para sandbox read-only
+        rec_audit = recommend_task_routing(
+            title="Auditoria estática de vulnerabilidades e inspeção de código",
+            domain="security",
+            client="antigravity"
+        )
+        self.assertEqual(rec_audit["recommended_mode"], "subagent")
+        self.assertEqual(rec_audit["recommended_specialist"], "lay-seguranca")
 
 if __name__ == "__main__":
     unittest.main()

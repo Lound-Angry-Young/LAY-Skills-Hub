@@ -25,6 +25,87 @@ VALID_RESULT_STATUSES = {"success", "failure", "needs_clarification", "escalated
 VALID_EXECUTION_MODES = {"session", "subagent", "arbitrator"}
 MAX_PAYLOAD_BYTES = 1024 * 1024  # 1 MB
 
+ROOT_DIR = Path(__file__).resolve().parent.parent
+
+# 11 perfis canônicos de domínio e seus respectivos subagentes
+ALL_CANONICAL_DOMAINS = {
+    "routing-and-proxy",
+    "frontend",
+    "engineering",
+    "context",
+    "devops",
+    "qa",
+    "security",
+    "creative-3d",
+    "documentation",
+    "design",
+    "database",
+}
+
+DOMAIN_TO_SPECIALIST = {
+    "routing-and-proxy": "lay-omniroute",
+    "frontend": "lay-frontend",
+    "engineering": "lay-engenharia",
+    "context": "lay-contexto",
+    "devops": "lay-devops",
+    "qa": "lay-qa",
+    "security": "lay-seguranca",
+    "creative-3d": "lay-3d",
+    "documentation": "lay-documentacao",
+    "design": "lay-design",
+    "database": "lay-banco-de-dados",
+}
+
+SPECIALIST_TO_DOMAIN = {v: k for k, v in DOMAIN_TO_SPECIALIST.items()}
+SPECIALIST_TO_DOMAIN["lay-arbitro"] = "architecture"
+SPECIALIST_TO_DOMAIN["lay-arbitro-opus"] = "architecture"
+
+ALL_CANONICAL_SPECIALISTS = set(SPECIALIST_TO_DOMAIN.keys())
+
+READONLY_SPECIALISTS = {
+    "lay-contexto",
+    "lay-seguranca",
+    "lay-banco-de-dados",
+    "lay-arbitro",
+    "lay-arbitro-opus",
+}
+
+# Suporte de clientes a delegação nativa de subagentes
+VALID_CLIENTS = {"claude", "antigravity", "codex", "local"}
+CLIENT_DELEGATION_SUPPORT = {
+    "claude": True,
+    "antigravity": True,
+    "codex": False,    # Manter Codex indisponível funcionalmente
+    "local": False,    # Ambiente local/CLI sem runtime de subagente
+}
+
+DOMAIN_KEYWORDS = {
+    "creative-3d": ["3d", "webgl", "blender", "shader", "vanta", "render", "threejs", "three.js", "rigging"],
+    "database": ["banco", "database", "sql", "postgres", "mysql", "tabela", "coluna", "migracao", "esquema", "query"],
+    "security": ["seguranca", "security", "vulnerab", "cve", "semgrep", "auditoria", "auth", "token", "jwt", "permissao", "api key", "secret"],
+    "qa": ["teste", "test", "tdd", "playwright", "devtools", "cobertura", "benchmark", "fixture", "e2e"],
+    "devops": ["devops", "ci/cd", "pipeline", "deploy", "vercel", "commit", "branch", "release", "rollout", "git"],
+    "frontend": ["frontend", "ui", "ux", "react", "next", "componente", "layout", "css", "tailwind", "animacao", "acessibilidade", "wcag", "html", "card", "padding", "button", "modal", "dialog"],
+    "context": ["contexto", "grafo", "ast", "prompt", "rtk", "requisito", "planejamento", "quebra de tarefa"],
+    "documentation": ["documentacao", "doc", "adr", "readme", "escrita", "artigo", "polimento", "guia"],
+    "routing-and-proxy": ["omniroute", "proxy", "gateway", "roteador", "trafego de rede"],
+    "design": ["design", "brandkit", "mockup", "identidade visual", "tipografia", "paleta", "tokens visuais"],
+}
+
+DESTRUCTIVE_DEVOPS_KEYWORDS = {"deploy", "push", "release", "reset", "rollback", "force"}
+DESTRUCTIVE_DATABASE_KEYWORDS = {"migracao", "drop", "alter", "schema", "esquema", "truncate"}
+
+TERMINAL_EXECUTION_KEYWORDS = {
+    "executar", "rodar", "run", "terminal", "bash", "cli", "comando",
+    "instalar", "scan cli", "varredura cli", "execucao"
+}
+
+ARCHITECTURAL_IMPASSE_KEYWORDS = {
+    "impasse", "trade-off", "tradeoff", "dilema", "opcoes conflitantes",
+    "conflito de arquitetura", "conflito arquitetural", "decisao entre",
+    "escolha entre", "arbitragem", "arbitr"
+}
+
 VALID_TRANSITIONS: Dict[str, set[str]] = {
     "pending": {"in_progress"},
     "in_progress": {"completed", "failed", "blocked", "escalated"},
@@ -252,9 +333,6 @@ def task_lock(workspace: Path, task_id: str, timeout_seconds: float = 3.0):
                     if proc_start is not None and proc_start > lock_created_ts + 1.0:
                         # Processo nasceu após a criação do lock -> PID foi reutilizado
                         pid_reused = True
-                    elif time.time() - lock_created_ts > 60.0:
-                        # Operação atômica em disco retida há mais de 60s -> stale
-                        pid_reused = True
                 except Exception:
                     pass
 
@@ -430,10 +508,257 @@ def validate_task_schema(data: dict) -> None:
             raise TaskValidationError("Campo 'summary' em 'result' deve ser uma string não vazia.")
 
 
+def infer_domain(text: str) -> str:
+    """Infere deterministicamente o domínio canônico a partir do texto normalizado."""
+    norm = normalize_text(text)
+
+    # Avalia domínios especializados por ordem de prioridade
+    priority_order = [
+        "creative-3d",
+        "database",
+        "security",
+        "qa",
+        "devops",
+        "routing-and-proxy",
+        "context",
+        "documentation",
+        "design",
+        "frontend",
+    ]
+    for dom in priority_order:
+        keywords = DOMAIN_KEYWORDS.get(dom, [])
+        if any(k in norm for k in keywords):
+            return dom
+
+    return "engineering"
+
+
+def get_relevant_skills(
+    domain: str,
+    text: str = "",
+    root: Optional[Path] = None,
+    limit: int = 4
+) -> List[str]:
+    """Descobre e pontua skills públicas do repositório para a finalidade concreta da tarefa.
+
+    Retorna lista vazia se nenhuma skill atingir relevância concreta suficiente,
+    evitando sugestões artificiais ou descontextualizadas.
+    """
+    target_root = root or ROOT_DIR
+    domain_dir = target_root / "refactored_skills" / domain
+    if not domain_dir.exists() or not domain_dir.is_dir():
+        return []
+
+    available = []
+    for p in sorted(domain_dir.iterdir()):
+        if p.is_dir() and (p / "SKILL.md").exists():
+            available.append(p.name)
+
+    if not available or not text.strip():
+        return []
+
+    norm = normalize_text(text)
+    stop_parts = {
+        "and", "the", "with", "for", "of", "in", "to", "a", "an",
+        "de", "do", "da", "em", "para", "com", "um", "uma", "os", "as"
+    }
+    scored = []
+    for s in available:
+        parts = [p for p in s.split("-") if len(p) > 2 and p not in stop_parts]
+        score = sum(2 if p in norm else (1 if len(p) >= 5 and p[:4] in norm else 0) for p in parts)
+        if score >= 2:
+            scored.append((score, s))
+
+    if not scored:
+        return []
+
+    scored.sort(key=lambda x: (-x[0], x[1]))
+    return [s[1] for s in scored[:limit]]
+
+
+def recommend_task_routing(
+    title: str,
+    description: str = "",
+    domain: Optional[str] = None,
+    client: str = "local",
+    context_files: Optional[List[str]] = None,
+    explicit_complexity: Optional[str] = None,
+    explicit_specialist: Optional[str] = None,
+    root: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Produz uma recomendação verificável de roteamento, domínio, skills e modo de execução."""
+    if not title or not title.strip():
+        raise TaskValidationError("O título da tarefa não pode ser vazio.")
+
+    # 1. Validação do cliente
+    client_norm = (client or "local").lower().strip()
+    if client_norm not in VALID_CLIENTS:
+        raise TaskValidationError(
+            f"Cliente inválido: '{client}'. Clientes suportados: {sorted(VALID_CLIENTS)}"
+        )
+    delegation_allowed = CLIENT_DELEGATION_SUPPORT.get(client_norm, False)
+
+    # 2. Validação ou inferência de domínio
+    combined_text = f"{title} {description}"
+    if domain:
+        d = domain.lower().strip()
+        if d not in ALL_CANONICAL_DOMAINS:
+            raise TaskValidationError(
+                f"Domínio inválido: '{domain}'. Domínios canônicos permitidos: {sorted(ALL_CANONICAL_DOMAINS)}"
+            )
+        target_domain = d
+    else:
+        target_domain = infer_domain(combined_text)
+
+    # 3. Classificação de complexidade
+    clf = classify_task(title=title, description=description, explicit_complexity=explicit_complexity)
+    complexity = clf["complexity"]
+
+    # 4. Resolução e validação de especialista
+    if explicit_specialist:
+        s = explicit_specialist.strip()
+        if s not in ALL_CANONICAL_SPECIALISTS:
+            raise TaskValidationError(
+                f"Especialista inválido: '{explicit_specialist}'. Especialistas canônicos permitidos: {sorted(ALL_CANONICAL_SPECIALISTS)}"
+            )
+        target_specialist = s
+    else:
+        target_specialist = DOMAIN_TO_SPECIALIST.get(target_domain, "lay-engenharia")
+
+    # 5. Política de execução e delegação mínima
+    norm_text = normalize_text(combined_text)
+    requires_authorization = False
+
+    requires_terminal = any(k in norm_text for k in TERMINAL_EXECUTION_KEYWORDS)
+    has_impasse = any(k in norm_text for k in ARCHITECTURAL_IMPASSE_KEYWORDS)
+
+    is_security_reading = (
+        target_domain == "security"
+        and any(k in norm_text for k in ["auditoria", "vulnerab", "cve", "semgrep", "revisao", "inspecao"])
+        and not requires_terminal
+    )
+    is_database_reading = (
+        target_domain == "database"
+        and any(k in norm_text for k in ["integridade", "esquema", "analise", "consistencia"])
+        and not requires_terminal
+    )
+    is_3d_specialized = target_domain == "creative-3d" and any(k in norm_text for k in ["blender", "shader", "webgl"])
+
+    if complexity == "critical":
+        # Tarefa crítica: exige autorização explícita
+        requires_authorization = True
+        if has_impasse:
+            # Impasse arquitetural real: arbitragem indicada como possibilidade justificada
+            if delegation_allowed:
+                recommended_mode = "arbitrator"
+                target_specialist = "lay-arbitro" if client_norm == "antigravity" else "lay-arbitro-opus"
+                rationale = (
+                    "Impasse arquitetural / trade-off estrutural detectado. "
+                    "Arbitragem indicada como possibilidade justificada para parecer técnico, "
+                    "sujeita a autorização humana explícita antes da convocação."
+                )
+            else:
+                recommended_mode = "session"
+                rationale = (
+                    f"Impasse crítico identificado, porém o cliente '{client_norm}' não suporta arbitragem/subagentes; "
+                    "resolução deve ser conduzida na sessão sob supervisão humana."
+                )
+        else:
+            # Tarefa crítica sem impasse: EXECUÇÃO PADRÃO MANTIDA NA SESSÃO
+            recommended_mode = "session"
+            target_specialist = DOMAIN_TO_SPECIALIST.get(target_domain, "lay-engenharia")
+            rationale = (
+                f"Demanda crítica de alto impacto no domínio '{target_domain}'. "
+                "Execução padrão mantida na sessão atual sob supervisão humana direta. "
+                "Se houver impasse entre alternativas concorrentes, a arbitragem pode ser convocada sob autorização."
+            )
+    elif not delegation_allowed:
+        recommended_mode = "session"
+        if client_norm == "codex":
+            rationale = (
+                "Cliente 'codex' indisponível funcionalmente para delegação nesta versão; "
+                f"resolução restrita à sessão atual para o domínio '{target_domain}'."
+            )
+        else:
+            rationale = (
+                f"Ambiente '{client_norm}' sem suporte nativo a delegação de subagentes; "
+                f"resolução recomendada na sessão atual para o domínio '{target_domain}'."
+            )
+    elif target_domain == "security" and requires_terminal:
+        # lay-seguranca é estritamente somente-leitura e não possui Bash
+        recommended_mode = "session"
+        rationale = (
+            "A tarefa requer execução de ferramentas externas via terminal (ex: Semgrep). "
+            "Como 'lay-seguranca' possui exclusivamente ferramentas de leitura (Read, Grep, Glob) "
+            "sem acesso a terminal (Bash), a execução da ferramenta deve ocorrer na sessão atual "
+            "(ou relatórios previamente gerados devem ser submetidos para revisão estática)."
+        )
+    elif target_domain == "database" and requires_terminal:
+        # lay-banco-de-dados é estritamente somente-leitura e não possui Bash
+        recommended_mode = "session"
+        requires_authorization = True
+        rationale = (
+            "A tarefa requer execução de scripts/comandos de banco via terminal. "
+            "Como 'lay-banco-de-dados' opera estritamente como somente-leitura (Read, Grep, Glob), "
+            "a execução deve ocorrer na sessão atual com supervisão humana direta."
+        )
+    elif is_security_reading:
+        recommended_mode = "subagent"
+        rationale = (
+            "Demanda de análise estática e auditoria de código por leitura beneficia-se de "
+            f"isolamento operacional estrito (sandbox somente-leitura sem escrita) via '{target_specialist}'."
+        )
+    elif is_database_reading:
+        recommended_mode = "subagent"
+        rationale = (
+            "Demanda de análise estática de esquema de banco de dados beneficia-se de "
+            f"isolamento operacional estrito via '{target_specialist}'."
+        )
+    elif is_3d_specialized:
+        recommended_mode = "subagent"
+        rationale = (
+            f"Demanda gráfica/3D requer ambiente especializado de renderização via '{target_specialist}'."
+        )
+    elif complexity == "high":
+        # Complexidade alta NÃO implica delegação obrigatória
+        recommended_mode = "session"
+        rationale = (
+            f"Demanda de complexidade alta. Recomenda-se resolução estruturada na sessão atual "
+            f"com decomposição em etapas, ativando as skills do domínio '{target_domain}'."
+        )
+    elif complexity == "low":
+        recommended_mode = "session"
+        rationale = "Demanda pontual com resolução recomendada na sessão atual sem subagentes."
+    else:
+        recommended_mode = "session"
+        rationale = f"Política padrão: resolução na sessão atual utilizando as skills pertinentes de '{target_domain}'."
+
+    # 6. Checagem de necessidade de autorização (operações de risco)
+    if target_domain == "devops" and any(k in norm_text for k in DESTRUCTIVE_DEVOPS_KEYWORDS):
+        requires_authorization = True
+    elif target_domain == "database" and any(k in norm_text for k in DESTRUCTIVE_DATABASE_KEYWORDS):
+        requires_authorization = True
+
+    # 7. Descoberta de skills relevantes
+    skills = get_relevant_skills(target_domain, text=combined_text, root=root)
+
+    return {
+        "complexity": complexity,
+        "recommended_domain": target_domain,
+        "relevant_skills": skills,
+        "current_client": client_norm,
+        "recommended_mode": recommended_mode,
+        "recommended_specialist": target_specialist,
+        "rationale": rationale,
+        "requires_authorization": requires_authorization,
+        "delegation_allowed": delegation_allowed,
+    }
+
+
 def create_task(
     workspace: Path,
     title: str,
-    domain: str = "engineering",
+    domain: Optional[str] = None,
     complexity: Optional[str] = None,
     context: Optional[List[str]] = None,
     constraints: Optional[List[str]] = None,
@@ -444,7 +769,12 @@ def create_task(
     if not title or not title.strip():
         raise TaskValidationError("O título da tarefa não pode ser vazio.")
 
-    classification = classify_task(title=title, explicit_complexity=complexity)
+    rec = recommend_task_routing(
+        title=title,
+        domain=domain,
+        client=client,
+        explicit_complexity=complexity
+    )
     task_id = f"task-{uuid.uuid4().hex[:8]}"
     created_time = now_iso()
 
@@ -452,17 +782,17 @@ def create_task(
         "schema_version": 1,
         "id": task_id,
         "title": title.strip(),
-        "complexity": classification["complexity"],
+        "complexity": rec["complexity"],
         "status": "pending",
         "routing": {
-            "client": client,
+            "client": rec["current_client"],
             "target_specialist": None,
-            "execution_mode": classification["recommended_mode"],
+            "execution_mode": rec["recommended_mode"],
             "delegation_reason": None,
         },
         "handoff": {
             "task": title.strip(),
-            "domain": domain.strip(),
+            "domain": rec["recommended_domain"],
             "context": [str(c) for c in (context or [])],
             "constraints": [str(c) for c in (constraints or [])],
             "acceptance_criteria": [str(c) for c in (acceptance_criteria or [])],
@@ -533,6 +863,11 @@ def assign_task(
 ) -> Dict[str, Any]:
     """Atribui responsável e modalidade de execução à tarefa com controle de concorrência."""
     validate_task_id(task_id)
+    if specialist not in ALL_CANONICAL_SPECIALISTS:
+        raise TaskValidationError(
+            f"Especialista inválido: '{specialist}'. Especialistas canônicos permitidos: {sorted(ALL_CANONICAL_SPECIALISTS)}"
+        )
+
     if mode not in VALID_EXECUTION_MODES:
         raise TaskValidationError(f"Modo de execução inválido: '{mode}'. Opções: {sorted(VALID_EXECUTION_MODES)}")
 
@@ -543,6 +878,17 @@ def assign_task(
 
     with task_lock(workspace, task_id):
         task = get_task(workspace, task_id)
+
+        client = task.get("routing", {}).get("client", "local").lower()
+        if mode in ("subagent", "arbitrator"):
+            if client == "codex":
+                raise TaskValidationError(
+                    "Delegação de subagentes indisponível para o cliente 'codex' nesta versão. Use modo 'session'."
+                )
+            if client == "local":
+                raise TaskValidationError(
+                    "Delegação de subagentes indisponível para o cliente 'local'. O modo deve ser 'session'."
+                )
 
         current_status = task["status"]
         if current_status == "completed":

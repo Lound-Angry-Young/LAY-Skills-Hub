@@ -1361,6 +1361,16 @@ def main():
     p_ta.add_argument('--mode', choices=['session', 'subagent', 'arbitrator'], default='session', help='Modalidade de execução')
     p_ta.add_argument('--reason', default=None, help='Justificativa objetiva da delegação (obrigatória para subagent/arbitrator)')
 
+    # task recommend
+    p_tr = task_sub.add_parser('recommend', help='Consultar recomendação de roteamento para uma tarefa')
+    p_tr.add_argument('--task-id', default=None, help='Identificador da tarefa existente')
+    p_tr.add_argument('--workspace', type=Path, default=Path.cwd(), help='Diretório raiz do workspace')
+    p_tr.add_argument('--title', default=None, help='Título descritivo da tarefa (se sem task-id)')
+    p_tr.add_argument('--domain', default=None, help='Domínio pretendido')
+    p_tr.add_argument('--client', default='local', help='Cliente executor (claude, antigravity, codex, local)')
+    p_tr.add_argument('--complexity', choices=['low', 'medium', 'high', 'critical'], default=None, help='Complexidade explícita')
+    p_tr.add_argument('--specialist', default=None, help='Especialista pretendido')
+
     # task complete
     p_tcp = task_sub.add_parser('complete', help='Concluir tarefa com contrato RESULT')
     p_tcp.add_argument('task_id', help='Identificador da tarefa')
@@ -1449,6 +1459,38 @@ def main():
                 print(f"   Status:       {t['status']}")
                 if t['routing'].get('delegation_reason'):
                     print(f"   Justificativa:{t['routing']['delegation_reason']}")
+            elif args.task_action == 'recommend':
+                if args.task_id:
+                    task = tasks.get_task(workspace=ws, task_id=args.task_id)
+                    rec = tasks.recommend_task_routing(
+                        title=task['title'],
+                        domain=task['handoff'].get('domain'),
+                        client=task['routing'].get('client', 'local'),
+                        explicit_complexity=task.get('complexity')
+                    )
+                elif args.title:
+                    rec = tasks.recommend_task_routing(
+                        title=args.title,
+                        domain=args.domain,
+                        client=args.client,
+                        explicit_complexity=args.complexity,
+                        explicit_specialist=args.specialist
+                    )
+                else:
+                    print("⚠️ Informe --task-id ou --title para obter recomendação.", file=sys.stderr)
+                    return 1
+
+                print("=== Decisão de Roteamento (Recomendação) ===")
+                print(f"Complexidade Estimada:    {rec['complexity']}")
+                print(f"Domínio Recomendado:      {rec['recommended_domain']}")
+                print(f"Cliente Atual:            {rec['current_client']}")
+                print(f"Modo Recomendado:         {rec['recommended_mode']}")
+                print(f"Especialista Recomendado: {rec['recommended_specialist'] or 'nenhum'}")
+                print(f"Autorização Necessária:   {'Sim' if rec['requires_authorization'] else 'Não'}")
+                print(f"Delegação Permitida:      {'Sim' if rec['delegation_allowed'] else 'Não'}")
+                print(f"Justificativa:            {rec['rationale']}")
+                if rec['relevant_skills']:
+                    print(f"Skills Relevantes:        {', '.join(rec['relevant_skills'])}")
             elif args.task_action == 'complete':
                 t = tasks.complete_task(
                     workspace=ws,
