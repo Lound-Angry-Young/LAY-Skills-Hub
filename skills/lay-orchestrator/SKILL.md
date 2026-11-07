@@ -23,6 +23,13 @@ Comece pela intenção do usuário. Resolva um problema por vez com a menor comb
 - Design: aplique [DESIGN.md](../../docs/DESIGN.md). Pesquise referências pertinentes e traduza princípios em decisões verificáveis. Não transforme estética, biblioteca ou stack de uma skill em regra universal.
 - Segurança: consulte [proveniência e scan](../../docs/SEGURANCA-E-PROVENIENCIA.md). Instalar instruções não instala nem autoriza todos os runtimes, serviços e comandos que elas descrevem.
 
+## Coordenação de Tarefas (LAY Orchestrator)
+
+O subsistema de tarefas coordena o ciclo de vida e o handoff controlado entre Claude Code e Antigravity:
+- Consulte [ORCHESTRATOR.md](../../docs/ORCHESTRATOR.md) para arquitetura, comandos CLI e ciclo de vida.
+- Priorize a resolução na sessão atual (`session`); convoque especialistas apenas com justificativa técnica demonstrada; reserve a arbitragem para impasses críticos documentados.
+- Handoffs entre clientes exigem autorização explícita (`--authorized`), contexto estritamente necessário e registro integral de histórico.
+
 ## Comunicação e conclusão
 
 Use Caveman como economia de contexto e linguagem direta, no idioma do usuário. Preserve condições, negações, riscos, perguntas necessárias, evidência e limites. Tabelas de diagnóstico e emojis de atualização solicitados têm função concreta. Não prometa percentuais de economia.

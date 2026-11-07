@@ -28,8 +28,16 @@ python scripts/skill_hub.py start --project 'C:\caminho\do\projeto' --refresh
 python scripts/skill_hub.py start --project 'C:\caminho\do\projeto' --offline
 python scripts/skill_hub.py sync --check
 python scripts/skill_hub.py sync --apply
+python scripts/skill_hub.py task list
+python scripts/skill_hub.py task create --title "Implementar funcionalidade"
+python scripts/skill_hub.py task show <id>
+python scripts/skill_hub.py task route --title "..."
+python scripts/skill_hub.py task handoff <id> --target-client claude --authorized --reason "..."
+python scripts/skill_hub.py task complete <id> --summary "Concluído" --artifacts arquivo.ext
 python scripts/skill_hub.py uninstall
 ```
+
+Para gerenciamento completo do ciclo de vida de tarefas, roteamento por custo e handoff entre clientes, consulte a [documentação do Orchestrator](ORCHESTRATOR.md).
 
 `--home` permite instalar/testar em outro diretório de usuário. `sync` consulta **primeiro** o repositório pai, depois as fontes, e só aplica fast-forward limpo. Alterações locais não são descartadas. `--check` não altera revisões; `--apply` atualiza commits de fontes e catálogo. `start`, e o hook de início de sessão, só consulta: roda `sync --check` na primeira vez por projeto, registra o resultado e apresenta prioridades para código existente. Nunca altera arquivos do repositório. `--refresh` força nova consulta; `--offline` usa o inventário instalado e sinaliza ausência de verificação. Os relatórios `.state/` são locais e ignorados pelo Git.
 
