@@ -1160,9 +1160,10 @@
       <section class="hero" aria-labelledby="titulo-principal">
         <p class="rotulo" data-i18n="install.kicker">CLAUDE CODE • SUBAGENTES</p>
         <h1 class="titulo-principal" id="titulo-principal" data-i18n="install.title">SUBAGENTES LAY<br><span class="destaque">INSTALE EM 3 PASSOS</span></h1>
-        <p class="lead" data-i18n="install.lead">Três comandos instalam os subagentes. Depois, confira com o doctor e com /agents.</p>
+        <p class="lead">Instalação progressiva para <strong>Claude Code</strong> e <strong>Google Antigravity</strong>. Configure subagentes, CLI de tarefas e confira a integridade com o doctor.</p>
         <div class="acoes">
           <a class="botao botao-primario" href="#instalar" data-i18n="install.btn_install_cmd">COMANDOS DE INSTALAÇÃO</a>
+          <a class="botao botao-secundario" href="#migracao">GUIA DE MIGRAÇÃO</a>
           <a class="botao botao-secundario" href="#prompts" data-i18n="install.btn_prompts">PROMPTS PARA COPIAR</a>
           <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer"><span data-i18n="install.btn_github">REPOSITÓRIO GITHUB</span> <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
         </div>
@@ -1174,13 +1175,69 @@
       </section>
 
       <section class="secao" id="instalar" aria-labelledby="titulo-instalar">
-        <p class="kicker" data-i18n="install.step1_kicker">01 · INSTALAR</p>
-        <h2 class="titulo-secao" id="titulo-instalar" data-i18n="install.step1_title">Três comandos</h2>
-        <p class="texto-secao" data-i18n="install.step1_desc">Execute no terminal, dentro da pasta do repositório clonado.</p>
+        <p class="kicker">01 · INSTALAR</p>
+        <h2 class="titulo-secao" id="titulo-instalar">Instalação Progressiva</h2>
+        <p class="texto-secao">Siga o fluxo recomendado para configurar subagentes, CLI e regras em seu ambiente.</p>
+
+        <!-- Diagrama Visual de Instalação (SVG) -->
+        <div style="background: var(--color-graphite-surface); border: 2px solid var(--color-border-dark); padding: 20px 16px; margin-bottom: 24px; box-shadow: 4px 4px 0 #000;">
+          <div style="font: 800 11px/1.2 var(--font-mono); color: var(--color-blaze-yellow); letter-spacing: .08em; text-transform: uppercase; margin-bottom: 14px;">
+            FLUXO PROGRESSIVO DE INSTALAÇÃO E VALIDAÇÃO
+          </div>
+          <div style="width: 100%; overflow-x: auto;">
+            <svg viewBox="0 0 860 110" fill="none" xmlns="http://www.w3.org/2000/svg" style="min-width: 680px; max-width: 100%; height: auto; display: block; margin: 0 auto;" aria-label="Diagrama do fluxo de instalação">
+              <defs>
+                <marker id="seta-amarela-inst" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M1 1L7 4L1 7" stroke="#FFF201" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </marker>
+              </defs>
+
+              <!-- Step 1: Baixar -->
+              <rect x="5" y="30" width="115" height="48" fill="#151821" stroke="#FAF5E9" stroke-width="1.5"/>
+              <text x="62" y="50" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">1. CLONAR</text>
+              <text x="62" y="66" fill="#9AA3B5" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Git submodules</text>
+
+              <path d="M120 54 H145" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela-inst)"/>
+
+              <!-- Step 2: Pré-requisitos -->
+              <rect x="150" y="30" width="125" height="48" fill="#151821" stroke="#FAF5E9" stroke-width="1.5"/>
+              <text x="212" y="50" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">2. PRÉ-REQUISITOS</text>
+              <text x="212" y="66" fill="#9AA3B5" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Python 3.10+</text>
+
+              <path d="M275 54 H300" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela-inst)"/>
+
+              <!-- Step 3: Instalador -->
+              <rect x="305" y="30" width="125" height="48" fill="#151821" stroke="#FFF201" stroke-width="2"/>
+              <text x="367" y="50" fill="#FFF201" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">3. INSTALADOR</text>
+              <text x="367" y="66" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">skill_hub.py</text>
+
+              <path d="M430 54 H455" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela-inst)"/>
+
+              <!-- Step 4: Clientes -->
+              <rect x="460" y="30" width="125" height="48" fill="#151821" stroke="#00FFFF" stroke-width="1.5"/>
+              <text x="522" y="50" fill="#00FFFF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">4. CLIENTES</text>
+              <text x="522" y="66" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Claude / Antigrav</text>
+
+              <path d="M585 54 H610" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela-inst)"/>
+
+              <!-- Step 5: Doctor -->
+              <rect x="615" y="30" width="115" height="48" fill="#151821" stroke="#FF3EB5" stroke-width="1.5"/>
+              <text x="672" y="50" fill="#FF3EB5" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">5. DOCTOR</text>
+              <text x="672" y="66" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Verificação</text>
+
+              <path d="M730 54 H755" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela-inst)"/>
+
+              <!-- Step 6: Pronto -->
+              <rect x="760" y="30" width="95" height="48" fill="#151821" stroke="#77B82A" stroke-width="2"/>
+              <text x="807" y="50" fill="#77B82A" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="800" text-anchor="middle">PRONTO</text>
+              <text x="807" y="66" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Operacional</text>
+            </svg>
+          </div>
+        </div>
 
         <div class="pre-req">
-          <p><strong data-i18n="install.prereq_title">Pré-requisitos:</strong> <span data-i18n="install.prereq_items">Git · Python 3.10+ · Claude Code</span></p>
-          <p class="pre-req-nota" data-i18n="install.prereq_note">Use <code>python</code>. No Windows, se não funcionar, use <code>py -3</code>. Claude Code: CLI no terminal ou app desktop; os subagentes aparecem nas sessões novas.</p>
+          <p><strong>Pré-requisitos:</strong> <span>Git · Python 3.10+ · Claude Code e/ou Google Antigravity</span></p>
+          <p class="pre-req-nota">Use <code>python</code> no terminal. No Windows, se necessário, use <code>py -3</code>. Os subagentes passam a ser descobertos nas novas sessões abertas.</p>
         </div>
 
         <div class="passos">
@@ -1196,12 +1253,18 @@ cd LAY-Skills-Hub</pre>
           </article>
 
           <article class="card">
-            <p class="card-num" data-i18n="install.step2_badge">Passo 02</p>
-            <h3 class="card-titulo" data-i18n="install.step2_card_title">Instalar os subagentes</h3>
-            <p class="texto-card" data-i18n="install.step2_card_desc">Instala os arquivos <code>lay-*.md</code> em <code>~/.claude/agents/</code> e grava o índice de roteamento no <code>~/.claude/CLAUDE.md</code>, entre os marcadores <code>LAY-SKILLS</code>. Quer também Codex e Antigravity? Troque <code>claude</code> por <code>all</code>.</p>
+            <p class="card-num">Passo 02</p>
+            <h3 class="card-titulo">Instalar os subagentes e runtime</h3>
+            <p class="texto-card">Instala os perfis <code>lay-*.md</code> e regras para os clientes escolhidos. Suporta Claude Code (<code>~/.claude/agents/</code>) e Google Antigravity (<code>~/.gemini/config/agents/</code>). Escolha o comando correspondente:</p>
+            
+            <div class="bloco-codigo" style="margin-bottom: 8px;">
+              <div class="bloco-topo"><span>Todos os clientes suportados (Recomendado)</span><button type="button" class="botao-copiar" data-copy="python scripts/skill_hub.py install --agents all">Copiar</button></div>
+              <pre>python scripts/skill_hub.py install --agents all</pre>
+            </div>
+
             <div class="bloco-codigo">
-              <div class="bloco-topo"><span data-i18n="install.bash_in_repo">bash · dentro do repositório</span><button type="button" class="botao-copiar" data-copy="cmd-install" data-i18n="install.btn_copy">Copiar</button></div>
-              <pre id="cmd-install">python scripts/skill_hub.py install --agents claude</pre>
+              <div class="bloco-topo"><span>Apenas Claude Code</span><button type="button" class="botao-copiar" data-copy="python scripts/skill_hub.py install --agents claude">Copiar</button></div>
+              <pre>python scripts/skill_hub.py install --agents claude</pre>
             </div>
           </article>
 
@@ -1443,6 +1506,69 @@ python scripts/skill_hub.py install --agents all</pre>
           </li>
         </ol>
       </section>
+
+      <!-- ==================================================================
+           SEÇÃO: MIGRAÇÃO DAS INSTALAÇÕES ANTERIORES
+           ================================================================== -->
+      <section class="secao" id="migracao" aria-labelledby="titulo-migracao">
+        <p class="kicker">MIGRAÇÃO &amp; ATUALIZAÇÃO SEGURA</p>
+        <h2 class="titulo-secao" id="titulo-migracao">Já utiliza o LAY Skills Hub? Veja como atualizar</h2>
+        <p class="texto-secao">Orientações para atualizar ambientes legados sem perder configurações, sem comandos destrutivos e com verificação automática de integridade.</p>
+
+        <div class="grade-2">
+          <article class="card">
+            <p class="card-num" style="background: var(--color-blaze-yellow); color: #000;">1. O que mudou</p>
+            <h3 class="card-titulo">Runtime Unificado &amp; Orchestrator</h3>
+            <div class="texto-card" style="font-size: 13px; line-height: 1.55;">
+              <p>• <strong>Runtime Isolado:</strong> As 138 skills agora residem em <code>~/.lay-skills/runtime/</code>, evitando duplicar arquivos em múltiplos projetos.</p>
+              <p style="margin-top: 6px;">• <strong>CLI Determinístico:</strong> Comandos <code>task create</code>, <code>task route</code> e <code>task handoff</code> para organizar o trabalho multi-client.</p>
+              <p style="margin-top: 6px;">• <strong>Multi-Client Nativo:</strong> Suporte conjunto para Claude Code e Google Antigravity.</p>
+            </div>
+          </article>
+
+          <article class="card">
+            <p class="card-num" style="background: var(--color-retro-cyan); color: #000;">2. Diagnóstico</p>
+            <h3 class="card-titulo">Como verificar sua versão</h3>
+            <p class="texto-card">No diretório clonado, verifique o commit atual e execute o diagnóstico do doctor:</p>
+            <div class="bloco-codigo">
+              <div class="bloco-topo"><span>bash · terminal</span><button type="button" class="botao-copiar" data-copy="python scripts/skill_hub.py doctor">Copiar</button></div>
+              <pre>python scripts/skill_hub.py doctor</pre>
+            </div>
+            <p class="texto-card" style="font-size: 12px; margin-top: 8px; color: var(--color-text-muted);">
+              O comando lista os subagentes instalados, caminhos de runtime e eventuais arquivos modificados manualmente.
+            </p>
+          </article>
+        </div>
+
+        <div class="card" style="margin-top: 16px; border-left: 4px solid var(--color-toxic-green);">
+          <h3 class="card-titulo" style="color: var(--color-toxic-green);">Como atualizar com segurança (Fast-Forward Limpo)</h3>
+          <p class="texto-card" style="margin-bottom: 12px;">
+            A atualização utiliza o mecanismo nativo <code>sync</code> do projeto. Ele consulta as mudanças sem alterar nada; você confere e aplica somente se aprovar:
+          </p>
+          <div class="bloco-codigo">
+            <div class="bloco-topo"><span>bash · passo a passo no repositório</span><button type="button" class="botao-copiar" data-copy="python scripts/skill_hub.py sync --check
+python scripts/skill_hub.py sync --apply
+python scripts/skill_hub.py install --agents all
+python scripts/skill_hub.py doctor">Copiar tudo</button></div>
+            <pre># 1. Consultar atualizações sem modificar nada
+python scripts/skill_hub.py sync --check
+
+# 2. Aplicar alterações no repositório (apenas fast-forward)
+python scripts/skill_hub.py sync --apply
+
+# 3. Reinstalar subagentes e atualizar runtime
+python scripts/skill_hub.py install --agents all
+
+# 4. Validar integridade da instalação
+python scripts/skill_hub.py doctor</pre>
+          </div>
+        </div>
+
+        <div class="nota" style="margin-top: 16px; border-left: 4px solid var(--color-blaze-yellow);">
+          <strong>🛡️ Garantia de Preservação:</strong> O instalador nunca apaga diretórios como <code>~/.claude</code>, <code>~/.gemini</code> ou <code>~/.codex</code>. Todo arquivo sobrescrito recebe backup preventivo com carimbo de data/hora em <code>~/.lay-skills/backups/</code>. Suas skills e agentes personalizados com outros nomes permanecem intactos.
+        </div>
+      </section>
+
     </main>
   </div>
 

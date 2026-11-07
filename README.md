@@ -10,17 +10,20 @@
 ![Release](https://img.shields.io/badge/release-v1.1.0-blue?style=for-the-badge&logo=git)
 ![Skills](https://img.shields.io/badge/skills-138%20homologadas-00f0ff?style=for-the-badge&logo=probot)
 ![Agents](https://img.shields.io/badge/subagentes-12%20(11%20especialistas%20%2B%201%20%C3%A1rbitro)-fff201?style=for-the-badge)
+![Tests](https://img.shields.io/badge/homologa%C3%A7%C3%A3o-239%20PASS%20(~23s)-brightgreen?style=for-the-badge&logo=checkmarx)
+![Orchestrator](https://img.shields.io/badge/orchestrator-zero--daemon%20%7C%20local--atomic-yellow?style=for-the-badge)
 ![Author](https://img.shields.io/badge/creator-Georges%20Ballister-brightgreen?style=for-the-badge)
 ![License](https://img.shields.io/badge/license-MIT-green?style=for-the-badge)
 
 <br>
 
-<img src="docs/assets/screenshots/01-hero.png" alt="Hub de skills LAY: 138 skills homologadas, 15 fontes e 12 subagentes (11 especialistas + 1 árbitro)" width="100%">
+<img src="docs/assets/screenshots/01-hero-orchestrator.png" alt="Hub de skills LAY: 138 skills homologadas, 12 subagentes e LAY Orchestrator determinístico local" width="100%">
 
 <br><br>
 
 [**🌐 Dashboard**](index.html) &nbsp;·&nbsp;
-[**📘 Guia dos Subagentes**](instalacao.html) &nbsp;·&nbsp;
+[**⚡ LAY Orchestrator**](#-lay-orchestrator--coordenação-determinística) &nbsp;·&nbsp;
+[**📘 Guia de Instalação**](instalacao.html) &nbsp;·&nbsp;
 [**⬇️ Instalação Rápida**](#️-instalação-no-computador-e-agentes) &nbsp;·&nbsp;
 [**🤖 Subagentes**](#-subagentes-especialistas) &nbsp;·&nbsp;
 [**🏛️ Taxonomia das Skills**](#️-taxonomia-e-domínios-técnicos) &nbsp;·&nbsp;
@@ -113,6 +116,52 @@ Capturas em alta definição extraídas do ecossistema visual do hub:
     </td>
   </tr>
 </table>
+
+---
+
+## ⚡ LAY Orchestrator — Coordenação Determinística
+
+O **LAY Orchestrator** é o subsistema de coordenação de tarefas de engenharia entre desenvolvedores e agentes de IA (**Google Antigravity** e **Claude Code**). Ele foi projetado sob um dogma estrito: **zero daemons, zero processos residentes em segundo plano e zero tokens de inferência consumidos para roteamento**.
+
+```mermaid
+flowchart TD
+    A["Usuário solicita uma tarefa"] --> B["Orchestrator analisa a tarefa"]
+    B --> C["Seleciona skills pertinentes"]
+    C --> D{"Qual execução é necessária?"}
+    D --> E["Sessão atual: padrão"]
+    D --> F["Subagente: se justificado"]
+    D --> G["Handoff: autorizado"]
+    E --> H["RESULT"]
+    F --> H
+    G --> H
+    H --> I["Validação e registro"]
+```
+
+### Pilares Arquiteturais
+- **Persistência Atômica Local:** Cada tarefa é armazenada em `.lay/tasks/task-<id>.json` com validação estática contra `schemas/task.schema.json` (schema v1). Identificadores seguem a regex `^task-[a-z0-9]{8,16}$` (proteção anti-path traversal).
+- **Concorrência Segura por PID:** Escritas atômicas protegidas por arquivos `.lock` que inspecionam o PID e o timestamp de inicialização do processo no sistema operacional, purgando automaticamente locks órfãos deixados por processos extintos.
+- **Máquina de Estados Finita:** Ciclo de vida estrito (`pending` ➔ `in_progress` ➔ `completed` / `failed` / `blocked` / `escalated`). Tarefas em estado `completed` são **estritamente imutáveis**, protegendo a base de código contra alterações zumbis.
+- **Contratos Canônicos HANDOFF & RESULT:** O handoff transfere apenas contexto cirúrgico (sem session dumping). O encerramento via `RESULT` audita fisicamente a existência dos arquivos gerados no disco antes de aprovar a conclusão.
+
+### Comandos Rápidos da CLI
+```bash
+# 1. Criar tarefa com classificação heurística local
+python scripts/skill_hub.py task create --title "Refatorar componente Modal" --client antigravity
+
+# 2. Consultar roteamento em 4 tiers (latência <2ms, 0 tokens)
+python scripts/skill_hub.py task route --title "Refatorar componente Modal"
+
+# 3. Transferência segura entre clientes com autorização pontual
+python scripts/skill_hub.py task handoff task-427584d6 --target-client claude --authorized --reason "Revisão no Claude Code"
+
+# 4. Concluir tarefa com verificação física de artefatos em disco
+python scripts/skill_hub.py task complete task-427584d6 --summary "Modal refatorado" --artifacts src/Modal.tsx
+```
+
+### Homologação e Evidências Reais
+- **Nível 1 (239 Testes Automatizados — 100% PASS):** Suíte hermética executada pela biblioteca padrão do Python em ~23 segundos (`python -m unittest discover -s tests -p "test_*.py"`).
+- **Nível 2 (Homologação Assistida em Console — Fase 3.2):** Validação ponta a ponta com consoles e modelos reais entre Google Antigravity e Claude Code (`task-427584d6` com `slugify.ts` e `task-1201e0e9` com `formatName.ts`).
+- 📚 **Documentação Completa:** Consulte a [**Arquitetura do Orchestrator**](docs/ORCHESTRATOR.md) e o [**Guia de Operação**](docs/OPERACAO.md).
 
 ---
 

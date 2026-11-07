@@ -145,7 +145,7 @@ A confiabilidade do LAY Orchestrator foi atestada em dois níveis claramente dif
 - **Cobertura:** Persistência atômica, recuperação de locks órfãos por verificação de PID, integridade de schema v1, classificação heurística, roteamento por custo, contratos RESULT, proteção traversal, histórico multi-hop e rejeição funcional do Codex.
 
 ### Nível 2: Homologação Assistida em Sessões Reais (Fase 3.2 — PASS)
-Validação ponta a ponta realizada com modelos e consoles reais em workspace temporário descartável (`C:\Users\georg\AppData\Local\Temp\lay-homologacao-fase3`):
+Validação ponta a ponta realizada com modelos e consoles reais em workspace temporário descartável (`<TMP_DIR>/lay-homologacao-fase3`):
 
 1. **Fluxo Antigravity $\rightarrow$ Claude Code (`task-427584d6`):**
    - Criada no Antigravity, transferida via `task handoff` para o Claude Code.

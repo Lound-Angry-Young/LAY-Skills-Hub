@@ -1057,6 +1057,242 @@
       .barra-plano { padding: 10px 12px; }
       .ocultar-mobile { display: none; }
     }
+
+    /* ==========================================================================
+       LAY® ORCHESTRATOR — ESTILO MODERADO E INTEGRADO
+       ========================================================================== */
+    .secao-orchestrator {
+      margin-top: 56px;
+      padding-top: 48px;
+      border-top: 2px solid var(--borda);
+    }
+
+    .orch-intro-card {
+      background: var(--cartao);
+      border: 2px solid var(--osso);
+      box-shadow: 4px 4px 0 #000;
+      padding: 28px 24px;
+      margin-bottom: 28px;
+    }
+
+    .orch-lead-text {
+      font-size: 16px;
+      line-height: 1.6;
+      color: var(--osso);
+      max-width: 80ch;
+      margin-bottom: 24px;
+    }
+
+    .orch-lead-text strong {
+      color: var(--amarelo);
+    }
+
+    .grade-perguntas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .pergunta-card {
+      background: var(--grafite);
+      border: 1px solid var(--borda);
+      border-left: 4px solid var(--ciano);
+      padding: 16px;
+      box-shadow: 2px 2px 0 #000;
+    }
+
+    .pergunta-card.amarelo { border-left-color: var(--amarelo); }
+    .pergunta-card.magenta { border-left-color: var(--magenta); }
+    .pergunta-card.verde { border-left-color: var(--verde); }
+    .pergunta-card.alerta { border-left-color: var(--vermelho); background: rgba(194, 24, 24, 0.08); }
+
+    .pergunta-titulo {
+      font: 800 12px/1.3 var(--fonte-mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--osso);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pergunta-corpo {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: var(--cinza);
+    }
+
+    .pergunta-corpo strong {
+      color: var(--osso);
+    }
+
+    /* Diagrama de Fluxo */
+    .caixa-diagrama {
+      background: var(--cartao-escuro);
+      border: 2px solid var(--borda);
+      padding: 24px 20px;
+      margin-bottom: 28px;
+      box-shadow: 4px 4px 0 #000;
+    }
+
+    .diagrama-titulo {
+      font: 800 12px/1.2 var(--fonte-mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--amarelo);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .diagrama-svg-wrapper {
+      width: 100%;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .diagrama-svg {
+      display: block;
+      margin: 0 auto;
+      min-width: 680px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Funcionalidades */
+    .grade-recursos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .recurso-card {
+      background: var(--cartao);
+      border: 2px solid var(--osso);
+      padding: 20px;
+      box-shadow: 4px 4px 0 #000;
+      transition: transform var(--transicao), border-color var(--transicao), filter var(--transicao);
+    }
+
+    .recurso-card:hover {
+      transform: translate(-2px, -2px);
+      border-color: var(--amarelo);
+      filter: var(--realce-amarelo);
+    }
+
+    .recurso-num {
+      font: 800 11px/1.2 var(--fonte-mono);
+      color: var(--amarelo);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .recurso-titulo {
+      font: 800 15px/1.2 var(--fonte-titulo);
+      text-transform: uppercase;
+      color: var(--osso);
+      margin-bottom: 8px;
+    }
+
+    .recurso-desc {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--cinza);
+    }
+
+    /* Demonstração CLI */
+    .painel-cli {
+      background: #000;
+      border: 2px solid var(--osso);
+      box-shadow: 4px 4px 0 var(--amarelo);
+      margin-bottom: 24px;
+    }
+
+    .cli-abas-nav {
+      display: flex;
+      flex-wrap: wrap;
+      background: #111;
+      border-bottom: 2px solid var(--borda);
+    }
+
+    .cli-aba-btn {
+      padding: 10px 16px;
+      background: transparent;
+      border: 0;
+      border-right: 1px solid var(--borda);
+      color: var(--cinza);
+      font: 700 11.5px/1.2 var(--fonte-mono);
+      letter-spacing: .05em;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: background var(--transicao), color var(--transicao);
+    }
+
+    .cli-aba-btn:hover {
+      background: rgba(255, 242, 1, 0.1);
+      color: var(--osso);
+    }
+
+    .cli-aba-btn.ativo {
+      background: var(--amarelo);
+      color: #000;
+      font-weight: 800;
+    }
+
+    .cli-conteudo-aba {
+      padding: 20px;
+    }
+
+    .cli-bloco-comando {
+      background: var(--grafite);
+      border: 1px solid var(--borda);
+      border-left: 4px solid var(--ciano);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cli-cmd-codigo {
+      font: 700 13px/1.4 var(--fonte-mono);
+      color: var(--osso);
+      word-break: break-all;
+    }
+
+    .cli-cmd-codigo span.prefixo {
+      color: var(--amarelo);
+      margin-right: 8px;
+      user-select: none;
+    }
+
+    .cli-cmd-efeito {
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--cinza);
+    }
+
+    .cli-cmd-efeito code {
+      font-family: var(--fonte-mono);
+      color: var(--ciano);
+      background: #111;
+      padding: 2px 6px;
+      border: 1px solid #333;
+    }
+
+    .cli-cmd-efeito b {
+      color: var(--osso);
+    }
+
   </style>
 </head>
 <body>
@@ -1170,8 +1406,239 @@
         </ul>
         <div class="acoes">
           <button type="button" class="botao botao-primario" id="btn-prompt-mestre" data-i18n="hero.btn_master_prompt">Copiar prompt mestre</button>
-          <a class="botao botao-secundario" href="instalacao.html#subagentes" data-i18n="hero.btn_install">Instalar subagentes</a>
+          <a class="botao botao-secundario" href="#orchestrator">LAY Orchestrator</a>
+          <a class="botao botao-secundario" href="instalacao.html" data-i18n="hero.btn_install">Instalação & Guia</a>
           <a class="botao botao-link" href="https://github.com/Lound-Angry-Young/LAY-Skills-Hub" target="_blank" rel="noopener noreferrer"><span data-i18n="hero.btn_github">Repositório GitHub</span> <span class="sr-only">(abre em nova aba)</span><span class="gh-stars" data-gh-stars>★ …</span></a>
+        </div>
+      </section>
+
+
+      <!-- ==================================================================
+           SEÇÃO: LAY ORCHESTRATOR (ARQUITETURA DETERMINÍSTICA LOCAL)
+           ================================================================== -->
+      <section class="secao secao-orchestrator" id="orchestrator" aria-labelledby="titulo-orchestrator">
+        <div class="cabecalho-aba">
+          <p class="kicker">01 · COORDENAÇÃO DE AGENTES • ZERO DAEMONS</p>
+          <h2 class="titulo-secao" id="titulo-orchestrator">LAY ORCHESTRATOR</h2>
+        </div>
+        
+        <div class="orch-intro-card">
+          <p class="orch-lead-text">
+            O <strong>LAY Orchestrator</strong> organiza o ciclo de vida das tarefas de desenvolvimento, recomenda skills cirúrgicas, persiste estados em arquivos locais e gerencia handoffs assistidos entre <strong>Claude Code</strong> e <strong>Google Antigravity</strong> — sem daemons residentes, sem watchers em segundo plano e com <strong>239 testes herméticos aprovados</strong>.
+          </p>
+
+          <!-- Perguntas Fundamentais (Esclarecimento de Conceitos) -->
+          <div class="grade-perguntas">
+            <div class="pergunta-card amarelo">
+              <h3 class="pergunta-titulo">O que é o Skills Hub?</h3>
+              <p class="pergunta-corpo">Uma biblioteca organizada de <strong>138 capacidades e especializações</strong> para abastecer assistentes de desenvolvimento de forma disciplinada.</p>
+            </div>
+
+            <div class="pergunta-card magenta">
+              <h3 class="pergunta-titulo">O que são as skills?</h3>
+              <p class="pergunta-corpo">Instruções e procedimentos modulares (arquivos <code>SKILL.md</code>) ativados cirurgicamente conforme o pedido, sem poluir a janela de contexto.</p>
+            </div>
+
+            <div class="pergunta-card verde">
+              <h3 class="pergunta-titulo">O que são os especialistas?</h3>
+              <p class="pergunta-corpo"><strong>12 perfis autônomos persistentes</strong> (11 de domínio + 1 árbitro) configurados com restrições rígidas de permissão e ferramentas.</p>
+            </div>
+
+            <div class="pergunta-card">
+              <h3 class="pergunta-titulo">O que é o Orchestrator?</h3>
+              <p class="pergunta-corpo">O núcleo determinístico em linha de comando que gerencia tarefas em <code>.lay/tasks/</code>, garante atomicidade de locks e audita resultados.</p>
+            </div>
+
+            <div class="pergunta-card amarelo">
+              <h3 class="pergunta-titulo">Como ele decide executar?</h3>
+              <p class="pergunta-corpo"><strong>Prioridade absoluta para a sessão atual (Tier 1)</strong>. Subagente nativo (Tier 2) só com justificativa de isolamento. Handoff externo (Tier 3) apenas sob autorização.</p>
+            </div>
+
+            <div class="pergunta-card">
+              <h3 class="pergunta-titulo">Como cooperam Claude e Antigravity?</h3>
+              <p class="pergunta-corpo">Por meio de <strong>handoff assistido</strong> via workspace compartilhado, onde o estado da tarefa é transmitido em JSON puro com exclusão mútua por PID.</p>
+            </div>
+
+            <div class="pergunta-card alerta" style="grid-column: 1 / -1;">
+              <h3 class="pergunta-titulo" style="color: var(--vermelho);">⚠️ O que ainda NÃO funciona automaticamente?</h3>
+              <p class="pergunta-corpo">Execução autônoma mágica sem supervisão humana, delegação nativa em clientes sem isolamento comprovado e integração funcional do OpenAI Codex (rejeitada com segurança nos testes).</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fluxo de Execução (Diagrama Simples e Legível) -->
+        <div class="caixa-diagrama">
+          <div class="diagrama-titulo">
+            <span>FLUXO DETERMINÍSTICO DE DECISÃO E EXECUÇÃO</span>
+            <span style="color: var(--cinza); font-weight: 400; font-size: 11px;">POLÍTICA DE MENOR CUSTO E ISOLAMENTO</span>
+          </div>
+
+          <div class="diagrama-svg-wrapper">
+            <svg class="diagrama-svg" viewBox="0 0 920 220" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Diagrama do fluxo de execução do Orchestrator">
+              <!-- Defs for arrows and patterns -->
+              <defs>
+                <marker id="seta-amarela" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M1 1L7 4L1 7" stroke="#FFF201" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </marker>
+                <marker id="seta-cinza" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                  <path d="M1 1L7 4L1 7" stroke="#9AA3B5" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                </marker>
+              </defs>
+
+              <!-- Node A: Usuário solicita -->
+              <rect x="10" y="85" width="140" height="50" fill="#151821" stroke="#FAF5E9" stroke-width="2"/>
+              <text x="80" y="106" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">PEDIDO</text>
+              <text x="80" y="122" fill="#9AA3B5" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">Usuário solicita</text>
+
+              <!-- Line A -> B -->
+              <path d="M150 110 H175" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela)"/>
+
+              <!-- Node B: Orchestrator analisa -->
+              <rect x="180" y="85" width="140" height="50" fill="#151821" stroke="#FFF201" stroke-width="2"/>
+              <text x="250" y="106" fill="#FFF201" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">ORCHESTRATOR</text>
+              <text x="250" y="122" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">Classifica tarefa</text>
+
+              <!-- Line B -> C -->
+              <path d="M320 110 H345" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela)"/>
+
+              <!-- Node C: Seleciona skills -->
+              <rect x="350" y="85" width="130" height="50" fill="#151821" stroke="#00FFFF" stroke-width="2"/>
+              <text x="415" y="106" fill="#00FFFF" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">SKILLS</text>
+              <text x="415" y="122" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="10" text-anchor="middle">Filtro contextual</text>
+
+              <!-- Line C -> Decision D -->
+              <path d="M480 110 H505" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela)"/>
+
+              <!-- Decision Diamond / Box D: Qual execução? -->
+              <polygon points="555,75 605,110 555,145 505,110" fill="#101218" stroke="#FFF201" stroke-width="2"/>
+              <text x="555" y="107" fill="#FFF201" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="800" text-anchor="middle">QUAL</text>
+              <text x="555" y="120" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">EXECUÇÃO?</text>
+
+              <!-- Branches to E, F, G -->
+              <!-- Branch 1: Sessão atual (top) -->
+              <path d="M555 75 V30 H635" stroke="#77B82A" stroke-width="2" marker-end="url(#seta-amarela)"/>
+              <rect x="640" y="10" width="140" height="40" fill="#151821" stroke="#77B82A" stroke-width="2"/>
+              <text x="710" y="27" fill="#77B82A" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">SESSÃO ATUAL</text>
+              <text x="710" y="41" fill="#9AA3B5" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Padrão (90%)</text>
+
+              <!-- Branch 2: Subagente (mid) -->
+              <path d="M605 110 H635" stroke="#00FFFF" stroke-width="2" marker-end="url(#seta-amarela)"/>
+              <rect x="640" y="90" width="140" height="40" fill="#151821" stroke="#00FFFF" stroke-width="2"/>
+              <text x="710" y="107" fill="#00FFFF" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">SUBAGENTE</text>
+              <text x="710" y="121" fill="#9AA3B5" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Se justificado</text>
+
+              <!-- Branch 3: Handoff (bottom) -->
+              <path d="M555 145 V190 H635" stroke="#FF3EB5" stroke-width="2" marker-end="url(#seta-amarela)"/>
+              <rect x="640" y="170" width="140" height="40" fill="#151821" stroke="#FF3EB5" stroke-width="2"/>
+              <text x="710" y="187" fill="#FF3EB5" font-family="'JetBrains Mono', monospace" font-size="10" font-weight="700" text-anchor="middle">HANDOFF</text>
+              <text x="710" y="201" fill="#9AA3B5" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">--authorized</text>
+
+              <!-- Convergence from E, F, G to Node H (RESULT) -->
+              <path d="M780 30 H805 V110" stroke="#9AA3B5" stroke-width="1.5"/>
+              <path d="M780 110 H805" stroke="#9AA3B5" stroke-width="1.5"/>
+              <path d="M780 190 H805 V110" stroke="#9AA3B5" stroke-width="1.5"/>
+              <path d="M805 110 H815" stroke="#FFF201" stroke-width="2" marker-end="url(#seta-amarela)"/>
+
+              <!-- Node H & I: RESULT & Registro -->
+              <rect x="820" y="85" width="90" height="50" fill="#151821" stroke="#77B82A" stroke-width="2"/>
+              <text x="865" y="106" fill="#77B82A" font-family="'JetBrains Mono', monospace" font-size="11" font-weight="700" text-anchor="middle">RESULT</text>
+              <text x="865" y="122" fill="#FAF5E9" font-family="'JetBrains Mono', monospace" font-size="9" text-anchor="middle">Auditoria</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Grade de Funcionalidades Objetivas (6 Pilares) -->
+        <div class="grade-recursos">
+          <div class="recurso-card">
+            <p class="recurso-num">01 · CLASSIFICAÇÃO</p>
+            <h3 class="recurso-titulo">Heurística Local 0 Tokens</h3>
+            <p class="recurso-desc">Classifica o domínio técnico em menos de 2ms usando regras estáticas em Python puro. Não consome cotas de IA para decidir roteamentos simples.</p>
+          </div>
+
+          <div class="recurso-card">
+            <p class="recurso-num">02 · ECONOMIA</p>
+            <h3 class="recurso-titulo">Delegação Mínima</h3>
+            <p class="recurso-desc">Executa na sessão atual por padrão. O Orchestrator só recomenda subagentes ou handoffs quando há benefício comprovado de isolamento.</p>
+          </div>
+
+          <div class="recurso-card">
+            <p class="recurso-num">03 · MÁQUINA FSM</p>
+            <h3 class="recurso-titulo">Estados & Imutabilidade</h3>
+            <p class="recurso-desc">Ciclo estrito de estados: <code>pending</code> ➔ <code>in_progress</code> ➔ <code>completed</code>. Tarefas concluídas tornam-se somente-leitura e imutáveis.</p>
+          </div>
+
+          <div class="recurso-card">
+            <p class="recurso-num">04 · LOCKS ATÔMICOS</p>
+            <h3 class="recurso-titulo">Concorrência por PID</h3>
+            <p class="recurso-desc">Escritas atômicas em disco protegidas por locks com PID do sistema operacional. Locks órfãos de processos abortados são purgados com segurança.</p>
+          </div>
+
+          <div class="recurso-card">
+            <p class="recurso-num">05 · CONTRATOS</p>
+            <h3 class="recurso-titulo">HANDOFF & RESULT</h3>
+            <p class="recurso-desc">Handoff transfere apenas o contexto necessário. A finalização via RESULT audita a existência física dos artefatos em disco antes de aprovar.</p>
+          </div>
+
+          <div class="recurso-card">
+            <p class="recurso-num">06 · SEGURANÇA</p>
+            <h3 class="recurso-titulo">Integridade & Schema v1</h3>
+            <p class="recurso-desc">Identificadores com regex estrita <code>^task-[a-z0-9]{8,16}$</code> protegendo contra path traversal. Ações externas exigem confirmação explícita.</p>
+          </div>
+        </div>
+
+        <!-- Demonstração Prática: Comandos Reais da CLI -->
+        <div class="painel-cli" id="demonstracao-cli">
+          <div class="cli-abas-nav" role="tablist" aria-label="Passos da demonstração CLI">
+            <button type="button" class="cli-aba-btn ativo" data-aba="1" role="tab" aria-selected="true">1. Criar Tarefa</button>
+            <button type="button" class="cli-aba-btn" data-aba="2" role="tab" aria-selected="false">2. Roteamento</button>
+            <button type="button" class="cli-aba-btn" data-aba="3" role="tab" aria-selected="false">3. Handoff Assistido</button>
+            <button type="button" class="cli-aba-btn" data-aba="4" role="tab" aria-selected="false">4. Concluir & Auditar</button>
+          </div>
+
+          <div class="cli-conteudo-aba" id="conteudo-aba-1">
+            <div class="cli-bloco-comando">
+              <div class="cli-cmd-codigo"><span class="prefixo">root@lay:~$</span>python scripts/skill_hub.py task create --title "Refatorar modal de login" --client antigravity</div>
+              <button type="button" class="botao botao-secundario botao-compacto btn-copiar-cmd" data-copy="python scripts/skill_hub.py task create --title "Refatorar modal de login" --client antigravity">Copiar</button>
+            </div>
+            <p class="cli-cmd-efeito">
+              <b>Efeito Real:</b> Cria o arquivo <code>.lay/tasks/task-427584d6.json</code> validado pelo Schema v1, atribui o cliente de origem e define o estado como <code>pending</code>.
+            </p>
+          </div>
+
+          <div class="cli-conteudo-aba" id="conteudo-aba-2" style="display:none;">
+            <div class="cli-bloco-comando">
+              <div class="cli-cmd-codigo"><span class="prefixo">root@lay:~$</span>python scripts/skill_hub.py task route --title "Refatorar modal de login"</div>
+              <button type="button" class="botao botao-secundario botao-compacto btn-copiar-cmd" data-copy="python scripts/skill_hub.py task route --title "Refatorar modal de login"">Copiar</button>
+            </div>
+            <p class="cli-cmd-efeito">
+              <b>Efeito Real:</b> Avalia a demanda por heurística estática (< 2ms, 0 tokens), identifica o domínio <code>frontend</code> e recomenda as skills pertinentes (ex: <code>engineering-frontend-interfaces</code>).
+            </p>
+          </div>
+
+          <div class="cli-conteudo-aba" id="conteudo-aba-3" style="display:none;">
+            <div class="cli-bloco-comando">
+              <div class="cli-cmd-codigo"><span class="prefixo">root@lay:~$</span>python scripts/skill_hub.py task handoff task-427584d6 --target-client claude --authorized --reason "Refatoração via CLI"</div>
+              <button type="button" class="botao botao-secundario botao-compacto btn-copiar-cmd" data-copy="python scripts/skill_hub.py task handoff task-427584d6 --target-client claude --authorized --reason "Refatoração via CLI"">Copiar</button>
+            </div>
+            <p class="cli-cmd-efeito">
+              <b>Efeito Real:</b> Atualiza o cliente responsável no JSON, grava o histórico de transferência e exige a flag explícita <code>--authorized</code> para garantir supervisão humana.
+            </p>
+          </div>
+
+          <div class="cli-conteudo-aba" id="conteudo-aba-4" style="display:none;">
+            <div class="cli-bloco-comando">
+              <div class="cli-cmd-codigo"><span class="prefixo">root@lay:~$</span>python scripts/skill_hub.py task complete task-427584d6 --summary "Modal refatorado com WCAG AA" --artifacts "src/Modal.tsx"</div>
+              <button type="button" class="botao botao-secundario botao-compacto btn-copiar-cmd" data-copy="python scripts/skill_hub.py task complete task-427584d6 --summary "Modal refatorado com WCAG AA" --artifacts "src/Modal.tsx"">Copiar</button>
+            </div>
+            <p class="cli-cmd-efeito">
+              <b>Efeito Real:</b> Verifica fisicamente no disco se o artefato <code>src/Modal.tsx</code> existe. Se confirmado, altera o estado para <code>completed</code> e torna a tarefa estritamente imutável.
+            </p>
+          </div>
+        </div>
+
+        <div class="acoes-secao" style="margin-top: 16px;">
+          <a class="botao botao-primario" href="instalacao.html">Guia Completo de Instalação & CLI</a>
+          <a class="botao botao-secundario" href="#especialistas">Conhecer o Esquadrão de Agentes</a>
         </div>
       </section>
 
